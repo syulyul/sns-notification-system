@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 60%;
+            border-collapse: collapse;
+            text-align: left;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f6be00;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid ;
+            /*border-radius: 3px;*/
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            /*padding: 10px 20px;*/
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #f6be00
+        }
+
+        .image-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        .user-image {
+            max-width: 200px;
+            border: 1px solid ;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<h2>회원가입 양식</h2>
+<table>
+    <tr>
+        <th>사진 :</th>
+        <td>
+            <div class="image-container">
+                <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
+                <img src="" class="user-image" id="previewImage">
+
+            </div>
+        </div></td>
+    </tr>
+    <tr>
+        <th>번호</th>
+        <td><input type='text' name='no'></td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td><input type='text' name='name'></td>
+    </tr>
+    <tr>
+        <th>생일</th>
+        <td><input type='date' name='birthdate'></td>
+    </tr>
+    <tr>
+        <th>이메일</th>
+        <td><input type='email' name='email'></td>
+    </tr>
+    <tr>
+        <th>전화번호</th>
+        <td><input type='tel' name='tel'></td>
+    </tr>
+    <tr>
+        <th>암호</th>
+        <td><input type='password' name='password'></td>
+    </tr>
+    <tr>
+        <th>성별</th>
+        <td>
+            <select name='gender'>
+                <option value='M'>남자</option>
+                <option value='W'>여자</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="submit" value="가입하기">
+            <input type="submit" value="초기화">
+        </td>
+
+    </td>
+
+</table>
+</body>
+</html>
