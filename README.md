@@ -1,3 +1,3 @@
 # sns-notification-system
 
-push test - ys
+push test - ys2
