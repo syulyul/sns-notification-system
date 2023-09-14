@@ -1,3 +1,1 @@
 # sns-notification-system
-
-tests
