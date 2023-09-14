@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-public class sns_member implements Serializable {
+public class Sns_member implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class sns_member implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof sns_member snsMember)) return false;
+        if (!(o instanceof Sns_member snsMember)) return false;
         return getNo() == snsMember.getNo() && getPhone_number() == snsMember.getPhone_number() && getGender() == snsMember.getGender() && Objects.equals(getNick(), snsMember.getNick()) && Objects.equals(getName(), snsMember.getName()) && Objects.equals(getPassword(), snsMember.getPassword()) && Objects.equals(getEmail(), snsMember.getEmail()) && Objects.equals(getPhoto(), snsMember.getPhoto()) && Objects.equals(getBirthday(), snsMember.getBirthday()) && Objects.equals(getCreated_date(), snsMember.getCreated_date());
     }
 
