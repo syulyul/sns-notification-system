@@ -782,3 +782,4 @@ node_modules/
 temp/
 jdbc.properties
 application.properties
+ncp.properties
