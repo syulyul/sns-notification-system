@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -153,3 +154,48 @@
 </script>
 </body>
 </html>
+=======
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <title>비트캠프</title>
+  <link rel="stylesheet" href="form.css">
+</head>
+<body>
+
+<div data-th-replace="header :: header"></div>
+<div class="login-wrapper">
+  <h2>로그인</h2>
+<form action='login' method='post' id="login-form">
+  <table style="border:1px;">
+    <tr>
+      <th>이메일</th>
+      <td><input data-th-value='${email}' name='email' type='email' placeholder="Email"></td>
+    </tr>
+    <tr>
+      <th>암호</th>
+      <td><input name='password' type='password' placeholder="Password"></td>
+    </tr>
+  </table>
+  <button type="submit">로그인</button>
+  <input data-th-checked="email != null" name='saveEmail'
+         type='checkbox'> 이메일 저장
+</form>
+</div>
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> main
