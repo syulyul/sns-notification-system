@@ -3,6 +3,7 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class Mypage implements Serializable {
@@ -23,6 +24,8 @@ public class Mypage implements Serializable {
     private String email;
     private String photo;
     private Timestamp created_Date;
+    private HashSet<Member> likeMemberSet;
+    private HashSet<Member> followMemberSet;
 
     @Override
     public String toString() {
@@ -38,6 +41,8 @@ public class Mypage implements Serializable {
                 ", email='" + email + '\'' +
                 ", photo='" + photo + '\'' +
                 ", created_Date=" + created_Date +
+                ", likeMemberSet=" + likeMemberSet +
+                ", followMemberSet=" + followMemberSet +
                 '}';
     }
 
@@ -45,12 +50,12 @@ public class Mypage implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Mypage mypage)) return false;
-        return no == mypage.no && gender == mypage.gender && likes == mypage.likes && today_Visit_Count == mypage.today_Visit_Count && visit_Count == mypage.visit_Count && Objects.equals(state_Message, mypage.state_Message) && Objects.equals(filePath, mypage.filePath) && Objects.equals(birthDay, mypage.birthDay) && Objects.equals(email, mypage.email) && Objects.equals(photo, mypage.photo) && Objects.equals(created_Date, mypage.created_Date);
+        return no == mypage.no && gender == mypage.gender && likes == mypage.likes && today_Visit_Count == mypage.today_Visit_Count && visit_Count == mypage.visit_Count && Objects.equals(state_Message, mypage.state_Message) && Objects.equals(filePath, mypage.filePath) && Objects.equals(birthDay, mypage.birthDay) && Objects.equals(email, mypage.email) && Objects.equals(photo, mypage.photo) && Objects.equals(created_Date, mypage.created_Date) && Objects.equals(likeMemberSet, mypage.likeMemberSet) && Objects.equals(followMemberSet, mypage.followMemberSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(no, state_Message, filePath, birthDay, gender, likes, today_Visit_Count, visit_Count, email, photo, created_Date);
+        return Objects.hash(no, state_Message, filePath, birthDay, gender, likes, today_Visit_Count, visit_Count, email, photo, created_Date, likeMemberSet, followMemberSet);
     }
 
     public int getNo() {
@@ -139,5 +144,21 @@ public class Mypage implements Serializable {
 
     public void setCreated_Date(Timestamp created_Date) {
         this.created_Date = created_Date;
+    }
+
+    public HashSet<Member> getLikeMemberSet() {
+        return likeMemberSet;
+    }
+
+    public void setLikeMemberSet(HashSet<Member> likeMemberSet) {
+        this.likeMemberSet = likeMemberSet;
+    }
+
+    public HashSet<Member> getFollowMemberSet() {
+        return followMemberSet;
+    }
+
+    public void setFollowMemberSet(HashSet<Member> followMemberSet) {
+        this.followMemberSet = followMemberSet;
     }
 }
