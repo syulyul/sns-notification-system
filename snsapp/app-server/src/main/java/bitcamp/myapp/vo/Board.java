@@ -11,7 +11,7 @@ public class Board implements Serializable{
   private int no; // 게시글 번호
   private String title; // 제목
   private String content; // 내용
-  // private Member writer; // 작성자
+//  private Member writer; // 작성자
   private int viewCount; // 조회수
   private int likes; // 좋아요
   private int category; // 카테고리
@@ -70,6 +70,14 @@ public class Board implements Serializable{
   public void setContent(String content) {
     this.content = content;
   }
+
+//  public Member getWriter() {
+//    return writer;
+//  }
+//
+//  public void setWriter(Member writer) {
+//    this.writer = writer;
+//  }
 
   public int getViewCount() {
     return viewCount;
