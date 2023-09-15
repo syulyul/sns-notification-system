@@ -37,3 +37,12 @@ mybatis.type-aliases-package=bitcamp.myapp.vo
 
 spring.servlet.multipart.max-file-size=20MB
 spring.servlet.multipart.max-request-size=200MB
+
+#
+
+# thymeleaf # 개발하는 동안만 사용할 것
+
+spring.thymeleaf.prefix=file:app-server/src/main/resources/templates/
+spring.web.resources.static-locations=file:app-server/src/main/resources/static/
+spring.web.resources.cache.period=0
+spring.profiles.active=dev
