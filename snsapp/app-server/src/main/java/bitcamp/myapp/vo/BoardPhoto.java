@@ -1,6 +1,7 @@
 package bitcamp.myapp.vo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class BoardPhoto implements Serializable{
   private static final long serialVersionUID = 1L;
@@ -11,11 +12,24 @@ public class BoardPhoto implements Serializable{
 
   @Override
   public String toString() {
-    return "AttachedFile{" +
+    return "BoardPhoto{" +
             "no=" + no +
-            ", filePath='" + filePath + '\'' +
             ", boardNo=" + boardNo +
+            ", filePath='" + filePath + '\'' +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    BoardPhoto that = (BoardPhoto) o;
+    return no == that.no && boardNo == that.boardNo && Objects.equals(filePath, that.filePath);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(no, boardNo, filePath);
   }
 
   public int getNo() {

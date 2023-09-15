@@ -3,6 +3,7 @@ package bitcamp.myapp.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 public class Board implements Serializable{
   private static final long serialVersionUID = 1L;
@@ -31,6 +32,19 @@ public class Board implements Serializable{
             ", createdDate=" + createdDate +
             ", updateDate=" + updateDate +
             '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Board board = (Board) o;
+    return no == board.no && viewCount == board.viewCount && likes == board.likes && category == board.category && Objects.equals(title, board.title) && Objects.equals(content, board.content) && Objects.equals(attachedFiles, board.attachedFiles) && Objects.equals(createdDate, board.createdDate) && Objects.equals(updateDate, board.updateDate);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(no, title, content, viewCount, likes, category, attachedFiles, createdDate, updateDate);
   }
 
   public int getNo() {
