@@ -8,8 +8,7 @@ public class Member implements Serializable {
   private static final long serialVersionUID = 1L;
 
 
-  public static final char MALE = 'M';
-  public static final char FEMALE = 'W';
+
   private int no;
   private String nick;
   private String name;

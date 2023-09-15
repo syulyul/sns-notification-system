@@ -8,6 +8,9 @@ public class Mypage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
+    public static final char MALE = 'M';
+    public static final char FEMALE = 'W';
     private int no;
     private int phone_number;
     private String email;
