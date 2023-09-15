@@ -12,9 +12,8 @@ public class Member implements Serializable {
   private int no;
   private String nick;
   private String name;
-  private int phone_number;
+  private int phone_Number;
   private String password;
-
 
   @Override
   public String toString() {
@@ -22,7 +21,7 @@ public class Member implements Serializable {
             "no=" + no +
             ", nick='" + nick + '\'' +
             ", name='" + name + '\'' +
-            ", phone_number=" + phone_number +
+            ", phone_Number=" + phone_Number +
             ", password='" + password + '\'' +
             '}';
   }
@@ -31,12 +30,12 @@ public class Member implements Serializable {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof Member member)) return false;
-    return getNo() == member.getNo() && getPhone_number() == member.getPhone_number() && Objects.equals(getNick(), member.getNick()) && Objects.equals(getName(), member.getName()) && Objects.equals(getPassword(), member.getPassword());
+    return no == member.no && phone_Number == member.phone_Number && Objects.equals(nick, member.nick) && Objects.equals(name, member.name) && Objects.equals(password, member.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getNo(), getNick(), getName(), getPhone_number(), getPassword());
+    return Objects.hash(no, nick, name, phone_Number, password);
   }
 
   public int getNo() {
@@ -63,12 +62,12 @@ public class Member implements Serializable {
     this.name = name;
   }
 
-  public int getPhone_number() {
-    return phone_number;
+  public int getPhone_Number() {
+    return phone_Number;
   }
 
-  public void setPhone_number(int phone_number) {
-    this.phone_number = phone_number;
+  public void setPhone_Number(int phone_Number) {
+    this.phone_Number = phone_Number;
   }
 
   public String getPassword() {

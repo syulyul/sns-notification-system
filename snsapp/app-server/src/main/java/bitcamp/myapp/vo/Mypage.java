@@ -2,33 +2,42 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Mypage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     public static final char MALE = 'M';
     public static final char FEMALE = 'W';
+
     private int no;
-    private int phone_number;
+    private String state_Message;
+    private String filePath;
+    private Timestamp birthDay;
+    private char gender;
+    private int likes;
+    private int today_Visit_Count;
+    private int visit_Count;
     private String email;
     private String photo;
-    private Date birthday;
-    private char gender;
-    private Date created_date;
+    private Timestamp created_Date;
 
     @Override
     public String toString() {
         return "Mypage{" +
                 "no=" + no +
-                ", phone_number=" + phone_number +
+                ", state_Message='" + state_Message + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", birthDay=" + birthDay +
+                ", gender=" + gender +
+                ", likes=" + likes +
+                ", today_Visit_Count=" + today_Visit_Count +
+                ", visit_Count=" + visit_Count +
                 ", email='" + email + '\'' +
                 ", photo='" + photo + '\'' +
-                ", birthday=" + birthday +
-                ", gender=" + gender +
-                ", created_date=" + created_date +
+                ", created_Date=" + created_Date +
                 '}';
     }
 
@@ -36,14 +45,13 @@ public class Mypage implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Mypage mypage)) return false;
-        return no == mypage.no && getPhone_number() == mypage.getPhone_number() && getGender() == mypage.getGender() && Objects.equals(getEmail(), mypage.getEmail()) && Objects.equals(getPhoto(), mypage.getPhoto()) && Objects.equals(getBirthday(), mypage.getBirthday()) && Objects.equals(getCreated_date(), mypage.getCreated_date());
+        return no == mypage.no && gender == mypage.gender && likes == mypage.likes && today_Visit_Count == mypage.today_Visit_Count && visit_Count == mypage.visit_Count && Objects.equals(state_Message, mypage.state_Message) && Objects.equals(filePath, mypage.filePath) && Objects.equals(birthDay, mypage.birthDay) && Objects.equals(email, mypage.email) && Objects.equals(photo, mypage.photo) && Objects.equals(created_Date, mypage.created_Date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPhone_number(), getEmail(), getPhoto(), getBirthday(), getGender(), getCreated_date());
+        return Objects.hash(no, state_Message, filePath, birthDay, gender, likes, today_Visit_Count, visit_Count, email, photo, created_Date);
     }
-
 
     public int getNo() {
         return no;
@@ -53,12 +61,60 @@ public class Mypage implements Serializable {
         this.no = no;
     }
 
-    public int getPhone_number() {
-        return phone_number;
+    public String getState_Message() {
+        return state_Message;
     }
 
-    public void setPhone_number(int phone_number) {
-        this.phone_number = phone_number;
+    public void setState_Message(String state_Message) {
+        this.state_Message = state_Message;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public Timestamp getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Timestamp birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getToday_Visit_Count() {
+        return today_Visit_Count;
+    }
+
+    public void setToday_Visit_Count(int today_Visit_Count) {
+        this.today_Visit_Count = today_Visit_Count;
+    }
+
+    public int getVisit_Count() {
+        return visit_Count;
+    }
+
+    public void setVisit_Count(int visit_Count) {
+        this.visit_Count = visit_Count;
     }
 
     public String getEmail() {
@@ -77,27 +133,11 @@ public class Mypage implements Serializable {
         this.photo = photo;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Timestamp getCreated_Date() {
+        return created_Date;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public char getGender() {
-        return gender;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
-
-    public Date getCreated_date() {
-        return created_date;
-    }
-
-    public void setCreated_date(Date created_date) {
-        this.created_date = created_date;
+    public void setCreated_Date(Timestamp created_Date) {
+        this.created_Date = created_Date;
     }
 }

@@ -12,7 +12,7 @@ public class NotiLog implements Serializable {
     private int notiNo; //알림 번호
     private String content;
     private String url;
-    private String noti_state;
+    private String noti_State;
 
     @Override
     public String toString() {
@@ -22,7 +22,7 @@ public class NotiLog implements Serializable {
                 ", notiNo=" + notiNo +
                 ", content='" + content + '\'' +
                 ", url='" + url + '\'' +
-                ", noti_state='" + noti_state + '\'' +
+                ", noti_State='" + noti_State + '\'' +
                 '}';
     }
 
@@ -30,12 +30,12 @@ public class NotiLog implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof NotiLog notiLog)) return false;
-        return no == notiLog.no && memberNo == notiLog.memberNo && notiNo == notiLog.notiNo && Objects.equals(content, notiLog.content) && Objects.equals(url, notiLog.url) && Objects.equals(noti_state, notiLog.noti_state);
+        return no == notiLog.no && memberNo == notiLog.memberNo && notiNo == notiLog.notiNo && Objects.equals(content, notiLog.content) && Objects.equals(url, notiLog.url) && Objects.equals(noti_State, notiLog.noti_State);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(no, memberNo, notiNo, content, url, noti_state);
+        return Objects.hash(no, memberNo, notiNo, content, url, noti_State);
     }
 
     public int getNo() {
@@ -78,11 +78,11 @@ public class NotiLog implements Serializable {
         this.url = url;
     }
 
-    public String getNoti_state() {
-        return noti_state;
+    public String getNoti_State() {
+        return noti_State;
     }
 
-    public void setNoti_state(String noti_state) {
-        this.noti_state = noti_state;
+    public void setNoti_State(String noti_State) {
+        this.noti_State = noti_State;
     }
 }
