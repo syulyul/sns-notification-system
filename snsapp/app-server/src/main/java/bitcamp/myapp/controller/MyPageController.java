@@ -33,7 +33,9 @@ public class MyPageController {
       @RequestParam(defaultValue = "0") int show,
       Model model,
       HttpSession session) throws Exception {
-    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    LoginUser loginUser = new LoginUser();
+    loginUser.setNo(1);
     model.addAttribute("myPage", myPageService.get(no));
     switch (show) {
       case SHOW_FOLLOWERS:

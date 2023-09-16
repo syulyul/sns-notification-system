@@ -5,7 +5,7 @@
 <mapper namespace="bitcamp.myapp.dao.MyPageDao">
 
   <resultMap type="myPage" id="myPageMap">
-    <id column="mpno" property="no" />
+    <id column="mno" property="no" />
     <result column="nick" property="nick" />
     <result column="name" property="name" />
     <result column="phone_number" property="phoneNumber" />
@@ -16,7 +16,6 @@
     <result column="birthday" property="birthday" />
     <result column="gender" property="gender" />
     <result column="likes" property="likes" />
-    <result column="today_visit_count" property="todayVisitCount" />
     <result column="visit_count" property="visitCount" />
     <result column="created_date" property="createdDate" />
   </resultMap>
@@ -48,11 +47,10 @@
     ,birthday
     ,gender
     ,likes
-    ,today_visit_count
     ,visit_count
     ,created_date
     from
-    sns_mypage as mp inner join sns_member as m on mp.mpno=m.mno
+    sns_mypage as mp inner join sns_member as m on mp.mno=m.mno
     where
     mno=#{memberNo}
   </select>
@@ -94,10 +92,10 @@
     ,m.email
     ,m.filepath
     from
-    (select f.follower
-    from sns_follow as f
-    where f.following=#{memberNo})
-    inner join sns_member as m f.follower=m.mno
+    (select follower
+    from sns_follow
+    where following=#{memberNo}) as f
+    inner join sns_member as m on f.follower=m.mno
   </select>
 
   <select id="findAllFollowings" parameterType="int" resultMap="memberMap">
@@ -109,9 +107,9 @@
     ,m.email
     ,m.filepath
     from
-    (select f.following
-    from sns_follow as f
-    where f.follower=#{memberNo})
-    inner join sns_member as m f.following=m.mno
+    (select following
+    from sns_follow
+    where follower=#{memberNo}) as f
+    inner join sns_member as m on f.following=m.mno
   </select>
 </mapper>
