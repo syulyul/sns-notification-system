@@ -10,7 +10,7 @@ public class Member implements Serializable {
   private int no;
   private String nick;
   private String name;
-  private int phoneNumber;
+  private String phoneNumber;
   private String email;
   private String password;
   private String photo;
@@ -68,11 +68,11 @@ public class Member implements Serializable {
     this.name = name;
   }
 
-  public int getPhoneNumber() {
+  public String getPhoneNumber() {
     return phoneNumber;
   }
 
-  public void setPhoneNumber(int phoneNumber) {
+  public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 
