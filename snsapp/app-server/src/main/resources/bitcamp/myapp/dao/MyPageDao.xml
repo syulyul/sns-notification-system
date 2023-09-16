@@ -36,7 +36,7 @@
     values(#{state_message}, #{birthday}, #{gender})
   </insert>
 
-  <select id="findBy" parameterType="int" resultMap="memberMap">
+  <select id="findBy" parameterType="int" resultMap="myPageMap">
     select
     mno
     ,nick

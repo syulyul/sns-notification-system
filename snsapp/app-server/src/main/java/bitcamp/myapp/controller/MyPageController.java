@@ -30,7 +30,7 @@ public class MyPageController {
   @GetMapping("{no}")
   public String detail(
       @PathVariable int no,
-      @RequestParam(required = false) int show,
+      @RequestParam(defaultValue = "0") int show,
       Model model,
       HttpSession session) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");

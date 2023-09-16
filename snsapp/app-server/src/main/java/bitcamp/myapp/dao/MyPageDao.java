@@ -3,8 +3,10 @@ package bitcamp.myapp.dao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface MyPageDao {
 
   int insert(MyPage myPage);
