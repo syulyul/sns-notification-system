@@ -37,7 +37,7 @@
 
   <select id="findBy" parameterType="int" resultMap="myPageMap">
     select
-    mno
+    mp.mno
     ,nick
     ,name
     ,phone_number
@@ -52,7 +52,7 @@
     from
     sns_mypage as mp inner join sns_member as m on mp.mno=m.mno
     where
-    mno=#{memberNo}
+    mp.mno=#{memberNo}
   </select>
 
   <update id="update" parameterType="myPage">
