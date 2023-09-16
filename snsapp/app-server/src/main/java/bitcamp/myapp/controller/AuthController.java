@@ -30,7 +30,7 @@ public class AuthController {
 
   @PostMapping("login")
   public String login(
-      String email,
+      String phone_Number,
       String password,
       String saveEmail,
       HttpSession session,
@@ -38,10 +38,10 @@ public class AuthController {
       HttpServletResponse response) throws Exception {
 
     if (saveEmail != null) {
-      Cookie cookie = new Cookie("email", email);
+      Cookie cookie = new Cookie("phone_Number", phone_Number);
       response.addCookie(cookie);
     } else {
-      Cookie cookie = new Cookie("email", "no");
+      Cookie cookie = new Cookie("phone_Number", "phone_Number");
       cookie.setMaxAge(0);
       response.addCookie(cookie);
     }
