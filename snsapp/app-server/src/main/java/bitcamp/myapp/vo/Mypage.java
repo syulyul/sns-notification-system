@@ -1,164 +1,144 @@
 package bitcamp.myapp.vo;
 
-import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.Objects;
 
-public class Mypage implements Serializable {
+public class Mypage extends Member {
 
-    private static final long serialVersionUID = 1L;
+  public static final char MALE = 'M';
+  public static final char FEMALE = 'W';
+  private static final long serialVersionUID = 1L;
+  private String stateMessage;
+  private String filePath;
+  private Timestamp birthDay;
+  private char gender;
+  private int likes;
+  private int todayVisitCount;
+  private int visitCount;
+  private String email;
+  private String photo;
+  private Timestamp createdDate;
 
-    public static final char MALE = 'M';
-    public static final char FEMALE = 'W';
+  @Override
+  public String toString() {
+    return "Mypage{" +
+        "state_Message='" + stateMessage + '\'' +
+        ", filePath='" + filePath + '\'' +
+        ", birthDay=" + birthDay +
+        ", gender=" + gender +
+        ", likes=" + likes +
+        ", today_Visit_Count=" + todayVisitCount +
+        ", visit_Count=" + visitCount +
+        ", email='" + email + '\'' +
+        ", photo='" + photo + '\'' +
+        ", created_Date=" + createdDate +
+        '}';
+  }
 
-    private int no;
-    private String state_Message;
-    private String filePath;
-    private Timestamp birthDay;
-    private char gender;
-    private int likes;
-    private int today_Visit_Count;
-    private int visit_Count;
-    private String email;
-    private String photo;
-    private Timestamp created_Date;
-    private HashSet<Member> likeMemberSet;
-    private HashSet<Member> followMemberSet;
+  @Override
+  public boolean equals(Object o) {
+      if (this == o) {
+          return true;
+      }
+      if (!(o instanceof Mypage mypage)) {
+          return false;
+      }
+    return gender == mypage.gender
+        && likes == mypage.likes
+        && todayVisitCount == mypage.todayVisitCount
+        && visitCount == mypage.visitCount
+        && Objects.equals(stateMessage, mypage.stateMessage)
+        && Objects.equals(filePath, mypage.filePath)
+        && Objects.equals(birthDay, mypage.birthDay)
+        && Objects.equals(email, mypage.email)
+        && Objects.equals(photo, mypage.photo)
+        && Objects.equals(createdDate, mypage.createdDate);
+  }
 
-    @Override
-    public String toString() {
-        return "Mypage{" +
-                "no=" + no +
-                ", state_Message='" + state_Message + '\'' +
-                ", filePath='" + filePath + '\'' +
-                ", birthDay=" + birthDay +
-                ", gender=" + gender +
-                ", likes=" + likes +
-                ", today_Visit_Count=" + today_Visit_Count +
-                ", visit_Count=" + visit_Count +
-                ", email='" + email + '\'' +
-                ", photo='" + photo + '\'' +
-                ", created_Date=" + created_Date +
-                ", likeMemberSet=" + likeMemberSet +
-                ", followMemberSet=" + followMemberSet +
-                '}';
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(stateMessage, filePath, birthDay, gender, likes, todayVisitCount,
+        visitCount, email, photo, createdDate);
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Mypage mypage)) return false;
-        return no == mypage.no && gender == mypage.gender && likes == mypage.likes && today_Visit_Count == mypage.today_Visit_Count && visit_Count == mypage.visit_Count && Objects.equals(state_Message, mypage.state_Message) && Objects.equals(filePath, mypage.filePath) && Objects.equals(birthDay, mypage.birthDay) && Objects.equals(email, mypage.email) && Objects.equals(photo, mypage.photo) && Objects.equals(created_Date, mypage.created_Date) && Objects.equals(likeMemberSet, mypage.likeMemberSet) && Objects.equals(followMemberSet, mypage.followMemberSet);
-    }
+  public String getStateMessage() {
+    return stateMessage;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(no, state_Message, filePath, birthDay, gender, likes, today_Visit_Count, visit_Count, email, photo, created_Date, likeMemberSet, followMemberSet);
-    }
+  public void setStateMessage(String stateMessage) {
+    this.stateMessage = stateMessage;
+  }
 
-    public int getNo() {
-        return no;
-    }
+  public String getFilePath() {
+    return filePath;
+  }
 
-    public void setNo(int no) {
-        this.no = no;
-    }
+  public void setFilePath(String filePath) {
+    this.filePath = filePath;
+  }
 
-    public String getState_Message() {
-        return state_Message;
-    }
+  public Timestamp getBirthDay() {
+    return birthDay;
+  }
 
-    public void setState_Message(String state_Message) {
-        this.state_Message = state_Message;
-    }
+  public void setBirthDay(Timestamp birthDay) {
+    this.birthDay = birthDay;
+  }
 
-    public String getFilePath() {
-        return filePath;
-    }
+  public char getGender() {
+    return gender;
+  }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
+  public void setGender(char gender) {
+    this.gender = gender;
+  }
 
-    public Timestamp getBirthDay() {
-        return birthDay;
-    }
+  public int getLikes() {
+    return likes;
+  }
 
-    public void setBirthDay(Timestamp birthDay) {
-        this.birthDay = birthDay;
-    }
+  public void setLikes(int likes) {
+    this.likes = likes;
+  }
 
-    public char getGender() {
-        return gender;
-    }
+  public int getTodayVisitCount() {
+    return todayVisitCount;
+  }
 
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
+  public void setTodayVisitCount(int todayVisitCount) {
+    this.todayVisitCount = todayVisitCount;
+  }
 
-    public int getLikes() {
-        return likes;
-    }
+  public int getVisitCount() {
+    return visitCount;
+  }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
+  public void setVisitCount(int visitCount) {
+    this.visitCount = visitCount;
+  }
 
-    public int getToday_Visit_Count() {
-        return today_Visit_Count;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setToday_Visit_Count(int today_Visit_Count) {
-        this.today_Visit_Count = today_Visit_Count;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public int getVisit_Count() {
-        return visit_Count;
-    }
+  public String getPhoto() {
+    return photo;
+  }
 
-    public void setVisit_Count(int visit_Count) {
-        this.visit_Count = visit_Count;
-    }
+  public void setPhoto(String photo) {
+    this.photo = photo;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public Timestamp getCreatedDate() {
+    return createdDate;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setCreatedDate(Timestamp createdDate) {
+    this.createdDate = createdDate;
+  }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public Timestamp getCreated_Date() {
-        return created_Date;
-    }
-
-    public void setCreated_Date(Timestamp created_Date) {
-        this.created_Date = created_Date;
-    }
-
-    public HashSet<Member> getLikeMemberSet() {
-        return likeMemberSet;
-    }
-
-    public void setLikeMemberSet(HashSet<Member> likeMemberSet) {
-        this.likeMemberSet = likeMemberSet;
-    }
-
-    public HashSet<Member> getFollowMemberSet() {
-        return followMemberSet;
-    }
-
-    public void setFollowMemberSet(HashSet<Member> followMemberSet) {
-        this.followMemberSet = followMemberSet;
-    }
 }
