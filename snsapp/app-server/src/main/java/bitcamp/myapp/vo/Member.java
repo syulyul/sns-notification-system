@@ -7,8 +7,6 @@ public class Member implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-
-
   private int no;
   private String nick;
   private String name;
@@ -18,24 +16,28 @@ public class Member implements Serializable {
   @Override
   public String toString() {
     return "Member{" +
-            "no=" + no +
-            ", nick='" + nick + '\'' +
-            ", name='" + name + '\'' +
-            ", phone_Number=" + phone_Number +
-            ", password='" + password + '\'' +
-            '}';
+        "no=" + no +
+        ", nick='" + nick + '\'' +
+        ", name='" + name + '\'' +
+        ", phone_Number=" + phone_Number +
+        ", password='" + password + '\'' +
+        '}';
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Member member)) return false;
-    return no == member.no && phone_Number == member.phone_Number && Objects.equals(nick, member.nick) && Objects.equals(name, member.name) && Objects.equals(password, member.password);
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Member member)) {
+      return false;
+    }
+    return no == member.no;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(no, nick, name, phone_Number, password);
+    return Objects.hash(no);
   }
 
   public int getNo() {
