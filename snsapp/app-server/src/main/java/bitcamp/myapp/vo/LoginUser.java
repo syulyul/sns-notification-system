@@ -16,7 +16,9 @@ public class LoginUser extends Member {
     this.setNick(member.getNick());
     this.setName(member.getName());
     this.setPassword(member.getPassword());
-    this.setPhone_Number(member.getPhone_Number());
+    this.setPhoneNumber(member.getPhoneNumber());
+    this.setEmail(member.getEmail());
+    this.setPhoto(member.getPhoto());
   }
 
   @Override

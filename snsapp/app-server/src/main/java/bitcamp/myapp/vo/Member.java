@@ -10,8 +10,10 @@ public class Member implements Serializable {
   private int no;
   private String nick;
   private String name;
-  private int phone_Number;
+  private String phoneNumber;
+  private String email;
   private String password;
+  private String photo;
 
   @Override
   public String toString() {
@@ -19,7 +21,9 @@ public class Member implements Serializable {
         "no=" + no +
         ", nick='" + nick + '\'' +
         ", name='" + name + '\'' +
-        ", phone_Number=" + phone_Number +
+        ", phoneNumber=" + phoneNumber +
+        ", email='" + email + '\'' +
+        ", photo='" + photo + '\'' +
         ", password='" + password + '\'' +
         '}';
   }
@@ -64,12 +68,28 @@ public class Member implements Serializable {
     this.name = name;
   }
 
-  public int getPhone_Number() {
-    return phone_Number;
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
-  public void setPhone_Number(int phone_Number) {
-    this.phone_Number = phone_Number;
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPhoto() {
+    return photo;
+  }
+
+  public void setPhoto(String photo) {
+    this.photo = photo;
   }
 
   public String getPassword() {

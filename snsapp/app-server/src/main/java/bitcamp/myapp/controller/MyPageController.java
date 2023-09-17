@@ -1,47 +1,56 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.vo.Member;
-import bitcamp.myapp.vo.Mypage;
+import bitcamp.myapp.service.MyPageService;
+import bitcamp.myapp.vo.LoginUser;
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
 @RequestMapping("/myPage")
 public class MyPageController {
 
-    {
-        System.out.println("MyPageController 생성됨!");
-    }
+  private static final int SHOW_BOARD = 0;
+  private static final int SHOW_FOLLOWERS = 1;
+  private static final int SHOW_FOLLOWINGS = 2;
 
-    @GetMapping("{no}")
-    public String detail(@PathVariable int no, Model model) throws Exception {
-        model.addAttribute("myPage", new Mypage());
-        model.addAttribute("member", new Member());
-        List<Member> list = new ArrayList<Member>();
-        Member a = new Member();
-        a.setNick("AAA");
-        Member b = new Member();
-        b.setNick("BBB");
-        Member c = new Member();
-        c.setNick("CCC");
-        list.add(a);
-        list.add(b);
-        list.add(c);
-        model.addAttribute("list", list);
-        HashSet<Member> set = new HashSet<Member>();
-        set.add(b);
-        model.addAttribute("loginUser", b);
-        model.addAttribute("set", set);
-        return "myPage/detail";
+  @Autowired
+  MyPageService myPageService;
+
+  {
+    System.out.println("MyPageController 생성됨!");
+  }
+
+  @GetMapping("{no}")
+  public String detail(
+      @PathVariable int no,
+      @RequestParam(defaultValue = "0") int show,
+      Model model,
+      HttpSession session) throws Exception {
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    LoginUser loginUser = new LoginUser();
+    loginUser.setNo(1);
+    model.addAttribute("myPage", myPageService.get(no));
+    switch (show) {
+      case SHOW_FOLLOWERS:
+        model.addAttribute("list", myPageService.followerList(no));
+        break;
+      case SHOW_FOLLOWINGS:
+        model.addAttribute("list", myPageService.followingList(no));
+        break;
+      default:
+        model.addAttribute("list", null);
+        break;
     }
+    model.addAttribute("loginUser", loginUser);
+    return "myPage/detail";
+  }
 
 
 }

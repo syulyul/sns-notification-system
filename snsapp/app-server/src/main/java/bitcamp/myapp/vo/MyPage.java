@@ -3,62 +3,53 @@ package bitcamp.myapp.vo;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class Mypage extends Member {
+public class MyPage extends Member {
 
   public static final char MALE = 'M';
   public static final char FEMALE = 'W';
   private static final long serialVersionUID = 1L;
   private String stateMessage;
-  private String filePath;
-  private Timestamp birthDay;
+  private Timestamp birthday;
   private char gender;
   private int likes;
   private int todayVisitCount;
   private int visitCount;
-  private String email;
-  private String photo;
   private Timestamp createdDate;
 
   @Override
   public String toString() {
     return "Mypage{" +
         "state_Message='" + stateMessage + '\'' +
-        ", filePath='" + filePath + '\'' +
-        ", birthDay=" + birthDay +
+        ", birthday=" + birthday +
         ", gender=" + gender +
         ", likes=" + likes +
         ", today_Visit_Count=" + todayVisitCount +
         ", visit_Count=" + visitCount +
-        ", email='" + email + '\'' +
-        ", photo='" + photo + '\'' +
         ", created_Date=" + createdDate +
         '}';
   }
 
   @Override
   public boolean equals(Object o) {
-      if (this == o) {
-          return true;
-      }
-      if (!(o instanceof Mypage mypage)) {
-          return false;
-      }
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof MyPage mypage)) {
+      return false;
+    }
     return gender == mypage.gender
         && likes == mypage.likes
         && todayVisitCount == mypage.todayVisitCount
         && visitCount == mypage.visitCount
         && Objects.equals(stateMessage, mypage.stateMessage)
-        && Objects.equals(filePath, mypage.filePath)
-        && Objects.equals(birthDay, mypage.birthDay)
-        && Objects.equals(email, mypage.email)
-        && Objects.equals(photo, mypage.photo)
+        && Objects.equals(birthday, mypage.birthday)
         && Objects.equals(createdDate, mypage.createdDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(stateMessage, filePath, birthDay, gender, likes, todayVisitCount,
-        visitCount, email, photo, createdDate);
+    return Objects.hash(stateMessage, birthday, gender, likes, todayVisitCount,
+        visitCount, createdDate);
   }
 
   public String getStateMessage() {
@@ -69,20 +60,12 @@ public class Mypage extends Member {
     this.stateMessage = stateMessage;
   }
 
-  public String getFilePath() {
-    return filePath;
+  public Timestamp getBirthday() {
+    return birthday;
   }
 
-  public void setFilePath(String filePath) {
-    this.filePath = filePath;
-  }
-
-  public Timestamp getBirthDay() {
-    return birthDay;
-  }
-
-  public void setBirthDay(Timestamp birthDay) {
-    this.birthDay = birthDay;
+  public void setBirthday(Timestamp birthday) {
+    this.birthday = birthday;
   }
 
   public char getGender() {
@@ -117,21 +100,6 @@ public class Mypage extends Member {
     this.visitCount = visitCount;
   }
 
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPhoto() {
-    return photo;
-  }
-
-  public void setPhoto(String photo) {
-    this.photo = photo;
-  }
 
   public Timestamp getCreatedDate() {
     return createdDate;
