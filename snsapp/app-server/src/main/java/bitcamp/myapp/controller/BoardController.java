@@ -4,15 +4,14 @@ import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.BoardPhoto;
+import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -139,4 +138,57 @@ public class BoardController {
             return "redirect:/board/detail/" + board.getCategory() + "/" + board.getNo();
         }
     }
+
+    @GetMapping("like")
+    public String like(
+            @RequestParam int show,
+            @RequestParam("boardNo") int boardNo,
+            @RequestParam("likes") int likes) throws Exception {
+        // 로그인한 사용자 정보를 가져오는 코드를 추가
+//        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        LoginUser loginUser = new LoginUser();
+        loginUser.setNo(1); // 임시로 사용자 번호설정
+
+        // 게시글 좋아요 토글 메소드를 호출하여 사용자의 좋아요를 추가하거나 제거합니다.
+        BoardService.
+
+        // 다시 해당 게시글 상세 페이지로 리다이렉트합니다.
+        return "redirect:/board/detail/" + boardNo + "?show=" + show;
+    }
+
+    @GetMapping("unlike")
+    public String unfollow(
+            @RequestParam int show,
+            @RequestParam("memberNo") int memberNo,
+            @RequestParam("boardNo") int boardNo) throws Exception {
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        LoginUser loginUser = new LoginUser();
+        loginUser.setNo(1);
+        myPageService.unfollow(loginUser.getNo(), boardNo);
+        return "redirect:" + myPageNo + "?show=" + show;
+    }
+
+//    @GetMapping("follow")
+//    public String follow(
+//            @RequestParam int show,
+//            @RequestParam("myPageNo") int myPageNo,
+//            @RequestParam("followingNo") int followingNo) throws Exception {
+////    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+//        LoginUser loginUser = new LoginUser();
+//        loginUser.setNo(1);
+//        myPageService.follow(loginUser.getNo(), followingNo);
+//        return "redirect:" + myPageNo + "?show=" + show;
+//    }
+//
+//    @GetMapping("unfollow")
+//    public String unfollow(
+//            @RequestParam int show,
+//            @RequestParam("myPageNo") int myPageNo,
+//            @RequestParam("followingNo") int followingNo) throws Exception {
+////    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+//        LoginUser loginUser = new LoginUser();
+//        loginUser.setNo(1);
+//        myPageService.unfollow(loginUser.getNo(), followingNo);
+//        return "redirect:" + myPageNo + "?show=" + show;
+//    }
 }

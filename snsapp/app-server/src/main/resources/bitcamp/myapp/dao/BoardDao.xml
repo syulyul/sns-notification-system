@@ -64,6 +64,7 @@
     b.view_count,
     b.created_at,
     b.category,
+    b.likes,
     m.mno,
     m.name,
     f.bpno,
@@ -124,4 +125,24 @@
     where
     bno=#{no}
   </delete>
+
+  <update id="updateLikes" parameterType="int">
+    update sns_board set
+    likes=likes + 1
+    where
+    bno=#{no}
+  </update>
+
+  <insert id="insertLike">
+    insert into sns_board_like(mno, bno)
+    values(#{memberNo}, #{boardNo})
+  </insert>
+
+  <delete id="deleteLike">
+    delete from sns_board_like
+    where
+    mno=#{memberNo}
+    and bno=#{boardNo}
+  </delete>
+
 </mapper>

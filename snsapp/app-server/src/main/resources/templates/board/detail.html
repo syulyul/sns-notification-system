@@ -69,6 +69,31 @@
             right: 10px; /* 우측에 위치하도록 설정 */
         }
     </style>
+
+    <script>
+        /* 좋아요 버튼 클릭 시 실행되는 함수 */
+        function likeButtonClicked() {
+            var boardNo = /* 게시글 번호를 여기에 동적으로 설정하세요 */ 0;
+            var currentLikes = parseInt(document.getElementById("likeButton").textContent.match(/\d+/)[0]);
+            var newLikes;
+
+            // 좋아요 수 업데이트
+            if (document.getElementById("likeButton").classList.contains("liked")) {
+                // 이미 좋아요를 누른 경우, 좋아요를 취소합니다.
+                newLikes = currentLikes - 1;
+                document.getElementById("likeButton").classList.remove("liked");
+            } else {
+                // 아직 좋아요를 누르지 않은 경우, 좋아요를 추가합니다.
+                newLikes = currentLikes + 1;
+                document.getElementById("likeButton").classList.add("liked");
+            }
+
+            // 좋아요 수 업데이트
+            document.getElementById("likeButton").textContent = "❤️ 좋아요 (" + newLikes + ")";
+        }
+    </script>
+
+
 </head>
 <body>
 
@@ -79,7 +104,7 @@
     <div class="content-box">
         <h1><span th:text="${board.title}"></span></h1>
         <div class="meta-info">
-<!--            작성자: <span th:if="${board != null}" th:text="${board.writer != null ? board.writer.name : '홍길동'}">홍길동</span> &nbsp;|&nbsp;-->
+            <!--            작성자: <span th:if="${board != null}" th:text="${board.writer != null ? board.writer.name : '홍길동'}">홍길동</span> &nbsp;|&nbsp;-->
             <span th:text="${board.writer.name}"></span>
             <img class="clock-icon" src="/images/clock.png">
             <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
@@ -91,16 +116,10 @@
         <p>
             <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}">내용입니다!</span>
         </p>
-<!--        <tr><th>첨부파일</th><td>-->
-<!--            <div data-th-each="file : ${board.attachedFiles}">-->
-<!--                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${file.filePath}|"-->
-<!--                   data-th-text="${file.filePath}">okok.gif</a>-->
-<!--                [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>-->
-<!--            </div>-->
-<!--            <input type='file' name='files' multiple>-->
-<!--        </td></tr>-->
         <button class="like-button" id="likeButton" th:if="${board != null}"
-                th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'" th:attr="data-board-no=${board != null ? board.no : '0'}">
+                th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'"
+                th:attr="data-board-no=${board != null ? board.no : '0'}"
+                onclick="likeButtonClicked()">
             ❤️ 좋아요 (0)
         </button>
     </div>
