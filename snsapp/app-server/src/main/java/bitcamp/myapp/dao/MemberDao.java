@@ -11,7 +11,7 @@ public interface MemberDao {
   int insert(Member member);
   List<Member> findAll();
   Member findBy(int no);
-  Member findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+  Member findByPhone_NumberAndPassword(@Param("phone_Number") String phone_Number, @Param("password") String password);
   int update(Member member);
   int delete(int no);
 }
