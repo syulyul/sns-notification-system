@@ -52,5 +52,28 @@ public class MyPageController {
     return "myPage/detail";
   }
 
+  @GetMapping("follow")
+  public String follow(
+      @RequestParam int show,
+      @RequestParam("myPageNo") int myPageNo,
+      @RequestParam("followingNo") int followingNo) throws Exception {
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    LoginUser loginUser = new LoginUser();
+    loginUser.setNo(1);
+    myPageService.follow(loginUser.getNo(), followingNo);
+    return "redirect:" + myPageNo + "?show=" + show;
+  }
+
+  @GetMapping("unfollow")
+  public String unfollow(
+      @RequestParam int show,
+      @RequestParam("myPageNo") int myPageNo,
+      @RequestParam("followingNo") int followingNo) throws Exception {
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    LoginUser loginUser = new LoginUser();
+    loginUser.setNo(1);
+    myPageService.unfollow(loginUser.getNo(), followingNo);
+    return "redirect:" + myPageNo + "?show=" + show;
+  }
 
 }

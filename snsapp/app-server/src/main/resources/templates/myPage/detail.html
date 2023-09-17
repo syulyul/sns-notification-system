@@ -58,9 +58,11 @@
         <img class="memberPhoto" data-th-src="'/images/avatar.png'">
         <!--                <img data-th-src="${member.photo}">-->
         <span data-th-text="${member.nick}"></span>
-        <button data-th-if="${true}">팔로잉</button>
-        <!--                <button data-th-if="${!loginUser.getFollowMemberSet.contains(member)}">팔로잉</button>-->
-        <!--                <button data-th-if="${loginUser.getFollowMemberSet.contains(member)}">팔로잉 취소</button>-->
+        <a data-th-href="@{follow(myPageNo=${myPage.no},followingNo=${member.no},show=${param.show})}">팔로잉</a>
+        <!--        <a data-th-href="@{follow(myPageNo=${myPage.no},followingNo=${member.no},show=${param.show})}"-->
+        <!--           data-th-if="${!loginUser.getFollowMemberSet.contains(member)}">팔로잉</a>-->
+        <!--        <a data-th-href="@{unfollow(myPageNo=${myPage.no},followingNo=${member.no},show=${param.show})}"-->
+        <!--           data-th-if="${loginUser.getFollowMemberSet.contains(member)}">팔로잉 취소</a>-->
       </div>
     </div>
   </div>
