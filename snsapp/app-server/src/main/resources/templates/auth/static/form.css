@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<style>
-  html {
+html {
     height: 100%;
-  }
+}
 
-  body {
+body {
     height: 100%;
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -13,9 +10,9 @@
     justify-items: center;
     align-items: center;
     background-color: #3a3a3a;
-  }
+}
 
-  #main-holder {
+#main-holder {
     width: 50%;
     height: 70%;
     display: grid;
@@ -24,17 +21,17 @@
     background-color: white;
     border-radius: 7px;
     box-shadow: 0px 0px 5px 2px black;
-  }
+}
 
-  #login-error-msg-holder {
+#login-error-msg-holder {
     width: 100%;
     height: 100%;
     display: grid;
     justify-items: center;
     align-items: center;
-  }
+}
 
-  #login-error-msg {
+#login-error-msg {
     width: 23%;
     text-align: center;
     margin: 0;
@@ -45,34 +42,34 @@
     border: 1px solid #8a0000;
     background-color: #e58f8f;
     opacity: 0;
-  }
+}
 
-  #error-msg-second-line {
+#error-msg-second-line {
     display: block;
-  }
+}
 
-  #login-form {
+#login-form {
     align-self: flex-start;
     display: grid;
     justify-items: center;
     align-items: center;
-  }
+}
 
-  .login-form-field::placeholder {
+.login-form-field::placeholder {
     color: #3a3a3a;
-  }
+}
 
-  .login-form-field {
+.login-form-field {
     border: none;
     border-bottom: 1px solid #3a3a3a;
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
     padding: 0px 0px 5px 5px;
-  }
+}
 
 
-  #login-form-submit {
+#login-form-submit {
     width: 100%;
     padding: 7px;
     border: none;
@@ -82,48 +79,15 @@
     background-color: #3a3a3a;
     cursor: pointer;
     outline: none;
-  }
+}
 
-  .user-field {
+.user-field {
     display: block;
     width: 220px; height: 30px;
     margin: 0 auto;
-  }
-  .user2-field {
+}
+.user2-field {
     display: block;
     width: 220px; height: 100px;
     margin: 0 auto;
-  }
-</style>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BITSNS</title>
-  <link rel="stylesheet" href="static/form.css?ver1">
-  <script defer src="static/form.js"></script>
-</head>
-
-<body>
-<main id="main-holder">
-  <h1 id="login-header">BITSNS</h1>
-
-  <div id="login-error-msg-holder">
-    <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
-  </div>
-
-  <form id="login-form">
-    <input type="text" name="Email" id="username-field" class="login-form-field" placeholder="Email">
-    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-    <input type="submit" value="Login" id="login-form-submit">
-    <ul>
-    <li><a href="ff.html" class="user-field"> 회원가입</a></li>
-    <li><a href="ff.html" class="user2-field"> 이메일/비밀번호 찾기</a></li>
-    </ul>
-  </form>
-
-</main>
-</body>
-
-
-</html>
-
+}

@@ -110,11 +110,11 @@ COMMENT '팔로우';
 
 -- 회원
 CREATE TABLE `snsdb`.`sns_member` (
-	`mno`      INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
-	`nick`     VARCHAR(50)  NOT NULL COMMENT '닉네임', -- 닉네임
-	`name`     VARCHAR(50)  NOT NULL COMMENT '이름', -- 이름
-	`email`    VARCHAR(40)  NOT NULL COMMENT '이메일', -- 이메일
-	`password` VARCHAR(255) NOT NULL COMMENT '비밀번호' -- 비밀번호
+	`mno`          INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+	`nick`         VARCHAR(50)  NOT NULL COMMENT '닉네임', -- 닉네임
+	`name`         VARCHAR(50)  NOT NULL COMMENT '이름', -- 이름
+	`phone_number` VARCHAR(30)  NOT NULL COMMENT '전화번호', -- 전화번호
+	`password`     VARCHAR(255) NOT NULL COMMENT '비밀번호' -- 비밀번호
 )
 COMMENT '회원';
 
@@ -125,16 +125,16 @@ ALTER TABLE `snsdb`.`sns_member`
 	`mno` -- 회원번호
 	);
 
--- 회원 유니크 인덱스
-CREATE UNIQUE INDEX `UIX_sns_member`
-	ON `snsdb`.`sns_member` ( -- 회원
-		`email` ASC -- 이메일
-	);
-
 -- 회원 유니크 인덱스2
 CREATE UNIQUE INDEX `UIX_sns_member2`
 	ON `snsdb`.`sns_member` ( -- 회원
 		`nick` ASC -- 닉네임
+	);
+
+-- 회원 유니크 인덱스3
+CREATE UNIQUE INDEX `UIX_sns_member3`
+	ON `snsdb`.`sns_member` ( -- 회원
+		`phone_number` ASC -- 전화번호
 	);
 
 ALTER TABLE `snsdb`.`sns_member`
@@ -145,13 +145,13 @@ CREATE TABLE `snsdb`.`sns_mypage` (
 	`mpno`              INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
 	`state_message`     VARCHAR(255) NULL     COMMENT '상태 메세지', -- 상태 메세지
 	`filepath`          VARCHAR(255) NULL     COMMENT '프로필 사진 경로', -- 프로필 사진 경로
-	`birthday`          DATE         NULL     COMMENT '생일', -- 생일
+	`email`             VARCHAR(40)  NULL     COMMENT '이메일', -- 이메일
+	`birthday`          DATETIME     NULL     COMMENT '생일', -- 생일
 	`gender`            TINYINT      NULL     COMMENT '성별', -- 성별
-	`phone_number`      VARCHAR(30)  NULL     COMMENT '전화번호', -- 전화번호
 	`likes`             INTEGER      NOT NULL DEFAULT 0 COMMENT '좋아요', -- 좋아요
 	`today_visit_count` INTEGER      NOT NULL DEFAULT 0 COMMENT '일일 방문자수', -- 일일 방문자수
 	`visit_count`       INTEGER      NOT NULL DEFAULT 0 COMMENT '총 방문자 수', -- 총 방문자 수
-	`created_date`      DATE         NOT NULL DEFAULT (current_date) COMMENT '가입일' -- 가입일
+	`created_date`      DATETIME     NOT NULL DEFAULT (current_date) COMMENT '가입일' -- 가입일
 )
 COMMENT '마이페이지';
 

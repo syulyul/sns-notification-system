@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            font-size: 20px; /* 텍스트 크기 조정 */
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 35%;
+            border-collapse: collapse;
+            text-align: left;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 10px; /* 텍스트와 셀 안의 요소들 사이의 간격 조정 */
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f6be00;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px; /* 입력 요소의 글꼴 크기 조정 */
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #f6be00; /* hover 시 색상 변경 */
+        }
+
+        .image-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        .user-image {
+            max-width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<h2>회원가입 양식</h2>
+<table>
+    <tr>
+        <th>사진 :</th>
+        <td>
+            <div>
+                <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
+            </div>
+            <div class="image-container">
+                <img src="" class="user-image" id="previewImage">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>번호</th>
+        <td><input type='text' name='no'></td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td><input type='text' name='name'></td>
+    </tr>
+    <tr>
+        <th>생일</th>
+        <td><input type='date' name='birthdate'></td>
+    </tr>
+    <tr>
+        <th>이메일</th>
+        <td><input type='email' name='email'></td>
+    </tr>
+    <tr>
+        <th>전화번호</th>
+        <td><input type='tel' name='tel'></td>
+    </tr>
+    <tr>
+        <th>암호</th>
+        <td><input type='password' name='password'></td>
+    </tr>
+    <tr>
+        <th>성별</th>
+        <td>
+            <select name='gender'>
+                <option value='M'>남자</option>
+                <option value='W'>여자</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="submit" value="가입하기">
+            <input type="submit" value="초기화">
+            <input type="submit" value="skip">
+            <input type="submit" value="회원탈퇴">
+        </td>
+
+    </tr>
+
+</table>
+
+<script>
+    function previewFile() {
+        const preview = document.getElementById('previewImage');
+        const fileInput = document.getElementById('photoInput');
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = ""; // 파일 선택이 취소될 때 미리보기 초기화
+        }
+    }
+</script>
+</body>
+</html>
