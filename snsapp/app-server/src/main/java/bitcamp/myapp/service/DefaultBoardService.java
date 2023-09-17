@@ -74,12 +74,12 @@ public class DefaultBoardService implements BoardService {
     }
 
     @Override
-    public int insertLike(int memberNo, int boardNo) throws Exception {
+    public int like(int memberNo, int boardNo) throws Exception {
         return boardDao.insertLike(memberNo, boardNo);
     }
 
     @Override
-    public int deleteLike(int memberNo, int boardNo) throws Exception {
+    public int unlike(int memberNo, int boardNo) throws Exception {
         return boardDao.deleteLike(memberNo, boardNo);
     }
 

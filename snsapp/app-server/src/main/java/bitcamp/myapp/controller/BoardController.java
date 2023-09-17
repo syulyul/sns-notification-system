@@ -149,23 +149,24 @@ public class BoardController {
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1); // 임시로 사용자 번호설정
 
-        // 게시글 좋아요 토글 메소드를 호출하여 사용자의 좋아요를 추가하거나 제거합니다.
-        BoardService.
+//         게시글 좋아요 토글 메소드를 호출하여 사용자의 좋아요를 추가하거나 제거
+        boardService.like(loginUser.getNo(), boardNo);
 
         // 다시 해당 게시글 상세 페이지로 리다이렉트합니다.
         return "redirect:/board/detail/" + boardNo + "?show=" + show;
     }
 
     @GetMapping("unlike")
-    public String unfollow(
+    public String unlike(
             @RequestParam int show,
-            @RequestParam("memberNo") int memberNo,
-            @RequestParam("boardNo") int boardNo) throws Exception {
+            @RequestParam("boardNo") int boardNo,
+            @RequestParam("likes") int likes) throws Exception {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
-        myPageService.unfollow(loginUser.getNo(), boardNo);
-        return "redirect:" + myPageNo + "?show=" + show;
+
+        boardService.unlike(loginUser.getNo(), boardNo);
+        return "redirect:" + boardNo + "?show=" + show;
     }
 
 //    @GetMapping("follow")

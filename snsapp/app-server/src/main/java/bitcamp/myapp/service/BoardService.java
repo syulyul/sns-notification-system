@@ -19,10 +19,10 @@ public interface BoardService {
 
   int increaseLikes(int boardNo) throws Exception; //board테이블 좋아요+1
 
-  int insertLike(int memberNo, int boardNo) throws Exception;
+  int like(int memberNo, int boardNo) throws Exception;
   //board_like테이블 좋아요정보 추가
 
-  int deleteLike(int memberNo, int boardNo) throws Exception;
+  int unlike(int memberNo, int boardNo) throws Exception;
   //board_like테이블 좋아요정보 삭제
 
 }
