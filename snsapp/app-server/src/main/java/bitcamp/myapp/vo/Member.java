@@ -7,37 +7,41 @@ public class Member implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-
-  public static final char MALE = 'M';
-  public static final char FEMALE = 'W';
   private int no;
   private String nick;
   private String name;
-  private int phone_number;
+  private String phoneNumber;
+  private String email;
   private String password;
-
+  private String photo;
 
   @Override
   public String toString() {
     return "Member{" +
-            "no=" + no +
-            ", nick='" + nick + '\'' +
-            ", name='" + name + '\'' +
-            ", phone_number=" + phone_number +
-            ", password='" + password + '\'' +
-            '}';
+        "no=" + no +
+        ", nick='" + nick + '\'' +
+        ", name='" + name + '\'' +
+        ", phoneNumber=" + phoneNumber +
+        ", email='" + email + '\'' +
+        ", photo='" + photo + '\'' +
+        ", password='" + password + '\'' +
+        '}';
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Member member)) return false;
-    return getNo() == member.getNo() && getPhone_number() == member.getPhone_number() && Objects.equals(getNick(), member.getNick()) && Objects.equals(getName(), member.getName()) && Objects.equals(getPassword(), member.getPassword());
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Member member)) {
+      return false;
+    }
+    return no == member.no;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getNo(), getNick(), getName(), getPhone_number(), getPassword());
+    return Objects.hash(no);
   }
 
   public int getNo() {
@@ -64,12 +68,28 @@ public class Member implements Serializable {
     this.name = name;
   }
 
-  public int getPhone_number() {
-    return phone_number;
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
-  public void setPhone_number(int phone_number) {
-    this.phone_number = phone_number;
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPhoto() {
+    return photo;
+  }
+
+  public void setPhoto(String photo) {
+    this.photo = photo;
   }
 
   public String getPassword() {

@@ -1,78 +1,78 @@
 package bitcamp.myapp.vo;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class PersonalOption implements Serializable {
+public class PersonalOption extends Member {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private int no;
-    private String like_noti_state;
-    private String follow_noti_state;
-    private String coment_noti_state;
-    private String tag_noti_state;
+  private int likeNotiState;
+  private int followNotiState;
+  private int commentNotiState;
+  private int tagNotiState;
 
-    @Override
-    public String toString() {
-        return "PersonalOption{" +
-                "no=" + no +
-                ", like_noti_state='" + like_noti_state + '\'' +
-                ", follow_noti_state='" + follow_noti_state + '\'' +
-                ", coment_noti_state='" + coment_noti_state + '\'' +
-                ", tag_noti_state='" + tag_noti_state + '\'' +
-                '}';
+  @Override
+  public String toString() {
+    return "PersonalOption{" +
+        "likeNotiState='" + likeNotiState + '\'' +
+        ", followNotiState='" + followNotiState + '\'' +
+        ", commentNotiState='" + commentNotiState + '\'' +
+        ", tagNotiState='" + tagNotiState + '\'' +
+        "} " + super.toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PersonalOption that)) return false;
-        return no == that.no && Objects.equals(like_noti_state, that.like_noti_state) && Objects.equals(follow_noti_state, that.follow_noti_state) && Objects.equals(coment_noti_state, that.coment_noti_state) && Objects.equals(tag_noti_state, that.tag_noti_state);
+    if (!(o instanceof PersonalOption that)) {
+      return false;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(no, like_noti_state, follow_noti_state, coment_noti_state, tag_noti_state);
+    if (!super.equals(o)) {
+      return false;
     }
+    return Objects.equals(likeNotiState, that.likeNotiState)
+        && Objects.equals(followNotiState, that.followNotiState)
+        && Objects.equals(commentNotiState, that.commentNotiState)
+        && Objects.equals(tagNotiState, that.tagNotiState);
+  }
 
-    public int getNo() {
-        return no;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), likeNotiState, followNotiState, commentNotiState,
+        tagNotiState);
+  }
 
-    public void setNo(int no) {
-        this.no = no;
-    }
+  public int getLikeNotiState() {
+    return likeNotiState;
+  }
 
-    public String getLike_noti_state() {
-        return like_noti_state;
-    }
+  public void setLikeNotiState(int likeNotiState) {
+    this.likeNotiState = likeNotiState;
+  }
 
-    public void setLike_noti_state(String like_noti_state) {
-        this.like_noti_state = like_noti_state;
-    }
+  public int getFollowNotiState() {
+    return followNotiState;
+  }
 
-    public String getFollow_noti_state() {
-        return follow_noti_state;
-    }
+  public void setFollowNotiState(int followNotiState) {
+    this.followNotiState = followNotiState;
+  }
 
-    public void setFollow_noti_state(String follow_noti_state) {
-        this.follow_noti_state = follow_noti_state;
-    }
+  public int getCommentNotiState() {
+    return commentNotiState;
+  }
 
-    public String getComent_noti_state() {
-        return coment_noti_state;
-    }
+  public void setCommentNotiState(int commentNotiState) {
+    this.commentNotiState = commentNotiState;
+  }
 
-    public void setComent_noti_state(String coment_noti_state) {
-        this.coment_noti_state = coment_noti_state;
-    }
+  public int getTagNotiState() {
+    return tagNotiState;
+  }
 
-    public String getTag_noti_state() {
-        return tag_noti_state;
-    }
-
-    public void setTag_noti_state(String tag_noti_state) {
-        this.tag_noti_state = tag_noti_state;
-    }
+  public void setTagNotiState(int tagNotiState) {
+    this.tagNotiState = tagNotiState;
+  }
 }

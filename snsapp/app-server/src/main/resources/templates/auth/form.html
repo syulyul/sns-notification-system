@@ -1,7 +1,106 @@
 <!DOCTYPE html>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 <html lang="en">
+<style>
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: #3a3a3a;
+  }
+
+  #main-holder {
+    width: 50%;
+    height: 70%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px 2px black;
+  }
+
+  #login-error-msg-holder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+  }
+
+  #login-error-msg {
+    width: 23%;
+    text-align: center;
+    margin: 0;
+    padding: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #8a0000;
+    border: 1px solid #8a0000;
+    background-color: #e58f8f;
+    opacity: 0;
+  }
+
+  #error-msg-second-line {
+    display: block;
+  }
+
+  #login-form {
+    align-self: flex-start;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .login-form-field::placeholder {
+    color: #3a3a3a;
+  }
+
+  .login-form-field {
+    border: none;
+    border-bottom: 1px solid #3a3a3a;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    outline: none;
+    padding: 0px 0px 5px 5px;
+  }
+
+
+  #login-form-submit {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: #3a3a3a;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .user-field {
+    display: block;
+    width: 220px; height: 30px;
+    margin: 0 auto;
+  }
+  .user2-field {
+    display: block;
+    width: 220px; height: 100px;
+    margin: 0 auto;
+  }
+</style>
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -74,85 +173,36 @@
             border-radius: 5px;
         }
     </style>
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BITSNS</title>
+  <link rel="stylesheet" href="static/form.css?ver1">
+  <script defer src="static/form.js"></script>
+>>>>>>> main
 </head>
+
 <body>
-<h2>회원가입 양식</h2>
-<table>
-    <tr>
-        <th>사진 :</th>
-        <td>
-            <div>
-                <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
-            </div>
-            <div class="image-container">
-                <img src="" class="user-image" id="previewImage">
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <th>번호</th>
-        <td><input type='text' name='no'></td>
-    </tr>
-    <tr>
-        <th>이름</th>
-        <td><input type='text' name='name'></td>
-    </tr>
-    <tr>
-        <th>생일</th>
-        <td><input type='date' name='birthdate'></td>
-    </tr>
-    <tr>
-        <th>이메일</th>
-        <td><input type='email' name='email'></td>
-    </tr>
-    <tr>
-        <th>전화번호</th>
-        <td><input type='tel' name='tel'></td>
-    </tr>
-    <tr>
-        <th>암호</th>
-        <td><input type='password' name='password'></td>
-    </tr>
-    <tr>
-        <th>성별</th>
-        <td>
-            <select name='gender'>
-                <option value='M'>남자</option>
-                <option value='W'>여자</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input type="submit" value="가입하기">
-            <input type="submit" value="초기화">
-            <input type="submit" value="skip">
-            <input type="submit" value="회원탈퇴">
-        </td>
+<main id="main-holder">
+  <h1 id="login-header">BITSNS</h1>
 
-    </tr>
+  <div id="login-error-msg-holder">
+    <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+  </div>
 
-</table>
+  <form id="login-form">
+    <input type="text" name="Email" id="username-field" class="login-form-field" placeholder="Email">
+    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+    <input type="submit" value="Login" id="login-form-submit">
+    <ul>
+    <li><a href="ff.html" class="user-field"> 회원가입</a></li>
+    <li><a href="ff.html" class="user2-field"> 이메일/비밀번호 찾기</a></li>
+    </ul>
+  </form>
 
-<script>
-    function previewFile() {
-        const preview = document.getElementById('previewImage');
-        const fileInput = document.getElementById('photoInput');
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = function() {
-            preview.src = reader.result;
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = ""; // 파일 선택이 취소될 때 미리보기 초기화
-        }
-    }
-</script>
+</main>
 </body>
+<<<<<<< HEAD
 </html>
 =======
 <html>
@@ -162,27 +212,12 @@
   <link rel="stylesheet" href="form.css">
 </head>
 <body>
+=======
+>>>>>>> main
 
-<div data-th-replace="header :: header"></div>
-<div class="login-wrapper">
-  <h2>로그인</h2>
-<form action='login' method='post' id="login-form">
-  <table style="border:1px;">
-    <tr>
-      <th>이메일</th>
-      <td><input data-th-value='${email}' name='email' type='email' placeholder="Email"></td>
-    </tr>
-    <tr>
-      <th>암호</th>
-      <td><input name='password' type='password' placeholder="Password"></td>
-    </tr>
-  </table>
-  <button type="submit">로그인</button>
-  <input data-th-checked="email != null" name='saveEmail'
-         type='checkbox'> 이메일 저장
-</form>
-</div>
-<div data-th-replace="footer :: footer"></div>
 
-</body>
 </html>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main

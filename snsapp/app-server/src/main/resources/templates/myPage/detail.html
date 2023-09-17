@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="ie=edge" http-equiv="X-UA-Compatible">
+  <title>MyPage</title>
+  <style>
+    *{
+        border: 1px solid;
+    }
+    body{
+
+    }
+    #myPageBox{
+        margin: auto;
+        max-width: 1000px;
+        display: flex;
+        justify-content: center;
+    }
+    #memberInfo{
+        width: 30%;
+    }
+    .boardListBox{
+        width: 70%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .memberListBox{
+        width: 70%;
+    }
+    .memberItem{
+        display: flex;
+        justify-content: space-between;
+    }
+    .memberPhoto{
+        height:40px;
+        width:50px;
+    }
+  </style>
+</head>
+<body>
+<div id="myPageBox">
+  <div id="memberInfo">회원정보</div>
+  <!--    <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
+  <div class="boardListBox" data-th-unless="${list}">
+    <div>본인 게시글
+      <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
+    </div>
+    <div>방명록
+      <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
+    </div>
+  </div>
+  <div class="memberListBox" data-th-if="${list}">
+    <h3 data-th-text="'회원 리스트'"></h3>
+    <div data-th-each="member : ${list}">
+      <div class="memberItem">
+        <img class="memberPhoto" data-th-src="'/images/avatar.png'">
+        <!--                <img data-th-src="${member.photo}">-->
+        <span data-th-text="${member.nick}"></span>
+        <button data-th-if="${true}">팔로잉</button>
+        <!--                <button data-th-if="${!loginUser.getFollowMemberSet.contains(member)}">팔로잉</button>-->
+        <!--                <button data-th-if="${loginUser.getFollowMemberSet.contains(member)}">팔로잉 취소</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
