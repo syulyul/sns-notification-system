@@ -13,36 +13,65 @@
 
     }
     #myPageBox{
-        margin: auto;
-        max-width: 1000px;
-        display: flex;
-        justify-content: center;
+
+      margin: auto;
+      max-width: 1000px;
+      display: flex;
+      justify-content: center;
     }
     #memberInfo{
-        width: 30%;
+      margin-right: 2em;
+      width: 30%;
     }
     .boardListBox{
-        width: 70%;
-        display: flex;
-        justify-content: space-evenly;
+      width: 70%;
+      display: flex;
+      justify-content: space-evenly;
     }
     .memberListBox{
-        width: 70%;
+      width: 70%;
     }
     .memberItem{
-        display: flex;
-        justify-content: space-between;
+      display: flex;
+      justify-content: space-between;
     }
     .memberPhoto{
-        height:40px;
-        width:50px;
+      height:40px;
+      width:50px;
     }
+
+
+    /* 왼쪽 사이드바 스타일 */
+    .sidebar {
+      float: left;
+      /*width: 50%;*/
+      padding: 20px;
+      background-color: #FAFAF5;
+    }
+    /* 프로필 사진 스타일 */
+    .profile-pic {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .my_btn {
+      background-color: #426B1F;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 5% 10%;
+    }
+
+
   </style>
 </head>
 <body>
+
+<div data-th-replace="header :: header"></div>
+<br>
 <div id="myPageBox">
-  <div id="memberInfo">회원정보</div>
-  <!--    <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
+  <div id="memberInfo" data-th-insert="myPage/memberInfo :: memberInfo"></div>
+  <!--      <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
   <div class="boardListBox" data-th-unless="${list}">
     <div>본인 게시글
       <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
@@ -67,5 +96,8 @@
     </div>
   </div>
 </div>
+
+<div data-th-replace="footer :: footer"></div>
+
 </body>
 </html>
