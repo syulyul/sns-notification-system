@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>방명록</title>
+    <style>
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .scrollable-table {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+
+        .actions {
+            text-align: center;
+            padding: 16px; /* 변경: 상하 여백 추가 */
+            line-height: 15; /* 변경: 세로 크기 2배로 늘림 */
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #426B1F;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button {
+            float : inherit;
+        }
+
+        .actions button {
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #426B1F;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>방명록</h1>
+<table>
+    <tr>
+        <th>제목</th>
+        <td><input type="text" id="title"></td>
+    </tr>
+    <tr>
+        <th>내용</th>
+        <td><textarea id="content" rows="4"></textarea></td>
+    </tr>
+</table>
+<button onclick="addGuestbookEntry()">등록</button>
+
+<div class="scrollable-table">
+    <div id="guestbookEntries">
+        <!-- 방명록 항목이 동적으로 추가됩니다. -->
+    </div>
+</div>
+
+<script>
+    // 방명록 데이터 배열 (임시로 사용)
+    const guestbookData = [];
+
+    // 방명록 등록 함수
+    function addGuestbookEntry() {
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+        const date = new Date().toLocaleDateString();
+        const entry = {
+            writer: '사용자', // 임시로 사용자 이름 설정
+            title: title,
+            content: content,
+            date: date,
+            likes: 0
+        };
+        guestbookData.push(entry);
+        displayGuestbookEntries();
+        clearForm();
+    }
+
+    // 방명록 목록을 표시하는 함수
+    function displayGuestbookEntries() {
+        const guestbookEntries = document.getElementById('guestbookEntries');
+        guestbookEntries.innerHTML = '';
+        guestbookData.forEach((entry, index) => {
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+<!--                <tr>-->
+<!--                    <th>방명록 번호</th>-->
+<!--                    <th>제목</th>-->
+<!--                    <th>등록일</th>-->
+<!--                </tr>-->
+                </thead>
+                <tbody>
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${entry.title}</td>
+                    <td>${entry.date}</td>
+                </tr>
+                </tbody>
+                <thead>
+                <tr>
+<!--                    <th>작성자 및 동작</th>-->
+<!--                    <th>내용</th>-->
+<!--                    <th>좋아요</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="actions">
+                        ${entry.writer}
+                        <button onclick="editGuestbookEntry(${index})">수정</button>
+                        <button onclick="deleteGuestbookEntry(${index})">삭제</button>
+                    </td>
+                    <td>${entry.content}</td>
+                    <td><button onclick="likeGuestbookEntry(${index})">❤️ ${entry.likes}</button></td>
+                </tr>
+                </tbody>
+            `;
+            guestbookEntries.appendChild(table);
+        });
+    }
+
+    // 방명록 수정 함수
+    function editGuestbookEntry(index) {
+        const entry = guestbookData[index];
+        const updatedTitle = prompt('수정할 제목:', entry.title);
+        const updatedContent = prompt('수정할 내용:', entry.content);
+        if (updatedTitle !== null && updatedContent !== null) {
+            entry.title = updatedTitle;
+            entry.content = updatedContent;
+            displayGuestbookEntries();
+        }
+    }
+
+    // 방명록 삭제 함수
+    function deleteGuestbookEntry(index) {
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            guestbookData.splice(index, 1);
+            displayGuestbookEntries();
+        }
+    }
+
+    // 좋아요 기능 함수
+    function likeGuestbookEntry(index) {
+        guestbookData[index].likes++;
+        displayGuestbookEntries();
+    }
+
+    // 입력 폼 초기화 함수
+    function clearForm() {
+        document.getElementById('title').value = '';
+        document.getElementById('content').value = '';
+    }
+
+    // 초기 화면 렌더링
+    displayGuestbookEntries();
+</script>
+</body>
+</html>

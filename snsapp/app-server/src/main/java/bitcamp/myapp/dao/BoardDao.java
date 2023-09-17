@@ -1,7 +1,7 @@
 package bitcamp.myapp.dao;
 
-import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.BoardPhoto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface BoardDao {
   int delete(int no);
 
   int insertFiles(Board board);
-  AttachedFile findFileBy(int no);
+  BoardPhoto findFileBy(int no);
   int deleteFile(int fileNo);
   int deleteFiles(int boardNo);
 }

@@ -11,15 +11,13 @@ public class Board implements Serializable{
   private int no; // 게시글 번호
   private String title; // 제목
   private String content; // 내용
-  //  private Member writer; // 작성자
+  private Member writer; // 작성자
   private int viewCount; // 조회수
-  private Timestamp createdDate; // 등록일
-  private int category; // 카테고리
-  private List<BoardPhoto> boardPhotos; // 사진 파일
-
-  //추가된 항목 2개
-  private Timestamp updateDate; // 수정일
   private int likes; // 좋아요
+  private int category; // 카테고리
+  private List<BoardPhoto> attachedFiles; // 사진 파일
+  private Timestamp createdAt; // 등록일
+  private Timestamp updateAt; // 수정일
 
   @Override
   public String toString() {
@@ -30,9 +28,9 @@ public class Board implements Serializable{
             ", viewCount=" + viewCount +
             ", likes=" + likes +
             ", category=" + category +
-            ", boardPhotos=" + boardPhotos +
-            ", createdDate=" + createdDate +
-            ", updateDate=" + updateDate +
+            ", attachedFiles=" + attachedFiles +
+            ", createdAt=" + createdAt +
+            ", updateAt=" + updateAt +
             '}';
   }
 
@@ -41,12 +39,12 @@ public class Board implements Serializable{
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Board board = (Board) o;
-    return no == board.no && viewCount == board.viewCount && likes == board.likes && category == board.category && Objects.equals(title, board.title) && Objects.equals(content, board.content) && Objects.equals(boardPhotos, board.boardPhotos) && Objects.equals(createdDate, board.createdDate) && Objects.equals(updateDate, board.updateDate);
+    return no == board.no && viewCount == board.viewCount && likes == board.likes && category == board.category && Objects.equals(title, board.title) && Objects.equals(content, board.content) && Objects.equals(attachedFiles, board.attachedFiles) && Objects.equals(createdAt, board.createdAt) && Objects.equals(updateAt, board.updateAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(no, title, content, viewCount, likes, category, boardPhotos, createdDate, updateDate);
+    return Objects.hash(no, title, content, viewCount, likes, category, attachedFiles, createdAt, updateAt);
   }
 
   public int getNo() {
@@ -73,13 +71,13 @@ public class Board implements Serializable{
     this.content = content;
   }
 
-//  public Member getWriter() {
-//    return writer;
-//  }
-//
-//  public void setWriter(Member writer) {
-//    this.writer = writer;
-//  }
+  public Member getWriter() {
+    return writer;
+  }
+
+  public void setWriter(Member writer) {
+    this.writer = writer;
+  }
 
   public int getViewCount() {
     return viewCount;
@@ -105,27 +103,27 @@ public class Board implements Serializable{
     this.category = category;
   }
 
-  public Timestamp getCreatedDate() {
-    return createdDate;
+  public Timestamp getCreatedAt() {
+    return createdAt;
   }
 
-  public void setCreatedDate(Timestamp createdDate) {
-    this.createdDate = createdDate;
+  public void setCreatedAt(Timestamp createdAt) {
+    this.createdAt = createdAt;
   }
 
-  public List<BoardPhoto> getboardPhotos() {
-    return boardPhotos;
+  public List<BoardPhoto> getAttachedFiles() {
+    return attachedFiles;
   }
 
-  public void setboardPhotos(List<BoardPhoto> boardPhotos) {
-    this.boardPhotos = boardPhotos;
+  public void setAttachedFiles(List<BoardPhoto> attachedFiles) {
+    this.attachedFiles = attachedFiles;
   }
 
-  public Timestamp getUpdateDate() {
-    return updateDate;
+  public Timestamp getUpdateAt() {
+    return updateAt;
   }
 
-  public void setUpdateDate(Timestamp updateDate) {
-    this.updateDate = updateDate;
+  public void setUpdateAt(Timestamp updateAt) {
+    this.updateAt = updateAt;
   }
 }

@@ -1,8 +1,8 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.vo.BoardPhoto;
 import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.BoardPhoto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,81 +10,66 @@ import java.util.List;
 
 @Service
 public class DefaultBoardService implements BoardService {
-  {
-    System.out.println("DefaultBoardService 생성됨!");
-  }
-
-  BoardDao boardDao;
-
-  public DefaultBoardService(BoardDao boardDao) {
-    this.boardDao = boardDao;
-  }
-
-  @Transactional // 이 메서드는 트랜잭션 상태에서 실행하라고 지정
-  @Override
-  public int add(Board board) throws Exception {
-    int count = boardDao.insert(board);
-    if (board.getBoardPhotos().size() > 0) {
-      boardDao.insertFiles(board);
+    {
+        System.out.println("DefaultBoardService 생성됨!");
     }
-    return count;
-  }
 
-  @Override
-  public List<Board> list(int category) throws Exception {
-    return boardDao.findAll(category);
-  }
+    BoardDao boardDao;
 
-  @Override
-  public Board get(int boardNo) throws Exception {
-    return boardDao.findBy(boardNo);
-  }
-
-  @Transactional
-  @Override
-  public int update(Board board) throws Exception {
-    int count = boardDao.update(board);
-    if (count > 0 && board.getBoardPhotos().size() > 0) {
-      boardDao.insertFiles(board);
+    public DefaultBoardService(BoardDao boardDao) {
+        this.boardDao = boardDao;
     }
-    return count;
-  }
 
-  @Transactional
-  @Override
-  public int delete(int boardNo) throws Exception {
-    boardDao.deleteFiles(boardNo);
-    return boardDao.delete(boardNo);
-  }
+    @Transactional // 이 메서드는 트랜잭션 상태에서 실행하라고 지정
+    @Override
+    public int add(Board board) throws Exception {
+        int count = boardDao.insert(board);
+        if (board.getAttachedFiles().size() > 0) {
+            boardDao.insertFiles(board);
+        }
+        return count;
+    }
 
-  //조회수
-  @Transactional
-  @Override
-  public int increaseViewCount(int boardNo) throws Exception {
-    return boardDao.updateCount(boardNo); //여기에 updatecount
-  }
+    @Override
+    public List<Board> list(int category) throws Exception {
+        return boardDao.findAll(category);
+    }
 
-  @Override
-  public BoardPhoto getBoardPhoto(int fileNo) throws Exception {
-    return boardDao.findFileBy(fileNo);
-  }
+    @Override
+    public Board get(int boardNo) throws Exception {
+        return boardDao.findBy(boardNo);
+    }
 
-  @Override
-  public int deleteBoardPhoto(int fileNo) throws Exception {
-    return boardDao.deleteFile(fileNo);
-  }
+    @Transactional
+    @Override
+    public int update(Board board) throws Exception {
+        int count = boardDao.update(board);
+        if (count > 0 && !board.getAttachedFiles().isEmpty()) {
+            boardDao.insertFiles(board);
+        }
+        return count;
+    }
 
-  //좋아요
-  @Transactional
-  @Override
-  public void increaseLikes(int boardNo, int memberNo) throws Exception {
-    return boardDao.updateLikes(boardNo, memberNo); //여기에 updatecount
-  }
+    @Transactional
+    @Override
+    public int delete(int boardNo) throws Exception {
+        boardDao.deleteFiles(boardNo);
+        return boardDao.delete(boardNo);
+    }
 
-//  @Override
-//  public int getLikes(int boardNo) throws Exception {
-//    return 0;
-//  }
+    @Transactional
+    @Override
+    public int increaseViewCount(int boardNo) throws Exception {
+        return boardDao.updateCount(boardNo);
+    }
 
+    @Override
+    public BoardPhoto getAttachedFile(int fileNo) throws Exception {
+        return boardDao.findFileBy(fileNo);
+    }
 
+    @Override
+    public int deleteAttachedFile(int fileNo) throws Exception {
+        return boardDao.deleteFile(fileNo);
+    }
 }

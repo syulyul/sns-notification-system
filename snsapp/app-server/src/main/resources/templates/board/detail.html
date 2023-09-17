@@ -3,44 +3,118 @@
 <head>
     <meta charset='UTF-8'>
     <title>게시글</title>
+    <style>
+        /* 중앙에 위치하는 사각형 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffffff; /* 배경색을 흰색으로 설정 */
+            border: 1px solid #ffffff; /* 선의 색상을 회색으로 설정 */
+            position: relative; /* 상대적 위치 설정 */
+        }
+
+        /* 내용을 감싸는 박스 */
+        .content-box {
+            text-align: left; /* 내용을 왼쪽으로 정렬 */
+            padding: 20px;
+            max-width: 600px;
+            background: #ffffff;
+            border: 1px solid #888;
+            height: 400px; /* 원하는 높이로 조절하세요 */
+            width: 500px;
+        }
+
+        /* 제목 스타일 */
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* 작성자, 등록일, 조회수 스타일 */
+        .meta-info {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px; /* 아래 간격 추가 */
+        }
+
+        /* 버튼 스타일 */
+        .btn-container {
+            display: flex; /* 버튼들을 가로로 나열하기 위해 설정 */
+            justify-content: flex-end; /* 버튼들을 오른쪽 정렬하기 위해 설정 */
+            margin-top: 20px;
+        }
+
+        .btn-container button {
+            background-color: #426B1F;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px; /* 버튼 간격 조절을 위해 margin-left 추가 */
+        }
+
+        /* 좋아요 버튼 스타일 */
+        .like-button {
+            background-color: transparent; /* 배경 색상을 투명하게 설정 */
+            border: 1px solid #fff; /* 테두리 흰색으로 설정 */
+            border-radius: 4px; /* 버튼 모서리 둥글게 설정 */
+            cursor: pointer;
+            padding: 5px 10px; /* 버튼 내부 여백 설정 */
+            position: absolute; /* 절대 위치 설정 */
+            bottom: 10px; /* 하단에 위치하도록 설정 */
+            right: 10px; /* 우측에 위치하도록 설정 */
+        }
+    </style>
 </head>
 <body>
 
-
-<h1>게시글</h1>
-
 <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
 
-<form data-th-if="${board}" data-th-action="@{/board/update}" method='post' enctype='multipart/form-data'>
-    <table border='1'>
-        <tr><th style='width:120px;'>번호</th>
-            <td style='width:300px;'><input type='text' name='no' value="100" data-th-value="${board.no}" readonly></td></tr>
-        <tr><th>제목</th>
-            <td><input type='text' name='title' value="제목입니다." data-th-value="${board.title}"></td></tr>
-        <tr><th>내용</th>
-            <td><textarea name='content' style='height:200px; width:400px;' data-th-text="${board.content}">내용입니다!</textarea></td></tr>
-        <tr><th>작성자</th> <td data-th-text="${board.writer.name}">홍길동</td></tr>
-        <tr><th>조회수</th> <td data-th-text="${board.viewCount}">34</td></tr>
-        <tr><th>등록일</th> <td data-th-text="${#dates.format(board.createdDate, 'yyyy-MM-dd')}">2023-09-14</td></tr>
-        <tr><th>첨부파일</th><td>
-            <div data-th-each="file : ${board.attachedFiles}">
-                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/board/${file.filePath}|"
-                   data-th-text="${file.filePath}">okok.gif</a>
-                [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
-            </div>
-            <input type='file' name='files' multiple>
-        </td></tr>
-    </table>
-
-    <div>
-        <button>변경</button>
-        <button type='reset'>초기화</button>
-        <a data-th-href="@{/board/delete(category=${board.category},no=${board.no})}">삭제</a>
-        <a data-th-href="@{/board/list(category=${board.category})}">목록</a>
-        <button id="likeButton" th:if="${board}" th:text="'❤️ 좋아요 (' + ${board.likes} + ')'" th:attr="data-board-no=${board.no}">❤️ 좋아요 (0)</button>
+<!--<form data-th-if="${board}" data-th-action="@{/board/update}" method='post' enctype='multipart/form-data'>-->
+<div class="container">
+    <div class="content-box">
+        <h1><span th:text="${board.title}"></span></h1>
+        <div class="meta-info">
+<!--            작성자: <span th:if="${board != null}" th:text="${board.writer != null ? board.writer.name : '홍길동'}">홍길동</span> &nbsp;|&nbsp;-->
+            <span th:text="${board.writer.name}"></span>
+            <img class="clock-icon" src="/images/clock.png">
+            <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
+            <img class="clock-icon" src="/images/eye.png">
+            <span th:text="${board.viewCount}"></span>
+        </div>
+        <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
+        <!-- 게시글 내용 추가 -->
+        <p>
+            <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}">내용입니다!</span>
+        </p>
+<!--        <tr><th>첨부파일</th><td>-->
+<!--            <div data-th-each="file : ${board.attachedFiles}">-->
+<!--                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${file.filePath}|"-->
+<!--                   data-th-text="${file.filePath}">okok.gif</a>-->
+<!--                [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>-->
+<!--            </div>-->
+<!--            <input type='file' name='files' multiple>-->
+<!--        </td></tr>-->
+        <button class="like-button" id="likeButton" th:if="${board != null}"
+                th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'" th:attr="data-board-no=${board != null ? board.no : '0'}">
+            ❤️ 좋아요 (0)
+        </button>
     </div>
-</form>
+    <div class="btn-container">
+        <button>변경</button>
+        <button type="reset">초기화</button>
+        <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
+            <button>삭제</button>
+        </a>
+        <a th:href="@{/board/list(category=${board.category})}">
+            <button>목록</button>
+        </a>
+    </div>
 
-
+</div>
 </body>
 </html>
