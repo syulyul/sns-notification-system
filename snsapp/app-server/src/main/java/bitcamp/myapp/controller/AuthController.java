@@ -69,8 +69,7 @@ public class AuthController {
         System.out.println(member);
         if (photofile.getSize() > 0) {
             String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                    "bitcamp-nc7-bucket-14", "member/", photofile);
-            member.setPhoto(uploadFileUrl);
+                    "bitcamp-nc7-bucket-14", "member/", photofile); // pang  bitcamp-nc7-bucket-14
         }
         memberService.add(member);
         return "redirect:list";
