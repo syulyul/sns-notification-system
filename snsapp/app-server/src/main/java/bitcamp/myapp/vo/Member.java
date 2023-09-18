@@ -1,19 +1,23 @@
 package bitcamp.myapp.vo;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@EntityScan
 public class Member implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private int no;
-  private String nick;
-  private String name;
-  private String phoneNumber;
-  private String email;
-  private String password;
-  private String photo;
+  private int no; // 회원번호
+  private String nick; // 닉네임
+  private String name; // 이름
+  private String phoneNumber; // 전화번호
+  private String email; // 이메일
+  private String password; // 비밀번호
+  private String photo; // 프로필 사진
 
   @Override
   public String toString() {
