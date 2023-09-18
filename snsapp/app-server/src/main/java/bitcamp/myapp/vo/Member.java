@@ -1,8 +1,12 @@
 package bitcamp.myapp.vo;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@EntityScan
 public class Member implements Serializable {
 
   private static final long serialVersionUID = 1L;
