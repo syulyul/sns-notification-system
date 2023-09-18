@@ -148,10 +148,10 @@
                 <img class="memberPhoto" data-th-src="'/images/avatar.png'">
                 <!--                <img data-th-src="${member.photo}">-->
                 <span data-th-text="${member.nick}"></span>
-                <button data-th-if="${!loginUser.getFollowMemberSet().contains(member)}"
+                <button data-th-if="${!session.loginUser.getFollowMemberSet().contains(member)}"
                         data-th-onclick="|follow(${member.no})|">팔로잉
                 </button>
-                <button data-th-if="${loginUser.getFollowMemberSet().contains(member)}"
+                <button data-th-if="${session.loginUser.getFollowMemberSet().contains(member)}"
                         data-th-onclick="|unfollow(${member.no})|">팔로잉 취소
                 </button>
             </div>
