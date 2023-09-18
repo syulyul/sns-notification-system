@@ -81,7 +81,7 @@ public class AuthController {
             System.out.println(member);
             if (photofile.getSize() > 0) {
                 String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                        "bitcamp-nc7-bucket-25", "sns_member/", photofile);
+                        "bitcamp-nc7-bucket-14", "sns_member/", photofile);
                 member.setPhoto(uploadFileUrl);
             }
             memberService.add(member);
