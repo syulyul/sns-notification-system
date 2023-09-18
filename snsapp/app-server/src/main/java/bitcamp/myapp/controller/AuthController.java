@@ -24,35 +24,28 @@ public class AuthController {
   MemberService memberService;
 
   @GetMapping("form")
-  public void form(@CookieValue(required = false) String email, Model model) {
-    model.addAttribute("email", email);
+  public void form(@CookieValue(required = false) String phoneNumber, Model model) {
+    model.addAttribute("phoneNumber", phoneNumber);
   }
 
   @PostMapping("login")
   public String login(
-      String email,
+      String phone_Number,
       String password,
-      String saveEmail,
+      String savephone_Number,
       HttpSession session,
       Model model,
       HttpServletResponse response) throws Exception {
 
-    if (saveEmail != null) {
-      Cookie cookie = new Cookie("email", email);
+    if (savephone_Number != null) {
+      Cookie cookie = new Cookie("phone_Number", phone_Number);
       response.addCookie(cookie);
     } else {
-      Cookie cookie = new Cookie("email", "no");
+      Cookie cookie = new Cookie("phone_Number", "phone_Number");
       cookie.setMaxAge(0);
       response.addCookie(cookie);
     }
 
-    // Member loginUser = memberService.get(email, password);
-    // if (loginUser == null) {
-    // model.addAttribute("refresh", "2;url=form");
-    // throw new Exception("회원 정보가 일치하지 않습니다.");
-    // }
-
-    // session.setAttribute("loginUser", loginUser);
     return "redirect:/";
   }
 

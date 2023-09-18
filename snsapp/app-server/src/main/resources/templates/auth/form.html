@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -73,6 +74,12 @@
             border-radius: 5px;
         }
     </style>
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BITSNS</title>
+  <script defer src="static/form.js"></script>
+>>>>>>> main
 </head>
 <body>
 <h2>회원가입 양식</h2>
@@ -135,9 +142,22 @@
         const file = fileInput.files[0];
         const reader = new FileReader();
 
+<<<<<<< HEAD
         reader.onloadend = function() {
             preview.src = reader.result;
         }
+=======
+  <form id="login-form" action='login' method='post'>
+    <input type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="Phone Number" data-th-value='${phoneNumber}'>
+    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+    <input type="submit" value="Login" id="login-form-submit">
+    <input type='checkbox' name='savephoneNumber' data-th-checked="${phoneNumber}"> 전화번호 저장
+    <ul>
+    <li><a href="ff.html" class="user-field"> 회원가입</a></li>
+    <li><a href="ff.html" class="user2-field"> 비밀번호 찾기</a></li>
+    </ul>
+  </form>
+>>>>>>> main
 
         if (file) {
             reader.readAsDataURL(file);
