@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bitcamp.myapp.service.NcpObjectStorageService;
-import bitcamp.myapp.vo.LoginUser;
-import bitcamp.myapp.vo.Member;
-
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-
-    private Member member;
-
     {
         System.out.println("AuthController 생성됨!");
     }
@@ -40,6 +34,11 @@ public class AuthController {
         model.addAttribute("phoneNumber", phoneNumber);
     }
 
+    @GetMapping("add")
+    public String add() {
+        return"auth/membership";
+    }
+
     @PostMapping("login")
     public String login(
             String phoneNumber,
@@ -50,21 +49,45 @@ public class AuthController {
             HttpServletResponse response) throws Exception {
 
         if (savePhoneNumber != null) {
-            Cookie cookie = new Cookie("phone_Number", phoneNumber);
+            Cookie cookie = new Cookie("phoneNumber", phoneNumber);
             response.addCookie(cookie);
         } else {
-            Cookie cookie = new Cookie("phone_Number", "phone_Number");
+            Cookie cookie = new Cookie("phoneNumber", "no");
             cookie.setMaxAge(0);
             response.addCookie(cookie);
         }
-        // Member loginUser = memberService.get(phoneNumber, password);
-        // if (loginUser == null) {
-        // model.addAttribute("refresh", "2;url=form");
-        // throw new Exception("회원 정보가 일치하지 않습니다.");
-        // }
-        //
-        // session.setAttribute("loginUser", loginUser);
-        return "redirect:/";
+
+//        Member loginUser = memberService.get(phoneNumber, password);
+//        if (loginUser == null) {
+//            model.addAttribute("refresh", "2;url=form");
+//            throw new Exception("회원 정보가 일치하지 않습니다.");
+//        }
+//
+//        session.setAttribute("loginUser", loginUser);
+        return "index";
+    }
+
+    @PostMapping("add")
+    public String add(
+            Member member,
+            MultipartFile photofile,
+            Model model) throws Exception {
+
+        try {
+            System.out.println(member);
+            if (photofile.getSize() > 0) {
+                String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                        "bitcamp-nc7-bucket-14", "member/", photofile);
+                member.setPhoto(uploadFileUrl);
+            }
+            memberService.add(member);
+            return "auth/membership";
+
+        } catch (Exception e) {
+            model.addAttribute("message", "회원 등록 오류!");
+            model.addAttribute("refresh", "2;url=list");
+            throw e;
+        }
     }
 
     @GetMapping("logout")
@@ -72,12 +95,4 @@ public class AuthController {
         session.invalidate();
         return "redirect:/";
     }
-
-    @GetMapping("add")
-    public String add(Member member) throws Exception {
-
-        memberService.add(member);
-        return "/auth/form";
-    }
-
 }
