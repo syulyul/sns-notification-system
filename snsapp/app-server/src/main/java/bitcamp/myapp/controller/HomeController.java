@@ -12,7 +12,7 @@ public class HomeController {
 
   @GetMapping("/")
   public String home() throws Exception {
-    return "index";
+    return "redirect:auth/form";
   }
 }
 
