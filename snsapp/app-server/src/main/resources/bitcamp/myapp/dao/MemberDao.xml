@@ -6,76 +6,76 @@
 
     <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
     <resultMap type="member" id="memberMap">
-        <id     column="member_no"    property="no"/>
+        <id     column="mno"    property="no"/>
         <result column="nick"         property="nick"/>
         <result column="name"         property="name"/>
-        <result column="phoneNumber"        property="phoneNumber"/>
+        <result column="phone_number"        property="phoneNumber"/>
         <result column="password"     property="password"/>
-        <result column="photo"        property="photo"/>
+        <result column="filepath"        property="photo"/>
     </resultMap>
 
     <insert id="insert" parameterType="member">
-        insert into myapp_member(nick,name,phoneNumber,password,photo)
+        insert into sns_member(nick,name,phone_number,password,filepath)
         values(#{nick},#{name},#{phoneNumber},sha1(#{password}),#{photo})
     </insert>
 
     <select id="findAll" resultMap="memberMap">
         select
-        member_no,
+        mno,
         nick,
         name,
-        phoneNumber,
-        photo
+        phone_number,
+        filepath
         from
-        myapp_member
+        sns_member
         order by
         name asc
     </select>
 
     <select id="findBy" parameterType="int" resultMap="memberMap">
         select
-        member_no,
+        mno,
         nick,
         name,
-        phoneNumber,
-        photo
+        phone_number,
+        filepath
         from
-        myapp_member
+        sns_member
         where
-        member_no=#{no}
+        mno=#{no}
     </select>
 
-    <select id="findByEmailAndPassword" resultMap="memberMap">
+    <select id="findByPhoneNumberAndPassword" resultMap="memberMap">
         select
-        member_no,
+        mno,
         nick,
         name,
-        phoneNumber,
-        photo
+        phone_number,
+        filepath
         from
-        myapp_member
+        sns_member
         where
-        phoneNumber=#{phoneNumber}
+        phone_number=#{phoneNumber}
         and password=sha1(#{password})
     </select>
 
     <update id="update" parameterType="member">
-        update myapp_member set
+        update sns_member set
         nick=#{nick},
         name=#{name}
-        ,phoneNumber=#{phoneNumber}
+        ,phone_number=#{phoneNumber}
         ,password=sha1(#{password})
-        <if test="photo != null">
-            ,photo=#{photo}
+        <if test="filepath != null">
+            ,filepath=#{photo}
         </if>
         where
-        member_no=#{no}
+        mno=#{no}
     </update>
 
     <delete id="delete" parameterType="int">
-        delete from myapp_member
+        delete from sns_member
         where
-        member_no=#{no}
+        mno=#{no}
     </delete>
 </mapper>
 
