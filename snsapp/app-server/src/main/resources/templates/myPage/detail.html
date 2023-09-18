@@ -9,11 +9,6 @@
     <script type="text/javascript">
         var myPageNo;
 
-        function test () {
-            myPageNo = document.getElementById("myPageNo").value;
-            console.log(myPageNo);
-        }
-
         function follow (memberNo) {
             myPageNo = document.getElementById("myPageNo").value;
             var httpRequest;
@@ -139,7 +134,7 @@
         </div>
     </div>
     <div class="memberListBox" data-th-if="${list}">
-        <input data-th-value="${myPage.no}" id="myPageNo" type="text">
+        <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
         <h3 data-th-text="'회원 리스트'"></h3>
         <div data-th-each="member : ${list}">
             <div class="memberItem">
@@ -153,7 +148,6 @@
                 <button data-th-if="${loginUser.getFollowMemberSet().contains(member)}"
                         data-th-onclick="|unfollow(${member.no})|">팔로잉 취소
                 </button>
-                <button data-th-onclick="test()">test</button>
             </div>
         </div>
     </div>
