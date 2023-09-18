@@ -23,10 +23,6 @@ import java.util.HashSet;
 @RequestMapping("/myPage")
 public class MyPageController {
 
-    private static final int SHOW_BOARD = 0;
-    private static final int SHOW_FOLLOWERS = 1;
-    private static final int SHOW_FOLLOWINGS = 2;
-
     @Autowired
     MyPageService myPageService;
 
@@ -37,7 +33,7 @@ public class MyPageController {
     @GetMapping("{no}")
     public String detail(
             @PathVariable int no,
-            @RequestParam(defaultValue = "0") int show,
+            @RequestParam(defaultValue = "") String show,
             Model model,
             HttpSession session) throws Exception {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -49,11 +45,12 @@ public class MyPageController {
         followingSet.add(member1);
         loginUser.setFollowMemberSet(followingSet);
         model.addAttribute("myPage", myPageService.get(no));
+        model.addAttribute("show", show);
         switch (show) {
-            case SHOW_FOLLOWERS:
+            case "followers":
                 model.addAttribute("list", myPageService.followerList(no));
                 break;
-            case SHOW_FOLLOWINGS:
+            case "followings":
                 model.addAttribute("list", myPageService.followingList(no));
                 break;
             default:
@@ -73,8 +70,9 @@ public class MyPageController {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
+        loginUser.setNick("김성주");
         loginUser.setFollowMemberSet(new HashSet<>());
-        myPageService.follow(loginUser.getNo(), followingNo);
+        myPageService.follow(loginUser, followingNo);
         try {
             response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
         } catch (IOException e) {
@@ -90,8 +88,9 @@ public class MyPageController {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
+        loginUser.setNick("김성주");
         loginUser.setFollowMemberSet(new HashSet<>());
-        myPageService.unfollow(loginUser.getNo(), followingNo);
+        myPageService.unfollow(loginUser, followingNo);
         try {
             response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
         } catch (IOException e) {
