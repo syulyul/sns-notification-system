@@ -64,16 +64,22 @@ public class AuthController {
 //        }
 //
 //        session.setAttribute("loginUser", loginUser);
-        return "redirect:/";
+        return "index";
     }
 
     @PostMapping("add")
     public String add(
             Member member,
+            MultipartFile photofile,
             Model model) throws Exception {
 
         try {
             System.out.println(member);
+            if (photofile.getSize() > 0) {
+                String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                        "bitcamp-nc7-bucket-14", "member/", photofile);
+                member.setPhoto(uploadFileUrl);
+            }
             memberService.add(member);
             return "auth/membership";
 
