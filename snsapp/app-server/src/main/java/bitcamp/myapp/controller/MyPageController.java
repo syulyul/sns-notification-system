@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
-
 @Controller
 @RequestMapping("/myPage")
 public class MyPageController {
@@ -36,9 +35,9 @@ public class MyPageController {
             @RequestParam(defaultValue = "") String show,
             Model model,
             HttpSession session) throws Exception {
-//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        LoginUser loginUser = new LoginUser();
-        loginUser.setNo(1);
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        // LoginUser loginUser = new LoginUser();
+        // loginUser.setNo(1);
         HashSet<Member> followingSet = new HashSet<>();
         Member member1 = new Member();
         member1.setNo(1);
@@ -58,6 +57,7 @@ public class MyPageController {
 
         model.addAttribute("myPage", myPageService.get(no));
         model.addAttribute("show", show);
+
         switch (show) {
             case "followers":
                 model.addAttribute("list", myPageService.followerList(no));
@@ -69,8 +69,9 @@ public class MyPageController {
                 model.addAttribute("list", null);
                 break;
         }
-//        myPageService.increaseVisitCount(no);
-        model.addAttribute("loginUser", loginUser);
+        // myPageService.increaseVisitCount(no);
+        // model.addAttribute("loginUser", loginUser);
+        session.setAttribute("loginUser", loginUser);
         return "myPage/detail";
     }
 
@@ -79,7 +80,7 @@ public class MyPageController {
             @RequestParam("myPageNo") int myPageNo,
             @RequestParam("followingNo") int followingNo,
             HttpServletResponse response) throws Exception, IOException {
-//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        // LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
         loginUser.setNick("김성주");
@@ -97,7 +98,7 @@ public class MyPageController {
             @RequestParam("myPageNo") int myPageNo,
             @RequestParam("followingNo") int followingNo,
             HttpServletResponse response) throws Exception {
-//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        // LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
         loginUser.setNick("김성주");
