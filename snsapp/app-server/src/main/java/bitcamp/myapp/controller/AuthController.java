@@ -45,10 +45,10 @@ public class AuthController {
       HttpServletResponse response) throws Exception {
 
     if (savePhoneNumber != null) {
-      Cookie cookie = new Cookie("phone_Number", phoneNumber);
+      Cookie cookie = new Cookie("phoneNumber", phoneNumber);
       response.addCookie(cookie);
     } else {
-      Cookie cookie = new Cookie("phone_Number", "phone_Number");
+      Cookie cookie = new Cookie("phoneNumber", "phoneNumber");
       cookie.setMaxAge(0);
       response.addCookie(cookie);
     }
@@ -75,7 +75,7 @@ public class AuthController {
         member.setPhoto(uploadFileUrl);
       }
       memberService.add(member);
-      return "redirect:list";
+      return "redirect:/";
 
     } catch (Exception e) {
       model.addAttribute("message", "회원 등록 오류!");
