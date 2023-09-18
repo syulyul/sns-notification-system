@@ -61,13 +61,20 @@
     ,birthday=#{birthday}
     ,gender=#{gender}
     where
-    member_no=#{no}
+    mno=#{no}
+  </update>
+
+  <update id="updateCount" parameterType="int">
+    update sns_mypage set
+    visit_count=visit_count + 1
+    where
+    mno=#{no}
   </update>
 
   <delete id="delete" parameterType="int">
     delete from sns_mypage
     where
-    member_no=#{memberNo}
+    mno=#{memberNo}
   </delete>
 
 

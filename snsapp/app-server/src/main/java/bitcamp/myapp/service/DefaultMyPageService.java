@@ -5,6 +5,7 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DefaultMyPageService implements MyPageService {
@@ -32,6 +33,12 @@ public class DefaultMyPageService implements MyPageService {
   @Override
   public int update(MyPage myPage) throws Exception {
     return myPageDao.update(myPage);
+  }
+
+  @Transactional
+  @Override
+  public int increaseVisitCount(int memberNo) throws Exception {
+    return myPageDao.updateCount(memberNo);
   }
 
   @Override

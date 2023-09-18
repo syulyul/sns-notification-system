@@ -12,6 +12,8 @@ public interface MyPageService {
 
   int update(MyPage myPage) throws Exception;
 
+  int increaseVisitCount(int memberNo) throws Exception;
+
   int delete(int memberNo) throws Exception;
 
   int follow(int followerNo, int followingNo) throws Exception;
