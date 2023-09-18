@@ -86,16 +86,7 @@ public class BoardController {
             model.addAttribute("board", board);
         }
 
-        // 카테고리에 따라 리다이렉트
-        if (category == 1) {
-            return "redirect:/board/list?category=" + category;
-        } else if (category == 2) {
-            return "redirect:/board/list?category=" + category;
-        } else {
-            // 다른 카테고리에 대한 처리 (예: 예외 발생 또는 기본 페이지로 이동)
-            // 여기서는 카테고리 1과 2 이외의 값은 "error"로 가정합니다.
-            return "redirect:/error"; // 또는 다른 처리 방식을 선택
-        }
+        return "board/detail";
     }
 
     @GetMapping("list")
@@ -168,7 +159,8 @@ public class BoardController {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
-        boardService.like(loginUser.getNo(), boardNo);
+        memberNo = loginUser.getNo();
+        boardService.like(memberNo, boardNo);
         return "redirect:/board/list?category=" + category;
     }
 
@@ -180,7 +172,8 @@ public class BoardController {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
-        boardService.like(loginUser.getNo(), boardNo);
+        memberNo = loginUser.getNo();
+        boardService.like(memberNo, boardNo);
         return "redirect:/board/list?category=" + category;
     }
 }
