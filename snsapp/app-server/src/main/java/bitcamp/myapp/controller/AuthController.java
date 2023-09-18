@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bitcamp.myapp.service.NcpObjectStorageService;
+import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ public class AuthController {
             HttpSession session,
             Model model,
             HttpServletResponse response) throws Exception {
-
+    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (savephone_Number != null) {
             Cookie cookie = new Cookie("phone_Number", phone_Number);
             response.addCookie(cookie);
@@ -64,18 +65,27 @@ public class AuthController {
     }
 
 
-    @PostMapping("add")
-    public String add(Member member, MultipartFile photofile) throws Exception {
-        System.out.println(member);
+    @GetMapping("add")
+    public String add(Member member, LoginUser followMemberSet, LoginUser likeBoardSet , MultipartFile photofile) throws Exception {
+
         if (photofile.getSize() > 0) {
             String uploadFileUrl = ncpObjectStorageService.uploadFile(
                     "bitcamp-nc7-bucket-14", "member/", photofile); // pang  bitcamp-nc7-bucket-14
         }
         memberService.add(member);
-        return "redirect:list";
+        return "redirect:/";
     }
 
+@GetMapping("loginfind")
+public String loginfind(Member member, MultipartFile photofile) throws Exception {
 
+    if (photofile.getSize() > 0) {
+        String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                "bitcamp-nc7-bucket-14", "member/", photofile); // pang  bitcamp-nc7-bucket-14
+    }
+    memberService.add(member);
+    return "redirect:list";
+}
 
 
 }

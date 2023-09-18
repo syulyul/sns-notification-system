@@ -1,3 +1,5 @@
+// 카카오 계정 가입 js
+
 const passport = require(passport);
 const KakaoStrategy = require('passport-kakao').Strategy;
 const User = require('../models/user');

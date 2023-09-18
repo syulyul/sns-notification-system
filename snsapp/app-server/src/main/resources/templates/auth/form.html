@@ -74,11 +74,12 @@
         }
     </style>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BITSNS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BITSNS</title>
     <form action='add' method='post' enctype='multipart/form-data'>
 </head>
+
 <body>
 <h2>회원가입 양식</h2>
 <table>
@@ -124,7 +125,8 @@
                 <option value='W'>여자</option>
             </select>
         </td>
-    </tr>    <tr>
+    </tr>
+    <tr>
         <td>
             <input type="submit" value="가입하기">
             <input type="submit" value="초기화">
@@ -133,36 +135,6 @@
         </td>
     </tr>
 </table>
-<script>
-    function previewFile() {
-        const preview = document.getElementById('previewImage');
-        const fileInput = document.getElementById('photoInput');
-        const file = fileInput.files[0];
-        const reader = new FileReader();
 
-<<<<<<< HEAD
-        reader.onloadend = function() {
-            preview.src = reader.result;
-        }
-=======
-  <form id="login-form" action='login' method='post'>
-    <input type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="Phone Number" data-th-value='${phoneNumber}'>
-    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-    <input type="submit" value="Login" id="login-form-submit">
-    <input type='checkbox' name='savephoneNumber' data-th-checked="${phoneNumber}"> 전화번호 저장
-    <ul>
-    <li><a href="ff.html" class="user-field"> 회원가입</a></li>
-    <li><a href="ff.html" class="user2-field"> 비밀번호 찾기</a></li>
-    </ul>
-  </form>
->>>>>>> main
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = ""; // 파일 선택이 취소될 때 미리보기 초기화
-        }
-    }
-</script>
 </body>
 </html>
