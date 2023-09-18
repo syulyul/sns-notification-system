@@ -1,129 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-  html {
-    height: 100%;
-  }
-
-  body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: #3a3a3a;
-  }
-
-  #main-holder {
-    width: 50%;
-    height: 70%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: 0px 0px 5px 2px black;
-  }
-
-  #login-error-msg-holder {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
-
-  #login-error-msg {
-    width: 23%;
-    text-align: center;
-    margin: 0;
-    padding: 5px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #8a0000;
-    border: 1px solid #8a0000;
-    background-color: #e58f8f;
-    opacity: 0;
-  }
-
-  #error-msg-second-line {
-    display: block;
-  }
-
-  #login-form {
-    align-self: flex-start;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
-
-  .login-form-field::placeholder {
-    color: #3a3a3a;
-  }
-
-  .login-form-field {
-    border: none;
-    border-bottom: 1px solid #3a3a3a;
-    margin-bottom: 10px;
-    border-radius: 3px;
-    outline: none;
-    padding: 0px 0px 5px 5px;
-  }
-
-
-  #login-form-submit {
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    background-color: #3a3a3a;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .user-field {
-    display: block;
-    width: 220px; height: 30px;
-    margin: 0 auto;
-  }
-  .user2-field {
-    display: block;
-    width: 220px; height: 100px;
-    margin: 0 auto;
-  }
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BITSNS</title>
-  <link rel="stylesheet" href="static/form.css?ver1">
-  <script defer src="static/form.js"></script>
+    <title>회원가입</title>
 </head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        font-size: 16px;
+    }
 
-<body>
-<main id="main-holder">
-  <h1 id="login-header">BITSNS</h1>
+    h2 {
+        margin-top: 20px;
+    }
 
-  <div id="login-error-msg-holder">
-    <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
-  </div>
+    table {
+        margin: 0 auto;
+        width: 70%;
+        border-collapse: collapse;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+    }
 
-  <form id="login-form">
-    <input type="text" name="Email" id="username-field" class="login-form-field" placeholder="Email">
-    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-    <input type="submit" value="Login" id="login-form-submit">
-    <ul>
-    <li><a href="ff.html" class="user-field"> 회원가입</a></li>
-    <li><a href="ff.html" class="user2-field"> 이메일/비밀번호 찾기</a></li>
-    </ul>
-  </form>
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
 
-</main>
-</body>
+    th {
+        background-color: #3a3a3a;
+    }
+
+    input[type="file"],
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+    }
+
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #f6be00;
+    }
+
+    .image-container {
+        width: 100%;
+        text-align: right; /* 사진을 우측에 배치 */
+    }
+
+    .user-image {
+        max-width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+</style>
+
+<title>BITSNS</title>
+<form action='add' method='post' enctype='multipart/form-data'>
+
+    <body>
+    <h2>회원가입 양식</h2>
+    <table>
 
 
+        <tr>
+            <th>번호</th>
+            <td><input type='text' name='no'></td>
+        </tr>
+        <tr>
+            <th>닉네임</th>
+            <td><input type='date' name='birthdate'></td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td><input type='text' name='name'></td>
+        </tr>
+        <tr>
+            <th>전화번호</th>
+            <td><input type='tel' name='tel'></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td><input type='email' name='email'></td>
+        </tr>
+        <tr>
+            <th>암호</th>
+            <td><input type='password' name='password'></td>
+        </tr>
+        <tr>
+            <th>사진 :</th>
+            <td>
+                <div class="image-container">
+                    <img src="" class="user-image" id="previewImage">
+                    <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="가입하기">
+                <input type="submit" value="초기화">
+                <input type="submit" value="skip">
+                <input type="submit" value="회원탈퇴">
+            </td>
+        </tr>
+    </table>
+
+    </body>
 </html>
-

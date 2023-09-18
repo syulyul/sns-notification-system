@@ -1,9 +1,14 @@
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.MemberService;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import bitcamp.myapp.service.NcpObjectStorageService;
+import bitcamp.myapp.vo.LoginUser;
+import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,50 +21,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/auth")
 public class AuthController {
 
-  {
-    System.out.println("AuthController 생성됨!");
-  }
+    private Member member;
 
-  @Autowired
-  MemberService memberService;
-
-  @GetMapping("form")
-  public void form(@CookieValue(required = false) String email, Model model) {
-    model.addAttribute("email", email);
-  }
-
-  @PostMapping("login")
-  public String login(
-      String email,
-      String password,
-      String saveEmail,
-      HttpSession session,
-      Model model,
-      HttpServletResponse response) throws Exception {
-
-    if (saveEmail != null) {
-      Cookie cookie = new Cookie("email", email);
-      response.addCookie(cookie);
-    } else {
-      Cookie cookie = new Cookie("email", "no");
-      cookie.setMaxAge(0);
-      response.addCookie(cookie);
+    {
+        System.out.println("AuthController 생성됨!");
     }
 
-    // Member loginUser = memberService.get(email, password);
-    // if (loginUser == null) {
-    // model.addAttribute("refresh", "2;url=form");
-    // throw new Exception("회원 정보가 일치하지 않습니다.");
-    // }
+    @Autowired
+    MemberService memberService;
 
-    // session.setAttribute("loginUser", loginUser);
-    return "redirect:/";
-  }
+    @Autowired
+    NcpObjectStorageService ncpObjectStorageService;
 
-  @GetMapping("logout")
-  public String logout(HttpSession session) throws Exception {
-    session.invalidate();
-    return "redirect:/";
-  }
+    @GetMapping("form")
+    public void form(@CookieValue(required = false) String phoneNumber, Model model) {
+        model.addAttribute("phoneNumber", phoneNumber);
+    }
+
+    @PostMapping("login")
+    public String login(
+            String phone_Number,
+            String password,
+            String savephone_Number,
+            HttpSession session,
+            Model model,
+            HttpServletResponse response) throws Exception {
+        if (savephone_Number != null) {
+            Cookie cookie = new Cookie("phone_Number", phone_Number);
+            response.addCookie(cookie);
+        } else {
+            Cookie cookie = new Cookie("phone_Number", "phone_Number");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+        Member loginUser = memberService.get(phone_Number, password);
+        if (loginUser == null) {
+            model.addAttribute("refresh", "2;url=form");
+            throw new Exception("회원 정보가 일치하지 않습니다.");
+        }
+
+        session.setAttribute("loginUser", loginUser);
+        return "redirect:/";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session) throws Exception {
+        session.invalidate();
+        return "redirect:/";
+    }
+
+
+    @GetMapping("add")
+    public String add(Member member) throws Exception {
+
+        memberService.add(member);
+        return "/auth/form";
+    }
 
 }
