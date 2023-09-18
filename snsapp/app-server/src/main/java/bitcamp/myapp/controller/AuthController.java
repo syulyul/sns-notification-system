@@ -69,7 +69,7 @@ public class AuthController {
 
     @PostMapping("add")
     public String add(
-            Member member,
+            Member member, //
             Model model) throws Exception {
 
         try {
