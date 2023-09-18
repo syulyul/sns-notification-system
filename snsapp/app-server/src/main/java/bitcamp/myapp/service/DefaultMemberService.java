@@ -36,8 +36,8 @@ public class DefaultMemberService implements MemberService {
   }
 
   @Override
-  public Member get(String phone_Number, String password) throws Exception {
-    return memberDao.findByPhone_NumberAndPassword(phone_Number, password);
+  public Member get(String phoneNumber, String password) throws Exception {
+    return memberDao.findByPhoneNumberAndPassword(phoneNumber, password);
   }
 
   @Transactional
