@@ -6,6 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bitcamp.myapp.service.NcpObjectStorageService;
+<<<<<<< HEAD
+=======
+import bitcamp.myapp.vo.LoginUser;
+import bitcamp.myapp.vo.Member;
+
+>>>>>>> main
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +30,7 @@ public class AuthController {
     System.out.println("AuthController 생성됨!");
   }
 
+<<<<<<< HEAD
   @Autowired
   MemberService memberService;
 
@@ -81,6 +88,61 @@ public class AuthController {
       model.addAttribute("message", "회원 등록 오류!");
       model.addAttribute("refresh", "2;url=list");
       throw e;
+=======
+    {
+        System.out.println("AuthController 생성됨!");
+    }
+
+    @Autowired
+    MemberService memberService;
+
+    @Autowired
+    NcpObjectStorageService ncpObjectStorageService;
+
+    @GetMapping("form")
+    public void form(@CookieValue(required = false) String phoneNumber, Model model) {
+        model.addAttribute("phoneNumber", phoneNumber);
+    }
+
+    @PostMapping("login")
+    public String login(
+            String phoneNumber,
+            String password,
+            String savePhoneNumber,
+            HttpSession session,
+            Model model,
+            HttpServletResponse response) throws Exception {
+
+        if (savePhoneNumber != null) {
+            Cookie cookie = new Cookie("phone_Number", phoneNumber);
+            response.addCookie(cookie);
+        } else {
+            Cookie cookie = new Cookie("phone_Number", "phone_Number");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+        // Member loginUser = memberService.get(phoneNumber, password);
+        // if (loginUser == null) {
+        // model.addAttribute("refresh", "2;url=form");
+        // throw new Exception("회원 정보가 일치하지 않습니다.");
+        // }
+        //
+        // session.setAttribute("loginUser", loginUser);
+        return "redirect:/";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session) throws Exception {
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    @GetMapping("add")
+    public String add(Member member) throws Exception {
+
+        memberService.add(member);
+        return "/auth/form";
+>>>>>>> main
     }
   }
   @GetMapping("logout")
