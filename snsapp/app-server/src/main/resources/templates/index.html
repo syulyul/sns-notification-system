@@ -97,9 +97,9 @@
 </style>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>BITSNS</title>
-    <script defer src="auth/static/form.js"></script>
+    <script defer src="auth/form.js"></script>
 </head>
 
 <body>
@@ -110,14 +110,15 @@
         <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
     </div>
 
-    <form id="login-form" action='login' method='post'>
-        <input type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="Phone Number" data-th-value='${phoneNumber}'>
-        <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-        <input type="submit" value="Login" id="login-form-submit">
-        <input type='checkbox' name='savephoneNumber' data-th-checked="${phoneNumber}"> 전화번호 저장
+    <form action='login' id="login-form" method='post'>
+        <input class="login-form-field" data-th-value='${phoneNumber}' id="username-field" name="phoneNumber" placeholder="Phone Number"
+               type="text">
+        <input class="login-form-field" id="password-field" name="password" placeholder="Password" type="password">
+        <input id="login-form-submit" type="submit" value="Login">
+        <input data-th-checked="${phoneNumber}" name='savephoneNumber' type='checkbox'> 전화번호 저장
         <ul>
-            <li><a href='/auth/form' class="user-field"> 회원가입</a></li>
-            <li><a href='/auth/logging' class="user2-field"> 비밀번호 찾기</a></li>
+            <li><a class="user-field" href='/auth/form'> 회원가입</a></li>
+            <li><a class="user2-field" href='/auth/logging'> 비밀번호 찾기</a></li>
         </ul>
     </form>
 
