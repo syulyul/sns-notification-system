@@ -72,4 +72,24 @@ public class DefaultBoardService implements BoardService {
     public int deleteAttachedFile(int fileNo) throws Exception {
         return boardDao.deleteFile(fileNo);
     }
+
+    @Override
+    public int like(int memberNo, int boardNo) throws Exception {
+        return boardDao.insertLike(memberNo, boardNo);
+    }
+
+    @Override
+    public int unLike(int memberNo, int boardNo) throws Exception {
+        return boardDao.deleteLike(memberNo, boardNo);
+    }
+
+    @Override
+    public int increaseLike(int memberNo, int boardNo) throws Exception {
+        return boardDao.updateIncreaseLikes(memberNo, boardNo);
+    }
+
+    @Override
+    public int decreaseLike(int memberNo, int boardNo) throws Exception {
+        return boardDao.updateDecreaseLikes(memberNo, boardNo);
+    }
 }

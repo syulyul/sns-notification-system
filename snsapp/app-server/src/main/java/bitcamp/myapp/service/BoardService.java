@@ -15,4 +15,9 @@ public interface BoardService {
 
     BoardPhoto getAttachedFile(int fileNo) throws Exception;
     int deleteAttachedFile(int fileNo) throws Exception;
+
+    int like(int memberNo, int boardNo) throws Exception;
+    int unLike(int memberNo, int boardNo) throws Exception;
+    int increaseLike(int memberNo, int boardNo) throws Exception;
+    int decreaseLike(int memberNo, int boardNo) throws Exception;
 }

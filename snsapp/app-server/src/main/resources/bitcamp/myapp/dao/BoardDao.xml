@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bitcamp.myapp.dao.BoardDao">
 
   <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
@@ -24,9 +24,9 @@
       <id     column="bpno"         property="no"/>
       <result column="filepath"     property="filePath"/>
     </collection>
-    
+
   </resultMap>
-  
+
   <resultMap type="boardPhoto" id="boardPhotoMap">
     <id     column="bpno"           property="no"/>
     <result column="filepath"       property="filePath"/>
@@ -41,84 +41,115 @@
 
   <select id="findAll" parameterType="int" resultMap="boardMap">
     select
-      b.bno,
-      b.title,
-      b.view_count,
-      b.created_at,
-      b.category,
-      m.mno,
-      m.name
+    b.bno,
+    b.title,
+    b.view_count,
+    b.created_at,
+    b.category,
+    m.mno,
+    m.name
     from
-      sns_board b inner join sns_member m on b.mno=m.mno
+    sns_board b inner join sns_member m on b.mno=m.mno
     where
-      category=#{categoryNo}
+    category=#{categoryNo}
     order by
-      b.bno desc
+    b.bno desc
   </select>
-  
+
   <select id="findBy" resultMap="boardMap" parameterType="int">
     select
-      b.bno,
-      b.title,
-      b.content,
-      b.view_count,
-      b.created_at,
-      b.category,
-      f.bpno,
-      f.filepath
+    b.bno,
+    b.title,
+    b.content,
+    b.view_count,
+    b.created_at,
+    b.category,
+    b.likes,
+    m.mno,
+    m.name,
+    f.bpno,
+    f.filepath
     from
-      sns_board b inner join sns_board_photo f on b.bno=f.bno
+    sns_board b inner join sns_member m on b.mno=m.mno
+    left outer join sns_board_photo f on b.bno=f.bpno
     where
-      b.bno=#{boardNo}
+    b.bno=#{boardNo}
   </select>
-  
+
   <update id="update" parameterType="board">
-	  update sns_board set
-	    title=#{title},
-	    content=#{content}
-	  where
-	    board_no=#{no}
+    update sns_board set
+    title=#{title},
+    content=#{content}
+    where
+    board_no=#{no}
   </update>
-  
+
   <update id="updateCount" parameterType="int">
     update sns_board set
-      view_count=view_count + 1
+    view_count=view_count + 1
     where
-      bno=#{no}
+    bno=#{no}
   </update>
-  
+
   <delete id="delete" parameterType="int">
     delete from sns_board
-    where 
-      bno=#{no}
+    where
+    bno=#{no}
   </delete>
-  
+
   <insert id="insertFiles" parameterType="board">
     insert into sns_board_photo(filepath, bno)
-    values 
+    values
     <foreach collection="attachedFiles" item="photo" separator=",">(#{photo.filePath}, #{no})</foreach>
   </insert>
-  
+
   <select id="findPhotoBy" parameterType="int" resultMap="boardPhotoMap">
     select
-      bpno,
-      filepath,
-      bno
+    bpno,
+    filepath,
+    bno
     from
-      sns_board_photo
+    sns_board_photo
     where
-      bpno=#{no}
+    bpno=#{no}
   </select>
-  
+
   <delete id="deleteFile" parameterType="int">
     delete from sns_board_photo
     where
-      bpno=#{no}
+    bpno=#{no}
   </delete>
 
   <delete id="deleteFiles" parameterType="int">
     delete from sns_board_photo
     where
-      bno=#{no}
+    bno=#{no}
   </delete>
+
+  <update id="updateIncreaseLikes" parameterType="int">
+    update sns_board set
+      likes=likes + 1
+    where
+      bno=#{no}
+  </update>
+
+  <update id="updateDecreaseLikes" parameterType="int">
+    update sns_board set
+      likes=likes - 1
+    where
+      bno=#{no}
+  </update>
+
+  <insert id="insertLike">
+    insert into sns_board_like(mno, bno)
+    values(#{memberNo}, #{boardNo})
+  </insert>
+
+  <delete id="deleteLike">
+    delete from sns_board_like
+    where
+    mno=#{memberNo}
+    and bno=#{boardNo}
+  </delete>
+
 </mapper>

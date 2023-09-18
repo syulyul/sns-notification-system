@@ -4,6 +4,7 @@ import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.BoardPhoto;
+import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -83,12 +85,30 @@ public class BoardController {
             boardService.increaseViewCount(no);
             model.addAttribute("board", board);
         }
-        return "board/detail";
+
+        // 카테고리에 따라 리다이렉트
+        if (category == 1) {
+            return "redirect:/board/list?category=" + category;
+        } else if (category == 2) {
+            return "redirect:/board/list?category=" + category;
+        } else {
+            // 다른 카테고리에 대한 처리 (예: 예외 발생 또는 기본 페이지로 이동)
+            // 여기서는 카테고리 1과 2 이외의 값은 "error"로 가정합니다.
+            return "redirect:/error"; // 또는 다른 처리 방식을 선택
+        }
     }
 
     @GetMapping("list")
-    public void list(int category, Model model) throws Exception {
-        model.addAttribute("list", boardService.list(category));
+    public String list(@RequestParam int category, Model model) throws Exception {
+        if (category == 1) {
+            model.addAttribute("list", boardService.list(category));
+            return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
+        } else if (category == 2) {
+            model.addAttribute("list", boardService.list(category));
+            return "board/read"; // 카테고리가 2일 때 "read.html"을 실행
+        } else {
+            throw new Exception("유효하지 않은 카테고리입니다.");
+        }
     }
 
     @PostMapping("update")
@@ -138,5 +158,29 @@ public class BoardController {
         } else {
             return "redirect:/board/detail/" + board.getCategory() + "/" + board.getNo();
         }
+    }
+
+    @GetMapping("like")
+    public String follow(
+            @RequestParam("memberNo") int memberNo,
+            @RequestParam("boardNo") int boardNo,
+            int category) throws Exception {
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        LoginUser loginUser = new LoginUser();
+        loginUser.setNo(1);
+        boardService.like(loginUser.getNo(), boardNo);
+        return "redirect:/board/list?category=" + category;
+    }
+
+    @GetMapping("unlike")
+    public String unlike(
+            @RequestParam("memberNo") int memberNo,
+            @RequestParam("boardNo") int boardNo,
+            int category) throws Exception {
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+        LoginUser loginUser = new LoginUser();
+        loginUser.setNo(1);
+        boardService.like(loginUser.getNo(), boardNo);
+        return "redirect:/board/list?category=" + category;
     }
 }
