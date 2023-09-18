@@ -41,6 +41,10 @@ public class AuthController {
     public String add() {
         return "auth/membership";
     }
+    @GetMapping("find")
+    public String find() {
+        return "auth/loginfind";
+    }
 
     @PostMapping("login")
     public String login(
@@ -69,21 +73,23 @@ public class AuthController {
          session.setAttribute("loginUser", loginUserObject);
 //         System.out.println(loginUser.getNick());
         return "redirect:/myPage/" + loginUser.getNo() + "?show=followers";
+
     }
 
     @PostMapping("add")
     public String add(
-            Member member,
-            MultipartFile photofile,
+            Member member, //
             Model model) throws Exception {
 
         try {
             System.out.println(member);
+
             if (photofile.getSize() > 0) {
                 String uploadFileUrl = ncpObjectStorageService.uploadFile(
                         "bitcamp-nc7-bucket-14", "sns_member/", photofile);
                 member.setPhoto(uploadFileUrl);
             }
+
             memberService.add(member);
             return "auth/membership";
 
@@ -92,6 +98,12 @@ public class AuthController {
             model.addAttribute("refresh", "2;url=list");
             throw e;
         }
+    }
+
+    @PostMapping("find")
+    public String find(HttpSession session) throws Exception {
+        session.invalidate();
+        return "auth/loginfind";
     }
 
     @GetMapping("logout")
