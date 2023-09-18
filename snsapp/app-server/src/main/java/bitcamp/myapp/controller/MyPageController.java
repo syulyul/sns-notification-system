@@ -69,8 +69,9 @@ public class MyPageController {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
+        loginUser.setNick("김성주");
         loginUser.setFollowMemberSet(new HashSet<>());
-        myPageService.follow(loginUser.getNo(), followingNo);
+        myPageService.follow(loginUser, followingNo);
         try {
             response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
         } catch (IOException e) {
@@ -86,8 +87,9 @@ public class MyPageController {
 //    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         LoginUser loginUser = new LoginUser();
         loginUser.setNo(1);
+        loginUser.setNick("김성주");
         loginUser.setFollowMemberSet(new HashSet<>());
-        myPageService.unfollow(loginUser.getNo(), followingNo);
+        myPageService.unfollow(loginUser, followingNo);
         try {
             response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
         } catch (IOException e) {
