@@ -1,5 +1,7 @@
 package bitcamp.myapp.controller;
+
 import bitcamp.myapp.service.MemberService;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/auth")
@@ -31,6 +32,11 @@ public class AuthController {
     @GetMapping("form")
     public void form(@CookieValue(required = false) String phoneNumber, Model model) {
         model.addAttribute("phoneNumber", phoneNumber);
+    }
+
+    @GetMapping("add")
+    public String add() {
+        return"auth/membership";
     }
 
     @PostMapping("login")
@@ -75,7 +81,7 @@ public class AuthController {
                 member.setPhoto(uploadFileUrl);
             }
             memberService.add(member);
-            return "redirect:list";
+            return "auth/membership";
 
         } catch (Exception e) {
             model.addAttribute("message", "회원 등록 오류!");
@@ -83,6 +89,7 @@ public class AuthController {
             throw e;
         }
     }
+
     @GetMapping("logout")
     public String logout(HttpSession session) throws Exception {
         session.invalidate();

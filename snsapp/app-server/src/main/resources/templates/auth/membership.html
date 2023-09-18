@@ -2,14 +2,22 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>회원가입</title>
+    <title>BITSNS</title>
+
     <style>
+        html {
+            height: 100%;
+        }
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             font-size: 16px;
+            height: 100%;
+            margin: 0;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+            background-color: #3a3a3a;
         }
 
         h2 {
@@ -23,6 +31,7 @@
             text-align: left;
             border-radius: 10px;
             overflow: hidden;
+            background: #cccccc;
         }
 
         th, td {
@@ -74,10 +83,8 @@
         }
     </style>
 
-    <title>BITSNS</title>
-</head>
-    <form action='add' method='post'>
 
+</head>
 <body>
 <h2>회원가입 양식</h2>
 <table>
@@ -126,14 +133,10 @@
     </tr>
     <tr>
         <td>
-            <input type="submit" value="가입하기">
-            <input type="submit" value="초기화">
-            <input type="submit" value="skip">
-            <input type="submit" value="회원탈퇴">
+            <button type="submit">가입하기</button>
+            <button type='reset'>초기화</button>
         </td>
     </tr>
 </table>
-
 </body>
-    </form>
 </html>
