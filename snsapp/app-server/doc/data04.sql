@@ -26,6 +26,12 @@ VALUES
   (9, '아홉 번째 회원의 상태 메시지입니다.', '1991-08-03', 1,  80, 130, NOW()),
   (10, 'This is the tenth user''s status message.', '1989-02-18', 2, 70, 120, NOW());
 
+-- 게시글 카테고리
+  INSERT INTO sns_board_category (name)
+  VALUES
+      ('게시글'),
+      ('방명록');
+
 -- 게시글
 INSERT INTO `sns_board` (`mno`, `title`, `content`, `view_count`, `likes`, `category`, `created_at`, `updated_at`)
 VALUES
@@ -103,3 +109,5 @@ VALUES
   (8, 1, 1, 1, 1),
   (9, 1, 1, 1, 1),
   (10, 1, 1, 1, 1);
+  
+

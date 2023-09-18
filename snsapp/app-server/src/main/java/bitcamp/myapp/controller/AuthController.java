@@ -38,6 +38,10 @@ public class AuthController {
     public String add() {
         return"auth/membership";
     }
+    @GetMapping("find")
+    public String find() {
+        return "auth/loginfind";
+    }
 
     @PostMapping("login")
     public String login(
@@ -83,6 +87,15 @@ public class AuthController {
             throw e;
         }
     }
+
+
+    @PostMapping("find")
+    public String find(HttpSession session) throws Exception {
+        session.invalidate();
+        return "auth/loginfind";
+    }
+
+
 
     @GetMapping("logout")
     public String logout(HttpSession session) throws Exception {
