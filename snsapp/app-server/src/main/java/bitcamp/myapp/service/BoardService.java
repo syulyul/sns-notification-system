@@ -2,6 +2,7 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.BoardPhoto;
+import bitcamp.myapp.vo.Member;
 
 import java.util.List;
 
@@ -16,8 +17,13 @@ public interface BoardService {
     BoardPhoto getAttachedFile(int fileNo) throws Exception;
     int deleteAttachedFile(int fileNo) throws Exception;
 
+    int increaseLikes(int boardNo) throws Exception; //board테이블 좋아요+1
+
+    int decreaseLikes(int boardNo) throws Exception; //board테이블 좋아요-1
+
     int like(int memberNo, int boardNo) throws Exception;
-    int unLike(int memberNo, int boardNo) throws Exception;
-    int increaseLike(int memberNo, int boardNo) throws Exception;
-    int decreaseLike(int memberNo, int boardNo) throws Exception;
+    //board_like테이블 좋아요정보 추가
+
+    int unlike(int memberNo, int boardNo) throws Exception;
+    //board_like테이블 좋아요정보 삭제
 }

@@ -25,7 +25,7 @@
             border: 1px solid #888;
             height: 400px; /* 원하는 높이로 조절하세요 */
             width: 500px;
-            position: relative; /* content-box도 상대적 위치 설정 */
+            position: relative;
         }
 
         /* 제목 스타일 */
@@ -66,34 +66,87 @@
             cursor: pointer;
             padding: 5px 10px; /* 버튼 내부 여백 설정 */
             position: absolute; /* 절대 위치 설정 */
+            bottom: 50px; /* 하단에 위치하도록 설정 */
+            right: 10px; /* 우측에 위치하도록 설정 */
+        }
+
+        .unlike-button {
+            background-color: transparent; /* 배경 색상을 투명하게 설정 */
+            border: 1px solid #fff; /* 테두리 흰색으로 설정 */
+            border-radius: 4px; /* 버튼 모서리 둥글게 설정 */
+            cursor: pointer;
+            padding: 5px 10px; /* 버튼 내부 여백 설정 */
+            position: absolute; /* 절대 위치 설정 */
             bottom: 10px; /* 하단에 위치하도록 설정 */
             right: 10px; /* 우측에 위치하도록 설정 */
         }
+
+        .comment-box {
+            margin-top: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .comment-input textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .comment-input button {
+            background-color: #426B1F;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px; /* 버튼 간격 조절을 위해 margin-left 추가 */
+        }
+
+        .comment-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comment-list th, .comment-list td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
     </style>
 
     <script>
-        /* 좋아요 버튼 클릭 시 실행되는 함수 */
         function likeButtonClicked() {
-            var boardNo = /* 게시글 번호를 여기에 동적으로 설정하세요 */ 0;
-            var currentLikes = parseInt(document.getElementById("likeButton").textContent.match(/\d+/)[0]);
-            var newLikes;
+            const boardNo = document.getElementById("likeButton").getAttribute("data-board-no");
+            const memberNo = 3; //임시로 설정 (로그인 구현시 추가해야함)
 
-            // 좋아요 수 업데이트
-            if (document.getElementById("likeButton").classList.contains("liked")) {
-                // 이미 좋아요를 누른 경우, 좋아요를 취소합니다.
-                newLikes = currentLikes - 1;
-                document.getElementById("likeButton").classList.remove("liked");
-            } else {
-                // 아직 좋아요를 누르지 않은 경우, 좋아요를 추가합니다.
-                newLikes = currentLikes + 1;
-                document.getElementById("likeButton").classList.add("liked");
-            }
+            fetch(`/board/like?memberNo=${memberNo}&boardNo=${boardNo}`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data !== -1) {
+                        document.getElementById("likeButton").innerText = `❤️ 좋아요 (${data})`;
+                    }
+                });
+        }
 
-            // 좋아요 수 업데이트
-            document.getElementById("likeButton").textContent = "❤️ 좋아요 (" + newLikes + ")";
+        function unlikeButtonClicked() {
+            const boardNo = document.getElementById("unlikeButton").getAttribute("data-board-no");
+            const memberNo = 3; //임시로 설정 (로그인 구현시 추가해야함)
+
+            fetch(`/board/unlike?memberNo=${memberNo}&boardNo=${boardNo}`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data !== -1) {
+                        document.getElementById("unlikeButton").innerText = `좋아요취소 (${data})`;
+                    }
+                });
         }
     </script>
-    
 </head>
 <body>
 
@@ -122,18 +175,36 @@
                 onclick="likeButtonClicked()">
             ❤️ 좋아요 (0)
         </button>
+        <button class="unlike-button" id="unlikeButton" th:if="${board != null}"
+                th:text="'취소 (' + ${board.likes != null ? board.likes : '0'} + ')'"
+                th:attr="data-board-no=${board != null ? board.no : '0'}"
+                onclick="unlikeButtonClicked()">
+            ❤️ 좋아요 (0)
+        </button>
     </div>
-    <div class="btn-container">
-        <button>변경</button>
-        <button type="reset">초기화</button>
-        <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
-            <button>삭제</button>
-        </a>
-        <a th:href="@{/board/list(category=${board.category})}">
-            <button>목록</button>
-        </a>
+    <div class="comment-box">
+        <div class="comment-list">
+            <h1>댓글 목록</h1>
+            <table border='1'>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>작성자</th>
+                    <th>내용</th>
+                    <th>등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="boardComment : ${list}">
+                    <td data-th-text="${boardComment.no}">200</td>
+                    <td data-th-text="${boardComment.writer.name}">홍길동</td>
+                    <td data-th-text="${boardComment.content}">댓글 제목</td>
+                    <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">2023-09-14</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
 </div>
 </body>
 </html>

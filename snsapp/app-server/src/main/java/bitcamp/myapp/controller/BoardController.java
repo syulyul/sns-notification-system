@@ -3,23 +3,23 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Board;
-import bitcamp.myapp.vo.BoardLike;
 import bitcamp.myapp.vo.BoardPhoto;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/board")
@@ -86,11 +86,6 @@ public class BoardController {
             boardService.increaseViewCount(no);
             model.addAttribute("board", board);
         }
-
-        BoardLike boardLike = new BoardLike();
-        boardLike.setBoardNo(no);
-        boardLike.setMemberNo(1);
-
         return "board/detail";
     }
 
@@ -156,29 +151,23 @@ public class BoardController {
         }
     }
 
-    @GetMapping("like")
-    public String follow(
-            @RequestParam("memberNo") int memberNo,
-            @RequestParam("boardNo") int boardNo,
-            int category) throws Exception {
-//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        LoginUser loginUser = new LoginUser();
-        loginUser.setNo(1);
-        memberNo = loginUser.getNo();
-        boardService.like(memberNo, boardNo);
-        return "redirect:/board/list?category=" + category;
+    @PostMapping("like")
+    public int like(@RequestParam int memberNo, @RequestParam int boardNo) {
+        try {
+            boardService.like(memberNo, boardNo);
+            return boardService.increaseLikes(boardNo);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
-    @GetMapping("unlike")
-    public String unlike(
-            @RequestParam("memberNo") int memberNo,
-            @RequestParam("boardNo") int boardNo,
-            int category) throws Exception {
-//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        LoginUser loginUser = new LoginUser();
-        loginUser.setNo(1);
-        memberNo = loginUser.getNo();
-        boardService.like(memberNo, boardNo);
-        return "redirect:/board/list?category=" + category;
+    @PostMapping("unlike")
+    public int unlike(@RequestParam int memberNo, @RequestParam int boardNo) {
+        try {
+            boardService.unlike(memberNo, boardNo);
+            return boardService.decreaseLikes(boardNo);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 }

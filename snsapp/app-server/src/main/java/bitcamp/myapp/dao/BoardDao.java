@@ -21,8 +21,14 @@ public interface BoardDao {
   int deleteFile(int fileNo);
   int deleteFiles(int boardNo);
 
-  int insertLike(@Param("memberNo") int memberNo, @Param("boardNo") int boardNo);
-  int deleteLike(@Param("memberNo") int memberNo, @Param("boardNo") int boardNo);
-  int updateIncreaseLikes(@Param("memberNo") int memberNo, @Param("boardNo") int boardNo);
-  int updateDecreaseLikes(@Param("memberNo") int memberNo, @Param("boardNo") int boardNo);
+  int insertLike(
+          @Param("memberNo") int memberNo,
+          @Param("boardNo") int boardNo);
+
+  int cancelLike(
+          @Param("memberNo") int memberNo,
+          @Param("boardNo") int boardNo);
+
+  int updateLike(int boardNo);
+  int deleteLike(int boardNo);
 }

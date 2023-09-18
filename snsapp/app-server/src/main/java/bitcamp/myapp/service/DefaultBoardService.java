@@ -44,7 +44,7 @@ public class DefaultBoardService implements BoardService {
     @Override
     public int update(Board board) throws Exception {
         int count = boardDao.update(board);
-        if (count > 0 && board.getAttachedFiles().size() > 0) {
+        if (count > 0 && !board.getAttachedFiles().isEmpty()) {
             boardDao.insertFiles(board);
         }
         return count;
@@ -73,23 +73,26 @@ public class DefaultBoardService implements BoardService {
         return boardDao.deleteFile(fileNo);
     }
 
+    //like테이블 정보 삽입 삭제
     @Override
     public int like(int memberNo, int boardNo) throws Exception {
         return boardDao.insertLike(memberNo, boardNo);
     }
 
     @Override
-    public int unLike(int memberNo, int boardNo) throws Exception {
-        return boardDao.deleteLike(memberNo, boardNo);
+    public int unlike(int memberNo, int boardNo) throws Exception {
+        return boardDao.cancelLike(memberNo, boardNo);
+    }
+
+    //board테이블 좋아요수 +1 -1
+    @Transactional
+    @Override
+    public int increaseLikes(int boardNo) throws Exception {
+        return boardDao.updateLike(boardNo);
     }
 
     @Override
-    public int increaseLike(int memberNo, int boardNo) throws Exception {
-        return boardDao.updateIncreaseLikes(memberNo, boardNo);
-    }
-
-    @Override
-    public int decreaseLike(int memberNo, int boardNo) throws Exception {
-        return boardDao.updateDecreaseLikes(memberNo, boardNo);
+    public int decreaseLikes(int boardNo) throws Exception {
+        return boardDao.deleteLike(boardNo);
     }
 }
