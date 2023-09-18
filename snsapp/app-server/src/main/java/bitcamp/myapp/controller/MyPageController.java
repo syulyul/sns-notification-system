@@ -48,6 +48,18 @@ public class MyPageController {
         member1.setNo(1);
         followingSet.add(member1);
         loginUser.setFollowMemberSet(followingSet);
+
+        // 세션에 저장된 방문한 마이페이지 번호 목록을 가져오기
+        HashSet<Integer> visitedMyPages = loginUser.getVisitedMyPages();
+
+        // 만약 방문한 적 없는 마이페이지라면 조회수 증가
+        if (!visitedMyPages.contains(no)) {
+            myPageService.increaseVisitCount(no);
+
+            // 방문한 마이페이지 번호를 세션에 추가
+            visitedMyPages.add(no);
+        }
+
         model.addAttribute("myPage", myPageService.get(no));
         switch (show) {
             case SHOW_FOLLOWERS:
@@ -60,7 +72,7 @@ public class MyPageController {
                 model.addAttribute("list", null);
                 break;
         }
-        myPageService.increaseVisitCount(no);
+//        myPageService.increaseVisitCount(no);
         model.addAttribute("loginUser", loginUser);
         return "myPage/detail";
     }
