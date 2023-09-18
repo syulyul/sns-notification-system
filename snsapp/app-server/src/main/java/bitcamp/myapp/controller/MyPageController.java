@@ -60,6 +60,7 @@ public class MyPageController {
                 model.addAttribute("list", null);
                 break;
         }
+        myPageService.increaseVisitCount(no);
         model.addAttribute("loginUser", loginUser);
         return "myPage/detail";
     }

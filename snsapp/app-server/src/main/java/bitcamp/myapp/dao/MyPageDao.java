@@ -15,6 +15,8 @@ public interface MyPageDao {
 
   int update(MyPage myPage);
 
+  int updateCount(int memberNo);
+
   int delete(int memberNo);
 
   int insertFollow(
