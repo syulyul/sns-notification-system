@@ -135,7 +135,8 @@
     </div>
     <div class="memberListBox" data-th-if="${list}">
         <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
-        <h3 data-th-text="'회원 리스트'"></h3>
+        <h3 data-th-if="${show.equals('followers')}" data-th-text="'팔로워 리스트'"></h3>
+        <h3 data-th-if="${show.equals('followings')}" data-th-text="'팔로잉 리스트'"></h3>
         <div data-th-each="member : ${list}">
             <div class="memberItem">
                 <input data-th-id="memberNo" data-th-value="${member.no}" type="hidden">
