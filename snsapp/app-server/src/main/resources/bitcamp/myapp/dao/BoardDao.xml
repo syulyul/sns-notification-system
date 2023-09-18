@@ -126,19 +126,26 @@
     bno=#{no}
   </delete>
 
-  <update id="updateLikes" parameterType="int">
+  <update id="updateLike" parameterType="int">
     update sns_board set
     likes=likes + 1
     where
     bno=#{no}
   </update>
 
+  <delete id="deleteLike" parameterType="int">
+    update sns_board set
+    likes=likes - 1
+    where
+    bno=#{no}
+  </delete>
+
   <insert id="insertLike">
     insert into sns_board_like(mno, bno)
     values(#{memberNo}, #{boardNo})
   </insert>
 
-  <delete id="deleteLike">
+  <delete id="cancelLike">
     delete from sns_board_like
     where
     mno=#{memberNo}

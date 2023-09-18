@@ -6,6 +6,8 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.BoardPhoto;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/board")
@@ -86,8 +90,16 @@ public class BoardController {
     }
 
     @GetMapping("list")
-    public void list(int category, Model model) throws Exception {
-        model.addAttribute("list", boardService.list(category));
+    public String list(@RequestParam int category, Model model) throws Exception {
+        if (category == 1) {
+            model.addAttribute("list", boardService.list(category));
+            return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
+        } else if (category == 2) {
+            model.addAttribute("list", boardService.list(category));
+            return "board/read"; // 카테고리가 2일 때 "read.html"을 실행
+        } else {
+            throw new Exception("유효하지 않은 카테고리입니다.");
+        }
     }
 
     @PostMapping("update")
@@ -139,57 +151,24 @@ public class BoardController {
         }
     }
 
-    @GetMapping("like")
-    public String like(
-            @RequestParam int show,
-            @RequestParam("boardNo") int boardNo,
-            @RequestParam("likes") int likes) throws Exception {
-        // 로그인한 사용자 정보를 가져오는 코드를 추가
-//        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        LoginUser loginUser = new LoginUser();
-        loginUser.setNo(1); // 임시로 사용자 번호설정
-
-//         게시글 좋아요 토글 메소드를 호출하여 사용자의 좋아요를 추가하거나 제거
-        boardService.like(loginUser.getNo(), boardNo);
-
-        // 다시 해당 게시글 상세 페이지로 리다이렉트합니다.
-        return "redirect:/board/detail/" + boardNo + "?show=" + show;
+    @PostMapping("like")
+    public int like(@RequestParam int memberNo, @RequestParam int boardNo) {
+        try {
+            boardService.like(memberNo, boardNo);
+            return boardService.increaseLikes(boardNo);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
-    @GetMapping("unlike")
-    public String unlike(
-            @RequestParam int show,
-            @RequestParam("boardNo") int boardNo,
-            @RequestParam("likes") int likes) throws Exception {
-//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-        LoginUser loginUser = new LoginUser();
-        loginUser.setNo(1);
-
-        boardService.unlike(loginUser.getNo(), boardNo);
-        return "redirect:" + boardNo + "?show=" + show;
+    @PostMapping("unlike")
+    public int unlike(@RequestParam int memberNo, @RequestParam int boardNo) {
+        try {
+            boardService.unlike(memberNo, boardNo);
+            return boardService.decreaseLikes(boardNo);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
-//    @GetMapping("follow")
-//    public String follow(
-//            @RequestParam int show,
-//            @RequestParam("myPageNo") int myPageNo,
-//            @RequestParam("followingNo") int followingNo) throws Exception {
-////    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-//        LoginUser loginUser = new LoginUser();
-//        loginUser.setNo(1);
-//        myPageService.follow(loginUser.getNo(), followingNo);
-//        return "redirect:" + myPageNo + "?show=" + show;
-//    }
-//
-//    @GetMapping("unfollow")
-//    public String unfollow(
-//            @RequestParam int show,
-//            @RequestParam("myPageNo") int myPageNo,
-//            @RequestParam("followingNo") int followingNo) throws Exception {
-////    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-//        LoginUser loginUser = new LoginUser();
-//        loginUser.setNo(1);
-//        myPageService.unfollow(loginUser.getNo(), followingNo);
-//        return "redirect:" + myPageNo + "?show=" + show;
-//    }
 }

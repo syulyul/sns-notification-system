@@ -25,9 +25,10 @@ public interface BoardDao {
           @Param("memberNo") int memberNo,
           @Param("boardNo") int boardNo);
 
-  int deleteLike(
+  int cancelLike(
           @Param("memberNo") int memberNo,
           @Param("boardNo") int boardNo);
 
-  int updateLikes(int boardNo);
+  int updateLike(int boardNo);
+  int deleteLike(int boardNo);
 }

@@ -25,6 +25,7 @@
             border: 1px solid #888;
             height: 400px; /* 원하는 높이로 조절하세요 */
             width: 500px;
+            position: relative;
         }
 
         /* 제목 스타일 */
@@ -65,51 +66,53 @@
             cursor: pointer;
             padding: 5px 10px; /* 버튼 내부 여백 설정 */
             position: absolute; /* 절대 위치 설정 */
+            bottom: 50px; /* 하단에 위치하도록 설정 */
+            right: 10px; /* 우측에 위치하도록 설정 */
+        }
+
+        .unlike-button {
+            background-color: transparent; /* 배경 색상을 투명하게 설정 */
+            border: 1px solid #fff; /* 테두리 흰색으로 설정 */
+            border-radius: 4px; /* 버튼 모서리 둥글게 설정 */
+            cursor: pointer;
+            padding: 5px 10px; /* 버튼 내부 여백 설정 */
+            position: absolute; /* 절대 위치 설정 */
             bottom: 10px; /* 하단에 위치하도록 설정 */
             right: 10px; /* 우측에 위치하도록 설정 */
         }
     </style>
+
     <script>
-        /* 좋아요 버튼 클릭 시 실행되는 함수 */
         function likeButtonClicked() {
-            var boardNo = /* 게시글 번호를 여기에 동적으로 설정하세요 */ 0;
-            var currentLikes = parseInt(document.getElementById("likeButton").textContent.match(/\d+/)[0]);
-            var newLikes;
+            const boardNo = document.getElementById("likeButton").getAttribute("data-board-no");
+            const memberNo = 3; //임시로 설정 (로그인 구현시 추가해야함)
 
-            // 좋아요 수 업데이트
-            if (document.getElementById("likeButton").classList.contains("liked")) {
-                // 이미 좋아요를 누른 경우, 좋아요 취소
-                newLikes = currentLikes - 1;
-                document.getElementById("likeButton").classList.remove("liked");
-            } else {
-                // 아직 좋아요를 누르지 않은 경우, 좋아요 추가
-                newLikes = currentLikes + 1;
-                document.getElementById("likeButton").classList.add("liked");
-            }
-
-            // 좋아요 수 업데이트
-            document.getElementById("likeButton").textContent = "❤️ 좋아요 (" + newLikes + ")";
-
-            // AJAX를 사용하여 서버로 좋아요 정보를 업데이트하는 요청 보내기
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/like?show=" + show + "&boardNo=" + boardNo + "&likes=" + newLikes, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // AJAX 요청이 성공했을 때의 처리
-                        var response = JSON.parse(xhr.responseText);
-                        // 서버에서 업데이트된 좋아요 정보를 처리할 수 있습니다.
-                    } else {
-                        // AJAX 요청이 실패했을 때의 처리
-                        console.error("좋아요 업데이트 실패");
+            fetch(`/board/like?memberNo=${memberNo}&boardNo=${boardNo}`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data !== -1) {
+                        document.getElementById("likeButton").innerText = `❤️ 좋아요 (${data})`;
                     }
-                }
-            };
-            xhr.send();
+                });
+        }
+
+        function unlikeButtonClicked() {
+            const boardNo = document.getElementById("unlikeButton").getAttribute("data-board-no");
+            const memberNo = 3; //임시로 설정 (로그인 구현시 추가해야함)
+
+            fetch(`/board/unlike?memberNo=${memberNo}&boardNo=${boardNo}`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data !== -1) {
+                        document.getElementById("unlikeButton").innerText = `좋아요취소 (${data})`;
+                    }
+                });
         }
     </script>
-
-
 </head>
 <body>
 
@@ -138,6 +141,13 @@
                 onclick="likeButtonClicked()">
             ❤️ 좋아요 (0)
         </button>
+        <button class="unlike-button" id="unlikeButton" th:if="${board != null}"
+                th:text="'취소 (' + ${board.likes != null ? board.likes : '0'} + ')'"
+                th:attr="data-board-no=${board != null ? board.no : '0'}"
+                onclick="unlikeButtonClicked()">
+            ❤️ 좋아요 (0)
+        </button>
+
     </div>
     <div class="btn-container">
         <button>변경</button>
@@ -149,7 +159,7 @@
             <button>목록</button>
         </a>
     </div>
-
+    </div>
 </div>
 </body>
 </html>
