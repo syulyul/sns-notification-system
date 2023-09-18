@@ -33,6 +33,11 @@
     <result column="board_no"       property="boardNo"/>
   </resultMap>
 
+  <resultMap type="boardLike" id="boardLikeMap">
+    <result column="member_no"      property="memberNo"/>
+    <result column="board_no"       property="boardNo"/>
+  </resultMap>
+
   <insert id="insert" parameterType="board"
           useGeneratedKeys="true" keyColumn="board_no" keyProperty="no">
     insert into sns_board(title,content,category)
@@ -125,6 +130,16 @@
     where
       bno=#{no}
   </delete>
+
+  <select id="findLikeBy" parameterType="int" resultMap="boardLikeMap">
+    select
+      mno,
+      bno
+    from
+      sns_board_like
+    where
+      mno=#{memberNo} and bno=#{boardNo}
+  </select>
 
   <update id="updateIncreaseLikes" parameterType="int">
     update sns_board set

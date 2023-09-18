@@ -3,6 +3,7 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.BoardLike;
 import bitcamp.myapp.vo.BoardPhoto;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
@@ -85,6 +86,10 @@ public class BoardController {
             boardService.increaseViewCount(no);
             model.addAttribute("board", board);
         }
+
+        BoardLike boardLike = new BoardLike();
+        boardLike.setBoardNo(no);
+        boardLike.setMemberNo(1);
 
         return "board/detail";
     }
