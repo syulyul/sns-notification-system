@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
+
+    private Member member;
 
     {
         System.out.println("AuthController 생성됨!");
@@ -45,7 +46,6 @@ public class AuthController {
             HttpSession session,
             Model model,
             HttpServletResponse response) throws Exception {
-    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         if (savephone_Number != null) {
             Cookie cookie = new Cookie("phone_Number", phone_Number);
             response.addCookie(cookie);
@@ -54,7 +54,13 @@ public class AuthController {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
         }
+        Member loginUser = memberService.get(phone_Number, password);
+        if (loginUser == null) {
+            model.addAttribute("refresh", "2;url=form");
+            throw new Exception("회원 정보가 일치하지 않습니다.");
+        }
 
+        session.setAttribute("loginUser", loginUser);
         return "redirect:/";
     }
 
@@ -66,26 +72,10 @@ public class AuthController {
 
 
     @GetMapping("add")
-    public String add(Member member, LoginUser followMemberSet, LoginUser likeBoardSet , MultipartFile photofile) throws Exception {
+    public String add(Member member) throws Exception {
 
-        if (photofile.getSize() > 0) {
-            String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                    "bitcamp-nc7-bucket-14", "member/", photofile); // pang  bitcamp-nc7-bucket-14
-        }
         memberService.add(member);
-        return "redirect:/";
+        return "/auth/form";
     }
-
-@GetMapping("loginfind")
-public String loginfind(Member member, MultipartFile photofile) throws Exception {
-
-    if (photofile.getSize() > 0) {
-        String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-14", "member/", photofile); // pang  bitcamp-nc7-bucket-14
-    }
-    memberService.add(member);
-    return "redirect:list";
-}
-
 
 }
