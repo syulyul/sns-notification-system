@@ -5,9 +5,8 @@ import java.util.Set;
 
 public class LoginUser extends Member {
 
-  private Set<Member> followMemberSet; // 로그인 한 유저가 팔로우하는 멤버 집합
-  private Set<Board> likeBoardSet; // 로그인 한 유저가 좋아요를 누른 게시글 집합
-
+  private HashSet<Member> followMemberSet; // 로그인 한 유저가 팔로우하는 멤버 집합
+  private HashSet<Board> likeBoardSet; // 로그인 한 유저가 좋아요를 누른 게시글 집합
   private HashSet<Integer> visitedMyPages = new HashSet<>(); // 방문한 유저를 담는 집합
 
   public LoginUser() {
