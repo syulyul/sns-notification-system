@@ -68,7 +68,6 @@ public class MyPageController {
 
   @GetMapping("follow")
   public void follow(
-      @RequestParam("myPageNo") int myPageNo,
       @RequestParam("followingNo") int followingNo,
       HttpSession session,
       HttpServletResponse response) throws Exception, IOException {
@@ -83,7 +82,6 @@ public class MyPageController {
 
   @GetMapping("unfollow")
   public void unfollow(
-      @RequestParam("myPageNo") int myPageNo,
       @RequestParam("followingNo") int followingNo,
       HttpSession session,
       HttpServletResponse response) throws Exception {
