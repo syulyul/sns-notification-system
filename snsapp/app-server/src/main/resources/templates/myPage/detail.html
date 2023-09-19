@@ -114,13 +114,6 @@
         padding: 10px 0;
         border-bottom: 1px solid #ccc; /* 회원 항목 사이에 구분선 추가 */
 
-        > label {
-            background-color: grey;
-        }
-
-        > .followCheckbox {
-            display: none;
-        }
     }
 
     .memberPhoto {
@@ -129,15 +122,21 @@
         border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
     }
 
+    /* 팔로우 언팔로우 버튼 디자인 및 토글 구현 */
+    .followCheckbox {
+        display: none;
+    }
     .unfollowLabel {
         display: none;
     }
     .followCheckbox:checked ~ .unfollowLabel { /* 팔로우 되어 있는 상태 == 언팔 버튼이 보여야함 */
         display: inline-block;
+        background-color: grey;
     }
 
     .followLabel {
         display: inline-block;
+        background-color: grey;
     }
     .followCheckbox:checked ~ .followLabel {
         display: none;
