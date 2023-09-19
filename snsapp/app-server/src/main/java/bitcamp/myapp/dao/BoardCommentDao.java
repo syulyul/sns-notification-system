@@ -9,7 +9,7 @@ import java.util.List;
 public interface BoardCommentDao {
   int insert(BoardComment boardComment);
   List<BoardComment> findAll(int boardNo);
-  BoardComment findBy(int no);
+  BoardComment findBy(int no, int boardNo);
   int update(BoardComment boardComment);
-  int delete(int no);
+  int delete(int no, int boardNo);
 }

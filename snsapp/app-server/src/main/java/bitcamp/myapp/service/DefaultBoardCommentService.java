@@ -32,8 +32,8 @@ public class DefaultBoardCommentService implements BoardCommentService {
     }
 
     @Override
-    public BoardComment get(int no) throws Exception {
-        return boardCommentDao.findBy(no);
+    public BoardComment get(int no, int boardNo) throws Exception {
+        return boardCommentDao.findBy(no, boardNo);
     }
 
     @Transactional
@@ -45,7 +45,7 @@ public class DefaultBoardCommentService implements BoardCommentService {
 
     @Transactional
     @Override
-    public int delete(int no) throws Exception {
-        return boardCommentDao.delete(no);
+    public int delete(int no, int boardNo) throws Exception {
+        return boardCommentDao.delete(no, boardNo);
     }
 }

@@ -129,7 +129,6 @@
                     if (data !== -1) {
                         document.getElementById("likeButton").innerText = `❤️ 좋아요 (${data})`;
                     }
-                    location.reload(); // 페이지를 새로고침
                 });
         }
 
@@ -145,7 +144,6 @@
                     if (data !== -1) {
                         document.getElementById("unlikeButton").innerText = `좋아요취소 (${data})`;
                     }
-                    location.reload(); // 페이지를 새로고침
                 });
         }
     </script>
@@ -183,31 +181,29 @@
                 onclick="unlikeButtonClicked()">
             ❤️ 좋아요 (0)
         </button>
-
     </div>
-    <div class="btn-container">
-        <button>변경</button>
-        <button type="reset">초기화</button>
-        <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
-            <button>삭제</button>
-        </a>
-        <a th:href="@{/board/list(category=${board.category})}">
-            <button>목록</button>
-        </a>
-    </div>
-    <div th:if="${boardNo == (board != null ? board.no : 0)}">
-        <table border="1">
-            <thead>
-            <tr><th>번호</th> <th>작성자</th> <th>내용</th> <th>등록일</th></tr>
-            </thead>
-            <tbody>
-            <tr th:each="comment : ${list}">
-                <td th:text="${comment.no}">게시글 번호</td>
-                <td th:text="${comment.writer.name}">작성자</td>
-                <td th:text="${#dates.format(comment.createdAt, 'yyyy-MM-dd')}">등록일</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="comment-box">
+        <div class="comment-list">
+            <h1>댓글 목록</h1>
+            <table border='1'>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>작성자</th>
+                    <th>내용</th>
+                    <th>등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="comments : ${commentList}">
+                    <td data-th-text="${boardComment.no}">200</td>
+                    <td data-th-text="${boardComment.writer.name}">홍길동</td>
+                    <td data-th-text="${boardComment.content}">댓글 내용</td>
+                    <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">2023-09-14</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>

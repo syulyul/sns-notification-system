@@ -9,23 +9,25 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface MyPageDao {
 
-    int insert(MyPage myPage);
+  int insert(MyPage myPage);
 
-    MyPage findBy(int memberNo);
+  MyPage findBy(int memberNo);
 
-    int update(MyPage myPage);
+  int update(MyPage myPage);
 
-    int delete(int memberNo);
+  int updateCount(int memberNo);
 
-    int insertFollow(
-            @Param("followerNo") int followerNo,
-            @Param("followingNo") int followingNo);
+  int delete(int memberNo);
 
-    int deleteFollow(
-            @Param("followerNo") int followerNo,
-            @Param("followingNo") int followingNo);
+  int insertFollow(
+      @Param("followerNo") int followerNo,
+      @Param("followingNo") int followingNo);
 
-    List<Member> findAllFollowers(int memberNo);
+  int deleteFollow(
+      @Param("followerNo") int followerNo,
+      @Param("followingNo") int followingNo);
 
-    List<Member> findAllFollowings(int memberNo);
+  List<Member> findAllFollowers(int memberNo);
+
+  List<Member> findAllFollowings(int memberNo);
 }

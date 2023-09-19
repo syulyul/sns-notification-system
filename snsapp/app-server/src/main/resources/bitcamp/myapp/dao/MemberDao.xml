@@ -4,77 +4,82 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bitcamp.myapp.dao.MemberDao">
 
-  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
-  <resultMap type="member" id="memberMap">
-    <id     column="member_no"    property="no"/>
-    <result column="nick"         property="nick"/>
-    <result column="name"         property="name"/>
-    <result column="phoneNumber"        property="phoneNumber"/>
-    <result column="password"     property="password"/>
-    <result column="photo"        property="photo"/>
-  </resultMap>
+    <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+    <resultMap type="member" id="memberMap">
+        <id     column="mno"    property="no"/>
+        <result column="nick"         property="nick"/>
+        <result column="name"         property="name"/>
+        <result column="phone_number"        property="phoneNumber"/>
+        <result column="password"     property="password"/>
+        <result column="filepath"        property="photo"/>
+    </resultMap>
 
-  <insert id="insert" parameterType="member">
-    insert into myapp_member(nick,name,phoneNumber,password,photo)
-    values(#{nick},#{name},#{phoneNumber},sha1(#{password}),#{photo})
-  </insert>
+    <insert id="insert" parameterType="member">
+        insert into sns_member(nick,name,phone_number,password,filepath)
+        values(#{nick},#{name},#{phoneNumber},sha1(#{password}),#{photo})
+    </insert>
 
-  <select id="findAll" resultMap="memberMap">
-    select
-    member_no,
-    nick,
-    name,
-    phoneNumber,
-    photo
-    from
-    myapp_member
-    order by
-    name asc
-  </select>
+    <select id="findAll" resultMap="memberMap">
+        select
+        mno,
+        nick,
+        name,
+        phone_number,
+        filepath
+        from
+        sns_member
+        order by
+        name asc
+    </select>
 
-  <select id="findBy" parameterType="int" resultMap="memberMap">
-    select
-    member_no,
-    nick,
-    name,
-    phoneNumber,
-    photo
-    from
-    myapp_member
-    where
-    member_no=#{no}
-  </select>
+    <select id="findBy" parameterType="int" resultMap="memberMap">
+        select
+        mno,
+        nick,
+        name,
+        phone_number,
+        filepath
+        from
+        sns_member
+        where
+        mno=#{no}
+    </select>
 
-  <select id="findByEmailAndPassword" resultMap="memberMap">
-    select
-    member_no,
-    nick,
-    name,
-    phoneNumber,
-    photo
-    from
-    myapp_member
-    where
-    phoneNumber=#{phoneNumber}
-    and password=sha1(#{password})
-  </select>
+    <select id="findByPhoneNumberAndPassword" resultMap="memberMap">
+        select
+        mno,
+        nick,
+        name,
+        phone_number,
+        filepath
+        from
+        sns_member
+        where
+        phone_number=#{phoneNumber}
+        and password=sha1(#{password})
+    </select>
 
-  <update id="update" parameterType="member">
-    update myapp_member set
-    nick=#{nick},
-    name=#{name}
-    ,phoneNumber=#{phoneNumber}
-    ,password=sha1(#{password})
-    <if test="photo != null">
-      ,photo=#{photo}
-    </if>
-    where
-    member_no=#{no}
-  </update>
+    <update id="update" parameterType="member">
+        update sns_member set
+        nick=#{nick},
+        name=#{name}
+        ,phone_number=#{phoneNumber}
+        ,password=sha1(#{password})
+        <if test="filepath != null">
+            ,filepath=#{photo}
+        </if>
+        where
+        mno=#{no}
+    </update>
 
-  <delete id="delete" parameterType="int">
-    delete from myapp_member
-    where
-    member_no=#{no}
-  </delete>
+    <delete id="delete" parameterType="int">
+        delete from sns_member
+        where
+        mno=#{no}
+    </delete>
 </mapper>
+
+
+
+
+

@@ -8,10 +8,10 @@ import java.util.List;
 
 @Mapper
 public interface MemberDao {
-    int insert(Member member);
-    List<Member> findAll();
-    Member findBy(int no);
-    Member findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
-    int update(Member member);
-    int delete(int no);
+  int insert(Member member);
+  List<Member> findAll();
+  Member findBy(int no);
+  Member findByPhoneNumberAndPassword(@Param("phoneNumber") String phoneNumber, @Param("password") String password);
+  int update(Member member);
+  int delete(int no);
 }

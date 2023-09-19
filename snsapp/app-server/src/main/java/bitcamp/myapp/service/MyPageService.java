@@ -2,6 +2,7 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
+
 import java.util.List;
 
 public interface MyPageService {
@@ -12,11 +13,13 @@ public interface MyPageService {
 
     int update(MyPage myPage) throws Exception;
 
+    int increaseVisitCount(int memberNo) throws Exception;
+
     int delete(int memberNo) throws Exception;
 
-    int follow(int followerNo, int followingNo) throws Exception;
+    int follow(Member follower, int followingNo) throws Exception;
 
-    int unfollow(int followerNo, int followingNo) throws Exception;
+    int unfollow(Member follower, int followingNo) throws Exception;
 
     List<Member> followerList(int memberNo) throws Exception;
 

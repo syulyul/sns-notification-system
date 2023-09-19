@@ -33,6 +33,11 @@
     <result column="board_no"       property="boardNo"/>
   </resultMap>
 
+  <resultMap type="boardLike" id="boardLikeMap">
+    <result column="member_no"      property="memberNo"/>
+    <result column="board_no"       property="boardNo"/>
+  </resultMap>
+
   <insert id="insert" parameterType="board"
           useGeneratedKeys="true" keyColumn="board_no" keyProperty="no">
     insert into sns_board(title,content,category)
@@ -41,60 +46,60 @@
 
   <select id="findAll" parameterType="int" resultMap="boardMap">
     select
-    b.bno,
-    b.title,
-    b.view_count,
-    b.created_at,
-    b.category,
-    m.mno,
-    m.name
+      b.bno,
+      b.title,
+      b.view_count,
+      b.created_at,
+      b.category,
+      m.mno,
+      m.name
     from
-    sns_board b inner join sns_member m on b.mno=m.mno
+      sns_board b inner join sns_member m on b.mno=m.mno
     where
-    category=#{categoryNo}
+      category=#{categoryNo}
     order by
-    b.bno desc
+      b.bno desc
   </select>
 
   <select id="findBy" resultMap="boardMap" parameterType="int">
     select
-    b.bno,
-    b.title,
-    b.content,
-    b.view_count,
-    b.created_at,
-    b.category,
-    b.likes,
-    m.mno,
-    m.name,
-    f.bpno,
-    f.filepath
+      b.bno,
+      b.title,
+      b.content,
+      b.view_count,
+      b.created_at,
+      b.category,
+      b.likes,
+      m.mno,
+      m.name,
+      f.bpno,
+      f.filepath
     from
-    sns_board b inner join sns_member m on b.mno=m.mno
-    left outer join sns_board_photo f on b.bno=f.bpno
+      sns_board b inner join sns_member m on b.mno=m.mno
+      left outer join sns_board_photo f on b.bno=f.bpno
     where
-    b.bno=#{boardNo}
+      b.bno=#{boardNo}
   </select>
 
   <update id="update" parameterType="board">
     update sns_board set
-    title=#{title},
-    content=#{content}
+      title=#{title},
+      content=#{content}
     where
-    board_no=#{no}
+      board_no=#{no}
   </update>
 
   <update id="updateCount" parameterType="int">
     update sns_board set
-    view_count=view_count + 1
+      view_count=view_count + 1
     where
-    bno=#{no}
+      bno=#{no}
   </update>
 
   <delete id="delete" parameterType="int">
     delete from sns_board
     where
-    bno=#{no}
+      bno=#{no}
   </delete>
 
   <insert id="insertFiles" parameterType="board">
@@ -105,51 +110,61 @@
 
   <select id="findPhotoBy" parameterType="int" resultMap="boardPhotoMap">
     select
-    bpno,
-    filepath,
-    bno
+      bpno,
+      filepath,
+      bno
     from
-    sns_board_photo
+      sns_board_photo
     where
-    bpno=#{no}
+      bpno=#{no}
   </select>
 
   <delete id="deleteFile" parameterType="int">
     delete from sns_board_photo
     where
-    bpno=#{no}
+      bpno=#{no}
   </delete>
 
   <delete id="deleteFiles" parameterType="int">
     delete from sns_board_photo
     where
-    bno=#{no}
+      bno=#{no}
   </delete>
 
-  <update id="updateLike" parameterType="int">
-    update sns_board set
-    likes=likes + 1
+  <select id="findLikeBy" parameterType="int" resultMap="boardLikeMap">
+    select
+      mno,
+      bno
+    from
+      sns_board_like
     where
-    bno=#{no}
+      mno=#{memberNo} and bno=#{boardNo}
+  </select>
+
+  <update id="updateIncreaseLikes" parameterType="int">
+    update sns_board set
+      likes=likes + 1
+    where
+      bno=#{no}
   </update>
 
-  <delete id="deleteLike" parameterType="int">
+  <update id="updateDecreaseLikes" parameterType="int">
     update sns_board set
-    likes=likes - 1
+      likes=likes - 1
     where
-    bno=#{no}
-  </delete>
+      bno=#{no}
+  </update>
 
   <insert id="insertLike">
     insert into sns_board_like(mno, bno)
     values(#{memberNo}, #{boardNo})
   </insert>
 
-  <delete id="cancelLike">
+  <delete id="deleteLike">
     delete from sns_board_like
     where
-    mno=#{memberNo}
-    and bno=#{boardNo}
+      mno=#{memberNo}
+      and bno=#{boardNo}
   </delete>
 
 </mapper>

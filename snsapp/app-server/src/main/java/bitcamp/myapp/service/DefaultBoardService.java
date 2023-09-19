@@ -95,5 +95,4 @@ public class DefaultBoardService implements BoardService {
     public int decreaseLikes(int boardNo) throws Exception {
         return boardDao.deleteLike(boardNo);
     }
-
 }

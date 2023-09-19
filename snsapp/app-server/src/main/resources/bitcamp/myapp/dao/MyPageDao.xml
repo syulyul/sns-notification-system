@@ -5,29 +5,29 @@
 <mapper namespace="bitcamp.myapp.dao.MyPageDao">
 
     <resultMap type="myPage" id="myPageMap">
-        <id column="mno" property="no" />
-        <result column="nick" property="nick" />
-        <result column="name" property="name" />
-        <result column="phone_number" property="phoneNumber" />
-        <result column="password" property="password" />
-        <result column="email" property="email" />
-        <result column="filepath" property="photo" />
-        <result column="state_message" property="stateMessage" />
-        <result column="birthday" property="birthday" />
-        <result column="gender" property="gender" />
-        <result column="likes" property="likes" />
-        <result column="visit_count" property="visitCount" />
-        <result column="created_date" property="createdDate" />
+        <id column="mno" property="no"/>
+        <result column="nick" property="nick"/>
+        <result column="name" property="name"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="filepath" property="photo"/>
+        <result column="state_message" property="stateMessage"/>
+        <result column="birthday" property="birthday"/>
+        <result column="gender" property="gender"/>
+        <result column="likes" property="likes"/>
+        <result column="visit_count" property="visitCount"/>
+        <result column="created_date" property="createdDate"/>
     </resultMap>
 
     <resultMap type="member" id="memberMap">
-        <id column="mno" property="no" />
-        <result column="nick" property="nick" />
-        <result column="name" property="name" />
-        <result column="phone_number" property="phoneNumber" />
-        <result column="email" property="email" />
-        <result column="password" property="password" />
-        <result column="filepath" property="photo" />
+        <id column="mno" property="no"/>
+        <result column="nick" property="nick"/>
+        <result column="name" property="name"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="filepath" property="photo"/>
     </resultMap>
 
     <insert id="insert" parameterType="myPage">
@@ -61,13 +61,20 @@
         ,birthday=#{birthday}
         ,gender=#{gender}
         where
-        member_no=#{no}
+        mno=#{no}
+    </update>
+
+    <update id="updateCount" parameterType="int">
+        update sns_mypage set
+        visit_count=visit_count + 1
+        where
+        mno=#{no}
     </update>
 
     <delete id="delete" parameterType="int">
         delete from sns_mypage
         where
-        member_no=#{memberNo}
+        mno=#{memberNo}
     </delete>
 
 
