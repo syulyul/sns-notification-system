@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIT SNS</title>
+    <style>
+        /* 왼쪽 사이드바 스타일 */
+        .sidebar {
+            float: left;
+            width: 25%;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        /* 프로필 사진 스타일 */
+        .profile-pic {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .my_btn {
+            background-color: skyblue;
+            color: white;
+            border: none;
+
+            padding: 20px 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div data-th-fragment="memberInfo">
+        <div class="sidebar">
+            <!--        <a href="" >오늘 방문자 수</a>-->
+            <p style="display: inline;">총 방문자 수 </p>
+            <p data-th-text="${myPage.visitCount}" style="display: inline;"></p>
+            <br>
+            <br>
+            <img class="profile-pic"
+                src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5511%2F2019%2F11%2F27%2F0000006891_003_20191127181028060.png&type=sc960_832"
+                alt="프로필 사진">
+            <!--        <h2>쫀떠기^-^</h2>-->
+            <h2 data-th-text="${session.loginUser.nick}"></h2>
+            <div>
+                <p style="display: inline; font-weight:bold;">상태 메시지</p>
+                <a style="display: inline; margin-left: 10px; float:right" href="">내 정보 수정</a>
+                <p data-th-text="${myPage.stateMessage}"></p>
+                <div style="text-align: center">
+                    <button class="my_btn" style="margin-right:20px">팔로잉</button>
+                    <button class="my_btn" style="margin-left:20px">팔로워</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

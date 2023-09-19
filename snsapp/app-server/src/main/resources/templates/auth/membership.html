@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>BITSNS</title>
+
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            font-size: 16px;
+            height: 100%;
+            margin: 0;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+            background-color: #3a3a3a;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 70%;
+            border-collapse: collapse;
+            text-align: left;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #cccccc;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #3a3a3a;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #f6be00;
+        }
+
+        .image-container {
+            width: 100%;
+            text-align: right; /* 사진을 우측에 배치 */
+        }
+
+        .user-image {
+            max-width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+
+
+</head>
+<body>
+<h2>회원가입 양식</h2>
+<table>
+    <tr>
+        <th>사진 :</th>
+        <td>
+            <div class="image-container">
+                <img src="" class="user-image" id="previewImage">
+                <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <th>번호</th>
+        <td><input type='text' name='no'></td>
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td><input type='text' name='name'></td>
+    </tr>
+    <tr>
+        <th>생일</th>
+        <td><input type='date' name='birthdate'></td>
+    </tr>
+    <tr>
+        <th>이메일</th>
+        <td><input type='email' name='email'></td>
+    </tr>
+    <tr>
+        <th>전화번호</th>
+        <td><input type='tel' name='tel'></td>
+    </tr>
+    <tr>
+        <th>암호</th>
+        <td><input type='password' name='password'></td>
+    </tr>
+    <tr>
+        <th>성별</th>
+        <td>
+            <select name='gender'>
+                <option value='M'>남자</option>
+                <option value='W'>여자</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button type="submit">가입하기</button>
+            <button type='reset'>초기화</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

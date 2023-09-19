@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
-public class Board implements Serializable{
+public class Board implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   private int no; // 게시글 번호
@@ -20,6 +21,7 @@ public class Board implements Serializable{
   private Timestamp updateAt; // 수정일
   private List<BoardComment> comments; // 댓글
 
+
   @Override
   public String toString() {
     return "Board{" +
@@ -33,19 +35,27 @@ public class Board implements Serializable{
             ", createdAt=" + createdAt +
             ", updateAt=" + updateAt +
             '}';
+
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Board board = (Board) o;
-    return no == board.no && viewCount == board.viewCount && likes == board.likes && category == board.category && Objects.equals(title, board.title) && Objects.equals(content, board.content) && Objects.equals(attachedFiles, board.attachedFiles) && Objects.equals(createdAt, board.createdAt) && Objects.equals(updateAt, board.updateAt);
+
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Board board)) {
+      return false;
+    }
+    return getNo() == board.getNo();
+
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(no, title, content, viewCount, likes, category, attachedFiles, createdAt, updateAt);
+
+    return Objects.hash(no);
+
   }
 
   public int getNo() {
@@ -122,6 +132,7 @@ public class Board implements Serializable{
 
   public Timestamp getUpdateAt() {
     return updateAt;
+    
   }
 
   public void setUpdateAt(Timestamp updateAt) {
@@ -134,5 +145,6 @@ public class Board implements Serializable{
 
   public void setComments(List<BoardComment> comments) {
     this.comments = comments;
+
   }
 }

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 public class BoardComment implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private int no; // 댓글 번호

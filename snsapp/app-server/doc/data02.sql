@@ -1,30 +1,30 @@
--- 회원
-INSERT INTO `sns_member` (`nick`, `name`, `email`, `password`)
+  -- 회원
+INSERT INTO `sns_member` (`nick`, `name`, `phone_number`, `password`)
 VALUES
-  ('user1', 'User One', 'user1@example.com', sha1('1111')),
-  ('user2', 'User Two', 'user2@example.com', sha1('1111')),
-  ('user3', 'User Three', 'user3@example.com', sha1('1111')),
-  ('user4', 'User Four', 'user4@example.com', sha1('1111')),
-  ('user5', 'User Five', 'user5@example.com', sha1('1111')),
-  ('user6', 'User Six', 'user6@example.com', sha1('1111')),
-  ('user7', 'User Seven', 'user7@example.com', sha1('1111')),
-  ('user8', 'User Eight', 'user8@example.com', sha1('1111')),
-  ('user9', 'User Nine', 'user9@example.com', sha1('1111')),
-  ('user10', 'User Ten', 'user10@example.com', sha1('1111'));
+  ('user1', 'User One', '010-1111-1111', sha1('1111')),
+  ('user2', 'User Two', '010-2222-2222', sha1('1111')),
+  ('user3', 'User Three', '010-3333-3333', sha1('1111')),
+  ('user4', 'User Four', '010-4444-4444', sha1('1111')),
+  ('user5', 'User Five', '010-5555-5555', sha1('1111')),
+  ('user6', 'User Six', '010-6666-6666', sha1('1111')),
+  ('user7', 'User Seven', '010-7777-7777', sha1('1111')),
+  ('user8', 'User Eight', '010-8888-8888', sha1('1111')),
+  ('user9', 'User Nine', '010-9999-9999', sha1('1111')),
+  ('user10', 'User Ten', '010-1010-1010', sha1('1111'));
 
 -- 마이페이지
-INSERT INTO `sns_mypage` (`mpno`, `state_message`, `filepath`, `birthday`, `gender`, `phone_number`, `likes`, `today_visit_count`, `visit_count`, `created_date`)
+INSERT INTO `sns_mypage` (`mpno`, `state_message`, `filepath`, `birthday`, `gender`, `email`, `likes`, `today_visit_count`, `visit_count`, `created_date`)
 VALUES
-  (1, '첫 번째 회원의 상태 메시지입니다.', '/profile/user1.jpg', '1990-01-01', 1, '010-1111-1111', 50, 10, 100, NOW()),
-  (2, 'This is the second user''s status message.', '/profile/user2.jpg', '1985-03-15', 2, '010-2222-2222', 40, 8, 90, NOW()),
-  (3, '세 번째 회원의 상태 메시지입니다.', '/profile/user3.jpg', '1992-07-20', 1, '010-3333-3333', 60, 12, 110, NOW()),
-  (4, 'Status message of the fourth user.', '/profile/user4.jpg', '1988-05-10', 2, '010-4444-4444', 70, 14, 120, NOW()),
-  (5, '다섯 번째 회원의 상태 메시지입니다.', '/profile/user5.jpg', '1995-12-25', 1, '010-5555-5555', 45, 9, 95, NOW()),
-  (6, 'This is the sixth user''s status message.', '/profile/user6.jpg', '1987-09-30', 2, '010-6666-6666', 55, 11, 105, NOW()),
-  (7, '일곱 번째 회원의 상태 메시지입니다.', '/profile/user7.jpg', '1993-04-12', 1, '010-7777-7777', 65, 13, 115, NOW()),
-  (8, 'Status message of the eighth user.', '/profile/user8.jpg', '1986-11-08', 2, '010-8888-8888', 75, 15, 125, NOW()),
-  (9, '아홉 번째 회원의 상태 메시지입니다.', '/profile/user9.jpg', '1991-08-03', 1, '010-9999-9999', 80, 16, 130, NOW()),
-  (10, 'This is the tenth user''s status message.', '/profile/user10.jpg', '1989-02-18', 2, '010-1010-1010', 70, 14, 120, NOW());
+  (1, '첫 번째 회원의 상태 메시지입니다.', '/profile/user1.jpg', '1990-01-01', 1, 'user1@example.com', 50, 10, 100, NOW()),
+  (2, 'This is the second user''s status message.', '/profile/user2.jpg', '1985-03-15', 2, 'user2@example.com', 40, 8, 90, NOW()),
+  (3, '세 번째 회원의 상태 메시지입니다.', '/profile/user3.jpg', '1992-07-20', 1, 'use3@example.com', 60, 12, 110, NOW()),
+  (4, 'Status message of the fourth user.', '/profile/user4.jpg', '1988-05-10', 2, 'user4@example.com', 70, 14, 120, NOW()),
+  (5, '다섯 번째 회원의 상태 메시지입니다.', '/profile/user5.jpg', '1995-12-25', 1, 'user5@example.com', 45, 9, 95, NOW()),
+  (6, 'This is the sixth user''s status message.', '/profile/user6.jpg', '1987-09-30', 2, 'user6@example.com', 55, 11, 105, NOW()),
+  (7, '일곱 번째 회원의 상태 메시지입니다.', '/profile/user7.jpg', '1993-04-12', 1, 'user7@example.com', 65, 13, 115, NOW()),
+  (8, 'Status message of the eighth user.', '/profile/user8.jpg', '1986-11-08', 2, 'user8@example.com', 75, 15, 125, NOW()),
+  (9, '아홉 번째 회원의 상태 메시지입니다.', '/profile/user9.jpg', '1991-08-03', 1, 'user9@example.com', 80, 16, 130, NOW()),
+  (10, 'This is the tenth user''s status message.', '/profile/user10.jpg', '1989-02-18', 2, 'user10@example.com', 70, 14, 120, NOW());
 
 -- 게시글
 INSERT INTO `sns_board` (`mno`, `title`, `content`, `view_count`, `likes`, `category`, `created_at`, `updated_at`)

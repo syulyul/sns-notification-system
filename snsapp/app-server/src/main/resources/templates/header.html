@@ -2,14 +2,27 @@
 <html>
 <head>
   <meta charset='UTF-8'>
-  <title>비트캠프</title>
+  <title>BIT SNS</title>
 </head>
 <body>
-<div data-th-fragment="header" style='height:50px;background-color:orange;'>
-  <img src='https://www.ncloud.com/public/img/logo-m.png' style='height:40px'>
-  <a href='/board/list?category=1'>게시판</a>
-  <a href='/board/list?category=2'>방명록</a>
-</div>
+
+<div data-th-fragment="header" style="height:60px;">
+  <img src="/images/logo.png" style="height:60px">
+  <a href="">마이페이지</a>
+  <a href="">게시글</a>
+  <a href="">방명록</a>
+  <!--  <div style="display:inline;">-->
+  <!--    <img data-th-if="${session.loginUser.photo == null}" style='height:40px' src='/images/avatar.png'>-->
+  <!--    <img data-th-if="${session.loginUser.photo != null}"-->
+  <!--         data-th-src="${'http://ncloud주소값/member/' + session.loginUser.photo + '?type=f&w=30&h=40&faceopt=true&ttype=jpg'}">-->
+  <!--    <span data-th-text="${session.loginUser.name}"></span>-->
+  <div style="float:right;">
+    <img src="/images/noti.png" style="height:20px;">
+    <span style="margin-left: 0px;">아이디</span>
+    <a href="/auth/logout" style="margin-left: 10px;">로그아웃</a>
+  </div>
+  <!--  </div>-->
+  <br>
 </div>
 </body>
 </html>
