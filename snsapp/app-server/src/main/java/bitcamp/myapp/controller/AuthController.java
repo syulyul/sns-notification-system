@@ -1,11 +1,6 @@
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.MemberService;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
@@ -18,18 +13,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    NcpObjectStorageService ncpObjectStorageService;
+
     {
         System.out.println("AuthController 생성됨!");
     }
-
-    @Autowired
-    MemberService memberService;
-
-    @Autowired
-    NcpObjectStorageService ncpObjectStorageService;
 
     @GetMapping("form")
     public void form(@CookieValue(required = false) String phoneNumber, HttpSession session, Model model) {
@@ -41,6 +39,7 @@ public class AuthController {
     public String add() {
         return "auth/membership";
     }
+
     @GetMapping("find")
     public String find() {
         return "auth/loginfind";
@@ -64,13 +63,13 @@ public class AuthController {
             response.addCookie(cookie);
         }
 
-         Member loginUser = memberService.get(phoneNumber, password);
-         if (loginUser == null) {
-             model.addAttribute("refresh", "2;url=index");
-             throw new Exception("회원 정보가 일치하지 않습니다.");
-         }
+        Member loginUser = memberService.get(phoneNumber, password);
+        if (loginUser == null) {
+            model.addAttribute("refresh", "2;url=index");
+            throw new Exception("회원 정보가 일치하지 않습니다.");
+        }
         LoginUser loginUserObject = new LoginUser(loginUser);
-         session.setAttribute("loginUser", loginUserObject);
+        session.setAttribute("loginUser", loginUserObject);
 //         System.out.println(loginUser.getNick());
         return "redirect:/myPage/" + loginUser.getNo() + "?show=followers";
 
@@ -78,7 +77,8 @@ public class AuthController {
 
     @PostMapping("add")
     public String add(
-            Member member, //
+            Member member,
+            MultipartFile photofile,
             Model model) throws Exception {
 
         try {
