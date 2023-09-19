@@ -8,10 +8,19 @@
         html {
             height: 100%;
         }
+
+        /* h2 글자의 색은 흰색으로 크기는 30px */
+        h2 {
+            color: white;
+            font-size: 30px;
+            /*font-style: ;*/
+        }
+
+
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            font-size: 16px;
+            font-size: 20px;
             height: 100%;
             margin: 0;
             display: grid;
@@ -20,28 +29,51 @@
             background-color: #3a3a3a;
         }
 
-        h2 {
-            margin-top: 20px;
+        form {
+            top: 40%;
+            left: 100%;
+            width: 1000px;
+            height: 2500px;
+            padding: 30px;
         }
+
+        /*  각 tr의 td의 모서리가 둥글게 하고 table 우측 끝에 가깝지만 margin을 5정도 남기고 꽉 채울수 있도록 */
 
         table {
             margin: 0 auto;
-            width: 70%;
-            border-collapse: collapse;
+            width: 100%; /* 테이블이 부모 요소에 꽉 차도록 설정합니다. */
+            border-collapse: collapse; /* 테이블 셀 경계를 병합하여 모서리가 둥글게 됩니다. */
             text-align: left;
             border-radius: 10px;
             overflow: hidden;
             background: #cccccc;
+            margin-right: 5px; /* 오른쪽 마진을 5px로 설정합니다. */
+
+        }
+
+
+        table {
         }
 
         th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
+            padding: 25px;
+            /*border-bottom: 1px solid #ccc;*/
         }
 
-        th {
-            background-color: #3a3a3a;
+        td {
+            background: #cccccc;
         }
+
+        /*  th의 글자 색은 흰색으로 배경색은 #3a3a3a로 */
+        th {
+            background: #007bff;
+            /*color: white;*/
+            /*background-color: #3a3a3a;*/
+            padding: 10px; /* 셀 안의 여백을 설정합니다. */
+            border-radius: 10px; /* 모서리를 둥글게 만듭니다. */
+
+        }
+
 
         input[type="file"],
         input[type="text"],
@@ -62,81 +94,77 @@
             background-color: #007bff;
             color: #fff;
             padding: 10px 20px;
-            border: none;
             border-radius: 3px;
             cursor: pointer;
         }
 
         input[type="submit"]:hover {
-            background-color: #f6be00;
         }
 
+        /* 3. 사진에서 사진을 넣게된다면 이미지를 우측에 출력하도록 table 수정 */
         .image-container {
-            width: 100%;
-            text-align: right; /* 사진을 우측에 배치 */
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
         }
 
         .user-image {
-            max-width: 200px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            max-width: 100px; /* 이미지의 최대 너비를 설정합니다. */
+            height: auto; /* 이미지의 높이를 자동으로 조정합니다. */
+            margin-left: 10px; /* 이미지와 텍스트 사이의 간격을 조정합니다. */
         }
+
     </style>
 
 
 </head>
 <body>
 <h2>회원가입 양식</h2>
-<table>
-    <tr>
-        <th>사진 :</th>
-        <td>
-            <div class="image-container">
-                <img src="" class="user-image" id="previewImage">
-                <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
-            </div>
-        </td>
-    </tr>
+<form action='add' method='post' enctype='multipart/form-data'>
+    <table>
+        <tr>
+            <th>번호</th>
+            <td><input type='text' name='no'></td>
+        </tr>
+        <tr>
+            <th>닉네임</th>
+            <td><input type='text' name='nick'></td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td><input type='text' name='name'></td>
+        </tr>
+        <tr>
+            <th>전화번호</th>
+            <td><input type='tel' name='phoneNumber'></td>
+        </tr>
+        <tr>
+            <th>비밀번호</th>
+            <td><input type='password' name='password'></td>
+        </tr>
+        <tr>
+            <th>사진 :</th>
+            <td>
+                <div class="image-container">
+                    <img src="" class="user-image" id="previewImage">
+                    <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
+                </div>
+            </td>
+        </tr>
 
-    <tr>
-        <th>번호</th>
-        <td><input type='text' name='no'></td>
-    </tr>
-    <tr>
-        <th>이름</th>
-        <td><input type='text' name='name'></td>
-    </tr>
-    <tr>
-        <th>생일</th>
-        <td><input type='date' name='birthdate'></td>
-    </tr>
-    <tr>
-        <th>이메일</th>
-        <td><input type='email' name='email'></td>
-    </tr>
-    <tr>
-        <th>전화번호</th>
-        <td><input type='tel' name='tel'></td>
-    </tr>
-    <tr>
-        <th>암호</th>
-        <td><input type='password' name='password'></td>
-    </tr>
-    <tr>
-        <th>성별</th>
-        <td>
-            <select name='gender'>
-                <option value='M'>남자</option>
-                <option value='W'>여자</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <button type="submit">가입하기</button>
-            <button type='reset'>초기화</button>
-        </td>
-    </tr>
-</table>
+        <tr>
+            <td>
+                <button><a href="/" style="backface-visibility: hidden">뒤로가기</a></button>
+            </td>
+            <td>
+                <button type='reset'>초기화</button>
+            </td>
+            <td>
+                <button type="submit">가입하기</button>
+            </td>
+        </tr>
+
+    </table>
+</form>
 </body>
 </html>
