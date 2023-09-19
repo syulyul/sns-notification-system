@@ -2,6 +2,7 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @EntityScan
