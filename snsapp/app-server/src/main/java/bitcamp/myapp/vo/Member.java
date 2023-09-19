@@ -2,7 +2,6 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @EntityScan
@@ -28,6 +27,7 @@ public class Member implements Serializable {
         ", email='" + email + '\'' +
         ", photo='" + photo + '\'' +
         ", password='" + password + '\'' +
+//        ", hashCode='" + this.hashCode() + '\'' +
         '}';
   }
 

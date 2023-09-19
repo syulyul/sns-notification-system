@@ -1,7 +1,6 @@
 package bitcamp.myapp.vo;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 public class MyPage extends Member {
 
@@ -31,25 +30,12 @@ public class MyPage extends Member {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof MyPage mypage)) {
-      return false;
-    }
-    return gender == mypage.gender
-        && likes == mypage.likes
-        && todayVisitCount == mypage.todayVisitCount
-        && visitCount == mypage.visitCount
-        && Objects.equals(stateMessage, mypage.stateMessage)
-        && Objects.equals(birthday, mypage.birthday)
-        && Objects.equals(createdDate, mypage.createdDate);
+    return super.equals(o); // 수정 금지
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(stateMessage, birthday, gender, likes, todayVisitCount,
-        visitCount, createdDate);
+    return super.hashCode(); // 수정 금지
   }
 
   public String getStateMessage() {
