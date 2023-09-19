@@ -7,7 +7,7 @@
 
         input[name='title'] {
             box-sizing: border-box;
-            position: absolute;
+            position: static;
             width: 641px;
             height: 42px;
             left: 330px;
@@ -18,7 +18,7 @@
 
         textarea[name='content'] {
             box-sizing: border-box;
-            position: absolute;
+            position: static;
             width: 641px;
             height: 255px;
             left: 330px;
@@ -31,7 +31,7 @@
 
             box-sizing: border-box;
 
-            position: absolute;
+            position: static;
             width: 641px;
             height: 42px;
             left: 330px;
@@ -41,7 +41,7 @@
         }
 
         input[type='file']::-webkit-file-upload-button {
-            position: absolute;
+            position: static;
             width: 89px;
             height: 36px;
             left: 552px;
@@ -55,7 +55,7 @@
         }
 
         button {
-            position: absolute;
+            position: static;
             width: 100px;
             height: 41px;
             left: 600px;
@@ -77,7 +77,7 @@
         select[name='category'] {
             box-sizing: border-box;
 
-            position: absolute;
+            position: static;
             width: 117px;
             height: 42px;
             left: 330px;
@@ -90,7 +90,7 @@
 </head>
 <body>
 
-
+<div data-th-replace="header :: header"></div>
 
 <h1>게시글</h1>
 <form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
@@ -111,6 +111,7 @@
     <button>등록</button>
 </form>
 
+<div data-th-replace="footer :: footer"></div>
 
 </body>
 </html>

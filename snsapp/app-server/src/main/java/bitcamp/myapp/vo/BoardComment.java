@@ -12,8 +12,8 @@ public class BoardComment implements Serializable {
     private int boardNo; // 게시글 번호
     private Member writer; // 작성자
     private String content; // 내용
-    private Timestamp createdDate; // 댓글 작성 일시
-    private Timestamp updateDate; // 댓글 수정 일시
+    private Timestamp createdAt; // 댓글 작성 일시
+    private Timestamp updatedAt; // 댓글 수정 일시
 
     @Override
     public String toString() {
@@ -22,8 +22,8 @@ public class BoardComment implements Serializable {
                 ", boardNo=" + boardNo +
                 ", writer=" + writer +
                 ", content='" + content + '\'' +
-                ", createdDate=" + createdDate +
-                ", updateDate=" + updateDate +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 
@@ -32,12 +32,12 @@ public class BoardComment implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoardComment that = (BoardComment) o;
-        return no == that.no && boardNo == that.boardNo && Objects.equals(writer, that.writer) && Objects.equals(content, that.content) && Objects.equals(createdDate, that.createdDate) && Objects.equals(updateDate, that.updateDate);
+        return no == that.no && boardNo == that.boardNo && Objects.equals(writer, that.writer) && Objects.equals(content, that.content) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(no, boardNo, writer, content, createdDate, updateDate);
+        return Objects.hash(no, boardNo, writer, content, createdAt, updatedAt);
     }
 
     public int getNo() {
@@ -72,19 +72,19 @@ public class BoardComment implements Serializable {
         this.content = content;
     }
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdateDate() {
-        return updateDate;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

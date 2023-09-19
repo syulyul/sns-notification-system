@@ -1,16 +1,13 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.service.BoardCommentService;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.BoardComment;
 import bitcamp.myapp.vo.BoardPhoto;
-import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -30,6 +26,9 @@ public class BoardController {
 
     @Autowired
     BoardService boardService;
+
+    @Autowired
+    BoardCommentService boardCommentService;
 
     @Autowired
     NcpObjectStorageService ncpObjectStorageService;
@@ -86,6 +85,12 @@ public class BoardController {
             boardService.increaseViewCount(no);
             model.addAttribute("board", board);
         }
+
+        // 댓글 조회
+        List<BoardComment> comments = null;
+        comments = boardCommentService.list(no);
+        model.addAttribute("comments", comments);
+
         return "board/detail";
     }
 
@@ -94,6 +99,7 @@ public class BoardController {
         if (category == 1) {
             model.addAttribute("list", boardService.list(category));
             return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
+
         } else if (category == 2) {
             model.addAttribute("list", boardService.list(category));
             return "board/read"; // 카테고리가 2일 때 "read.html"을 실행

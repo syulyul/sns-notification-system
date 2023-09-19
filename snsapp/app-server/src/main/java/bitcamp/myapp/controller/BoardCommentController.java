@@ -1,28 +1,16 @@
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.BoardCommentService;
-import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.NcpObjectStorageService;
-import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.BoardComment;
-import bitcamp.myapp.vo.BoardLike;
-import bitcamp.myapp.vo.BoardPhoto;
-import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/boardComment")
@@ -65,21 +53,6 @@ public class BoardCommentController {
             boardCommentService.delete(b.getNo(), b.getBoardNo());
             return "redirect:/board/detail?category=1&no=" + boardNo;
         }
-    }
-
-    @GetMapping("list")
-    public String list(@RequestParam int boardNo, Model model) throws Exception {
-        // 주어진 boardNo에 해당하는 댓글 목록을 서비스로부터 받아온다.
-        List<BoardComment> commentList = boardCommentService.list(boardNo);
-
-        // 댓글 목록을 모델에 추가하여 View로 전달한다.
-        model.addAttribute("commentList", commentList);
-
-        // 해당 게시글의 번호를 모델에 추가하여 View로 전달한다. (선택사항)
-        model.addAttribute("boardNo", boardNo);
-
-        // list.html (댓글 목록을 출력하는 뷰 페이지)로 포워드한다.
-        return "list";
     }
 
     @PostMapping("update")
