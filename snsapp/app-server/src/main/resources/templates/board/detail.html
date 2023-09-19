@@ -149,7 +149,7 @@
     </script>
 </head>
 <body>
-
+<div data-th-replace="header :: header"></div>
 <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
 
 <!--<form data-th-if="${board}" data-th-action="@{/board/update}" method='post' enctype='multipart/form-data'>-->
@@ -195,7 +195,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-th-each="comments : ${commentList}">
+                <tr data-th-each="boardComment : ${comments}">
                     <td data-th-text="${boardComment.no}">200</td>
                     <td data-th-text="${boardComment.writer.name}">홍길동</td>
                     <td data-th-text="${boardComment.content}">댓글 내용</td>
@@ -206,5 +206,6 @@
         </div>
     </div>
 </div>
+<div data-th-replace="footer :: footer"></div>
 </body>
 </html>

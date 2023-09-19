@@ -7,6 +7,7 @@
   <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
   <resultMap type="boardComment" id="boardCommentMap">
     <id     column="bcno"           property="no"/>
+    <result column="bno"            property="boardNo"/>
     <result column="content"        property="content"/>
     <result column="created_at"     property="createdAt"/>
     <result column="updated_at"     property="updatedAt"/>
@@ -14,10 +15,6 @@
     <association property="writer" javaType="member">
       <id     column="mno"          property="no"/>
       <result column="name"         property="name"/>
-    </association>
-
-    <association property="bno" javaType="board">
-      <id     column="bno"    property="no"/>
     </association>
   </resultMap>
 
@@ -33,11 +30,9 @@
       bc.content,
       bc.created_at,
       m.mno,
-      m.name,
-      b.bno
+      m.name
     from
       sns_board_comment bc inner join sns_member m on bc.mno=m.mno
-      left outer join sns_board b on bc.bno=b.bno
     where
       bc.bno=#{boardNo}
     order by
