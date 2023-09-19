@@ -40,8 +40,8 @@
 
   <insert id="insert" parameterType="board"
           useGeneratedKeys="true" keyColumn="board_no" keyProperty="no">
-    insert into sns_board(title,content,category)
-    values(#{title},#{content},#{category})
+    insert into sns_board(title,content,mno,category)
+    values(#{title},#{content},#{writer.no},#{category})
   </insert>
 
   <select id="findAll" parameterType="int" resultMap="boardMap">
@@ -141,30 +141,30 @@
       mno=#{memberNo} and bno=#{boardNo}
   </select>
 
-  <update id="updateIncreaseLikes" parameterType="int">
+  <update id="updateLike" parameterType="int">
     update sns_board set
-      likes=likes + 1
+    likes=likes + 1
     where
-      bno=#{no}
+    bno=#{no}
   </update>
 
-  <update id="updateDecreaseLikes" parameterType="int">
+  <delete id="deleteLike" parameterType="int">
     update sns_board set
-      likes=likes - 1
+    likes=likes - 1
     where
-      bno=#{no}
-  </update>
+    bno=#{no}
+  </delete>
 
   <insert id="insertLike">
     insert into sns_board_like(mno, bno)
     values(#{memberNo}, #{boardNo})
   </insert>
 
-  <delete id="deleteLike">
+  <delete id="cancelLike">
     delete from sns_board_like
     where
-      mno=#{memberNo}
-      and bno=#{boardNo}
+    mno=#{memberNo}
+    and bno=#{boardNo}
   </delete>
 
 </mapper>

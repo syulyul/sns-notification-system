@@ -21,7 +21,6 @@ public class Board implements Serializable {
   private Timestamp updateAt; // 수정일
   private List<BoardComment> comments; // 댓글
 
-
   @Override
   public String toString() {
     return "Board{" +

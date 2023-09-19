@@ -149,10 +149,10 @@
     </script>
 </head>
 <body>
-
+<div data-th-replace="header :: header"></div>
 <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
 
-<!--<form data-th-if="${board}" data-th-action="@{/board/update}" method='post' enctype='multipart/form-data'>-->
+<form data-th-if="${board}" data-th-action="@{/board/update}" method='post' enctype='multipart/form-data'>
 <div class="container">
     <div class="content-box">
         <h1><span th:text="${board.title}"></span></h1>
@@ -166,6 +166,23 @@
         </div>
         <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
         <!-- 게시글 내용 추가 -->
+        <tr><th>첨부파일</th><td>
+            <div data-th-each="photo : ${board.attachedFiles}">
+                <!-- 이미지 파일 URL -->
+                <img data-th-src="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${photo.filePath}|"
+                     alt="첨부파일 이미지" width="300"/>
+
+                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${photo.filePath}|"
+                   data-th-text="${photo.filePath}">okok.gif</a>
+                [<a data-th-href="|/board/fileDelete/attachedFile;no=${photo.no}|">삭제</a>]<br>
+            </div>
+<!--            <div data-th-each="photo : ${board.attachedFiles}">-->
+<!--                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${photo.filePath}|"-->
+<!--                   data-th-text="${photo.filePath}">okok.gif</a>-->
+<!--                [<a data-th-href="|/board/fileDelete/attachedFile;no=${photo.no}|">삭제</a>]<br>-->
+<!--            </div>-->
+            <input type='photo' name='files' multiple>
+        </td></tr>
         <p>
             <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}">내용입니다!</span>
         </p>
@@ -182,6 +199,16 @@
             ❤️ 좋아요 (0)
         </button>
     </div>
+    <div class="btn-container">
+        <button>변경</button>
+        <button type="reset">초기화</button>
+        <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
+            <button>삭제</button>
+        </a>
+        <a th:href="@{/board/list(category=${board.category})}">
+            <button>목록</button>
+        </a>
+    </div>
     <div class="comment-box">
         <div class="comment-list">
             <h1>댓글 목록</h1>
@@ -195,7 +222,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-th-each="comments : ${commentList}">
+                <tr data-th-each="boardComment : ${comments}">
                     <td data-th-text="${boardComment.no}">200</td>
                     <td data-th-text="${boardComment.writer.name}">홍길동</td>
                     <td data-th-text="${boardComment.content}">댓글 내용</td>
@@ -206,5 +233,6 @@
         </div>
     </div>
 </div>
+<div data-th-replace="footer :: footer"></div>
 </body>
 </html>
