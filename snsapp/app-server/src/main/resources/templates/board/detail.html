@@ -80,6 +80,40 @@
             bottom: 10px; /* 하단에 위치하도록 설정 */
             right: 10px; /* 우측에 위치하도록 설정 */
         }
+
+        .comment-box {
+            margin-top: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .comment-input textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .comment-input button {
+            background-color: #426B1F;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px; /* 버튼 간격 조절을 위해 margin-left 추가 */
+        }
+
+        .comment-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comment-list th, .comment-list td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
     </style>
 
     <script>
@@ -95,6 +129,7 @@
                     if (data !== -1) {
                         document.getElementById("likeButton").innerText = `❤️ 좋아요 (${data})`;
                     }
+                    location.reload(); // 페이지를 새로고침
                 });
         }
 
@@ -110,6 +145,7 @@
                     if (data !== -1) {
                         document.getElementById("unlikeButton").innerText = `좋아요취소 (${data})`;
                     }
+                    location.reload(); // 페이지를 새로고침
                 });
         }
     </script>
@@ -159,6 +195,19 @@
             <button>목록</button>
         </a>
     </div>
+    <div th:if="${boardNo == (board != null ? board.no : 0)}">
+        <table border="1">
+            <thead>
+            <tr><th>번호</th> <th>작성자</th> <th>내용</th> <th>등록일</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${list}">
+                <td th:text="${comment.no}">게시글 번호</td>
+                <td th:text="${comment.writer.name}">작성자</td>
+                <td th:text="${#dates.format(comment.createdAt, 'yyyy-MM-dd')}">등록일</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
