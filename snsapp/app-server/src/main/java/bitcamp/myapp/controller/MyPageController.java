@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.vo.LoginUser;
@@ -23,6 +24,8 @@ public class MyPageController {
   MyPageService myPageService;
   @Autowired
   MemberService memberService;
+  @Autowired
+  BoardService boardService;
 
   {
     System.out.println("MyPageController 생성됨!");
@@ -52,13 +55,14 @@ public class MyPageController {
 
     switch (show) {
       case "followers":
-        model.addAttribute("list", myPageService.followerList(no));
+        model.addAttribute("followList", myPageService.followerList(no));
         break;
       case "followings":
-        model.addAttribute("list", myPageService.followingList(no));
+        model.addAttribute("followList", myPageService.followingList(no));
         break;
       default:
-        model.addAttribute("list", null);
+        model.addAttribute("followList", null);
+        model.addAttribute("list", boardService.list(1));
         break;
     }
     // myPageService.increaseVisitCount(no);
