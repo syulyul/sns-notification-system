@@ -17,27 +17,30 @@ public class Board implements Serializable {
   private int likes; // 좋아요
   private int category; // 카테고리
   private List<BoardPhoto> attachedFiles; // 사진 파일
-  private Timestamp createdAt; // 등록일시
-  private Timestamp updateAt; // 수정일시
+  private Timestamp createdAt; // 등록일
+  private Timestamp updateAt; // 수정일
+  private List<BoardComment> comments; // 댓글
+
 
   @Override
   public String toString() {
     return "Board{" +
-        "no=" + no +
-        ", title='" + title + '\'' +
-        ", content='" + content + '\'' +
-        ", writer=" + writer +
-        ", viewCount=" + viewCount +
-        ", likes=" + likes +
-        ", category=" + category +
-        ", attachedFiles=" + attachedFiles +
-        ", createdAt=" + createdAt +
-        ", updateAt=" + updateAt +
-        '}';
+            "no=" + no +
+            ", title='" + title + '\'' +
+            ", content='" + content + '\'' +
+            ", viewCount=" + viewCount +
+            ", likes=" + likes +
+            ", category=" + category +
+            ", attachedFiles=" + attachedFiles +
+            ", createdAt=" + createdAt +
+            ", updateAt=" + updateAt +
+            '}';
+
   }
 
   @Override
   public boolean equals(Object o) {
+
     if (this == o) {
       return true;
     }
@@ -45,11 +48,14 @@ public class Board implements Serializable {
       return false;
     }
     return getNo() == board.getNo();
+
   }
 
   @Override
   public int hashCode() {
+
     return Objects.hash(no);
+
   }
 
   public int getNo() {
@@ -126,9 +132,19 @@ public class Board implements Serializable {
 
   public Timestamp getUpdateAt() {
     return updateAt;
+    
   }
 
   public void setUpdateAt(Timestamp updateAt) {
     this.updateAt = updateAt;
+  }
+
+  public List<BoardComment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<BoardComment> comments) {
+    this.comments = comments;
+
   }
 }

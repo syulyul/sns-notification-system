@@ -1,10 +1,9 @@
 package bitcamp.myapp.vo;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-
 import java.io.Serializable;
 import java.util.Objects;
+
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @EntityScan
 public class Member implements Serializable {
@@ -40,7 +39,7 @@ public class Member implements Serializable {
     if (!(o instanceof Member member)) {
       return false;
     }
-    return no == member.no;
+    return this.no == member.no;
   }
 
   @Override
