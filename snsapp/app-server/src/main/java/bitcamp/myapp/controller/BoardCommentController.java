@@ -68,8 +68,18 @@ public class BoardCommentController {
     }
 
     @GetMapping("list")
-    public void list(int boardNo, Model model) throws Exception {
-        model.addAttribute("list", boardCommentService.list(boardNo));
+    public String list(@RequestParam int boardNo, Model model) throws Exception {
+        // 주어진 boardNo에 해당하는 댓글 목록을 서비스로부터 받아온다.
+        List<BoardComment> commentList = boardCommentService.list(boardNo);
+
+        // 댓글 목록을 모델에 추가하여 View로 전달한다.
+        model.addAttribute("commentList", commentList);
+
+        // 해당 게시글의 번호를 모델에 추가하여 View로 전달한다. (선택사항)
+        model.addAttribute("boardNo", boardNo);
+
+        // list.html (댓글 목록을 출력하는 뷰 페이지)로 포워드한다.
+        return "list";
     }
 
     @PostMapping("update")

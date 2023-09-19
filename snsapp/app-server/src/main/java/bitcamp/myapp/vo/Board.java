@@ -18,6 +18,7 @@ public class Board implements Serializable{
   private List<BoardPhoto> attachedFiles; // 사진 파일
   private Timestamp createdAt; // 등록일
   private Timestamp updateAt; // 수정일
+  private List<BoardComment> comments; // 댓글
 
   @Override
   public String toString() {
@@ -125,5 +126,13 @@ public class Board implements Serializable{
 
   public void setUpdateAt(Timestamp updateAt) {
     this.updateAt = updateAt;
+  }
+
+  public List<BoardComment> getComments() {
+    return comments;
+  }
+
+  public void setComments(List<BoardComment> comments) {
+    this.comments = comments;
   }
 }

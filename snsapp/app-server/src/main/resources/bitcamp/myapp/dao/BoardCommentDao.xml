@@ -6,7 +6,7 @@
 
   <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
   <resultMap type="boardComment" id="boardCommentMap">
-    <id     column="bcno"            property="no"/>
+    <id     column="bcno"           property="no"/>
     <result column="content"        property="content"/>
     <result column="created_at"     property="createdAt"/>
     <result column="updated_at"     property="updatedAt"/>
@@ -16,29 +16,30 @@
       <result column="name"         property="name"/>
     </association>
 
-    <association property="bno"    javaType="board">
-      <id     column="bno"          property="no"/>
+    <association property="bno" javaType="board">
+      <id     column="bno"    property="no"/>
     </association>
-
   </resultMap>
 
   <insert id="insert" parameterType="boardComment">
-    insert into sns_board_comment(bno,mno,content,createdAt)
+    insert into sns_board_comment(bno,mno,content,created_at)
     values(#{bno},#{writer.no},#{content},now())
   </insert>
 
   <select id="findAll" parameterType="int" resultMap="boardCommentMap">
     select
-      b.bcno,
-      b.bno,
-      b.content,
-      b.created_at,
+      bc.bcno,
+      bc.bno,
+      bc.content,
+      bc.created_at,
       m.mno,
-      m.name
+      m.name,
+      b.bno
     from
-      sns_board_comment b inner join sns_member m
+      sns_board_comment bc inner join sns_member m on bc.mno=m.mno
+      left outer join sns_board b on bc.bno=b.bno
     where
-      bno=#{boardNo}
+      bc.bno=#{boardNo}
     order by
       bcno desc
   </select>

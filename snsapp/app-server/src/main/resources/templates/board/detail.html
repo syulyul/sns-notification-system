@@ -195,10 +195,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-th-each="boardComment : ${list}">
+                <tr data-th-each="comments : ${commentList}">
                     <td data-th-text="${boardComment.no}">200</td>
                     <td data-th-text="${boardComment.writer.name}">홍길동</td>
-                    <td data-th-text="${boardComment.content}">댓글 제목</td>
+                    <td data-th-text="${boardComment.content}">댓글 내용</td>
                     <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">2023-09-14</td>
                 </tr>
                 </tbody>
