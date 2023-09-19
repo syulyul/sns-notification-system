@@ -8,72 +8,67 @@
   <style>
     /* 왼쪽 사이드바 스타일 */
     .sidebar {
-        float: left;
-        width: 25%;
-        padding: 20px;
-        background-color: #f0f0f0;
+      float: left;
+      width: 25%;
+      padding: 20px;
+      background-color: #f0f0f0;
     }
 
     /* 프로필 사진 스타일 */
     .profile-pic {
-        max-width: 100%;
-        height: auto;
+      max-width: 100%;
+      height: auto;
     }
 
     .my_btn {
-        background-color: skyblue;
-        color: white;
-        border: none;
+      background-color: skyblue;
+      color: white;
+      border: none;
 
-        padding: 20px 60px;
+      padding: 20px 60px;
     }
   </style>
 </head>
 
 <body>
-<div data-th-fragment="memberInfo">
-  <div class="sidebar">
-    <!--        <a href="" >오늘 방문자 수</a>-->
-    <p style="display: inline;">총 방문자 수 </p>
-    <p data-th-text="${myPage.visitCount}" style="display: inline;"></p>
-    <br>
-    <br>
-    <img alt="프로필 사진"
-         class="profile-pic"
-         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5511%2F2019%2F11%2F27%2F0000006891_003_20191127181028060.png&type=sc960_832">
-    <!--        <h2>쫀떠기^-^</h2>-->
-    <h2 data-th-text="${myPage.nick}"></h2>
-    <div>
-      <p style="display: inline; font-weight:bold;">상태 메시지</p>
-      <a data-th-if="${session.loginUser.no == myPage.no}"
-         href="" style="display: inline; margin-left: 10px; float:right">내 정보 수정</a>
-      <a data-th-if="${session.loginUser.no != myPage.no}"
-         href="" style="display: inline; margin-left: 10px; float:right">
+  <div data-th-fragment="memberInfo">
+    <div class="sidebar">
+      <!--        <a href="" >오늘 방문자 수</a>-->
+      <p style="display: inline;">총 방문자 수 </p>
+      <p data-th-text="${myPage.visitCount}" style="display: inline;"></p>
+      <br>
+      <br>
+      <img alt="프로필 사진" class="profile-pic"
+        src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5511%2F2019%2F11%2F27%2F0000006891_003_20191127181028060.png&type=sc960_832">
+      <!--        <h2>쫀떠기^-^</h2>-->
+      <h2 data-th-text="${myPage.nick}"></h2>
+      <div>
+        <p style="display: inline; font-weight:bold;">상태 메시지</p>
+        <a data-th-if="${session.loginUser.no == myPage.no}" href=""
+          style="display: inline; margin-left: 10px; float:right">내 정보 수정</a>
+        <a data-th-if="${session.loginUser.no != myPage.no}" href=""
+          style="display: inline; margin-left: 10px; float:right">
 
-        <input class="followCheckbox"
-               data-th-checked="${session.loginUser.getFollowMemberSet().contains(myPage)}"
-               data-th-id="|toggle${myPage.no}|"
-               type="checkbox">
-        <label class="unfollowLabel"
-               data-th-for="|toggle${myPage.no}|"
-               data-th-onclick="|unfollow(${myPage.no})|">
-          팔로잉 취소
-        </label>
-        <label class="followLabel"
-               data-th-for="|toggle${myPage.no}|"
-               data-th-onclick="|follow(${myPage.no})|">
-          팔로잉
-        </label>
-      </a>
-      <p data-th-text="${myPage.stateMessage}"></p>
-      <div style="text-align: center">
-        <button class="my_btn" style="margin-right:20px">팔로잉</button>
-        <button class="my_btn" style="margin-left:20px">팔로워</button>
+          <input class="followCheckbox" data-th-checked="${session.loginUser.getFollowMemberSet().contains(myPage)}"
+            data-th-id="|toggle${myPage.no}|" type="checkbox">
+          <label class="unfollowLabel" data-th-for="|toggle${myPage.no}|" data-th-onclick="|unfollow(${myPage.no})|">
+            팔로잉 취소
+          </label>
+          <label class="followLabel" data-th-for="|toggle${myPage.no}|" data-th-onclick="|follow(${myPage.no})|">
+            팔로잉
+          </label>
+        </a>
+        <p data-th-text="${myPage.stateMessage}"></p>
+        <div style="text-align: center">
+          <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followings'}" class="my_btn"
+            style="margin-right:20px;text-decoration-line:none;">팔로잉</a>
+          <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followers'}" class="my_btn"
+            style="margin-left:20px;text-decoration-line:none;">팔로워</a>
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
 </body>
 
 </html>
