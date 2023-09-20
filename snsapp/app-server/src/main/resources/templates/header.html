@@ -8,7 +8,7 @@
 
 <div data-th-fragment="header" style="height:60px;">
   <img src="/images/logo.png" style="height:60px">
-  <a href="">마이페이지</a>
+  <a data-th-href="|/myPage/${session.loginUser.no}|">마이페이지</a>
   <a href="/board/list?category=1">게시글</a>
   <a href="/board/list?category=2">방명록</a>
   <!--  <div style="display:inline;">-->
@@ -17,8 +17,10 @@
   <!--         data-th-src="${'http://ncloud주소값/member/' + session.loginUser.photo + '?type=f&w=30&h=40&faceopt=true&ttype=jpg'}">-->
   <!--    <span data-th-text="${session.loginUser.name}"></span>-->
   <div style="float:right;">
-    <img src="/images/noti.png" style="height:20px;">
-    <span style="margin-left: 0px;">아이디</span>
+    <a href="/notification/list">
+      <img src="/images/noti.png" style="height:20px;">
+    </a>
+    <span style="margin-left: 0px;" data-th-text="${session.loginUser.nick}">닉네임</span>
     <a href="/auth/logout" style="margin-left: 10px;">로그아웃</a>
   </div>
   <!--  </div>-->

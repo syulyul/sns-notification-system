@@ -1,68 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>알림 로그 목록</title>
-    <style>
-        /* 부모 컨테이너 스타일 - 가운데 정렬 */
-        .center-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50vh;
-            flex-direction: column; /* 추가: 세로 방향으로 정렬 */
-            margin-left : 5%;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알림 로그 목록</title>
+  <style>
+    /* 부모 컨테이너 스타일 - 가운데 정렬 */
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+        flex-direction: column; /* 추가: 세로 방향으로 정렬 */
+        margin-left : 5%;
+    }
 
-        /* 알림 로그 목록 컨테이너 스타일 */
-        .notification-list-container {
-            width: 50%;
-            max-height: 100%;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        }
+    /* 알림 로그 목록 컨테이너 스타일 */
+    .notification-list-container {
+        width: 50%;
+        max-height: 100%;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
 
-        /* 개별 알림 로그 스타일 */
-        .notification-item {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
+    /* 개별 알림 로그 스타일 */
+    .notification-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
 
-        .notification-item:hover {
-            background-color: #f5f5f5;
-        }
+    .notification-item:hover {
+        background-color: #f5f5f5;
+    }
 
-        /* 알림 메시지 제목 스타일 */
-        .notification-title {
-            font-weight: bold;
-            text-align: left; /* 추가: 왼쪽 정렬 */
+    #notification-title-container{
+        display: flex;
+        justify-content: space-between;
+
+        > form {
+          margin: 1rem;
         }
-    </style>
+    }
+
+    /* 알림 메시지 제목 스타일 */
+    .notification-title {
+        font-weight: bold;
+        text-align: left; /* 추가: 왼쪽 정렬 */
+    }
+  </style>
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
 <!-- 부모 컨테이너 - 가운데 정렬 -->
 <div class="center-container">
-    <!-- 알림 로그 목록 컨테이너 -->
-    <div class="notification-list-container">
-        <h2 class="notification-title" style="margin-left: 5%;">알림 내용</h2> <!-- 수정: 제목을 왼쪽 정렬로 맞춤 -->
-        <!-- 알림 로그 아이템 예제 -->
-        <div class="notification-item">
-<!--            <p style="margin-left: 4%;">알림 내용 1</p>-->
-            <a href="" style="margin-left: 4%;">알림 내용 1</a>
-        </div>
-        <div class="notification-item">
-            <p style="margin-left: 4%;">알림 내용 2</p>
-        </div>
-        <div class="notification-item">
-            <p style="margin-left: 4%;">알림 내용 3</p>
-        </div>
+  <!-- 알림 로그 목록 컨테이너 -->
+  <div class="notification-list-container">
+    <div id="notification-title-container">
+      <h2 class="notification-title" style="margin-left: 5%;">알림 내용</h2> <!-- 수정: 제목을 왼쪽 정렬로 맞춤 -->
+      <form data-th-action="'/notification/updateAllState'" method='post'>
+        <input value="1" name="notiState" type="hidden">
+        <button>
+          모두 읽음
+        </button>
+      </form>
     </div>
+    <!-- 알림 로그 아이템 예제 -->
+    <div data-th-each="notiLog : ${notiList}">
+      <div class="notification-item">
+        <a style="margin-left: 4%;"
+           data-th-href="@{/notification/updateState(memberNo=${notiLog.memberNo},notiNo=${notiLog.no},notiState=1,url=${notiLog.url})}"
+           data-th-text="${notiLog.content}">
+          알림 내용
+        </a>
+        <span data-th-if="${notiLog.notiState==0}" data-th-text="안읽음"></span>
+        <span data-th-if="${notiLog.notiState==1}" data-th-text="읽음"></span>
+      </div>
+    </div>
+  </div>
 </div>
 <div data-th-replace="footer :: footer"></div>
 </body>
