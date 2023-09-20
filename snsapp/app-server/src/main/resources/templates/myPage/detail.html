@@ -7,123 +7,17 @@
   <meta content="ie=edge" http-equiv="X-UA-Compatible">
   <title>MyPage</title>
 
-  <script type="text/javascript">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/detail.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfo.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/boardList.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/memberList.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/follow.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfoUpdate.css">
 
-  </script>
-
-  <style>
-    /* 전체 페이지 스타일 */
-    body {
-      font-family: Arial, sans-serif;
-      /*background-color: #f5f5f5;*/
-      margin: 0;
-      padding: 0;
-    }
-
-    /* MyPageBox 스타일 */
-    #myPageBox {
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    /* 왼쪽 사이드바 스타일 */
-    .sidebar {
-      float: left;
-      width: 70%;
-      padding: 20px;
-      background-color: #FAFAF5;
-      border-radius: 5px;
-      /* 사이드바를 둥글게 만들기 위해 추가 */
-    }
-
-    /* 프로필 사진 스타일 */
-    .profile-pic {
-      max-width: 100%;
-      height: auto;
-      border-radius: 50%;
-      /* 원 모양 프로필 사진을 만들기 위해 추가 */
-    }
-
-    .my_btn {
-      background-color: #426B1F;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      cursor: pointer;
-      /* 마우스 커서를 포인터로 변경 */
-    }
-
-    /* 회원 리스트 스타일 */
-    .memberListBox {
-      width: 100%;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      /* 박스를 둥글게 만들기 위해 추가 */
-    }
-
-    /* 개별 회원 항목 스타일 */
-    .memberItem {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #ccc;
-      /* 회원 항목 사이에 구분선 추가 */
-
-    }
-
-    .memberPhoto {
-      height: 40px;
-      width: 50px;
-      border-radius: 50%;
-      /* 원 모양 프로필 사진을 만들기 위해 추가 */
-    }
-
-    /* 팔로우 언팔로우 버튼 디자인 및 토글 구현 */
-    .followCheckbox {
-      display: none;
-    }
-
-    .unfollowLabel {
-      display: none;
-    }
-
-    .followCheckbox:checked~.unfollowLabel {
-      /* 팔로우 되어 있는 상태 == 언팔 버튼이 보여야함 */
-      display: inline-block;
-      background-color: grey;
-    }
-
-    .followLabel {
-      display: inline-block;
-      background-color: grey;
-    }
-
-    .followCheckbox:checked~.followLabel {
-      display: none;
-    }
-
-    .state-message {
-      outline: none;
-      border-color: #888888;
-    }
-
-    .sidebar_my_btn {
-      background-color: #426B1F;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-  </style>
+  <script src="/js/myPage/follow.js"></script>
 </head>
 
 <body>
-
   <div data-th-replace="header :: header"></div>
   <br>
   <div id="myPageBox">
