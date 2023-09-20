@@ -1,5 +1,7 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.vo.Member;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -11,9 +13,13 @@ public class HomeController {
   }
 
   @GetMapping("/")
-  public String home() throws Exception {
+  public String home(HttpSession session) throws Exception {
+    Member loginUser = (Member) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      return "redirect:auth/form";
+    }
 
-    return "redirect:auth/form";
+    return "redirect:/myPage/" + loginUser.getNo();
   }
 }
 
