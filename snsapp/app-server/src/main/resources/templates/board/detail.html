@@ -150,89 +150,90 @@
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
+
 <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
 
 <form data-th-if="${board}" data-th-action="@{/board/update}" method='post' enctype='multipart/form-data'>
-<div class="container">
-    <div class="content-box">
-        <h1><span th:text="${board.title}"></span></h1>
-        <div class="meta-info">
-            <!--            작성자: <span th:if="${board != null}" th:text="${board.writer != null ? board.writer.name : '홍길동'}">홍길동</span> &nbsp;|&nbsp;-->
-            <span th:text="${board.writer.name}"></span>
-            <img class="clock-icon" src="/images/clock.png">
-            <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
-            <img class="clock-icon" src="/images/eye.png">
-            <span th:text="${board.viewCount}"></span>
-        </div>
-        <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
-        <!-- 게시글 내용 추가 -->
-        <tr><th>첨부파일</th><td>
-            <div data-th-each="photo : ${board.attachedFiles}">
-                <!-- 이미지 파일 URL -->
-                <img data-th-src="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${photo.filePath}|"
-                     alt="첨부파일 이미지" width="300"/>
-
-                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${photo.filePath}|"
-                   data-th-text="${photo.filePath}">okok.gif</a>
-                [<a data-th-href="|/board/fileDelete/attachedFile;no=${photo.no}|">삭제</a>]<br>
+    <div class="container">
+        <div class="content-box">
+            <input type='hidden' name='no' th:value="${board.no}">
+            <h1>
+                <input type="text" name="title" value="${board.title}" th:value="${board.title}">
+            </h1>
+            <div class="meta-info">
+                <span th:text="${board.writer.name}"></span>
+                <img class="clock-icon" src="/images/clock.png">
+                <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
+                <img class="clock-icon" src="/images/eye.png">
+                <span th:text="${board.viewCount}"></span>
             </div>
-<!--            <div data-th-each="photo : ${board.attachedFiles}">-->
-<!--                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${photo.filePath}|"-->
-<!--                   data-th-text="${photo.filePath}">okok.gif</a>-->
-<!--                [<a data-th-href="|/board/fileDelete/attachedFile;no=${photo.no}|">삭제</a>]<br>-->
-<!--            </div>-->
-            <input type='photo' name='files' multiple>
-        </td></tr>
-        <p>
-            <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}">내용입니다!</span>
-        </p>
-        <button class="like-button" id="likeButton" th:if="${board != null}"
-                th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'"
-                th:attr="data-board-no=${board != null ? board.no : '0'}"
-                onclick="likeButtonClicked()">
-            ❤️ 좋아요 (0)
-        </button>
-        <button class="unlike-button" id="unlikeButton" th:if="${board != null}"
-                th:text="'취소 (' + ${board.likes != null ? board.likes : '0'} + ')'"
-                th:attr="data-board-no=${board != null ? board.no : '0'}"
-                onclick="unlikeButtonClicked()">
-            ❤️ 좋아요 (0)
-        </button>
+            <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
+            <textarea name='content' style='height:200px; width:400px;' data-th-text="${board.content}">내용입니다!</textarea>
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                    <div data-th-each="file : ${board.attachedFiles}">
+                        <!-- 이미지 파일 URL -->
+                        <img data-th-src="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${file.filePath}|"
+                             alt="첨부파일 이미지" width="50"/>
+                        <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/board/${file.filePath}|"
+                           data-th-text="${file.filePath}">okok.gif</a>
+                        [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
+                    </div>
+                    <input type='file' name='files' multiple>
+                </td>
+            </tr>
+            <button class="like-button" id="likeButton" th:if="${board != null}"
+                    th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'"
+                    th:attr="data-board-no=${board != null ? board.no : '0'}"
+                    onclick="likeButtonClicked()">
+                ❤️ 좋아요 (0)
+            </button>
+            <button class="unlike-button" id="unlikeButton" th:if="${board != null}"
+                    th:text="'취소 (' + ${board.likes != null ? board.likes : '0'} + ')'"
+                    th:attr="data-board-no=${board != null ? board.no : '0'}"
+                    onclick="unlikeButtonClicked()">
+                ❤️ 좋아요 (0)
+            </button>
+        </div>
     </div>
     <div class="btn-container">
         <button>변경</button>
         <button type="reset">초기화</button>
         <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
-            <button>삭제</button>
+            <button type="button">삭제</button>
         </a>
         <a th:href="@{/board/list(category=${board.category})}">
-            <button>목록</button>
+            <button type="button">목록</button>
         </a>
     </div>
-    <div class="comment-box">
-        <div class="comment-list">
-            <h1>댓글 목록</h1>
-            <table border='1'>
-                <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>작성자</th>
-                    <th>내용</th>
-                    <th>등록일</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr data-th-each="boardComment : ${comments}">
-                    <td data-th-text="${boardComment.no}">200</td>
-                    <td data-th-text="${boardComment.writer.name}">홍길동</td>
-                    <td data-th-text="${boardComment.content}">댓글 내용</td>
-                    <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">2023-09-14</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+</form>
+
+<tr data-th-each="boardComment : ${comments}">
+    <div>
+        <p>
+            <td data-th-text="${boardComment.writer.name}">홍길동</td>
+            /
+            <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">2023-09-14</td>
+        </p>
+        <p>
+            <td data-th-text="${boardComment.content}">댓글 내용</td>
+        </p>
+        <button data-th-href="@{/board/updateComment}" type="submit">수정</button>
     </div>
+</tr>
+<div>
+    <form method="post" action="/board/addComment">
+        <p>
+            <textarea rows="3" cols="70" name="content"></textarea>
+        </p>
+        <p>
+            <input type="hidden" name="boardNo" th:value="${board.getNo()}">
+        </p>
+        <button type="submit">댓글 작성</button>
+    </form>
 </div>
+
 <div data-th-replace="footer :: footer"></div>
 </body>
 </html>
