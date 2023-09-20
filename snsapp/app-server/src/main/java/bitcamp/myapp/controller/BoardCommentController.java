@@ -30,20 +30,5 @@ public class BoardCommentController {
 
 
 
-    @GetMapping("delete/{no}/{boardNo}")
-    public String delete(@PathVariable int no, @PathVariable int boardNo, HttpSession session) throws Exception {
-        Member loginUser = (Member) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/auth/form";
-        }
 
-        BoardComment b = boardCommentService.get(no, boardNo);
-
-        if (b == null || b.getWriter().getNo() != loginUser.getNo()) {
-            throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
-        } else {
-            boardCommentService.delete(b.getNo(), b.getBoardNo());
-            return "redirect:/board/detail?category=1&no=" + boardNo;
-        }
-    }
 }
