@@ -4,12 +4,12 @@ import java.sql.Timestamp;
 
 public class MyPage extends Member {
 
-  public static final char MALE = 'M';
-  public static final char FEMALE = 'W';
+  public static final int MALE = 1;
+  public static final int FEMALE = 2;
   private static final long serialVersionUID = 1L;
   private String stateMessage;
   private Timestamp birthday;
-  private char gender;
+  private int gender;
   private int likes;
   private int todayVisitCount;
   private int visitCount;
@@ -54,11 +54,11 @@ public class MyPage extends Member {
     this.birthday = birthday;
   }
 
-  public char getGender() {
+  public int getGender() {
     return gender;
   }
 
-  public void setGender(char gender) {
+  public void setGender(int gender) {
     this.gender = gender;
   }
 
@@ -85,7 +85,6 @@ public class MyPage extends Member {
   public void setVisitCount(int visitCount) {
     this.visitCount = visitCount;
   }
-
 
   public Timestamp getCreatedDate() {
     return createdDate;
