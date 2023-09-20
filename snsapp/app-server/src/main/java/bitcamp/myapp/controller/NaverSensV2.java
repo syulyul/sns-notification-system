@@ -57,7 +57,7 @@ public class NaverSensV2 {
         // 프로젝트에 할당된 SMS 서비스 ID
         serviceId = "ncp:sms:kr:316390617576:sms_practice";
         //
-        phone = "010-7666-2821";
+        phone = "01076662821";
         // 요청 method
         String method = "POST";
         // current timestamp (epoch)
@@ -81,7 +81,7 @@ public class NaverSensV2 {
         bodyJson.put("countryCode","82");
 
         // 발신번호 * 사전에 인증/등록된 번호만 사용할 수 있습니다.
-        bodyJson.put("from","010-7666-2821");
+        bodyJson.put("from","01076662821");
         bodyJson.put("messages", toArr);
 
         String body = bodyJson.toJSONString();
@@ -174,12 +174,12 @@ public class NaverSensV2 {
                              SmsService memberService,
                              HttpSession session) {
 
-        try { // 이미 가입된 전화번호가 있으면
-            if(memberService.memberTelCount(phoneNumber) > 0)
-                return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try { // 이미 가입된 전화번호가 있으면
+//            if(memberService.memberTelCount(phoneNumber) > 0)
+//                return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         String code = memberService.sendRandomMessage(phoneNumber);
         session.setAttribute("rand", code);

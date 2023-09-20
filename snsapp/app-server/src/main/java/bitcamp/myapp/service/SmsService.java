@@ -2,6 +2,7 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.controller.NaverSensV2;
 import bitcamp.myapp.dao.MemberDao;
+import bitcamp.myapp.vo.Member;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ public class SmsService {
     }
 
     // 핸드폰 번호로 가입된 회원 수 조회
-    public int memberTelCount(String tel) {
-        return memberDao.countByTel(tel);
+    public Member memberTelCount(String phoneNumber) {
+        return memberDao.countByTel(phoneNumber);
     }
     // 문자 메시지 발송과 랜덤 코드 생성을 한 번에 처리
     public String sendRandomMessage(String phoneNumber) {
