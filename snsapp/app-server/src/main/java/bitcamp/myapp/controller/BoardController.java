@@ -39,27 +39,27 @@ public class BoardController {
 
     @PostMapping("add")
     public String add(Board board, MultipartFile[] files, HttpSession session) throws Exception {
-        Member loginUser = (Member) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/auth/form";
-        }
-        board.setWriter(loginUser);
-
-        ArrayList<BoardPhoto> attachedFiles = new ArrayList<>();
-        for (MultipartFile part : files) {
-            if (part.getSize() > 0) {
-                String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                        "bitcamp-nc7-bucket-14", "board/", part);
-                BoardPhoto attachedFile = new BoardPhoto();
-                attachedFile.setFilePath(uploadFileUrl);
-                attachedFiles.add(attachedFile);
+            Member loginUser = (Member) session.getAttribute("loginUser");
+            if (loginUser == null) {
+                return "redirect:/auth/form";
             }
-        }
-        board.setAttachedFiles(attachedFiles);
+            board.setWriter(loginUser);
 
-        boardService.add(board);
-        return "redirect:/board/list?category=" + board.getCategory();
-    }
+            ArrayList<BoardPhoto> attachedFiles = new ArrayList<>();
+            for (MultipartFile part : files) {
+                if (part.getSize() > 0) {
+                    String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                            "bitcamp-nc7-bucket-14", "board/", part);
+                    BoardPhoto attachedFile = new BoardPhoto();
+                    attachedFile.setFilePath(uploadFileUrl);
+                    attachedFiles.add(attachedFile);
+                }
+            }
+            board.setAttachedFiles(attachedFiles);
+
+            boardService.add(board);
+            return "redirect:/board/list?category=" + board.getCategory();
+        }
 
     @GetMapping("delete")
     public String delete(int no, int category, HttpSession session) throws Exception {

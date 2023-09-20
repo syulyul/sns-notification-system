@@ -47,12 +47,7 @@
 
         th:nth-child(2),
         td:nth-child(2) {
-            width: 20%;
-        }
-
-        th:nth-child(3),
-        td:nth-child(3) {
-            width: 50%;
+            width: 60%;
         }
 
         th, td {
@@ -113,7 +108,7 @@
 
 <table border='1'>
     <thead>
-    <tr><th>번호</th> <th>제목</th> <th>작성자</th> <th>조회수</th> <th>등록일</th></tr>
+    <tr><th>번호</th> <th>제목</th>  <th>프사</th> <th>작성자</th><th>조회수</th> <th>등록일</th></tr>
     </thead>
     <tbody>
     <tr data-th-each="board : ${list}">
@@ -121,7 +116,13 @@
         <td><a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
                data-th-text="${board.title} ?: '제목없음'">게시글 제목</a>
         </td>
+        <td>
+            <div class="profile-picture">
+                <img src="${board.writer.photo}" class="circular-image">
+            </div>
+        </td>
         <td data-th-text="${board.writer.name}">작성자</td>
+
         <td data-th-text="${board.viewCount}">조회수</td>
         <td data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">등록일</td>
     </tr>
