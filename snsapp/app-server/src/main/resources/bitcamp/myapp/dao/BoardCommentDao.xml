@@ -20,7 +20,7 @@
 
   <insert id="insert" parameterType="boardComment">
     insert into sns_board_comment(bno,mno,content,created_at)
-    values(#{bno},#{writer.no},#{content},now())
+    values(#{boardNo},#{writer.no},#{content},now())
   </insert>
 
   <select id="findAll" parameterType="int" resultMap="boardCommentMap">
