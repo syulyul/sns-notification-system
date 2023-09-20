@@ -1,10 +1,10 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.service.BoardService;
+import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.vo.LoginUser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +22,10 @@ public class MyPageController {
 
   @Autowired
   MyPageService myPageService;
+  @Autowired
+  MemberService memberService;
+  @Autowired
+  BoardService boardService;
 
   {
     System.out.println("MyPageController 생성됨!");
@@ -51,13 +55,14 @@ public class MyPageController {
 
     switch (show) {
       case "followers":
-        model.addAttribute("list", myPageService.followerList(no));
+        model.addAttribute("followList", myPageService.followerList(no));
         break;
       case "followings":
-        model.addAttribute("list", myPageService.followingList(no));
+        model.addAttribute("followList", myPageService.followingList(no));
         break;
       default:
-        model.addAttribute("list", null);
+        model.addAttribute("followList", null);
+        model.addAttribute("list", boardService.list(1));
         break;
     }
     // myPageService.increaseVisitCount(no);
@@ -68,32 +73,46 @@ public class MyPageController {
 
   @GetMapping("follow")
   public void follow(
-      @RequestParam("myPageNo") int myPageNo,
       @RequestParam("followingNo") int followingNo,
       HttpSession session,
       HttpServletResponse response) throws Exception, IOException {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-    myPageService.follow(loginUser, followingNo);
+
     try {
-      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
-    } catch (IOException e) {
-      e.printStackTrace();
+      myPageService.follow(loginUser, followingNo);
+      loginUser.getFollowMemberSet().add(memberService.get(followingNo));
+      session.setAttribute("loginUser", loginUser);
+    } catch (Exception e) {
+
     }
+
+//    try {
+//      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
 
   @GetMapping("unfollow")
   public void unfollow(
-      @RequestParam("myPageNo") int myPageNo,
       @RequestParam("followingNo") int followingNo,
       HttpSession session,
       HttpServletResponse response) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-    myPageService.unfollow(loginUser, followingNo);
+
     try {
-      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
-    } catch (IOException e) {
-      e.printStackTrace();
+      myPageService.unfollow(loginUser, followingNo);
+      loginUser.getFollowMemberSet().remove(memberService.get(followingNo));
+      session.setAttribute("loginUser", loginUser);
+    } catch (Exception e) {
+
     }
+
+//    try {
+//      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
 
 }

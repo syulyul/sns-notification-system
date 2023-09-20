@@ -56,3 +56,4 @@ public class LoginUser extends Member {
     this.visitedMyPages = visitedMyPages;
   }
 }
+

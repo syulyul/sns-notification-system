@@ -74,6 +74,7 @@
         padding: 20px;
     }
 
+
     /* 왼쪽 사이드바 스타일 */
     .sidebar {
         float: left;
@@ -99,6 +100,73 @@
         cursor: pointer; /* 마우스 커서를 포인터로 변경 */
     }
 
+
+    /* 게시글 리스트 스타일 */
+    .boardListBox {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
+    }
+    table {
+        border-collapse: collapse;
+        width: 200%;
+        margin: 1rem 0.5rem;
+        background-color: white;
+    }
+
+    thead {
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 테이블 행 */
+    td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        padding: 8px;
+        text-align: left;
+        text-align: center;
+        /*border-top: 2px solid #888;*/
+        /*border-bottom: 2px solid #888;*/
+        /*color: #888;*/
+    }
+
+    /* 테이블 올렸을 때 */
+    tbody tr:hover {
+        background-color: #d3d3d3;
+        opacity: 0.9;
+        cursor: pointer;
+    }
+
+    /* 테이블 비율 */
+    th:nth-child(1),
+    td:nth-child(1) {
+        width: 10%;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+        width: 20%;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+        width: 40%;
+    }
+
+    th, td {
+        border-left: none;
+        border-right: none;
+    }
+
+
     /* 회원 리스트 스타일 */
     .memberListBox {
         width: 100%;
@@ -114,13 +182,6 @@
         padding: 10px 0;
         border-bottom: 1px solid #ccc; /* 회원 항목 사이에 구분선 추가 */
 
-        > label {
-            background-color: grey;
-        }
-
-        > .followCheckbox {
-            display: none;
-        }
     }
 
     .memberPhoto {
@@ -129,15 +190,21 @@
         border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
     }
 
+    /* 팔로우 언팔로우 버튼 디자인 및 토글 구현 */
+    .followCheckbox {
+        display: none;
+    }
     .unfollowLabel {
         display: none;
     }
     .followCheckbox:checked ~ .unfollowLabel { /* 팔로우 되어 있는 상태 == 언팔 버튼이 보여야함 */
         display: inline-block;
+        background-color: grey;
     }
 
     .followLabel {
         display: inline-block;
+        background-color: grey;
     }
     .followCheckbox:checked ~ .followLabel {
         display: none;
@@ -153,19 +220,16 @@
 <div id="myPageBox">
   <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
   <!--      <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
-  <div class="boardListBox" data-th-unless="${list}">
-    <div>본인 게시글
-      <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
-    </div>
-    <div>방명록
-      <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
-    </div>
+  <div class="boardListBox" data-th-unless="${followList}">
+    <div data-th-replace="board/list :: boardList">목록</div>
+    <div data-th-replace="board/list :: boardList">목록</div>
+    <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
   </div>
-  <div class="memberListBox" data-th-if="${list}">
+  <div class="memberListBox" data-th-if="${followList}">
     <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
     <h3 data-th-if="${show.equals('followers')}" data-th-text="'팔로워 리스트'"></h3>
     <h3 data-th-if="${show.equals('followings')}" data-th-text="'팔로잉 리스트'"></h3>
-    <div data-th-each="member : ${list}">
+    <div data-th-each="member : ${followList}">
       <div class="memberItem">
         <input data-th-id="memberNo" data-th-value="${member.no}" type="hidden">
         <img class="memberPhoto" data-th-src="'/images/avatar.png'"

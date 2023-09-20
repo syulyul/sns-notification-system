@@ -27,6 +27,7 @@ public class Member implements Serializable {
         ", email='" + email + '\'' +
         ", photo='" + photo + '\'' +
         ", password='" + password + '\'' +
+//        ", hashCode='" + this.hashCode() + '\'' +
         '}';
   }
 
