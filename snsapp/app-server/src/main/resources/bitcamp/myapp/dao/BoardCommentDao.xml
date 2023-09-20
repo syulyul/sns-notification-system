@@ -64,4 +64,10 @@
     where
       bcno=#{no} and bno=#{boardNo}
   </delete>
+
+  <delete id="deleteComments" parameterType="int">
+    delete from sns_board_comment
+    where
+      bno=#{boardNo}
+  </delete>
 </mapper>

@@ -159,6 +159,7 @@ public class BoardController {
         }
     }
 
+    // 좋아요 기능
     @PostMapping("like")
     public int like(@RequestParam int memberNo, @RequestParam int boardNo) {
         try {
@@ -179,6 +180,8 @@ public class BoardController {
         }
     }
 
+
+    // 댓글 기능
     @PostMapping("addComment")
     public String addComment(BoardComment boardComment, HttpSession session, @RequestParam("boardNo") int boardNo) throws Exception {
         Member loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -232,7 +235,7 @@ public class BoardController {
             throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
         } else {
             boardCommentService.delete(no, boardNo);
-            return "redirect:/board/detail/1/" + boardNo; 
+            return "redirect:/board/detail/1/" + boardNo;
         }
     }
 }
