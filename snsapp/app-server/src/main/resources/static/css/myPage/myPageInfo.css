@@ -1,0 +1,21 @@
+/* 왼쪽 사이드바 스타일 */
+.sidebar {
+    float: left;
+    width: 25%;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+/* 프로필 사진 스타일 */
+.profile-pic {
+    max-width: 100%;
+    height: auto;
+}
+
+.my_btn {
+    background-color: skyblue;
+    color: white;
+    border: none;
+
+    padding: 20px 60px;
+}
