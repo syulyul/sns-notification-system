@@ -31,8 +31,8 @@
     </resultMap>
 
     <insert id="insert" parameterType="myPage">
-        insert into sns_mypage(state_message, birthday, gender)
-        values(#{state_message}, #{birthday}, #{gender})
+        insert into sns_mypage(mno,state_message, birthday, gender)
+        values(#{no},#{stateMessage}, #{birthday}, #{gender})
     </insert>
 
     <select id="findBy" parameterType="int" resultMap="myPageMap">

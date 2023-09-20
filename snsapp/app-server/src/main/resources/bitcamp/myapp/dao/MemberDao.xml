@@ -14,7 +14,7 @@
         <result column="filepath"        property="photo"/>
     </resultMap>
 
-    <insert id="insert" parameterType="member">
+    <insert id="insert" parameterType="member" useGeneratedKeys="true" keyColumn="board_no" keyProperty="no">
         insert into sns_member(nick,name,phone_number,password,filepath)
         values(#{nick},#{name},#{phoneNumber},sha1(#{password}),#{photo})
     </insert>

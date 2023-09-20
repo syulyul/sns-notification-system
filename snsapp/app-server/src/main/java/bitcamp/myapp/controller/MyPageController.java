@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.service.NcpObjectStorageService;
@@ -36,6 +37,9 @@ public class MyPageController {
   MyPageService myPageService;
 
   @Autowired
+  BoardService boardService;
+
+  @Autowired
   NcpObjectStorageService ncpObjectStorageService;
 
   {
@@ -66,13 +70,14 @@ public class MyPageController {
 
     switch (show) {
       case "followers":
-        model.addAttribute("list", myPageService.followerList(no));
+        model.addAttribute("followList", myPageService.followerList(no));
         break;
       case "followings":
-        model.addAttribute("list", myPageService.followingList(no));
+        model.addAttribute("followList", myPageService.followingList(no));
         break;
       default:
-        model.addAttribute("list", null);
+        model.addAttribute("followList", null);
+        model.addAttribute("list", boardService.list(1));
         break;
     }
     // myPageService.increaseVisitCount(no);
@@ -90,14 +95,14 @@ public class MyPageController {
 
   @PostMapping("{no}/update")
   public String update(
-          Member member,
-          @RequestParam("birthday") String birthday,
-          @RequestParam("gender") int gender,
-          Model model,
-          MultipartFile photofile) throws Exception {
+      Member member,
+      @RequestParam("birthday") String birthday,
+      @RequestParam("gender") int gender,
+      Model model,
+      MultipartFile photofile) throws Exception {
     if (photofile.getSize() > 0) {
       String uploadFileUrl = ncpObjectStorageService.uploadFile(
-              "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+          "bitcamp-nc7-bucket-14", "sns_member/", photofile);
       member.setPhoto(uploadFileUrl);
     }
 
@@ -128,12 +133,21 @@ public class MyPageController {
       HttpSession session,
       HttpServletResponse response) throws Exception, IOException {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-    myPageService.follow(loginUser, followingNo);
+
     try {
-      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
-    } catch (IOException e) {
-      e.printStackTrace();
+      myPageService.follow(loginUser, followingNo);
+      loginUser.getFollowMemberSet().add(memberService.get(followingNo));
+      session.setAttribute("loginUser", loginUser);
+    } catch (Exception e) {
+
     }
+
+    // try {
+    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
+    // HashMap<>()));
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
   }
 
   @GetMapping("unfollow")
@@ -142,12 +156,21 @@ public class MyPageController {
       HttpSession session,
       HttpServletResponse response) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-    myPageService.unfollow(loginUser, followingNo);
+
     try {
-      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
-    } catch (IOException e) {
-      e.printStackTrace();
+      myPageService.unfollow(loginUser, followingNo);
+      loginUser.getFollowMemberSet().remove(memberService.get(followingNo));
+      session.setAttribute("loginUser", loginUser);
+    } catch (Exception e) {
+
     }
+
+    // try {
+    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
+    // HashMap<>()));
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
   }
 
 }
