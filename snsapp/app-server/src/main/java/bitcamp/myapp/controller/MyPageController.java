@@ -1,9 +1,16 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
+import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.LoginUser;
+import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.MyPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import javax.servlet.http.HttpServletResponse;
@@ -13,15 +20,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/myPage")
 public class MyPageController {
 
   @Autowired
+  MemberService memberService;
+
+  @Autowired
   MyPageService myPageService;
+
+  @Autowired
+  NcpObjectStorageService ncpObjectStorageService;
 
   {
     System.out.println("MyPageController 생성됨!");
@@ -64,6 +79,47 @@ public class MyPageController {
     // model.addAttribute("loginUser", loginUser);
     session.setAttribute("loginUser", loginUser);
     return "myPage/detail";
+  }
+
+  @GetMapping("{no}/info")
+  public String info(@PathVariable int no, Model model) throws Exception {
+    model.addAttribute("myPage", myPageService.get(no));
+
+    return "myPage/memberInfoUpdate";
+  }
+
+  @PostMapping("{no}/update")
+  public String update(
+          Member member,
+          @RequestParam("birthday") String birthday,
+          @RequestParam("gender") int gender,
+          Model model,
+          MultipartFile photofile) throws Exception {
+    if (photofile.getSize() > 0) {
+      String uploadFileUrl = ncpObjectStorageService.uploadFile(
+              "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+      member.setPhoto(uploadFileUrl);
+    }
+
+    MyPage myPage = myPageService.get(member.getNo());
+
+    if (birthday.isEmpty()) {
+      birthday = null;
+    } else {
+      // 생일 값을 문자열에서 Timestamp로 변환
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date parsedDate = dateFormat.parse(birthday);
+      Timestamp timestamp = new Timestamp(parsedDate.getTime());
+
+      myPage.setBirthday(timestamp);
+      myPage.setGender(gender);
+    }
+
+    if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
+      throw new Exception("회원이 없습니다.");
+    } else {
+      return "redirect:/myPage/" + myPage.getNo();
+    }
   }
 
   @GetMapping("follow")
