@@ -1,81 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bitcamp.myapp.dao.NotificationDao">
 
-    <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
-    <resultMap type="notiLog" id="notiLogMap">
-        <id column="nlno" property="no"/>
-        <result column="mno" property="memberNo"/>
-        <result column="ntno" property="notiTypeNo"/>
-        <result column="content" property="content"/>
-        <result column="url" property="url"/>
-        <result column="noti_state" property="notiState"/>
-    </resultMap>
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="notiLog" id="notiLogMap">
+    <id column="nlno" property="no" />
+    <result column="mno" property="memberNo" />
+    <result column="ntno" property="notiTypeNo" />
+    <result column="content" property="content" />
+    <result column="url" property="url" />
+    <result column="noti_state" property="notiState" />
+  </resultMap>
 
-    <resultMap type="notiType" id="notiTypeMap">
-        <id column="ntno" property="no"/>
-        <result column="name" property="name"/>
-    </resultMap>
+  <resultMap type="notiType" id="notiTypeMap">
+    <id column="ntno" property="no" />
+    <result column="name" property="name" />
+  </resultMap>
 
-    <insert id="insert" parameterType="notiLog">
-        insert into sns_noti_log(mno,ntno,content,url)
-        values(#{memberNo},#{notiTypeNo},#{content},#{url})
-    </insert>
+  <insert id="insert" parameterType="notiLog">
+    insert into sns_noti_log(mno,ntno,content,url)
+    values(#{memberNo},#{notiTypeNo},#{content},#{url})
+  </insert>
 
-    <select id="findAll" parameterType="int" resultMap="notiLogMap">
-        select
-        nlno,
-        mno,
-        ntno,
-        content,
-        url,
-        noti_state
-        from
-        sns_noti_log
-        where
-        mno=#{memberNo}
-        order by
-        nlno desc
-    </select>
+  <select id="findAllNotiLog" parameterType="int" resultMap="notiLogMap">
+    select
+    nlno,
+    mno,
+    ntno,
+    content,
+    url,
+    noti_state
+    from
+    sns_noti_log
+    where
+    mno=#{memberNo}
+    order by
+    nlno desc
+  </select>
 
-    <select id="findBy" parameterType="int" resultMap="notiLogMap">
-        select
-        nlno,
-        mno,
-        ntno,
-        content,
-        url,
-        noti_state
-        from
-        sns_noti_log
-        where
-        nlno=#{notiNo}
-    </select>
+  <select id="findBy" parameterType="int" resultMap="notiLogMap">
+    select
+    nlno,
+    mno,
+    ntno,
+    content,
+    url,
+    noti_state
+    from
+    sns_noti_log
+    where
+    nlno=#{notiNo}
+  </select>
 
-    <update id="updateState" parameterType="notiLog">
-        update sns_noti_log set
-        noti_state=#{notiState}
-        where
-        nlno=#{notiNo}
-    </update>
+  <update id="updateState">
+    update sns_noti_log set
+    noti_state=#{notiState}
+    where
+    nlno=#{notiNo}
+  </update>
 
-    <select id="findAllNotiType" resultMap="notiTypeMap">
-        select
-        *
-        from
-        sns_noti_type
-    </select>
+  <update id="updateAllState">
+    update sns_noti_log set
+    noti_state=#{notiState}
+    where
+    mno=#{memberNo}
+  </update>
 
-    <select id="findNotiTypeName" parameterType="int">
-        select
-        name
-        from
-        sns_noti_type
-        where
-        ntno=#{notiTypeNo}
-    </select>
+  <select id="findAllNotiType" resultMap="notiTypeMap">
+    select
+    *
+    from
+    sns_noti_type
+  </select>
+
+  <select id="findNotiTypeName" parameterType="int">
+    select
+    name
+    from
+    sns_noti_type
+    where
+    ntno=#{notiTypeNo}
+  </select>
 </mapper>
 
 
