@@ -5,33 +5,59 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import bitcamp.myapp.service.SmsService;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+@Component
+@PropertySource("classpath:application.properties")
+@RequestMapping("/auth")
 public class NaverSensV2 {
+    @Value("${ncs.accessKey}")
+    private String accessKey;
 
-    public void sendMsg(String tel, String rand) throws JSONException {
+    @Value("${ncs.secretKey}")
+    private String secretKey;
+
+    @Value("${ncs.serviceId}")
+    private String serviceId;
+
+    @Value("${ncs.senderPhone}")
+    private String phone;
+
+    public void sendMsg(String phoneNumber, String rand) {
         // 호스트 URL
         String hostNameUrl = "https://sens.apigw.ntruss.com";
         // 요청 URL
-        String requestUrl = "/sms/v2/services/";
+        String requestUrl= "/sms/v2/services/";
         // 요청 URL Type
         String requestUrlType = "/messages";
         // 개인 인증키
-        String accessKey = "";
+        accessKey = "75pWjJhG9pprB66ehLxc";
         // 2차 인증을 위해 서비스마다 할당되는 service secret
-        String secretKey = "";
+        secretKey = "ghfYItSWx3lzr1cH2RpxzXHgxebEvdoLMEVSxjUm";
         // 프로젝트에 할당된 SMS 서비스 ID
-        String serviceId = "";
+        serviceId = "ncp:sms:kr:316390617576:sms_practice";
+        //
+        phone = "010-7666-2821";
         // 요청 method
         String method = "POST";
         // current timestamp (epoch)
@@ -39,26 +65,26 @@ public class NaverSensV2 {
         requestUrl += serviceId + requestUrlType;
         String apiUrl = hostNameUrl + requestUrl;
 
-        // JSON을 활용한 body data 생성
+        // JSON 을 활용한 body data 생성
         JSONObject bodyJson = new JSONObject();
         JSONObject toJson = new JSONObject();
-        JSONArray toArr = new JSONArray();
+        JSONArray  toArr = new JSONArray();
 
         // 난수와 함께 전송
-        toJson.put("content", "Going 본인인증 [" + rand + "]");
-        toJson.put("to", tel);
-        toArr.put(toJson);
+        toJson.put("content","Going 본인인증 ["+rand+"]");
+        toJson.put("to",phone);
+        toArr.add(toJson);
 
         // 메시지 Type (sms | lms)
-        bodyJson.put("type", "sms");
-        bodyJson.put("contentType", "COMM");
-        bodyJson.put("countryCode", "82");
+        bodyJson.put("type","sms");
+        bodyJson.put("contentType","COMM");
+        bodyJson.put("countryCode","82");
 
         // 발신번호 * 사전에 인증/등록된 번호만 사용할 수 있습니다.
-        bodyJson.put("from", "");
+        bodyJson.put("from","010-7666-2821");
         bodyJson.put("messages", toArr);
 
-        String body = bodyJson.toString();
+        String body = bodyJson.toJSONString();
 
         System.out.println(body);
 
@@ -97,12 +123,13 @@ public class NaverSensV2 {
             }
             br.close();
 
-            System.out.println(response.toString());
+            System.out.println(response);
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
 
     public static String makeSignature(
             String url,
@@ -137,20 +164,43 @@ public class NaverSensV2 {
             encodeBase64String = e.toString();
         }
 
+
         return encodeBase64String;
     }
-    public String sendRandomMessage(String tel) throws JSONException {
-        NaverSensV2 message = new NaverSensV2();
-        Random rand = new Random();
-        String numStr = "";
-        for (int i = 0; i < 6; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            numStr += ran;
+
+    @PostMapping("phoneAuth")
+    @ResponseBody
+    public Boolean phoneAuth(String phoneNumber,
+                             SmsService memberService,
+                             HttpSession session) {
+
+        try { // 이미 가입된 전화번호가 있으면
+            if(memberService.memberTelCount(phoneNumber) > 0)
+                return true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println("회원가입 문자 인증 => " + numStr);
 
-        message.sendMsg(tel, numStr);
+        String code = memberService.sendRandomMessage(phoneNumber);
+        session.setAttribute("rand", code);
 
-        return numStr;
+        return false;
+    }
+
+    @PostMapping("phoneAuthOk")
+    @ResponseBody
+    public Boolean phoneAuthOk(HttpSession session,
+                               HttpServletRequest request) {
+        String rand = (String) session.getAttribute("rand");
+        String code = (String) request.getParameter("code");
+
+        System.out.println(rand + " : " + code);
+
+        if (rand.equals(code)) {
+            session.removeAttribute("rand");
+            return false;
+        }
+
+        return true;
     }
 }
