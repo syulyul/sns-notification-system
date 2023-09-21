@@ -223,10 +223,8 @@
             <button type="reset">초기화</button>
             <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
                 <button type="button">삭제</button>
-                <button type="button">삭제</button>
             </a>
             <a th:href="@{/board/list(category=${board.category})}">
-                <button type="button">목록</button>
                 <button type="button">목록</button>
             </a>
         </div>

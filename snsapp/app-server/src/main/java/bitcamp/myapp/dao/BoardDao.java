@@ -26,4 +26,6 @@ public interface BoardDao {
   int insertLike(@Param("memberNo") int memberNo, @Param("boardNo") int boardNo); // 좋아요 테이블에 추가
   int deleteLike(@Param("memberNo") int memberNo, @Param("boardNo") int boardNo); // 좋아요 테이블에 삭제
   int deleteLikes(int boardNo); // 게시판 삭제시 좋아요도 삭제
+
+  List<Integer> findLikeByMno(int memberNo);
 }

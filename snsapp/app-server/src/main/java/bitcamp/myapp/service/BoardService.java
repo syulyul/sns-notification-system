@@ -17,8 +17,15 @@ public interface BoardService {
     BoardPhoto getAttachedFile(int fileNo) throws Exception;
     int deleteAttachedFile(int fileNo) throws Exception;
 
-    int increaseLikes(int boardNo) throws Exception; //board 테이블 좋아요+1
-    int decreaseLikes(int boardNo) throws Exception; //board 테이블 좋아요-1
-    int like(int memberNo, int boardNo) throws Exception; //board_like 테이블 좋아요 정보 추가
-    int unlike(int memberNo, int boardNo) throws Exception; //board_like 테이블 좋아요 정보 삭제
+    int increaseLikes(int boardNo) throws Exception; //board테이블 좋아요+1
+
+    int decreaseLikes(int boardNo) throws Exception; //board테이블 좋아요-1
+
+    int like(int memberNo, int boardNo) throws Exception;
+    //board_like테이블 좋아요정보 추가
+
+    int unlike(int memberNo, int boardNo) throws Exception;
+    //board_like테이블 좋아요정보 삭제
+
+    List<Integer> likelist(int memberNo) throws Exception;
 }
