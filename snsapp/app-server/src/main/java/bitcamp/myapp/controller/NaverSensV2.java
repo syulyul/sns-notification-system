@@ -58,6 +58,7 @@ public class NaverSensV2 {
         serviceId = "ncp:sms:kr:316390617576:sms_practice";
         //
         phone = "01076662821";
+
         // 요청 method
         String method = "POST";
         // current timestamp (epoch)
@@ -71,7 +72,7 @@ public class NaverSensV2 {
         JSONArray  toArr = new JSONArray();
 
         // 난수와 함께 전송
-        toJson.put("content","Going 본인인증 ["+rand+"]");
+        toJson.put("content", "본인인증 코드는 [" + rand + "] 입니다.");
         toJson.put("to",phone);
         toArr.add(toJson);
 
@@ -81,7 +82,7 @@ public class NaverSensV2 {
         bodyJson.put("countryCode","82");
 
         // 발신번호 * 사전에 인증/등록된 번호만 사용할 수 있습니다.
-        bodyJson.put("from","01076662821");
+        bodyJson.put("from", phone);
         bodyJson.put("messages", toArr);
 
         String body = bodyJson.toJSONString();
@@ -168,6 +169,7 @@ public class NaverSensV2 {
         return encodeBase64String;
     }
 
+
     @PostMapping("phoneAuth")
     @ResponseBody
     public Boolean phoneAuth(String phoneNumber,
@@ -180,7 +182,6 @@ public class NaverSensV2 {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-
         String code = memberService.sendRandomMessage(phoneNumber);
         session.setAttribute("rand", code);
 

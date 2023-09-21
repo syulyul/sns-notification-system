@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>전화번호 인증</h1>
-<input type="text" id="tel" placeholder="전화번호를 입력하세요">
+<input type="text" id="phoneNumber" placeholder="전화번호를 입력하세요">
 <button id="sendCode">인증번호 전송</button>
 <input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
 <button id="verifyCode">인증 확인</button>
@@ -17,11 +17,11 @@
 <script>
   $(document).ready(function() {
     $("#sendCode").click(function() {
-      var tel = $("#tel").val();
+      var phoneNumber = $("#tel").val();
       $.ajax({
         type: "POST",
         url: "/auth/phoneAuth",
-        data: { tel: tel },
+        data: { phoneNumber: phoneNumber },
         success: function(response) {
           if (response) {
             $("#result").text("가입된 전화번호입니다.");

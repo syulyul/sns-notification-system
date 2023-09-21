@@ -3,14 +3,19 @@ package bitcamp.myapp.service;
 import bitcamp.myapp.controller.NaverSensV2;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
+@PropertySource("classpath:application.properties")
 @Service
 public class SmsService {
+    @Value("${ncs.senderPhone}")
+    private String phone;
 
     private final MemberDao memberDao; // MemberDao 주입
 
@@ -33,7 +38,7 @@ public class SmsService {
             numStr += ran;
             //numStr.append(ran);
         }
-        message.sendMsg(phoneNumber, numStr);
+        message.sendMsg(phone, numStr);
 
         return numStr;
     }
