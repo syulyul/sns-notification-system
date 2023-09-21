@@ -14,16 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bitcamp.myapp.vo.MyPage;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,8 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    SmsService smsService;
+//private final SmsService smsService;
     @Autowired
     MemberService memberService;
     @Autowired
@@ -44,6 +38,10 @@ public class AuthController {
     {
         System.out.println("AuthController 생성됨!");
     }
+
+//    public AuthController(SmsService smsService) {
+//        this.smsService = smsService;
+//    }
 
     @GetMapping("form")
     public void form(
@@ -138,6 +136,7 @@ public class AuthController {
     @PostMapping("phoneAuth")
     @ResponseBody
     public Boolean phoneAuth(String phoneNumber,
+                             SmsService smsService,
                              HttpSession session) {
 
 //        try { // 이미 가입된 전화번호가 있으면
@@ -146,10 +145,9 @@ public class AuthController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        JSONObject toJson = new JSONObject();
-
-        String code = smsService.sendRandomMessage(phoneNumber);
-        session.setAttribute("rand", code);
+        System.out.println("Received phoneNumber: " + phoneNumber);
+        String rand = smsService.sendRandomMessage(phoneNumber);
+        session.setAttribute("rand", rand);
 
         return false;
     }

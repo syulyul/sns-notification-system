@@ -86,9 +86,11 @@ public class NaverSensV2 {
         bodyJson.put("messages", toArr);
 
         String body = bodyJson.toJSONString();
+        String to = toJson.toJSONString();
 
         System.out.println(body);
         System.out.println("phoneNumber 값" + rand);
+        System.out.println("phoneNumber 값" + to);
 
         try {
             URL url = new URL(apiUrl);

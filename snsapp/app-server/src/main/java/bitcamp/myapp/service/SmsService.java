@@ -38,6 +38,7 @@ public class SmsService {
             numStr += ran;
             //numStr.append(ran);
         }
+
         message.sendMsg(phoneNumber, numStr);
         System.out.println("rand 값: " + numStr);
         return numStr;
