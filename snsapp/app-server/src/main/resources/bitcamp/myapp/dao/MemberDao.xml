@@ -78,7 +78,7 @@
         mno=#{no}
     </delete>
 
-    <select id="countByTel" parameterType="string" resultType="int">
+    <select id="countByTel" parameterType="string">
         select count(*)
         from sns_member
         where phone_number = #{phoneNumber}

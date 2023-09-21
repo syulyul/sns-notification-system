@@ -73,7 +73,7 @@ public class NaverSensV2 {
 
         // 난수와 함께 전송
         toJson.put("content", "본인인증 코드는 [" + rand + "] 입니다.");
-        toJson.put("to",phone);
+        toJson.put("to",phoneNumber);
         toArr.add(toJson);
 
         // 메시지 Type (sms | lms)

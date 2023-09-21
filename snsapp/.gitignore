@@ -3,3 +3,11 @@
 
 # Ignore Gradle build output directory
 build
+
+*.exe
+node_modules/
+temp/
+jdbc.properties
+application.properties
+ncp.properties
+ncs.properties

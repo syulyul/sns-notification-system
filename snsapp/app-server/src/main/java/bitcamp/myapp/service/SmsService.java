@@ -25,6 +25,7 @@ public class SmsService {
 
     // 핸드폰 번호로 가입된 회원 수 조회
     public Member memberTelCount(String phoneNumber) {
+
         return memberDao.countByTel(phoneNumber);
     }
     // 문자 메시지 발송과 랜덤 코드 생성을 한 번에 처리
@@ -38,7 +39,7 @@ public class SmsService {
             numStr += ran;
             //numStr.append(ran);
         }
-        message.sendMsg(phone, numStr);
+        message.sendMsg(phoneNumber, numStr);
 
         return numStr;
     }
