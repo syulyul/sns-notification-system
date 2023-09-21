@@ -10,7 +10,13 @@
             /* readyState가 Done이고 응답 값이 200일 때 실행 */
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
                 if (httpRequest.status === 200) {
-                    var result = httpRequest.response;
+                    var response = httpRequest.response;
+                    if(response.result == "success"){
+                      console.log("follow 성공");
+                    } else {
+                      console.log("follow 실패");
+//                      document.getElementById("toggle" + memberNo).removeAttribute("checked");
+                    }
                 } else {
                     alert('Request Error!');
                 }
@@ -34,7 +40,13 @@
             /* readyState가 Done이고 응답 값이 200일 때 실행 */
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
                 if (httpRequest.status === 200) {
-                    var result = httpRequest.response;
+                    var response = httpRequest.response;
+                    if(response.result == "success"){
+                        console.log("unfollow 성공");
+                    } else {
+                        console.log("unfollow 실패");
+//                        document.getElementById("toggle" + memberNo).addAttribute("checked");
+                    }
                 } else {
                     alert('Request Error!');
                 }

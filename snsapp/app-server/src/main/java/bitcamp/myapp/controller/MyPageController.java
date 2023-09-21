@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class MyPageController {
       Model model,
       HttpSession session) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      return "redirect:/auth/form";
+    }
 
     // 세션에 저장된 방문한 마이페이지 번호 목록을 가져오기
     HashSet<Integer> visitedMyPages = loginUser.getVisitedMyPages();
@@ -134,20 +138,24 @@ public class MyPageController {
       HttpServletResponse response) throws Exception, IOException {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 
+    Map<String, Object> returnMap = new HashMap<>();
     try {
       myPageService.follow(loginUser, followingNo);
       loginUser.getFollowMemberSet().add(memberService.get(followingNo));
       session.setAttribute("loginUser", loginUser);
-    } catch (Exception e) {
+      returnMap.put("result", "success");
 
+    } catch (Exception e) {
+      returnMap.put("result", "fail");
+
+    } finally {
+      try {
+        response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
+      } catch (IOException ioExceptione) {
+        ioExceptione.printStackTrace();
+      }
     }
 
-    // try {
-    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
-    // HashMap<>()));
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
   }
 
   @GetMapping("unfollow")
@@ -157,20 +165,23 @@ public class MyPageController {
       HttpServletResponse response) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 
+    Map<String, Object> returnMap = new HashMap<>();
     try {
       myPageService.unfollow(loginUser, followingNo);
       loginUser.getFollowMemberSet().remove(memberService.get(followingNo));
       session.setAttribute("loginUser", loginUser);
+      returnMap.put("result", "success");
+
     } catch (Exception e) {
+      returnMap.put("result", "fail");
 
+    } finally {
+      try {
+        response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
+      } catch (IOException ioExceptione) {
+        ioExceptione.printStackTrace();
+      }
     }
-
-    // try {
-    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
-    // HashMap<>()));
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
   }
 
 }
