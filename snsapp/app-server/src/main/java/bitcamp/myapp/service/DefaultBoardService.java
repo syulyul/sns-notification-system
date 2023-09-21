@@ -84,6 +84,8 @@ public class DefaultBoardService implements BoardService {
         return boardDao.cancelLike(memberNo, boardNo);
     }
 
+
+
     //board테이블 좋아요수 +1 -1
     @Transactional
     @Override
@@ -94,5 +96,10 @@ public class DefaultBoardService implements BoardService {
     @Override
     public int decreaseLikes(int boardNo) throws Exception {
         return boardDao.deleteLike(boardNo);
+    }
+
+    @Override
+    public List<Integer> likelist(int memberNo) throws Exception {
+        return boardDao.findLikeByMno(memberNo);
     }
 }

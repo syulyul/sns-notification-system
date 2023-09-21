@@ -222,10 +222,8 @@
             <button type="reset">초기화</button>
             <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
                 <button type="button">삭제</button>
-                <button type="button">삭제</button>
             </a>
             <a th:href="@{/board/list(category=${board.category})}">
-                <button type="button">목록</button>
                 <button type="button">목록</button>
             </a>
         </div>
@@ -267,18 +265,6 @@
                     </p>
                     <button type="submit">댓글 작성</button>
                 </form>
-    </tr>
-    <div>
-        <form method="post" action="/board/addComment">
-            <p>
-                <textarea rows="3" cols="70" name="content"></textarea>
-            </p>
-            <p>
-                <input type="hidden" name="boardNo" th:value="${board.getNo()}">
-            </p>
-            <button type="submit">댓글 작성</button>
-        </form>
-    </div>
 
 
     <div data-th-replace="footer :: footer"></div>

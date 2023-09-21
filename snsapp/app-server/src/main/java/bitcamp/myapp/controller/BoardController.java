@@ -9,6 +9,8 @@ import bitcamp.myapp.vo.BoardPhoto;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -97,7 +99,14 @@ public class BoardController {
     }
 
     @GetMapping("list")
-    public String list(@RequestParam int category, Model model) throws Exception {
+    public String list(@RequestParam int category, Model model, HttpSession session) throws Exception {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+
+        if (loginUser != null) {
+            List<Integer> likedBoards = boardService.likelist(loginUser.getNo());
+            model.addAttribute("likedBoards", likedBoards);
+        }
+
         if (category == 1) {
             model.addAttribute("list", boardService.list(category));
             return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
@@ -160,24 +169,46 @@ public class BoardController {
     }
 
     @PostMapping("like")
-    public int like(@RequestParam int memberNo, @RequestParam int boardNo) {
+    public int like(@RequestParam int boardNo, HttpSession session) throws Exception {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         try {
-            boardService.like(memberNo, boardNo);
-            return boardService.increaseLikes(boardNo);
+            boardService.like(loginUser.getNo(), boardNo);
+            boardService.increaseLikes(boardNo);
+            return 1; // 예: 성공시 1 반환
         } catch (Exception e) {
             return -1;
         }
     }
 
     @PostMapping("unlike")
-    public int unlike(@RequestParam int memberNo, @RequestParam int boardNo) {
+    public int unlike(@RequestParam int boardNo, HttpSession session) throws Exception {
+        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
         try {
-            boardService.unlike(memberNo, boardNo);
-            return boardService.decreaseLikes(boardNo);
+            boardService.unlike(loginUser.getNo(), boardNo);
+            boardService.decreaseLikes(boardNo);
+            return 1; // 예: 성공시 1 반환
         } catch (Exception e) {
             return -1;
         }
     }
+
+    @GetMapping("/likedBoards")
+    public ResponseEntity<List<Integer>> getLikedBoards(HttpSession session) {
+        try {
+            Member loginUser = (Member) session.getAttribute("loginUser");
+            if (loginUser == null) {
+                // 로그인되지 않은 경우
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
+            List<Integer> likedBoards = boardService.likelist(loginUser.getNo());
+            return new ResponseEntity<>(likedBoards, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
     @PostMapping("addComment")
     public String addComment(BoardComment boardComment, HttpSession session, @RequestParam("boardNo") int boardNo) throws Exception {

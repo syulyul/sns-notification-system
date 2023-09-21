@@ -31,4 +31,6 @@ public interface BoardDao {
 
   int updateLike(int boardNo);
   int deleteLike(int boardNo);
+
+  List<Integer> findLikeByMno(int memberNo);
 }

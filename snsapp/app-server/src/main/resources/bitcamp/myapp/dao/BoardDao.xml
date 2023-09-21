@@ -171,4 +171,13 @@
     and bno=#{boardNo}
   </delete>
 
+  <select id="findLikeByMno" parameterType="int">
+    select
+    bno
+    from
+    sns_board_like
+    where
+    mno=#{memberNo}
+  </select>
+
 </mapper>
