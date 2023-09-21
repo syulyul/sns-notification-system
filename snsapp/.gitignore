@@ -786,7 +786,5 @@ temp/
 jdbc.properties
 application.properties
 ncp.properties
-<<<<<<< HEAD
 ncs.properties
-=======
->>>>>>> main
+
