@@ -18,6 +18,7 @@
     <association property="writer" javaType="member">
       <id     column="mno"          property="no"/>
       <result column="name"         property="name"/>
+      <result column="filepath"     property="photo"/>
     </association>
 
     <collection property="attachedFiles" ofType="boardPhoto">
@@ -30,7 +31,7 @@
   <resultMap type="boardPhoto" id="boardPhotoMap">
     <id     column="bpno"           property="no"/>
     <result column="filepath"       property="filePath"/>
-    <result column="board_no"       property="boardNo"/>
+    <result column="bno"            property="boardNo"/>
   </resultMap>
 
   <resultMap type="boardLike" id="boardLikeMap">
@@ -48,11 +49,13 @@
     select
       b.bno,
       b.title,
+      b.content,
       b.view_count,
       b.created_at,
       b.category,
       m.mno,
-      m.name
+      m.name,
+      m.filepath
     from
       sns_board b inner join sns_member m on b.mno=m.mno
     where
@@ -72,11 +75,12 @@
       b.likes,
       m.mno,
       m.name,
+      m.filepath,
       f.bpno,
       f.filepath
     from
       sns_board b inner join sns_member m on b.mno=m.mno
-      left outer join sns_board_photo f on b.bno=f.bpno
+      left outer join sns_board_photo f on b.bno=f.bno
     where
       b.bno=#{boardNo}
   </select>
@@ -86,7 +90,7 @@
       title=#{title},
       content=#{content}
     where
-      board_no=#{no}
+      bno=#{no}
   </update>
 
   <update id="updateCount" parameterType="int">

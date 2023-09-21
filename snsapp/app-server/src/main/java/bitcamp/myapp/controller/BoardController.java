@@ -6,6 +6,7 @@ import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.BoardComment;
 import bitcamp.myapp.vo.BoardPhoto;
+import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,27 +40,27 @@ public class BoardController {
 
     @PostMapping("add")
     public String add(Board board, MultipartFile[] files, HttpSession session) throws Exception {
-        Member loginUser = (Member) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/auth/form";
-        }
-        board.setWriter(loginUser);
-
-        ArrayList<BoardPhoto> attachedFiles = new ArrayList<>();
-        for (MultipartFile part : files) {
-            if (part.getSize() > 0) {
-                String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                        "bitcamp-nc7-bucket-14", "board/", part);
-                BoardPhoto attachedFile = new BoardPhoto();
-                attachedFile.setFilePath(uploadFileUrl);
-                attachedFiles.add(attachedFile);
+            Member loginUser = (Member) session.getAttribute("loginUser");
+            if (loginUser == null) {
+                return "redirect:/auth/form";
             }
-        }
-        board.setAttachedFiles(attachedFiles);
+            board.setWriter(loginUser);
 
-        boardService.add(board);
-        return "redirect:/board/list?category=" + board.getCategory();
-    }
+            ArrayList<BoardPhoto> attachedFiles = new ArrayList<>();
+            for (MultipartFile part : files) {
+                if (part.getSize() > 0) {
+                    String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                            "bitcamp-nc7-bucket-14", "board/", part);
+                    BoardPhoto attachedFile = new BoardPhoto();
+                    attachedFile.setFilePath(uploadFileUrl);
+                    attachedFiles.add(attachedFile);
+                }
+            }
+            board.setAttachedFiles(attachedFiles);
+
+            boardService.add(board);
+            return "redirect:/board/list?category=" + board.getCategory();
+        }
 
     @GetMapping("delete")
     public String delete(int no, int category, HttpSession session) throws Exception {
@@ -68,6 +69,7 @@ public class BoardController {
             return "redirect:/auth/form";
         }
 
+        System.out.println(no);
         Board b = boardService.get(no);
 
         if (b == null || b.getWriter().getNo() != loginUser.getNo()) {
@@ -175,5 +177,45 @@ public class BoardController {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    @PostMapping("addComment")
+    public String addComment(BoardComment boardComment, HttpSession session, @RequestParam("boardNo") int boardNo) throws Exception {
+        Member loginUser = (LoginUser) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/auth/form";
+        }
+
+        boardComment.setBoardNo(boardNo);
+        boardComment.setWriter(loginUser);
+
+        boardCommentService.add(boardComment);
+        return "redirect:/board/detail/1/" + boardComment.getBoardNo();
+    }
+
+    @GetMapping("detailComment/{boardNo}/{no}")
+    public String detailComment(@PathVariable int boardNo, @PathVariable int no, Model model) throws Exception {
+        BoardComment boardComment = boardCommentService.get(boardNo, no);
+        if (boardComment != null) {
+            model.addAttribute("boardComment", boardComment);
+        }
+
+        return "redirect:/board/detail/1/" + boardNo;
+    }
+
+    @PostMapping("updateComment")
+    public String updateComment(BoardComment boardComment, HttpSession session) throws Exception {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/auth/form";
+        }
+
+        BoardComment b = boardCommentService.get(boardComment.getNo(), boardComment.getBoardNo());
+        if (b == null || b.getWriter().getNo() != loginUser.getNo()) {
+            throw new Exception("댓글이 존재하지 않거나 변경 권한이 없습니다.");
+        }
+
+        boardCommentService.update(boardComment);
+        return "redirect:/board/detail/1/" + boardComment.getBoardNo();
     }
 }
