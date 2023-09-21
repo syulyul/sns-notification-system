@@ -17,8 +17,8 @@
 
 # Ignore Gradle build output directory
 build
-<<<<<<< HEAD
-=======
+
+
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,eclipse,intellij,linux,intellij+all,java,c++,react,reactnative,gradle,maven,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,visualstudiocode,eclipse,intellij,linux,intellij+all,java,c++,react,reactnative,gradle,maven,node
 
@@ -778,7 +778,6 @@ gradle-app.setting
 
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,eclipse,intellij,linux,intellij+all,java,c++,react,reactnative,gradle,maven,node
->>>>>>> main
 
 *.exe
 node_modules/
