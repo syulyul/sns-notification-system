@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +88,17 @@ public class MyPageController {
   }
 
   @GetMapping("{no}/info")
-  public String info(@PathVariable int no, Model model) throws Exception {
-    model.addAttribute("myPage", myPageService.get(no));
+  public String info(@PathVariable int no, Model model, HttpServletRequest request) throws Exception {
+    MyPage myPage = myPageService.get(no);
+    model.addAttribute("myPage", myPage);
+
+    // 로그인된 사용자 정보를 세션에서 가져와서 모델에 추가
+//    session.getAttribute("loginUser");
+//    HttpSession session = request.getSession();
+//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+//    model.addAttribute("loginUser", loginUser);
+    model.addAttribute("request", request);
+    System.out.println(request.getRequestURL());
 
     return "myPage/memberInfoUpdate";
   }
@@ -98,6 +108,7 @@ public class MyPageController {
       Member member,
       @RequestParam("birthday") String birthday,
       @RequestParam("gender") int gender,
+      @RequestParam("stateMessage") String stateMessage,
       Model model,
       MultipartFile photofile) throws Exception {
     if (photofile.getSize() > 0) {
@@ -118,6 +129,7 @@ public class MyPageController {
 
       myPage.setBirthday(timestamp);
       myPage.setGender(gender);
+      myPage.setStateMessage(stateMessage);
     }
 
     if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
