@@ -47,12 +47,7 @@
 
     th:nth-child(2),
     td:nth-child(2) {
-        width: 20%;
-    }
-
-    th:nth-child(3),
-    td:nth-child(3) {
-        width: 50%;
+        width: 60%;
     }
 
     th, td {
@@ -103,13 +98,12 @@
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
-
 <h1>게시글 목록</h1>
 
 <!-- 새 글 버튼을 표 상단 우측에 추가 -->
 <div style="text-align: right; margin-right: 20px; margin-top: -30px;">
-  <a class="button" data-th-href="@{/board/form(category=${param.category})}">새 글</a>
-  <a class="button" data-th-href='@{/}'>메인</a>
+  <a data-th-href="@{/board/form(category=${param.category})}" class="button">새 글</a>
+  <a data-th-href='@{/}' class="button">메인</a>
 </div>
 
 <table border='1' data-th-fragment="boardList">
@@ -117,6 +111,7 @@
   <tr>
     <th>번호</th>
     <th>제목</th>
+    <th>프사</th>
     <th>작성자</th>
     <th>조회수</th>
     <th>등록일</th>
@@ -128,7 +123,13 @@
     <td><a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
            data-th-text="${board.title} ?: '제목없음'">게시글 제목</a>
     </td>
+    <td>
+      <div class="profile-picture">
+        <img src="${board.writer.photo}" class="circular-image">
+      </div>
+    </td>
     <td data-th-text="${board.writer.name}">작성자</td>
+
     <td data-th-text="${board.viewCount}">조회수</td>
     <td data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">등록일</td>
   </tr>
@@ -137,7 +138,7 @@
 
 <!-- 검색 박스와 검색 버튼 추가 -->
 <div class="search-box">
-  <input placeholder="검색어를 입력하세요" type="text">
+  <input type="text" placeholder="검색어를 입력하세요">
   <button class="search-button">검색</button>
 </div>
 

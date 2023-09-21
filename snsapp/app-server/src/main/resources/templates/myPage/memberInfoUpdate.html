@@ -1,65 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원 정보 수정</title>
-    <style>
-        .my_btn {
-            background-color: #426B1F;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 1em 2em;
-            cursor: pointer; /* 마우스 커서를 포인터로 변경 */
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 정보 수정</title>
+    <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfo.css">
+    <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfoUpdate.css">
 </head>
 <body>
-<h1>내 정보 수정</h1>
-<!--<p data-th-unless="${member}">해당 번호의 회원이 없습니다!</p>-->
-<form data-th-if="${member}" action='update' method='post' enctype='multipart/form-data'>
-  <table border='1'>
-    <tr>
-      <th style='width:120px;'>사진</th>
-      <td style='width:300px;'>
-<!--        <img data-th-unless="${member.photo}" style='height:80px' src='/images/avatar.png'>-->
-        <img data-th-unless="${member.photo}" style='height:80px;float:right;'
-             src='https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5511%2F2019%2F11%2F27%2F0000006891_003_20191127181028060.png&type=sc960_832'>
-<!--        <a data-th-if="${member.photo}"-->
-<!--           data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-25/member/${member.photo}|">-->
-<!--          <img data-th-src="|http://urnfabxxeceu19010753.cdn.ntruss.com/member/${member.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg|">-->
-<!--        </a>-->
-          <input type='file' name='photofile'></td></tr>
-<!--    <tr>-->
-<!--      <th style='width:120px;'>번호</th>-->
-<!--      <td style='width:300px;'><input type='text' name='no' data-th-value="${member.no}" size="40em" readonly></td></tr>-->
-<!--    <tr>-->
-      <th>이름</th>
-      <td><input type='text' name='name' data-th-value="${member.name}" size="40em"></td></tr>
-    <tr>
-      <th>생일</th>
-      <td><input type='date' name='birthday' data-th-value="${member.birthday}" size="40em"></td></tr>
-    <tr>
-      <th>이메일</th>
-      <td><input type='email' name='email' data-th-value="${member.email}" size="40em"></td></tr>
-    <tr>
-      <th>전화번호</th>
-      <td><input type='phone' name='phone' data-th-value="${member.phone}" size="40em"></td></tr>
-    <tr>
-      <th>암호</th>
-      <td><input type='password' name='password' size="40em"></td></tr>
-    <tr>
-      <th>성별</th>
-      <td><select name='gender'>
-        <option value='M' data-th-selected="${member.gender} == 'M'">남자</option>
-        <option value='W' data-th-selected="${member.gender} == 'W'">여자</option></select></td></tr>
-  </table>
-  <br>
-  <div>
-    <button class="my_btn" style="margin-left:8em;">수정</button>
-    <button class="my_btn" type='reset'>초기화</button>
-  </div>
+<div data-th-replace="header :: header"></div>
+<br>
+<div id="myPageBox">
+<div data-th-replace="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
+
+<p data-th-unless="${session.loginUser}">로그인이 필요합니다!</p>
+
+<form class="info_update" data-th-if="${session.loginUser}" action='update' method='post' enctype='multipart/form-data'>
+    <div class="form-container">
+        <h1>내 정보 수정</h1>
+        <div class="form-group">
+            <label for="name">사진</label>
+            <input type="file" id="photofile" name="photofile" style="width:10px;">
+            <img data-th-unless="${session.loginUser.photo}" style='height:80px' src='/images/avatar.png'>
+<!--            <a data-th-if="${session.loginUser.photo}"-->
+<!--               data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${session.loginUser.photo}|">-->
+<!--                <img data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg|">-->
+<!--            </a>-->
+            <img class="user-photo" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5511%2F2019%2F11%2F27%2F0000006891_003_20191127181028060.png&type=sc960_832" alt="사용자 사진">
+        </div>
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" data-th-value="${myPage.name}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nick">닉네임</label>
+            <input type="text" id="nick" name="nick" data-th-value="${myPage.nick}">
+        </div>
+        <div class="form-group">
+            <label for="birthday">생일</label>
+            <input type="date" id="birthday" name="birthday" data-th-value="${#dates.format(myPage.birthday, 'yyyy-MM-dd')}">
+        </div>
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" data-th-value="${myPage.email}">
+        </div>
+        <div class="form-group">
+            <label for="phone">전화번호</label>
+            <input type="tel" id="phone" name="phoneNumber" data-th-value="${myPage.phoneNumber}">
+        </div>
+        <div class="form-group">
+            <label for="password">암호</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div class="form-group">
+            <label for="gender">성별</label>
+            <select id="gender" name="gender" data-th-value="${myPage.gender}">
+                <option value="1">남자</option>
+                <option value="2">여자</option>
+            </select>
+        </div>
+        <div class="button-container">
+            <button class="my_btn" type="submit">수정</button>
+            <button class="my_btn" type="reset">초기화</button>
+        </div>
+    </div>
 </form>
+</div>
+<div data-th-replace="footer :: footer"></div>
 </body>
 </html>
