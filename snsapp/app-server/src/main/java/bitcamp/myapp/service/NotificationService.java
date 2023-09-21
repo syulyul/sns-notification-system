@@ -10,6 +10,8 @@ public interface NotificationService {
 
   List<NotiLog> notiLogList(int memberNo) throws Exception;
 
+  List<NotiLog> notReadNotiLogList(int memberNo) throws Exception;
+
   NotiLog getNotiLog(int notiNo) throws Exception;
 
   int updateState(int notiNo, int notiState) throws Exception;

@@ -2,6 +2,12 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.NotificationService;
 import bitcamp.myapp.vo.Member;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +23,26 @@ public class NotificationController {
 
   @Autowired
   NotificationService notificationService;
+  @Autowired
+  ServletContext context;
 
   {
     System.out.println("NotificationController 생성됨!");
+  }
+
+  @GetMapping("notReadNotiCount")
+  public void count(HttpSession session, HttpServletResponse response) throws Exception {
+    Map<String, Object> returnMap = new HashMap<>();
+    returnMap.put(
+        "notReadNotiCount",
+        context.getAttribute(
+            "notReadNotiCount" + ((Member) session.getAttribute("loginUser")).getNo()));
+
+    try {
+      response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
+    } catch (IOException ioExceptione) {
+      ioExceptione.printStackTrace();
+    }
   }
 
   @GetMapping("list")
