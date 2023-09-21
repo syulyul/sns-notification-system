@@ -13,6 +13,8 @@ public class Board implements Serializable {
   private String title; // 제목
   private String content; // 내용
   private Member writer; // 작성자
+
+  private Member profile; // 회원 프사
   private int viewCount; // 조회수
   private int likes; // 좋아요
   private int category; // 카테고리
@@ -145,5 +147,13 @@ public class Board implements Serializable {
   public void setComments(List<BoardComment> comments) {
     this.comments = comments;
 
+  }
+
+  public Member getProfile() {
+    return profile;
+ }
+
+  public void setProfile(Member profile) {
+    this.profile = profile;
   }
 }

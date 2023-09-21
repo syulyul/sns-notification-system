@@ -61,11 +61,13 @@
 
     <update id="update" parameterType="member">
         update sns_member set
-        nick=#{nick},
-        name=#{name}
+        nick=#{nick}
+        ,name=#{name}
         ,phone_number=#{phoneNumber}
-        ,password=sha1(#{password})
-        <if test="filepath != null">
+        <if test="password != null and password.length() != 0">
+            ,password=sha1(#{password})
+        </if>
+        <if test="photo != null">
             ,filepath=#{photo}
         </if>
         where

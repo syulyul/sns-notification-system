@@ -1,0 +1,56 @@
+/*!* 왼쪽 사이드바 스타일 *!*/
+/*.sidebar {*/
+/*    float: left;*/
+/*    width: 25%;*/
+/*    padding: 20px;*/
+/*    background-color: #f0f0f0;*/
+/*}*/
+
+/* 프로필 사진 스타일 */
+.profile-pic {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 왼쪽 사이드바 스타일 */
+.sidebar {
+    float: left;
+    width: 70%;
+    padding: 20px;
+    background-color: #FAFAF5;
+    border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
+}
+
+/* 왼쪽 사이드바 스타일 */
+.sidebar {
+    float: left;
+    width: 70%;
+    padding: 20px;
+    background-color: #FAFAF5;
+    border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
+}
+
+.button-container {
+    display: flex; /* 버튼을 가로로 나란히 배치하기 위해 flex를 사용 */
+    text-align: center;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.sidebar_my_btn a {
+    background-color: #426B1F;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    /*margin-right: 10px;*/
+    white-space : nowrap;
+    text-decoration-line: none;
+    margin: 20px;
+}
+
+.sidebar_my_btn a:hover {
+    background-color: #5d962c;
+    color: white;
+}

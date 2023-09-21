@@ -3,9 +3,18 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
+import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.LoginUser;
+import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.MyPage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +22,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/myPage")
 public class MyPageController {
 
   @Autowired
-  MyPageService myPageService;
-  @Autowired
   MemberService memberService;
+
+  @Autowired
+  MyPageService myPageService;
+
   @Autowired
   BoardService boardService;
+
+  @Autowired
+  NcpObjectStorageService ncpObjectStorageService;
 
   {
     System.out.println("MyPageController 생성됨!");
@@ -71,6 +87,57 @@ public class MyPageController {
     return "myPage/detail";
   }
 
+
+  @GetMapping("{no}/info")
+  public String info(@PathVariable int no, Model model, HttpServletRequest request) throws Exception {
+    MyPage myPage = myPageService.get(no);
+    model.addAttribute("myPage", myPage);
+
+    // request 객체가 null이 아닌 경우에만 모델에 추가
+    if (request != null) {
+      model.addAttribute("request", request);
+      System.out.println(request.getRequestURL());
+    }
+
+    return "myPage/memberInfoUpdate";
+  }
+
+  @PostMapping("{no}/update")
+  public String update(
+      Member member,
+      @RequestParam("birthday") String birthday,
+      @RequestParam("gender") int gender,
+      @RequestParam("stateMessage") String stateMessage,
+      Model model,
+      MultipartFile photofile) throws Exception {
+    if (photofile.getSize() > 0) {
+      String uploadFileUrl = ncpObjectStorageService.uploadFile(
+          "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+      member.setPhoto(uploadFileUrl);
+    }
+
+    MyPage myPage = myPageService.get(member.getNo());
+
+    if (birthday.isEmpty()) {
+      birthday = null;
+    } else {
+      // 생일 값을 문자열에서 Timestamp로 변환
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date parsedDate = dateFormat.parse(birthday);
+      Timestamp timestamp = new Timestamp(parsedDate.getTime());
+
+      myPage.setBirthday(timestamp);
+      myPage.setGender(gender);
+      myPage.setStateMessage(stateMessage);
+    }
+
+    if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
+      throw new Exception("회원이 없습니다.");
+    } else {
+      return "redirect:/myPage/" + myPage.getNo();
+    }
+  }
+
   @GetMapping("follow")
   public void follow(
       @RequestParam("followingNo") int followingNo,
@@ -86,11 +153,12 @@ public class MyPageController {
 
     }
 
-//    try {
-//      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
+    // try {
+    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
+    // HashMap<>()));
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
   }
 
   @GetMapping("unfollow")
@@ -108,11 +176,12 @@ public class MyPageController {
 
     }
 
-//    try {
-//      response.getWriter().print(new ObjectMapper().writeValueAsString(new HashMap<>()));
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
+    // try {
+    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
+    // HashMap<>()));
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
   }
 
 }

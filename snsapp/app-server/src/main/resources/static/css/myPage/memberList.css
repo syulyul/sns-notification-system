@@ -1,0 +1,23 @@
+
+    /* 회원 리스트 스타일 */
+    .memberListBox {
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
+    }
+
+    /* 개별 회원 항목 스타일 */
+    .memberItem {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc; /* 회원 항목 사이에 구분선 추가 */
+
+    }
+
+    .memberPhoto {
+        height: 40px;
+        width: 50px;
+        border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
+    }

@@ -1,262 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="ie=edge" http-equiv="X-UA-Compatible">
   <title>MyPage</title>
 
-  <script type="text/javascript">
-    var myPageNo;
+  <link rel="stylesheet" type="text/css" href="/css/myPage/detail.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfo.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/boardList.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/memberList.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/follow.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfoUpdate.css">
+  <link rel="stylesheet" type="text/css" href="/css/header.css">
 
-    function follow (memberNo) {
-        myPageNo = document.getElementById("myPageNo").value;
-        var httpRequest;
-        /* 통신에 사용 될 XMLHttpRequest 객체 정의 */
-        httpRequest = new XMLHttpRequest();
-        /* httpRequest의 readyState가 변화했을때 함수 실행 */
-        httpRequest.onreadystatechange = () => {
-            /* readyState가 Done이고 응답 값이 200일 때 실행 */
-            if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                if (httpRequest.status === 200) {
-                    var result = httpRequest.response;
-                } else {
-                    alert('Request Error!');
-                }
-            }
-        };
-        /* Get 방식으로 name 파라미터와 함께 요청 */
-        httpRequest.open('GET', '/myPage/follow?myPageNo=' + myPageNo + '&followingNo=' + memberNo);
-        /* Response Type을 Json으로 사전 정의 */
-        httpRequest.responseType = "json";
-        /* 정의된 서버에 요청을 전송 */
-        httpRequest.send();
-    }
-
-    function unfollow (memberNo) {
-        myPageNo = document.getElementById("myPageNo").value;
-        var httpRequest;
-        /* 통신에 사용 될 XMLHttpRequest 객체 정의 */
-        httpRequest = new XMLHttpRequest();
-        /* httpRequest의 readyState가 변화했을때 함수 실행 */
-        httpRequest.onreadystatechange = () => {
-            /* readyState가 Done이고 응답 값이 200일 때 실행 */
-            if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                if (httpRequest.status === 200) {
-                    var result = httpRequest.response;
-                } else {
-                    alert('Request Error!');
-                }
-            }
-        };
-        /* Get 방식으로 name 파라미터와 함께 요청 */
-        httpRequest.open('GET', '/myPage/unfollow?myPageNo=' + myPageNo + '&followingNo=' + memberNo);
-        /* Response Type을 Json으로 사전 정의 */
-        httpRequest.responseType = "json";
-        /* 정의된 서버에 요청을 전송 */
-        httpRequest.send();
-    }
-  </script>
-
-  <style>
-    /* 전체 페이지 스타일 */
-    body {
-        font-family: Arial, sans-serif;
-        /*background-color: #f5f5f5;*/
-        margin: 0;
-        padding: 0;
-    }
-
-    /* MyPageBox 스타일 */
-    #myPageBox {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-    }
-
-
-    /* 왼쪽 사이드바 스타일 */
-    .sidebar {
-        float: left;
-        width: 70%;
-        padding: 20px;
-        background-color: #FAFAF5;
-        border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
-    }
-
-    /* 프로필 사진 스타일 */
-    .profile-pic {
-        max-width: 100%;
-        height: auto;
-        border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
-    }
-
-    .my_btn {
-        background-color: #426B1F;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
-        cursor: pointer; /* 마우스 커서를 포인터로 변경 */
-    }
-
-
-    /* 게시글 리스트 스타일 */
-    .boardListBox {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
-    }
-    table {
-        border-collapse: collapse;
-        width: 200%;
-        margin: 1rem 0.5rem;
-        background-color: white;
-    }
-
-    thead {
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 테이블 행 */
-    td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        text-align: center;
-    }
-
-    th {
-        padding: 8px;
-        text-align: left;
-        text-align: center;
-        /*border-top: 2px solid #888;*/
-        /*border-bottom: 2px solid #888;*/
-        /*color: #888;*/
-    }
-
-    /* 테이블 올렸을 때 */
-    tbody tr:hover {
-        background-color: #d3d3d3;
-        opacity: 0.9;
-        cursor: pointer;
-    }
-
-    /* 테이블 비율 */
-    th:nth-child(1),
-    td:nth-child(1) {
-        width: 10%;
-    }
-
-    th:nth-child(2),
-    td:nth-child(2) {
-        width: 20%;
-    }
-
-    th:nth-child(3),
-    td:nth-child(3) {
-        width: 40%;
-    }
-
-    th, td {
-        border-left: none;
-        border-right: none;
-    }
-
-
-    /* 회원 리스트 스타일 */
-    .memberListBox {
-        width: 100%;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
-    }
-
-    /* 개별 회원 항목 스타일 */
-    .memberItem {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #ccc; /* 회원 항목 사이에 구분선 추가 */
-
-    }
-
-    .memberPhoto {
-        height: 40px;
-        width: 50px;
-        border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
-    }
-
-    /* 팔로우 언팔로우 버튼 디자인 및 토글 구현 */
-    .followCheckbox {
-        display: none;
-    }
-    .unfollowLabel {
-        display: none;
-    }
-    .followCheckbox:checked ~ .unfollowLabel { /* 팔로우 되어 있는 상태 == 언팔 버튼이 보여야함 */
-        display: inline-block;
-        background-color: grey;
-    }
-
-    .followLabel {
-        display: inline-block;
-        background-color: grey;
-    }
-    .followCheckbox:checked ~ .followLabel {
-        display: none;
-    }
-
-
-  </style>
+  <script src="/js/myPage/follow.js"></script>
 </head>
+
 <body>
-
-<div data-th-replace="header :: header"></div>
-<br>
-<div id="myPageBox">
-  <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
-  <!--      <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
-  <div class="boardListBox" data-th-unless="${followList}">
-    <div data-th-replace="board/list :: boardList">목록</div>
-    <div data-th-replace="board/list :: boardList">목록</div>
-    <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
-  </div>
-  <div class="memberListBox" data-th-if="${followList}">
-    <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
-    <h3 data-th-if="${show.equals('followers')}" data-th-text="'팔로워 리스트'"></h3>
-    <h3 data-th-if="${show.equals('followings')}" data-th-text="'팔로잉 리스트'"></h3>
-    <div data-th-each="member : ${followList}">
-      <div class="memberItem">
-        <input data-th-id="memberNo" data-th-value="${member.no}" type="hidden">
-        <img class="memberPhoto" data-th-src="'/images/avatar.png'"
-             data-th-unless="${member.photo}">
-        <img class="memberPhoto" data-th-if="${member.photo}" data-th-src="${member.photo}">
-        <span data-th-text="${member.nick}"></span>
-
-        <input class="followCheckbox"
-               data-th-checked="${session.loginUser.getFollowMemberSet().contains(member)}"
-               data-th-id="|toggle${member.no}|"
-               type="checkbox">
-        <label class="unfollowLabel"
-               data-th-for="|toggle${member.no}|"
-               data-th-onclick="|unfollow(${member.no})|">
-          팔로잉 취소
-        </label>
-        <label class="followLabel"
-               data-th-for="|toggle${member.no}|"
-               data-th-onclick="|follow(${member.no})|">
-          팔로잉
-        </label>
-      </div>
+  <div data-th-replace="header :: header"></div>
+  <br>
+  <div id="myPageBox">
+    <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
+    <!--      <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
+    <div class="boardListBox" data-th-unless="${followList}">
+       <div data-th-replace="board/list :: boardList">목록</div>
+       <div data-th-replace="board/list :: boardList">목록</div>
+      <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
     </div>
-  </div>
-</div>
+    <div data-th-replace="myPage/followList :: followList"></div>
 
-<div data-th-replace="footer :: footer"></div>
+  </div>
+
+  <div data-th-replace="footer :: footer"></div>
 
 </body>
+
 </html>

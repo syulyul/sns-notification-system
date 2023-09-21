@@ -1,0 +1,23 @@
+   /* 전체 페이지 스타일 */
+   body {
+       font-family: Arial, sans-serif;
+       /*background-color: #f5f5f5;*/
+       margin: 0;
+       padding: 0;
+   }
+
+   /* MyPageBox 스타일 */
+   #myPageBox {
+       display: flex;
+       justify-content: center;
+       padding: 20px;
+   }
+
+   /* 왼쪽 사이드바 스타일 */
+   .sidebar {
+       float: left;
+       width: 70%;
+       padding: 20px;
+       background-color: #FAFAF5;
+       border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
+   }

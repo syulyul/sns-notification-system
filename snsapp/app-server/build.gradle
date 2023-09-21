@@ -73,3 +73,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//앱이름-plain.jar를 생성제어
+jar {
+    enabled = false
+}

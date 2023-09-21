@@ -1,7 +1,9 @@
 package bitcamp.myapp.service;
 
+import bitcamp.myapp.dao.BoardCommentDao;
 import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.vo.Board;
+import bitcamp.myapp.vo.BoardComment;
 import bitcamp.myapp.vo.BoardPhoto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +17,11 @@ public class DefaultBoardService implements BoardService {
     }
 
     BoardDao boardDao;
+    BoardCommentDao boardCommentDao;
 
-    public DefaultBoardService(BoardDao boardDao) {
+    public DefaultBoardService(BoardDao boardDao, BoardCommentDao boardCommentDao) {
         this.boardDao = boardDao;
+        this.boardCommentDao = boardCommentDao;
     }
 
     @Transactional // 이 메서드는 트랜잭션 상태에서 실행하라고 지정
@@ -54,6 +58,8 @@ public class DefaultBoardService implements BoardService {
     @Override
     public int delete(int boardNo) throws Exception {
         boardDao.deleteFiles(boardNo);
+        boardCommentDao.deleteComments(boardNo);
+        boardDao.deleteLikes(boardNo);
         return boardDao.delete(boardNo);
     }
 
@@ -65,7 +71,7 @@ public class DefaultBoardService implements BoardService {
 
     @Override
     public BoardPhoto getAttachedFile(int fileNo) throws Exception {
-        return boardDao.findFileBy(fileNo);
+        return boardDao.findPhotoBy(fileNo);
     }
 
     @Override
@@ -73,7 +79,7 @@ public class DefaultBoardService implements BoardService {
         return boardDao.deleteFile(fileNo);
     }
 
-    //like테이블 정보 삽입 삭제
+    // like 테이블 정보 삽입 삭제
     @Override
     public int like(int memberNo, int boardNo) throws Exception {
         return boardDao.insertLike(memberNo, boardNo);
@@ -81,10 +87,12 @@ public class DefaultBoardService implements BoardService {
 
     @Override
     public int unlike(int memberNo, int boardNo) throws Exception {
-        return boardDao.cancelLike(memberNo, boardNo);
+        return boardDao.deleteLike(memberNo, boardNo);
     }
 
-    //board테이블 좋아요수 +1 -1
+
+
+    // board 테이블 좋아요 수 +1 -1
     @Transactional
     @Override
     public int increaseLikes(int boardNo) throws Exception {
@@ -93,6 +101,11 @@ public class DefaultBoardService implements BoardService {
 
     @Override
     public int decreaseLikes(int boardNo) throws Exception {
-        return boardDao.deleteLike(boardNo);
+        return boardDao.cancelLike(boardNo);
+    }
+
+    @Override
+    public List<Integer> likelist(int memberNo) throws Exception {
+        return boardDao.findLikeByMno(memberNo);
     }
 }
