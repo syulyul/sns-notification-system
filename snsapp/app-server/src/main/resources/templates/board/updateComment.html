@@ -6,18 +6,21 @@
 </head>
 <body>
 
-<div data-th-replace="header :: header"></div>
+<!--<div data-th-replace="header :: header"></div>-->
 
 <h1>댓글 수정</h1>
 <form data-th-action="@{/board/updateComment}" method='post'>
     <p>
         <label>댓글 작성자</label>
-        <input type="text" name="writer" readonly="readonly" data-th-value="${boardComment.writer.name}">
+        <span th:text="${boardComment.writer.name}"></span>
     </p>
-    <p><textarea rows="5" cols="70" name="content" data-th-value="${boardComment.content}"></textarea></p>
     <p>
-        <input type='hidden' name='boardNo' data-th-value="${boardComment.boardNo}">
-        <input type='hidden' name='no' data-th-value="${boardComment.no}">
+        <label>댓글 내용</label>
+        <textarea rows="5" cols="70" name="content" th:text="${boardComment.content}"></textarea>
+    </p>
+    <p>
+        <input type='hidden' name='boardNo' th:value="${boardComment.boardNo}">
+        <input type='hidden' name='no' th:value="${boardComment.no}">
     </p>
     <button type="submit">수정</button>
 </form>

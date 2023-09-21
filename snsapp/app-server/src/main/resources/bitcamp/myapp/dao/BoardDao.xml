@@ -18,7 +18,7 @@
     <association property="writer" javaType="member">
       <id     column="mno"          property="no"/>
       <result column="name"         property="name"/>
-      <result column="filepath"     property="photo"/>
+<!--      <result column="filepath"     property="photo"/>-->
     </association>
 
     <collection property="attachedFiles" ofType="boardPhoto">
@@ -75,7 +75,7 @@
       b.likes,
       m.mno,
       m.name,
-      m.filepath,
+<!--      m.filepath,-->
       f.bpno,
       f.filepath
     from
@@ -112,7 +112,7 @@
     <foreach collection="attachedFiles" item="photo" separator=",">(#{photo.filePath}, #{no})</foreach>
   </insert>
 
-  <select id="findFileBy" parameterType="int" resultMap="boardPhotoMap">
+  <select id="findPhotoBy" parameterType="int" resultMap="boardPhotoMap">
     select
       bpno,
       filepath,
@@ -175,13 +175,13 @@
     where
       bno=#{boardNo}
   </delete>
+
   <select id="findLikeByMno" parameterType="int">
     select
-    bno
+      bno
     from
-    sns_board_like
+      sns_board_like
     where
-    mno=#{memberNo}
+      mno=#{memberNo}
   </select>
-
 </mapper>

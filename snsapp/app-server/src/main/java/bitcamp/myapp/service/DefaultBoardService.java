@@ -71,7 +71,7 @@ public class DefaultBoardService implements BoardService {
 
     @Override
     public BoardPhoto getAttachedFile(int fileNo) throws Exception {
-        return boardDao.findFileBy(fileNo);
+        return boardDao.findPhotoBy(fileNo);
     }
 
     @Override
