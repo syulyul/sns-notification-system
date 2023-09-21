@@ -11,28 +11,28 @@
             margin: 0 auto;
             margin-bottom: 20px;
         }
-        
+
         table,
         th,
         td {
-            border: 1px solid #ccc;
+            border: 1px solid #f2f2f2;
         }
-        
+
         th,
         td {
             padding: 8px;
             text-align: left;
         }
-        
+
         th {
             background-color: #f2f2f2;
         }
-        
+
         .scrollable-table {
             max-height: 300px;
             overflow-y: scroll;
         }
-        
+
         .actions {
             text-align: center;
             padding: 16px;
@@ -40,7 +40,7 @@
             line-height: 15;
             /* 변경: 세로 크기 2배로 늘림 */
         }
-        
+
         button {
             padding: 5px 10px;
             background-color: #426B1F;
@@ -50,11 +50,11 @@
             cursor: pointer;
             margin-top: 10px;
         }
-        
+
         button {
             float: inherit;
         }
-        
+
         .actions button {
             padding: 5px 10px;
             margin: 5px;
@@ -63,14 +63,18 @@
             border: none;
             border-radius: 4px;
         }
-        
+
         .content-table {
-            width: 40%;
+            border: none;
             border-collapse: collapse;
-            background-color: #888888;
+        }
+
+        .content-table td {
+            border: none; /* 모든 셀의 테두리를 제거합니다. */
         }
         /* 메타 정보 내부 요소들을 가로로 배열 */
-        
+
+
         .meta-info {
             display: flex;
             align-items: center;
@@ -78,12 +82,12 @@
             /* 아이콘과 텍스트 사이의 간격 */
         }
         /* 시간과 뷰 카운트 아이콘 스타일 */
-        
+
         .clock-icon {
             width: 16px;
             height: 16px;
         }
-        
+
         .horizontal-layout {
             display: flex;
             align-items: center;
@@ -92,53 +96,53 @@
             gap: 20px;
         }
         /* 게시글 제목을 가로로 배열하기 위한 스타일 */
-        
+
         h1 {
             margin: 0;
         }
         /* 메타 정보 내부 요소들을 가로로 배열 */
-        
+
         .meta-info {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
         .no-cell {
             width: 10%;
         }
         /* 제목과 메타 정보 셀 스타일 */
-        
+
         .title-meta-cell {
             width: 40%;
         }
         /* 작성자 셀 스타일 */
-        
+
         .writer-cell {
             width: 15%;
         }
         /* 내용과 좋아요 셀 스타일 */
-        
+
         .content-like-cell {
             width: 35%;
         }
-        
+
         .horizontal-layout {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
         }
-        
+
         .first-row {
             background-color: #f2f2f2;
         }
-        
+
         .second-row {
             background-color: white;
             height: 200px;
         }
-        
+
         .hidden-file-input {
             opacity: 0;
             /* 투명하게 만들기 */
@@ -147,26 +151,32 @@
             pointer-events: none;
             /* 마우스 이벤트 무시 */
         }
-        
-        .like-button {
+
+        .like-button, .unlike-button {
             padding: 5px 10px;
-            background-color: #ffffff;
+            background-color: transparent;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
         }
-        
-        .unlike-button {
-            padding: 5px 10px;
-            background-color: #ffffff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
+
+        .profile-picture {
+            width: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
+            height: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
+            border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다. */
+            overflow: hidden; /* 이미지가 원 안에 맞게 잘릴 수 있도록 설정합니다. */
         }
+
+        .profile-picture img {
+            width: 100%; /* 이미지를 부모 요소에 꽉 채우도록 설정합니다. */
+            height: auto; /* 가로 세로 비율을 유지합니다. */
+        }
+
     </style>
     <link rel="stylesheet" type="text/css" href="/css/header.css">
 
@@ -232,13 +242,13 @@
             </tr>
             <tr>
                 <th>내용</th>
-                <td><textarea name="content" rows="4"></textarea></td>
+                <td><textarea name="content" rows="10"></textarea></td>
             </tr>
             <input type='hidden' name='category' data-th-value="${param.category}">
             <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
             <!--파일 선택 부분 투명으로 바꿔줌 -->
         </table>
-        <div style="text-align: center; margin-left:40%; margin-top:10%">
+        <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
             <button>등록</button>
         </div>
     </form>
@@ -251,8 +261,8 @@
             <table class="content-table">
                 <!-- 첫 번째 행: 번호, 제목, 메타 정보 -->
                 <tr class="first-row">
-                    <td class="no-cell">
-                        <span th:text="${board.no}"></span>
+                    <td class="no-cell" style="text-align: center;">
+                        <span th:text="'No. ' + ${board.no}"></span>
                     </td>
                     <td class="title-meta-cell" colspan="3">
                         <div class="horizontal-layout">
@@ -260,35 +270,40 @@
                             <div class="meta-info">
                                 <img class="clock-icon" src="/images/clock.png">
                                 <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
-                                <img class="clock-icon" src="/images/eye.png">
-                                <span th:text="${board.viewCount}"></span>
                             </div>
                         </div>
                     </td>
                 </tr>
                 <!-- 두 번째 행: 작성자, 내용, 좋아요 -->
                 <tr class="second-row">
-                    <td class="writer-cell">
-                        <span th:text="${board.writer.name}"></span>
-                        <span th:text="${board.writer.photo}"></span>
+                    <td class="writer-cell" style="text-align: center;">
+                        <div class="profile-picture" style="display: inline-block;">
+                            <img class="profile-image" src="/images/profile.png" alt="Profile Picture" />
+                            <!-- 프로필 사진을 실제 이미지로 바꾸세요. -->
+                        </div>
+                        <div style="margin-top: 5px;"> <!-- 이름과 프로필 사진 사이에 간격을 조절합니다. -->
+                            <span th:text="${board.writer.name}"></span>
+                        </div>
                     </td>
-                    <td class="content-like-cell" colspan="3">
+                    <td class="content-like-cell" colspan="3" style="position: relative;">
                         <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}"></span>
                         <!-- 좋아요 버튼 -->
                         <button class="like-button" th:id="'likeButton-' + ${board.no}" th:if="${!likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
-                        🤍
-                    </button>
+                            🤍
+                        </button>
 
                         <!-- 좋아요 취소 (좋아요 눌러져있는상태) 버튼 -->
                         <button class="unlike-button" th:id="'unlikeButton-' + ${board.no}" th:if="${likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
-                        ❤️
-                    </button>
+                            ❤️
+                        </button>
                     </td>
                 </tr>
             </table>
             <div class="btn-container">
                 <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
-                    <button>삭제</button>
+                    <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
+                        <button>삭제</button>
+                    </div>
                 </a>
             </div>
         </div>
