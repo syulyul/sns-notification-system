@@ -112,7 +112,7 @@
     <foreach collection="attachedFiles" item="photo" separator=",">(#{photo.filePath}, #{no})</foreach>
   </insert>
 
-  <select id="findPhotoBy" parameterType="int" resultMap="boardPhotoMap">
+  <select id="findFileBy" parameterType="int" resultMap="boardPhotoMap">
     select
       bpno,
       filepath,
@@ -147,28 +147,32 @@
 
   <update id="updateLike" parameterType="int">
     update sns_board set
-    likes=likes + 1
+      likes=likes + 1
     where
-    bno=#{no}
+      bno=#{no}
   </update>
 
-  <delete id="deleteLike" parameterType="int">
+  <update id="cancelLike" parameterType="int">
     update sns_board set
-    likes=likes - 1
+      likes=likes - 1
     where
-    bno=#{no}
-  </delete>
+      bno=#{no}
+  </update>
 
-  <insert id="insertLike">
+  <insert id="insertLike" parameterType="int">
     insert into sns_board_like(mno, bno)
     values(#{memberNo}, #{boardNo})
   </insert>
 
-  <delete id="cancelLike">
+  <delete id="deleteLike" parameterType="int">
     delete from sns_board_like
     where
-    mno=#{memberNo}
-    and bno=#{boardNo}
+      mno=#{memberNo} and bno=#{boardNo}
   </delete>
 
+  <delete id="deleteLikes" parameterType="int">
+    delete from sns_board_like
+    where
+      bno=#{boardNo}
+  </delete>
 </mapper>

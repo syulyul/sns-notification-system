@@ -41,18 +41,19 @@
 
   <select id="findBy" resultMap="boardCommentMap" parameterType="int">
     select
-      bcno,
-      content,
-      created_at
+      bc.bcno,
+      bc.content,
+      bc.created_at,
+      m.mno,
+      m.name
     from
-      sns_board_comment
+      sns_board_comment bc inner join sns_member m on bc.mno=m.mno
     where
-      bcno=#{no} and bno=#{boardNo}
+      bc.bcno=#{no} and bc.bno=#{boardNo}
   </select>
 
   <update id="update" parameterType="board">
     update sns_board_comment set
-      mno=#{writer.no},
       content=#{content}
     where
       bcno=#{no} and bno=#{boardNo}
@@ -62,5 +63,11 @@
     delete from sns_board_comment
     where
       bcno=#{no} and bno=#{boardNo}
+  </delete>
+
+  <delete id="deleteComments" parameterType="int">
+    delete from sns_board_comment
+    where
+      bno=#{boardNo}
   </delete>
 </mapper>

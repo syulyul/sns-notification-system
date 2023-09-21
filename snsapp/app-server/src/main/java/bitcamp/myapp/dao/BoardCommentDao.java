@@ -12,4 +12,5 @@ public interface BoardCommentDao {
   BoardComment findBy(int no, int boardNo);
   int update(BoardComment boardComment);
   int delete(int no, int boardNo);
+  int deleteComments(int boardNo); // 해당 게시판이 삭제되면 댓글까지 다 삭제
 }

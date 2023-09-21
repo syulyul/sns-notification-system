@@ -269,15 +269,21 @@
                 </form>
     </tr>
     <div>
-        <form method="post" action="/board/addComment">
-            <p>
-                <textarea rows="3" cols="70" name="content"></textarea>
-            </p>
-            <p>
-                <input type="hidden" name="boardNo" th:value="${board.getNo()}">
-            </p>
-            <button type="submit">댓글 작성</button>
-        </form>
+        <p>
+            <td data-th-text="${boardComment.writer.name}">홍길동</td>
+            /
+            <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">2023-09-14</td>
+        </p>
+        <p>
+            <td data-th-text="${boardComment.content}">댓글 내용</td>
+        </p>
+        <a data-th-href="|/board/detailComment/${board.no}/${boardComment.no}|">
+            <button type="button">수정</button>
+        </a>
+        <a data-th-href="|/board/deleteComment/${board.no}/${boardComment.no}|">
+            <button type="button">삭제</button>
+        </a>
+
     </div>
 
 
