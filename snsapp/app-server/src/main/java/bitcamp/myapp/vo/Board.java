@@ -151,7 +151,7 @@ public class Board implements Serializable {
 
   public Member getProfile() {
     return profile;
-  }
+ }
 
   public void setProfile(Member profile) {
     this.profile = profile;

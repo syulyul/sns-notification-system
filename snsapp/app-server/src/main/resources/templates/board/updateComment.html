@@ -12,11 +12,11 @@
 <form data-th-action="@{/board/updateComment}" method='post'>
     <p>
         <label>댓글 작성자</label>
-        <input type="text" name="writer" readonly="readonly" value="${boardComment.writer.name}">
+        <input type="text" name="writer" readonly="readonly" data-th-value="${boardComment.writer.name}">
     </p>
-    <<p><textarea rows="5" cols="70" name="content">${boardComment.content}</textarea></p>
+    <p><textarea rows="5" cols="70" name="content" data-th-value="${boardComment.content}"></textarea></p>
     <p>
-        <input type='hidden' name='boardNo' th:value="${board.getNo()}">
+        <input type='hidden' name='boardNo' data-th-value="${boardComment.boardNo}">
         <input type='hidden' name='no' data-th-value="${boardComment.no}">
     </p>
     <button type="submit">수정</button>
