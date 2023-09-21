@@ -17,6 +17,8 @@
 
 # Ignore Gradle build output directory
 build
+
+
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,eclipse,intellij,linux,intellij+all,java,c++,react,reactnative,gradle,maven,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,visualstudiocode,eclipse,intellij,linux,intellij+all,java,c++,react,reactnative,gradle,maven,node
 
@@ -783,3 +785,5 @@ temp/
 jdbc.properties
 application.properties
 ncp.properties
+ncs.properties
+

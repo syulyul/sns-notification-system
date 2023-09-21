@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>방명록</title>
     <!-- 스타일과 스크립트 추가가 필요하면 여기에 -->
@@ -11,11 +12,14 @@
             margin-bottom: 20px;
         }
 
-        table, th, td {
-            border: 1px solid #ccc;
+        table,
+        th,
+        td {
+            border: 1px solid #f2f2f2;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             text-align: left;
         }
@@ -31,8 +35,10 @@
 
         .actions {
             text-align: center;
-            padding: 16px; /* 변경: 상하 여백 추가 */
-            line-height: 15; /* 변경: 세로 크기 2배로 늘림 */
+            padding: 16px;
+            /* 변경: 상하 여백 추가 */
+            line-height: 15;
+            /* 변경: 세로 크기 2배로 늘림 */
         }
 
         button {
@@ -46,7 +52,7 @@
         }
 
         button {
-            float : inherit;
+            float: inherit;
         }
 
         .actions button {
@@ -59,19 +65,24 @@
         }
 
         .content-table {
-            width: 40%;
+            border: none;
             border-collapse: collapse;
-            background-color: #888888;
         }
 
+        .content-table td {
+            border: none; /* 모든 셀의 테두리를 제거합니다. */
+        }
         /* 메타 정보 내부 요소들을 가로로 배열 */
+
+
         .meta-info {
             display: flex;
             align-items: center;
-            gap: 10px; /* 아이콘과 텍스트 사이의 간격 */
+            gap: 10px;
+            /* 아이콘과 텍스트 사이의 간격 */
         }
-
         /* 시간과 뷰 카운트 아이콘 스타일 */
+
         .clock-icon {
             width: 16px;
             height: 16px;
@@ -80,16 +91,17 @@
         .horizontal-layout {
             display: flex;
             align-items: center;
-            justify-content: space-between;  /* 추가된 속성 */
+            justify-content: space-between;
+            /* 추가된 속성 */
             gap: 20px;
         }
-
         /* 게시글 제목을 가로로 배열하기 위한 스타일 */
+
         h1 {
             margin: 0;
         }
-
         /* 메타 정보 내부 요소들을 가로로 배열 */
+
         .meta-info {
             display: flex;
             align-items: center;
@@ -99,18 +111,18 @@
         .no-cell {
             width: 10%;
         }
-
         /* 제목과 메타 정보 셀 스타일 */
+
         .title-meta-cell {
             width: 40%;
         }
-
         /* 작성자 셀 스타일 */
+
         .writer-cell {
             width: 15%;
         }
-
         /* 내용과 좋아요 셀 스타일 */
+
         .content-like-cell {
             width: 35%;
         }
@@ -132,83 +144,171 @@
         }
 
         .hidden-file-input {
-            opacity: 0; /* 투명하게 만들기 */
-            position: absolute; /* 페이지 레이아웃에 영향을 주지 않게 위치 지정 */
-            pointer-events: none; /* 마우스 이벤트 무시 */
+            opacity: 0;
+            /* 투명하게 만들기 */
+            position: absolute;
+            /* 페이지 레이아웃에 영향을 주지 않게 위치 지정 */
+            pointer-events: none;
+            /* 마우스 이벤트 무시 */
         }
+
+        .like-button, .unlike-button {
+            padding: 5px 10px;
+            background-color: transparent;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .profile-picture {
+            width: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
+            height: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
+            border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다. */
+            overflow: hidden; /* 이미지가 원 안에 맞게 잘릴 수 있도록 설정합니다. */
+        }
+
+        .profile-picture img {
+            width: 100%; /* 이미지를 부모 요소에 꽉 채우도록 설정합니다. */
+            height: auto; /* 가로 세로 비율을 유지합니다. */
+        }
+
     </style>
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+
+    <script>
+        function toggleLikeButtons(boardNo) {
+            const likeButton = document.getElementById('likeButton-' + boardNo);
+            const unlikeButton = document.getElementById('unlikeButton-' + boardNo);
+
+            // 버튼의 표시 상태를 전환
+            if (likeButton.style.display === 'none' || likeButton.style.display === '') {
+                likeButton.style.display = 'inline-block';
+                unlikeButton.style.display = 'none';
+            } else {
+                likeButton.style.display = 'none';
+                unlikeButton.style.display = 'inline-block';
+            }
+        }
+
+        function likeButtonClicked(buttonElement) {
+            const boardNo = buttonElement.getAttribute("data-board-no");
+
+            fetch(`/board/like?boardNo=${boardNo}`, {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("좋아요가 성공적으로 처리되었습니다.");
+                        toggleLikeButtons(boardNo); // 버튼 상태 전환 함수 호출
+                    } else {
+                        alert("좋아요 처리 중 오류가 발생했습니다.");
+                    }
+                });
+        }
+
+        function unlikeButtonClicked(buttonElement) {
+            const boardNo = buttonElement.getAttribute("data-board-no");
+
+            fetch(`/board/unlike?boardNo=${boardNo}`, {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("좋아요 취소가 성공적으로 처리되었습니다.");
+                        toggleLikeButtons(boardNo); // 버튼 상태 전환 함수 호출
+                    } else {
+                        alert("좋아요 취소 처리 중 오류가 발생했습니다.");
+                    }
+                });
+        }
+    </script>
+
 </head>
+
 <body>
 
-<div data-th-replace="header :: header"></div>
+    <div data-th-replace="header :: header"></div>
 
-<form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
-<table>
-    <tr>
-        <th>제목</th>
-        <td><input type="text" name="title"></td>
-    </tr>
-    <tr>
-        <th>내용</th>
-        <td><textarea name="content" rows="4"></textarea></td>
-    </tr>
-    <input type='hidden' name='category' data-th-value="${param.category}">
-    <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
-    <!--파일 선택 부분 투명으로 바꿔줌 -->
-</table>
-    <div style="text-align: center; margin-left:40%; margin-top:10%" >
-        <button>등록</button>
-    </div>
-</form>
-
-
-<!-- 게시글 목록을 출력하기 위한 Thymeleaf 반복문 -->
-<div data-th-each="board : ${list}">
-    <div class="container">
-        <!-- 게시글 목록 -->
-        <table class="content-table">
-            <!-- 첫 번째 행: 번호, 제목, 메타 정보 -->
-            <tr class="first-row">
-                <td class="no-cell">
-                    <span th:text="${board.no}"></span>
-                </td>
-                <td class="title-meta-cell" colspan="3">
-                    <div class="horizontal-layout">
-                        <span th:text="${board.title}"></span>
-                        <div class="meta-info">
-                            <img class="clock-icon" src="/images/clock.png">
-                            <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
-                            <img class="clock-icon" src="/images/eye.png">
-                            <span th:text="${board.viewCount}"></span>
-                        </div>
-                    </div>
-                </td>
+    <form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
+        <table>
+            <tr>
+                <th>제목</th>
+                <td><input type="text" name="title"></td>
             </tr>
-            <!-- 두 번째 행: 작성자, 내용, 좋아요 -->
-            <tr class="second-row">
-                <td class="writer-cell">
-                    <span th:text="${board.writer.name}"></span>
-                    <span th:text="${board.writer.photo}"></span>
-                </td>
-                <td class="content-like-cell" colspan="3">
-                    <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}"></span>
-                    <button class="like-button" id="likeButton" th:if="${board != null}"
-                            th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'"
-                            th:attr="data-board-no=${board != null ? board.no : '0'}"
-                            onclick="likeButtonClicked()">
-                        ❤️ 좋아요 (0)
-                    </button>
-                </td>
+            <tr>
+                <th>내용</th>
+                <td><textarea name="content" rows="10"></textarea></td>
             </tr>
+            <input type='hidden' name='category' data-th-value="${param.category}">
+            <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
+            <!--파일 선택 부분 투명으로 바꿔줌 -->
         </table>
+        <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
+            <button>등록</button>
+        </div>
+    </form>
 
-        <div class="btn-container">
-            <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
-                <button>삭제</button>
-            </a>
+
+    <!-- 게시글 목록을 출력하기 위한 Thymeleaf 반복문 -->
+    <div data-th-each="board : ${list}">
+        <div class="container">
+            <!-- 게시글 목록 -->
+            <table class="content-table">
+                <!-- 첫 번째 행: 번호, 제목, 메타 정보 -->
+                <tr class="first-row">
+                    <td class="no-cell" style="text-align: center;">
+                        <span th:text="'No. ' + ${board.no}"></span>
+                    </td>
+                    <td class="title-meta-cell" colspan="3">
+                        <div class="horizontal-layout">
+                            <span th:text="${board.title}"></span>
+                            <div class="meta-info">
+                                <img class="clock-icon" src="/images/clock.png">
+                                <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 두 번째 행: 작성자, 내용, 좋아요 -->
+                <tr class="second-row">
+                    <td class="writer-cell" style="text-align: center;">
+                        <div class="profile-picture" style="display: inline-block;">
+                            <img class="profile-image" src="/images/profile.png" alt="Profile Picture" />
+                            <!-- 프로필 사진을 실제 이미지로 바꾸세요. -->
+                        </div>
+                        <div style="margin-top: 5px;"> <!-- 이름과 프로필 사진 사이에 간격을 조절합니다. -->
+                            <span th:text="${board.writer.name}"></span>
+                        </div>
+                    </td>
+                    <td class="content-like-cell" colspan="3" style="position: relative;">
+                        <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}"></span>
+                        <!-- 좋아요 버튼 -->
+                        <button class="like-button" th:id="'likeButton-' + ${board.no}" th:if="${!likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
+                            🤍
+                        </button>
+
+                        <!-- 좋아요 취소 (좋아요 눌러져있는상태) 버튼 -->
+                        <button class="unlike-button" th:id="'unlikeButton-' + ${board.no}" th:if="${likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
+                            ❤️
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <div class="btn-container">
+                <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
+                    <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
+                        <button>삭제</button>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-</div>
-<div data-th-replace="footer :: footer"></div>
+    <div data-th-replace="footer :: footer"></div>
 </body>
+
 </html>

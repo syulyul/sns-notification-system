@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 정보 수정</title>
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfo.css">
     <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfoUpdate.css">
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
 <br>
-<div id="myPageBox">
-<div data-th-replace="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
 
 <p data-th-unless="${session.loginUser}">로그인이 필요합니다!</p>
 
-<form class="info_update" data-th-if="${session.loginUser}" action='update' method='post' enctype='multipart/form-data'>
+<form data-th-if="${session.loginUser}" action='update' method='post' enctype='multipart/form-data'>
+    <div id="myPageBox">
+        <div data-th-replace="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
+<!--            <input type="hidden" id="stateMessage" name="myPage.stateMessage" data-th-value="${myPage.stateMessage}">-->
+<div class="info_update" >
     <div class="form-container">
         <h1>내 정보 수정</h1>
         <div class="form-group">
@@ -60,10 +63,13 @@
             </select>
         </div>
         <div class="button-container">
-            <button class="my_btn" type="submit">수정</button>
+            <div class="my_btn">
+            <button type="submit">수정</button>
             <button class="my_btn" type="reset">초기화</button>
+            </div>
         </div>
     </div>
+</div>
 </form>
 </div>
 <div data-th-replace="footer :: footer"></div>

@@ -26,28 +26,42 @@
           style="display: inline; margin-left: 10px; float:right">내 정보 수정</a>
         <a data-th-if="${session.loginUser.no != myPage.no}" href=""
           style="display: inline; margin-left: 10px; float:right">
-
           <input class="followCheckbox" data-th-checked="${session.loginUser.getFollowMemberSet().contains(myPage)}"
             data-th-id="|toggle${myPage.no}|" type="checkbox">
           <label class="unfollowLabel" data-th-for="|toggle${myPage.no}|" data-th-onclick="|unfollow(${myPage.no})|">
             팔로잉 취소
           </label>
           <label class="followLabel" data-th-for="|toggle${myPage.no}|" data-th-onclick="|follow(${myPage.no})|">
-            팔로잉
+            팔로우
           </label>
         </a>
         <div style="padding-bottom:10px; padding-top: 10px;">
-        <input type='text' name='no' data-th-if="${session.loginUser.no != myPage.no}" data-th-value="${myPage.stateMessage}" readonly
-               style="height:40px; border: none; background-color:transparent; width: 80%;">
-        <input type='text' name='no' data-th-if="${session.loginUser.no == myPage.no}" data-th-value="${myPage.stateMessage}"
-               style="border-radius:5px; height:40px; background-color:transparent; width: 80%;">
+
+          <input type="text" name="stateMessage" data-th-if="${#strings.isEmpty(myPage.stateMessage)}"
+                 placeholder="상태 메시지가 없습니다."
+                 style="height:40px; border: none; background-color:transparent; width: 100%;">
+          <div data-th-if="${not #strings.isEmpty(myPage.stateMessage)}">
+            <input type='text' name='stateMessage' data-th-if="${session.loginUser.no != myPage.no}"
+                   data-th-value="${myPage.stateMessage}" readonly
+                   style="height:40px; border: none; background-color:transparent; width: 100%;">
+  <!--          <div data-th-if="${session.loginUser.no == myPage.no}">-->
+            <div data-th-if="${session.loginUser.no == myPage.no }">
+              <input type='text' name='stateMessage' data-th-readonly="${request == null || !#strings.contains(request.getRequestURL(), '/info')}"
+                     data-th-value="${myPage.stateMessage}"
+                     style="height:40px; border: none; background-color:transparent; width: 100%;">
+            </div>
+          </div>
         </div>
-        <div style="text-align: center; padding-top: 20px;">
-          <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followings'}" class="sidebar_my_btn"
-            style="margin-right:20px;text-decoration-line:none;">팔로잉</a>
-          <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followers'}" class="sidebar_my_btn"
-            style="margin-left:20px;text-decoration-line:none;">팔로워</a>
+<!--        <div style="text-align: center; padding-top: 20px;">-->
+        <div class="button-container">
+          <div class="sidebar_my_btn" style="">
+          <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followings'}">팔로잉</a>
+          </div>
+          <div class="sidebar_my_btn">
+          <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followers'}">팔로워</a>
+          </div>
         </div>
+<!--        </div>-->
       </div>
     </div>
 
