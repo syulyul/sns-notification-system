@@ -3,17 +3,22 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.service.NcpObjectStorageService;
+import bitcamp.myapp.service.SmsService;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 
 import java.util.HashSet;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bitcamp.myapp.vo.MyPage;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -21,12 +26,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-
+    @Autowired
+    SmsService smsService;
     @Autowired
     MemberService memberService;
     @Autowired
@@ -126,5 +133,41 @@ public class AuthController {
     public String logout(HttpSession session) throws Exception {
         session.invalidate();
         return "redirect:/";
+    }
+
+    @PostMapping("phoneAuth")
+    @ResponseBody
+    public Boolean phoneAuth(String phoneNumber,
+                             HttpSession session) {
+
+//        try { // 이미 가입된 전화번호가 있으면
+//            if(memberService.memberTelCount(phoneNumber) > 0)
+//                return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        JSONObject toJson = new JSONObject();
+
+        String code = smsService.sendRandomMessage(phoneNumber);
+        session.setAttribute("rand", code);
+
+        return false;
+    }
+
+    @PostMapping("phoneAuthOk")
+    @ResponseBody
+    public Boolean phoneAuthOk(HttpSession session,
+                               HttpServletRequest request) {
+        String rand = (String) session.getAttribute("rand");
+        String code = (String) request.getParameter("code");
+
+        System.out.println(rand + " : " + code);
+
+        if (rand.equals(code)) {
+            session.removeAttribute("rand");
+            return false;
+        }
+
+        return true;
     }
 }
