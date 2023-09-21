@@ -87,18 +87,17 @@ public class MyPageController {
     return "myPage/detail";
   }
 
+
   @GetMapping("{no}/info")
   public String info(@PathVariable int no, Model model, HttpServletRequest request) throws Exception {
     MyPage myPage = myPageService.get(no);
     model.addAttribute("myPage", myPage);
 
-    // 로그인된 사용자 정보를 세션에서 가져와서 모델에 추가
-//    session.getAttribute("loginUser");
-//    HttpSession session = request.getSession();
-//    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-//    model.addAttribute("loginUser", loginUser);
-    model.addAttribute("request", request);
-    System.out.println(request.getRequestURL());
+    // request 객체가 null이 아닌 경우에만 모델에 추가
+    if (request != null) {
+      model.addAttribute("request", request);
+      System.out.println(request.getRequestURL());
+    }
 
     return "myPage/memberInfoUpdate";
   }
