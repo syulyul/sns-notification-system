@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>방명록</title>
+    <!-- 스타일과 스크립트 추가가 필요하면 여기에 -->
     <style>
         table {
-            width: 60%;
+            width: 40%;
             border-collapse: collapse;
             margin: 0 auto;
             margin-bottom: 20px;
@@ -57,130 +57,159 @@
             border: none;
             border-radius: 4px;
         }
+
+        .content-table {
+            width: 40%;
+            border-collapse: collapse;
+            background-color: #888888;
+        }
+
+        /* 메타 정보 내부 요소들을 가로로 배열 */
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 아이콘과 텍스트 사이의 간격 */
+        }
+
+        /* 시간과 뷰 카운트 아이콘 스타일 */
+        .clock-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .horizontal-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;  /* 추가된 속성 */
+            gap: 20px;
+        }
+
+        /* 게시글 제목을 가로로 배열하기 위한 스타일 */
+        h1 {
+            margin: 0;
+        }
+
+        /* 메타 정보 내부 요소들을 가로로 배열 */
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .no-cell {
+            width: 10%;
+        }
+
+        /* 제목과 메타 정보 셀 스타일 */
+        .title-meta-cell {
+            width: 40%;
+        }
+
+        /* 작성자 셀 스타일 */
+        .writer-cell {
+            width: 15%;
+        }
+
+        /* 내용과 좋아요 셀 스타일 */
+        .content-like-cell {
+            width: 35%;
+        }
+
+        .horizontal-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .first-row {
+            background-color: #f2f2f2;
+        }
+
+        .second-row {
+            background-color: white;
+            height: 200px;
+        }
+
+        .hidden-file-input {
+            opacity: 0; /* 투명하게 만들기 */
+            position: absolute; /* 페이지 레이아웃에 영향을 주지 않게 위치 지정 */
+            pointer-events: none; /* 마우스 이벤트 무시 */
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="/css/header.css">
 </head>
 <body>
+
 <div data-th-replace="header :: header"></div>
-<h1>방명록</h1>
+
+<form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
 <table>
     <tr>
         <th>제목</th>
-        <td><input type="text" id="title"></td>
+        <td><input type="text" name="title"></td>
     </tr>
     <tr>
         <th>내용</th>
-        <td><textarea id="content" rows="4"></textarea></td>
+        <td><textarea name="content" rows="4"></textarea></td>
     </tr>
+    <input type='hidden' name='category' data-th-value="${param.category}">
+    <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
+    <!--파일 선택 부분 투명으로 바꿔줌 -->
 </table>
-<button onclick="addGuestbookEntry()">등록</button>
+    <div style="text-align: center; margin-left:40%; margin-top:10%" >
+        <button>등록</button>
+    </div>
+</form>
 
-<div class="scrollable-table">
-    <div id="guestbookEntries">
-        <!-- 방명록 항목이 동적으로 추가됩니다. -->
+
+<!-- 게시글 목록을 출력하기 위한 Thymeleaf 반복문 -->
+<div data-th-each="board : ${list}">
+    <div class="container">
+        <!-- 게시글 목록 -->
+        <table class="content-table">
+            <!-- 첫 번째 행: 번호, 제목, 메타 정보 -->
+            <tr class="first-row">
+                <td class="no-cell">
+                    <span th:text="${board.no}"></span>
+                </td>
+                <td class="title-meta-cell" colspan="3">
+                    <div class="horizontal-layout">
+                        <span th:text="${board.title}"></span>
+                        <div class="meta-info">
+                            <img class="clock-icon" src="/images/clock.png">
+                            <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
+                            <img class="clock-icon" src="/images/eye.png">
+                            <span th:text="${board.viewCount}"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <!-- 두 번째 행: 작성자, 내용, 좋아요 -->
+            <tr class="second-row">
+                <td class="writer-cell">
+                    <span th:text="${board.writer.name}"></span>
+                    <span th:text="${board.writer.photo}"></span>
+                </td>
+                <td class="content-like-cell" colspan="3">
+                    <span th:if="${board != null}" th:text="${board.content != null ? board.content : '내용입니다!'}"></span>
+                    <button class="like-button" id="likeButton" th:if="${board != null}"
+                            th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'"
+                            th:attr="data-board-no=${board != null ? board.no : '0'}"
+                            onclick="likeButtonClicked()">
+                        ❤️ 좋아요 (0)
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <div class="btn-container">
+            <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
+                <button>삭제</button>
+            </a>
+        </div>
     </div>
 </div>
-
-<script>
-    // 방명록 데이터 배열 (임시로 사용)
-    const guestbookData = [];
-
-    // 방명록 등록 함수
-    function addGuestbookEntry() {
-        const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
-        const date = new Date().toLocaleDateString();
-        const entry = {
-            writer: '사용자', // 임시로 사용자 이름 설정
-            title: title,
-            content: content,
-            date: date,
-            likes: 0
-        };
-        guestbookData.push(entry);
-        displayGuestbookEntries();
-        clearForm();
-    }
-
-    // 방명록 목록을 표시하는 함수
-    function displayGuestbookEntries() {
-        const guestbookEntries = document.getElementById('guestbookEntries');
-        guestbookEntries.innerHTML = '';
-        guestbookData.forEach((entry, index) => {
-            const table = document.createElement('table');
-            table.innerHTML = `
-                <thead>
-<!--                <tr>-->
-<!--                    <th>방명록 번호</th>-->
-<!--                    <th>제목</th>-->
-<!--                    <th>등록일</th>-->
-<!--                </tr>-->
-                </thead>
-                <tbody>
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${entry.title}</td>
-                    <td>${entry.date}</td>
-                </tr>
-                </tbody>
-                <thead>
-                <tr>
-<!--                    <th>작성자 및 동작</th>-->
-<!--                    <th>내용</th>-->
-<!--                    <th>좋아요</th>-->
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="actions">
-                        ${entry.writer}
-                        <button onclick="editGuestbookEntry(${index})">수정</button>
-                        <button onclick="deleteGuestbookEntry(${index})">삭제</button>
-                    </td>
-                    <td>${entry.content}</td>
-                    <td><button onclick="likeGuestbookEntry(${index})">❤️ ${entry.likes}</button></td>
-                </tr>
-                </tbody>
-            `;
-            guestbookEntries.appendChild(table);
-        });
-    }
-
-    // 방명록 수정 함수
-    function editGuestbookEntry(index) {
-        const entry = guestbookData[index];
-        const updatedTitle = prompt('수정할 제목:', entry.title);
-        const updatedContent = prompt('수정할 내용:', entry.content);
-        if (updatedTitle !== null && updatedContent !== null) {
-            entry.title = updatedTitle;
-            entry.content = updatedContent;
-            displayGuestbookEntries();
-        }
-    }
-
-    // 방명록 삭제 함수
-    function deleteGuestbookEntry(index) {
-        if (confirm('정말로 삭제하시겠습니까?')) {
-            guestbookData.splice(index, 1);
-            displayGuestbookEntries();
-        }
-    }
-
-    // 좋아요 기능 함수
-    function likeGuestbookEntry(index) {
-        guestbookData[index].likes++;
-        displayGuestbookEntries();
-    }
-
-    // 입력 폼 초기화 함수
-    function clearForm() {
-        document.getElementById('title').value = '';
-        document.getElementById('content').value = '';
-    }
-
-    // 초기 화면 렌더링
-    displayGuestbookEntries();
-</script>
 <div data-th-replace="footer :: footer"></div>
 </body>
 </html>
