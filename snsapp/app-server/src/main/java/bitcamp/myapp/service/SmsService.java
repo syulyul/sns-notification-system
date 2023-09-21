@@ -6,16 +6,15 @@ import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
-@PropertySource("classpath:application.properties")
+
 @Service
 public class SmsService {
-    @Value("${ncs.senderPhone}")
-    private String phone;
 
     private final MemberDao memberDao; // MemberDao 주입
 
@@ -40,20 +39,21 @@ public class SmsService {
             //numStr.append(ran);
         }
         message.sendMsg(phoneNumber, numStr);
-
+        System.out.println("rand 값: " + numStr);
         return numStr;
+
     }
 
 
     // 문자 코드 검증
-    public boolean verifyCode(String code, HttpSession session) {
-        String rand = (String) session.getAttribute("rand");
-        if (rand != null && rand.equals(code)) {
-            // 코드 일치, 세션에서 코드 제거
-            session.removeAttribute("rand");
-            return true;
-        }
-        // 코드 불일치
-        return false;
-    }
+//    public boolean verifyCode(String code, HttpSession session) {
+//        String rand = (String) session.getAttribute("rand");
+//        if (rand != null && rand.equals(code)) {
+//            // 코드 일치, 세션에서 코드 제거
+//            session.removeAttribute("rand");
+//            return true;
+//        }
+//        // 코드 불일치
+//        return false;
+//    }
 }

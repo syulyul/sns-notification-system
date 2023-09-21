@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 @Component
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:ncs.properties")
 @RequestMapping("/auth")
 public class NaverSensV2 {
     @Value("${ncs.accessKey}")
@@ -88,6 +88,7 @@ public class NaverSensV2 {
         String body = bodyJson.toJSONString();
 
         System.out.println(body);
+        System.out.println("phoneNumber 값" + rand);
 
         try {
             URL url = new URL(apiUrl);
@@ -170,38 +171,39 @@ public class NaverSensV2 {
     }
 
 
-    @PostMapping("phoneAuth")
-    @ResponseBody
-    public Boolean phoneAuth(String phoneNumber,
-                             SmsService memberService,
-                             HttpSession session) {
-
-//        try { // 이미 가입된 전화번호가 있으면
-//            if(memberService.memberTelCount(phoneNumber) > 0)
-//                return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
+//    @PostMapping("phoneAuth")
+//    @ResponseBody
+//    public Boolean phoneAuth(String phoneNumber,
+//                             SmsService memberService,
+//                             HttpSession session) {
+//
+////        try { // 이미 가입된 전화번호가 있으면
+////            if(memberService.memberTelCount(phoneNumber) > 0)
+////                return true;
+////        } catch (Exception e) {
+////            e.printStackTrace();
+////        }
+//
+//        String code = memberService.sendRandomMessage(phoneNumber);
+//        session.setAttribute("rand", code);
+//
+//        return false;
+//    }
+//
+//    @PostMapping("phoneAuthOk")
+//    @ResponseBody
+//    public Boolean phoneAuthOk(HttpSession session,
+//                               HttpServletRequest request) {
+//        String rand = (String) session.getAttribute("rand");
+//        String code = (String) request.getParameter("code");
+//
+//        System.out.println(rand + " : " + code);
+//
+//        if (rand.equals(code)) {
+//            session.removeAttribute("rand");
+//            return false;
 //        }
-        String code = memberService.sendRandomMessage(phoneNumber);
-        session.setAttribute("rand", code);
-
-        return false;
-    }
-
-    @PostMapping("phoneAuthOk")
-    @ResponseBody
-    public Boolean phoneAuthOk(HttpSession session,
-                               HttpServletRequest request) {
-        String rand = (String) session.getAttribute("rand");
-        String code = (String) request.getParameter("code");
-
-        System.out.println(rand + " : " + code);
-
-        if (rand.equals(code)) {
-            session.removeAttribute("rand");
-            return false;
-        }
-
-        return true;
-    }
+//
+//        return true;
+//    }
 }

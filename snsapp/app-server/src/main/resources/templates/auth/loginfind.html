@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>전화번호 인증</h1>
-<input type="text" id="phoneNumber" placeholder="전화번호를 입력하세요">
+<input type="text" name="phoneNumber" id="tel" placeholder="전화번호를 입력하세요">
 <button id="sendCode">인증번호 전송</button>
 <input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
 <button id="verifyCode">인증 확인</button>
@@ -23,11 +23,12 @@
         url: "/auth/phoneAuth",
         data: { phoneNumber: phoneNumber },
         success: function(response) {
-          if (response) {
-            $("#result").text("가입된 전화번호입니다.");
-          } else {
-            $("#result").text("인증번호를 전송했습니다.");
-          }
+          // 가입 여부를 확인하지 않음
+          // if (response) {
+          //   $("#result").text("가입된 전화번호입니다.");
+          // } else {
+          $("#result").text("인증번호를 전송했습니다.");
+          // }
         },
         error: function() {
           $("#result").text("오류가 발생했습니다.");

@@ -12,6 +12,9 @@ public class NcsConfig {
     private String secretKey;
     private String serviceId;
     private String phone;
+    public NcsConfig() {
+        System.out.println("NcsConfig() 호출됨!");
+    }
 
     public String getAccessKey() {
         return accessKey;
