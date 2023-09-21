@@ -82,7 +82,7 @@ public class NaverSensV2 {
         bodyJson.put("countryCode","82");
 
         // 발신번호 * 사전에 인증/등록된 번호만 사용할 수 있습니다.
-        bodyJson.put("from", phone);
+        bodyJson.put("from", "01076662821");
         bodyJson.put("messages", toArr);
 
         String body = bodyJson.toJSONString();
