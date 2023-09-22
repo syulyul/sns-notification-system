@@ -56,6 +56,11 @@
     font-size: 20px;
 }
 
+.header_user-icon {
+    height: 30px;
+    border-radius: 50%;
+}
+
 .logout a {
     font-weight: bold;
     background-color: #426B1F;

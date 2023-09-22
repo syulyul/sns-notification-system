@@ -41,8 +41,8 @@ public class NotificationController {
 
     try {
       response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
-    } catch (IOException ioExceptione) {
-      ioExceptione.printStackTrace();
+    } catch (IOException ioException) {
+      ioException.printStackTrace();
     }
   }
 
