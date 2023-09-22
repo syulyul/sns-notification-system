@@ -2,6 +2,7 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.NotificationService;
 import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.NotiLog;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,7 +63,14 @@ public class NotificationController {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (memberNo == loginUser.getNo()) {
+      NotiLog notiLog = notificationService.getNotiLog(notiNo);
       notificationService.updateState(notiNo, notiState);
+      if (notiLog.getNotiState() == 0 && notiState != 0) {
+        int notReadNotiCount = (int) context.getAttribute("notReadNotiCount" + memberNo);
+        context.setAttribute(
+            "notReadNotiCount" + memberNo, notReadNotiCount - 1);
+        session.setAttribute("notReadNotiCount", notReadNotiCount - 1);
+      }
     }
 
     return "redirect:" + url;
@@ -75,7 +83,11 @@ public class NotificationController {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     notificationService.updateAllState(loginUser.getNo(), notiState);
-
+    if (notiState != 0) {
+      context.setAttribute(
+          "notReadNotiCount" + loginUser.getNo(), 0);
+      session.setAttribute("notReadNotiCount", 0);
+    }
     return "redirect:list";
   }
 
