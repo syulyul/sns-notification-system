@@ -79,6 +79,11 @@ public class DefaultMyPageService implements MyPageService {
   }
 
   @Override
+  public List<Member> searchMembers(String keyword) throws Exception {
+    return myPageDao.searchMembers(keyword);
+  }
+
+  @Override
   public List<Member> followerList(int memberNo) throws Exception {
     return myPageDao.findAllFollowers(memberNo);
   }
