@@ -13,7 +13,7 @@ const checkNoti = () => {
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
       if (httpRequest.status === 200) {
         let response = httpRequest.response;
-        if(response.notReadNotiCount != notReadNotiCount){
+        if(response.notReadNotiCount > notReadNotiCount){
           newNotiBox.style.right = '50px';
           setTimeout(setHidden, 10000, "setTimeout");
           console.log("새로운 알림!");
