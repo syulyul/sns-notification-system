@@ -51,7 +51,7 @@ public class AuthController {
       @CookieValue(required = false) String phoneNumber,
       HttpSession session,
       Model model) {
-//        model.addAttribute("phoneNumber", phoneNumber);
+    // model.addAttribute("phoneNumber", phoneNumber);
     session.setAttribute("phoneNumber", phoneNumber);
   }
 
@@ -146,12 +146,13 @@ public class AuthController {
   public Boolean phoneAuth(String phoneNumber,
       HttpSession session) {
 
-//        try { // 이미 가입된 전화번호가 있으면
-//            if(memberService.memberTelCount(phoneNumber) > 0)
-//                return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+    try { // 이미 가입된 전화번호가 있으면
+      if (smsService.memberTelCount(phoneNumber) > 0)
+        return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     JSONObject toJson = new JSONObject();
 
     String code = smsService.sendRandomMessage(phoneNumber);

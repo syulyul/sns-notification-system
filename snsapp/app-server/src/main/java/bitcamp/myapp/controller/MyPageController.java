@@ -92,14 +92,16 @@ public class MyPageController {
   }
 
   @GetMapping("{no}/info")
-  public String info(@PathVariable int no, Model model, HttpServletRequest request) throws Exception {
+  public String info(@PathVariable int no, Model model, HttpServletRequest request, HttpSession session) throws Exception {
     MyPage myPage = myPageService.get(no);
     model.addAttribute("myPage", myPage);
 
+    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     // request 객체가 null이 아닌 경우에만 모델에 추가
-    if (request != null) {
+    if (request != null && loginUser.getNo() == myPage.getNo()) {
       model.addAttribute("request", request);
-      System.out.println(request.getRequestURL());
+    } else {
+      return "redirect:/";
     }
 
     return "myPage/memberInfoUpdate";
@@ -108,37 +110,47 @@ public class MyPageController {
   @PostMapping("{no}/update")
   public String update(
       Member member,
+      @PathVariable int no,
       @RequestParam("birthday") String birthday,
       @RequestParam("gender") int gender,
       @RequestParam("stateMessage") String stateMessage,
       Model model,
-      MultipartFile photofile) throws Exception {
-    if (photofile.getSize() > 0) {
-      String uploadFileUrl = ncpObjectStorageService.uploadFile(
-          "bitcamp-nc7-bucket-14", "sns_member/", photofile);
-      member.setPhoto(uploadFileUrl);
-    }
+      MultipartFile photofile,
+      HttpSession session) throws Exception {
 
+    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     MyPage myPage = myPageService.get(member.getNo());
 
-    if (birthday.isEmpty()) {
-      birthday = null;
-    } else {
-      // 생일 값을 문자열에서 Timestamp로 변환
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-      Date parsedDate = dateFormat.parse(birthday);
-      Timestamp timestamp = new Timestamp(parsedDate.getTime());
+    if (loginUser.getNo() == myPage.getNo()) {
+      if (photofile.getSize() > 0) {
+        String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+        member.setPhoto(uploadFileUrl);
+      }
 
-      myPage.setBirthday(timestamp);
-      myPage.setGender(gender);
-      myPage.setStateMessage(stateMessage);
+      if (birthday.isEmpty()) {
+        birthday = null;
+      } else {
+        // 생일 값을 문자열에서 Timestamp로 변환
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate = dateFormat.parse(birthday);
+        Timestamp timestamp = new Timestamp(parsedDate.getTime());
+
+        myPage.setBirthday(timestamp);
+        myPage.setGender(gender);
+        myPage.setStateMessage(stateMessage);
+//      myPage.setEmail(email);
+      }
+
+      if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
+        throw new Exception("회원이 없습니다.");
+      } else {
+        return "redirect:/myPage/" + myPage.getNo();
+      }
+    } else {
+      return "redirect:/error";
     }
 
-    if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
-      throw new Exception("회원이 없습니다.");
-    } else {
-      return "redirect:/myPage/" + myPage.getNo();
-    }
   }
 
   @GetMapping("follow")
