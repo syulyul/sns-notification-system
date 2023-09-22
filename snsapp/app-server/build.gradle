@@ -33,9 +33,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.googlecode.json-simple:json-simple:1.1.1' // 또는 원하는 버전을 지정
+    // json-simple 라이브러리
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    // lombok 라이브러리
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
     // Spring JDBC 관련 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
