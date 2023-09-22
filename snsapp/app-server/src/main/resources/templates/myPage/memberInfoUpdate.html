@@ -17,60 +17,79 @@
 <form data-th-if="${session.loginUser}" action='update' method='post' enctype='multipart/form-data'>
     <div id="myPageBox">
         <div data-th-replace="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
-<!--            <input type="hidden" id="stateMessage" name="myPage.stateMessage" data-th-value="${myPage.stateMessage}">-->
-<div class="info_update" >
-    <div class="form-container">
-        <h1>내 정보 수정</h1>
-        <div class="form-group">
-            <label for="name">사진</label>
-            <input type="file" id="photofile" name="photofile" style="width:10px;">
-            <img data-th-unless="${session.loginUser.photo}" style='height:80px' src='/images/avatar.png'>
-<!--            <a data-th-if="${session.loginUser.photo}"-->
-<!--               data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${session.loginUser.photo}|">-->
-<!--                <img data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg|">-->
-<!--            </a>-->
-            <img class="user-photo" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5511%2F2019%2F11%2F27%2F0000006891_003_20191127181028060.png&type=sc960_832" alt="사용자 사진">
-        </div>
-        <div class="form-group">
-            <label for="name">이름</label>
-            <input type="text" id="name" name="name" data-th-value="${myPage.name}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="nick">닉네임</label>
-            <input type="text" id="nick" name="nick" data-th-value="${myPage.nick}">
-        </div>
-        <div class="form-group">
-            <label for="birthday">생일</label>
-            <input type="date" id="birthday" name="birthday" data-th-value="${#dates.format(myPage.birthday, 'yyyy-MM-dd')}">
-        </div>
-        <div class="form-group">
-            <label for="email">이메일</label>
-            <input type="email" id="email" name="email" data-th-value="${myPage.email}">
-        </div>
-        <div class="form-group">
-            <label for="phone">전화번호</label>
-            <input type="tel" id="phone" name="phoneNumber" data-th-value="${myPage.phoneNumber}">
-        </div>
-        <div class="form-group">
-            <label for="password">암호</label>
-            <input type="password" id="password" name="password">
-        </div>
-        <div class="form-group">
-            <label for="gender">성별</label>
-            <select id="gender" name="gender" data-th-value="${myPage.gender}">
-                <option value="1">남자</option>
-                <option value="2">여자</option>
-            </select>
-        </div>
-        <div class="button-container">
-            <div class="my_btn">
-            <button type="submit">수정</button>
-            <button class="my_btn" type="reset">초기화</button>
+        <div class="info_update" >
+            <div class="form-container">
+                <h1>내 정보 수정</h1>
+<!--                <div class="form-group">-->
+<!--                    <label for="name">사진</label>-->
+<!--                    <input type="file" id="photofile" name="photofile" style="width:10px;" onchange="previewImage(this);">-->
+<!--                    <img id="preview" style="height:80px" src="/images/avatar.png" alt="기본 이미지">-->
+<!--                    <a data-th-if="${session.loginUser.photo}"-->
+<!--                       data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${myPage.photo}|">-->
+<!--                        <img class="user-photo" data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${myPage.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">-->
+<!--                    </a>-->
+<!--                </div>-->
+                <div class="form-group">
+                    <label for="name">사진</label>
+                    <input type="file" id="photofile" name="photofile" style="width:10px;" onchange="previewImage(this);">
+                    <img data-th-unless="${session.loginUser.photo}" style='height:80px' src='/images/avatar.png' alt="기본 이미지">
+                    <img id="preview" class="user-photo" data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${myPage.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+                </div>
+
+                <script>
+                    function previewImage(input) {
+                        var preview = document.getElementById('preview');
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                preview.src = e.target.result;
+                            };
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                </script>
+
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" data-th-value="${myPage.name}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="nick">닉네임</label>
+                    <input type="text" id="nick" name="nick" data-th-value="${myPage.nick}">
+                </div>
+                <div class="form-group">
+                    <label for="birthday">생일</label>
+                    <input type="date" id="birthday" name="birthday" data-th-value="${#dates.format(myPage.birthday, 'yyyy-MM-dd')}">
+                </div>
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" data-th-value="${myPage.email}">
+                </div>
+                <div class="form-group">
+                    <label for="phone">전화번호</label>
+                    <input type="tel" id="phone" name="phoneNumber" data-th-value="${myPage.phoneNumber}">
+                </div>
+                <div class="form-group">
+                    <label for="password">암호</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="gender">성별</label>
+                    <select id="gender" name="gender" data-th-value="${myPage.gender}">
+                        <option value='1' data-th-selected="${myPage.gender} == '1'">남자</option>
+                        <option value='2' data-th-selected="${myPage.gender} == '2'">여자</option>
+                    </select>
+                </div>
+                <div class="button-container">
+                    <div class="my_btn">
+                        <button type="submit">수정</button>
+                        <button class="my_btn" type="reset">초기화</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 </form>
+
 </div>
 <div data-th-replace="footer :: footer"></div>
 </body>

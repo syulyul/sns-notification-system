@@ -146,8 +146,7 @@ public class AuthController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String code = smsService.sendRandomMessage(phoneNumber);
-        session.setAttribute("rand", code);
+
         JSONObject toJson = new JSONObject();
 
         String code = smsService.sendRandomMessage(phoneNumber);

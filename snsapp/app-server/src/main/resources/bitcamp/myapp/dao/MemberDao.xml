@@ -10,6 +10,7 @@
         <result column="nick"         property="nick"/>
         <result column="name"         property="name"/>
         <result column="phone_number"        property="phoneNumber"/>
+        <result column="email"     property="email"/>
         <result column="password"     property="password"/>
         <result column="filepath"        property="photo"/>
     </resultMap>
@@ -25,6 +26,7 @@
         nick,
         name,
         phone_number,
+        email,
         filepath
         from
         sns_member
@@ -38,6 +40,7 @@
         nick,
         name,
         phone_number,
+        email,
         filepath
         from
         sns_member
@@ -51,6 +54,7 @@
         nick,
         name,
         phone_number,
+        email,
         filepath
         from
         sns_member
@@ -64,6 +68,7 @@
         nick=#{nick}
         ,name=#{name}
         ,phone_number=#{phoneNumber}
+        ,email=#{email}
         <if test="password != null and password.length() != 0">
             ,password=sha1(#{password})
         </if>
