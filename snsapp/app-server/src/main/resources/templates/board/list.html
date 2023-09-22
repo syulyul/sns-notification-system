@@ -3,99 +3,30 @@
 <head>
   <meta charset='UTF-8'>
   <title>게시글</title>
-  <style>
-    table {
-        border-collapse: collapse;
-        width: 1200px;
-        margin: 1rem auto;
-        background-color: white;
-    }
 
-    thead {
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 테이블 행 */
-    td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        text-align: center;
-    }
-
-    th {
-        padding: 8px;
-        text-align: left;
-        text-align: center;
-        /*border-top: 2px solid #888;*/
-        /*border-bottom: 2px solid #888;*/
-        /*color: #888;*/
-    }
-
-    /* 테이블 올렸을 때 */
-    tbody tr:hover {
-        background-color: #d3d3d3;
-        opacity: 0.9;
-        cursor: pointer;
-    }
-
-    /* 테이블 비율 */
-    th:nth-child(1),
-    td:nth-child(1) {
-        width: 10%;
-    }
-
-    th:nth-child(2),
-    td:nth-child(2) {
-        width: 60%;
-    }
-
-    th, td {
-        border-left: none;
-        border-right: none;
-    }
-
-    /* 버튼 스타일 (새 글 버튼, 메인 버튼) */
-    .button {
-        background-color: #426B1F;
-        color: white;
-        padding: 5px 10px;
-        text-decoration: none;
-        border-radius: 4px;
-    }
-
-    .button:hover {
-        background-color: #426B1F;
-    }
-
-    /* 검색 박스 스타일 */
-    .search-box {
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    input[type="text"] {
-        padding: 5px;
-        width: 200px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-right: 10px;
-    }
-
-    .search-button {
-        background-color: #426B1F;
-        color: white;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .search-button:hover {
-        background-color: #426B1F;
-    }
-  </style>
   <link rel="stylesheet" type="text/css" href="/css/header.css">
+  <link rel="stylesheet" type="text/css" href="/css/board/list.css">
+
+  <script>
+    function searchFunction() {
+      const input = document.querySelector('.search-box input[type="text"]');
+      const filter = input.value.toUpperCase();
+      const table = document.querySelector('table tbody');
+      const tr = table.querySelectorAll('tr');
+
+      tr.forEach(row => {
+        const titleCell = row.querySelector('td:nth-child(2) a');
+        const titleText = titleCell ? titleCell.textContent || titleCell.innerText : "";
+
+        if (titleText.toUpperCase().indexOf(filter) > -1) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+  </script>
+
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
@@ -139,7 +70,7 @@
 
 <!-- 검색 박스와 검색 버튼 추가 -->
 <div class="search-box">
-  <input type="text" placeholder="검색어를 입력하세요">
+  <input type="text" placeholder="제목을 입력하세요" onkeyup="searchFunction()">
   <button class="search-button">검색</button>
 </div>
 

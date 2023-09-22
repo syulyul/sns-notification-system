@@ -92,7 +92,11 @@ public class MyPageController {
   }
 
   @GetMapping("{no}/info")
-  public String info(@PathVariable int no, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+  public String info(
+      @PathVariable int no,
+      Model model,
+      HttpServletRequest request,
+      HttpSession session) throws Exception {
     MyPage myPage = myPageService.get(no);
     model.addAttribute("myPage", myPage);
 
@@ -124,7 +128,7 @@ public class MyPageController {
     if (loginUser.getNo() == myPage.getNo()) {
       if (photofile.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+            "bitcamp-nc7-bucket-14", "sns_member/", photofile);
         member.setPhoto(uploadFileUrl);
       }
 
@@ -172,7 +176,7 @@ public class MyPageController {
 
     Map<String, Object> returnMap = new HashMap<>();
     try {
-      myPageService.follow(loginUser, followingNo);
+      int result = myPageService.follow(loginUser, followingNo);
       loginUser.getFollowMemberSet().add(memberService.get(followingNo));
       session.setAttribute("loginUser", loginUser);
       returnMap.put("result", "success");
@@ -199,7 +203,7 @@ public class MyPageController {
 
     Map<String, Object> returnMap = new HashMap<>();
     try {
-      myPageService.unfollow(loginUser, followingNo);
+      int result = myPageService.unfollow(loginUser, followingNo);
       loginUser.getFollowMemberSet().remove(memberService.get(followingNo));
       session.setAttribute("loginUser", loginUser);
       returnMap.put("result", "success");

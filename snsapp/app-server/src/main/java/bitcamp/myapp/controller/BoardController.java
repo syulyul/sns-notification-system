@@ -83,7 +83,14 @@ public class BoardController {
     }
 
     @GetMapping("detail/{category}/{no}")
-    public String detail(@PathVariable int category, @PathVariable int no, Model model) throws Exception {
+    public String detail(@PathVariable int category, @PathVariable int no, Model model, HttpSession session) throws Exception {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+
+        if (loginUser != null) {
+            List<Integer> likedBoards = boardService.likelist(loginUser.getNo());
+            model.addAttribute("likedBoards", likedBoards);
+        }
+
         Board board = boardService.get(no);
         if (board != null) {
             boardService.increaseViewCount(no);
