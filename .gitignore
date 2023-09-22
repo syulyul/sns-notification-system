@@ -783,3 +783,4 @@ temp/
 jdbc.properties
 application.properties
 ncp.properties
+ncs.properties

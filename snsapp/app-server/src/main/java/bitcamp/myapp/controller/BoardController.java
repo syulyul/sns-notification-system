@@ -52,7 +52,7 @@ public class BoardController {
             for (MultipartFile part : files) {
                 if (part.getSize() > 0) {
                     String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                            "bitcamp-nc7-bucket-14", "board/", part);
+                            "bitcamp-nc7-bucket-14", "sns_board/", part);
                     BoardPhoto attachedFile = new BoardPhoto();
                     attachedFile.setFilePath(uploadFileUrl);
                     attachedFiles.add(attachedFile);
@@ -135,7 +135,7 @@ public class BoardController {
         for (MultipartFile part : files) {
             if (part.getSize() > 0) {
                 String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                        "bitcamp-nc7-bucket-14", "board/", part);
+                        "bitcamp-nc7-bucket-14", "sns_board/", part);
                 BoardPhoto attachedFile = new BoardPhoto();
                 attachedFile.setFilePath(uploadFileUrl);
                 attachedFiles.add(attachedFile);
@@ -235,12 +235,13 @@ public class BoardController {
     }
 
     @PostMapping("updateComment")
-    public String updateComment(BoardComment boardComment, HttpSession session) throws Exception {
+    public String updateComment(@RequestParam int boardNo, BoardComment boardComment, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
         }
 
+        boardComment.setBoardNo(boardNo);
         BoardComment b = boardCommentService.get(boardComment.getNo(), boardComment.getBoardNo());
         if (b == null || b.getWriter().getNo() != loginUser.getNo()) {
             throw new Exception("댓글이 존재하지 않거나 변경 권한이 없습니다.");

@@ -84,6 +84,12 @@
         where
         mno=#{no}
     </delete>
+
+    <select id="countByTel" parameterType="string">
+        select count(*)
+        from sns_member
+        where phone_number = #{phoneNumber}
+    </select>
 </mapper>
 
 

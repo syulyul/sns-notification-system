@@ -14,4 +14,5 @@ public interface MemberDao {
   Member findByPhoneNumberAndPassword(@Param("phoneNumber") String phoneNumber, @Param("password") String password);
   int update(Member member);
   int delete(int no);
+  Member countByTel(@Param("phoneNumber") String phoneNumber);
 }
