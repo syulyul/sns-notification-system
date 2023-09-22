@@ -23,8 +23,8 @@ public class NotReadNotiCountIntercepter implements HandlerInterceptor {
       throws Exception {
     HttpSession session = request.getSession();
     session.setAttribute("notReadNotiCount",
-        notificationService.notReadNotiLogList(
-            ((Member) session.getAttribute("loginUser")).getNo()).size());
+        notificationService.notReadNotiLogCount(
+            ((Member) session.getAttribute("loginUser")).getNo()));
     return true;
   }
 }
