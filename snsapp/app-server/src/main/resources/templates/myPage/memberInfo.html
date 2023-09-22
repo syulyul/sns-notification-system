@@ -16,14 +16,22 @@
       <p data-th-text="${myPage.visitCount}" style="display: inline;"></p>
       <br>
       <br>
-      <img alt="프로필 사진" class="profile-pic"
-        src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F5511%2F2019%2F11%2F27%2F0000006891_003_20191127181028060.png&type=sc960_832">
-      <!--        <h2>쫀떠기^-^</h2>-->
+
+      <img data-th-unless="${myPage.photo}" style='height:80px' src='/images/avatar.png' alt="기본 이미지">
+      <a data-th-if="${myPage.photo}"
+         data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${myPage.photo}|">
+        <img class="profile-pic" alt="프로필 사진"
+             data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${myPage.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+      </a>
       <h2 data-th-text="${myPage.nick}"></h2>
       <div>
-        <p style="display: inline; font-weight:bold;">상태 메시지</p>
-        <a data-th-if="${session.loginUser.no == myPage.no}" data-th-href="@{'/myPage/' + ${myPage.no} + '/info'}"
-          style="display: inline; margin-left: 10px; float:right">내 정보 수정</a>
+
+        <div class="sidebar_my_btn" style="display: flex; align-items: center;">
+          <p style="display: inline; font-weight: bold; flex: 1;">상태 메시지</p>
+          <a data-th-if="${session.loginUser.no == myPage.no}" data-th-href="@{'/myPage/' + ${myPage.no} + '/info'}"
+             style="display: inline; margin: 5px; padding: 10px 10px;">내 정보 수정</a>
+        </div>
+
         <a data-th-if="${session.loginUser.no != myPage.no}" href=""
           style="display: inline; margin-left: 10px; float:right">
           <input class="followCheckbox" data-th-checked="${session.loginUser.getFollowMemberSet().contains(myPage)}"
@@ -37,22 +45,21 @@
         </a>
         <div style="padding-bottom:10px; padding-top: 10px;">
 
-          <input type="text" name="stateMessage" data-th-if="${#strings.isEmpty(myPage.stateMessage)}"
-                 placeholder="상태 메시지가 없습니다."
-                 style="height:40px; border: none; background-color:transparent; width: 100%;">
+          <textarea class="custom-textarea" name="stateMessage" data-th-if="${#strings.isEmpty(myPage.stateMessage)}"
+                    placeholder="상태 메시지가 없습니다."
+                    style="border: none; background-color: transparent; width: 100%; resize: none;"></textarea>
           <div data-th-if="${not #strings.isEmpty(myPage.stateMessage)}">
-            <input type='text' name='stateMessage' data-th-if="${session.loginUser.no != myPage.no}"
-                   data-th-value="${myPage.stateMessage}" readonly
-                   style="height:40px; border: none; background-color:transparent; width: 100%;">
-  <!--          <div data-th-if="${session.loginUser.no == myPage.no}">-->
-            <div data-th-if="${session.loginUser.no == myPage.no }">
-              <input type='text' name='stateMessage' data-th-readonly="${request == null || !#strings.contains(request.getRequestURL(), '/info')}"
-                     data-th-value="${myPage.stateMessage}"
-                     style="height:40px; border: none; background-color:transparent; width: 100%;">
+  <textarea class="custom-textarea" name="stateMessage" data-th-if="${session.loginUser.no != myPage.no}"
+            readonly
+            style="border: none; background-color: transparent; width: 100%; resize: none;" data-th-text="${myPage.stateMessage}"></textarea>
+            <div data-th-if="${session.loginUser.no == myPage.no}">
+    <textarea class="custom-textarea" name="stateMessage" data-th-readonly="${request == null || !#strings.contains(request.getRequestURL(), '/info')}"
+              style="border: none; background-color: transparent; width: 100%; resize: none;" data-th-text="${myPage.stateMessage}"></textarea>
             </div>
           </div>
+
+
         </div>
-<!--        <div style="text-align: center; padding-top: 20px;">-->
         <div class="button-container">
           <div class="sidebar_my_btn" style="">
           <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followings'}">팔로잉</a>
@@ -61,7 +68,6 @@
           <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=followers'}">팔로워</a>
           </div>
         </div>
-<!--        </div>-->
       </div>
     </div>
 

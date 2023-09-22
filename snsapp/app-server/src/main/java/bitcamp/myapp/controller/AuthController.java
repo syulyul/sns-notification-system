@@ -139,12 +139,12 @@ public class AuthController {
                              SmsService smsService,
                              HttpSession session) {
 
-//        try { // 이미 가입된 전화번호가 있으면
-//            if(memberService.memberTelCount(phoneNumber) > 0)
-//                return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try { // 이미 가입된 전화번호가 있으면
+            if(smsService.memberTelCount(phoneNumber) > 0)
+                return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         return false;
