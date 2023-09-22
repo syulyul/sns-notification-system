@@ -14,7 +14,7 @@ function follow (memberNo) {
                     console.log("follow 성공");
                 } else {
                     console.log("follow 실패");
-                    document.getElementById("toggle" + memberNo).removeAttribute("checked");
+//                    document.getElementById("toggle" + memberNo).removeAttribute("checked");
                 }
             } else {
                 alert('Request Error!');
@@ -41,7 +41,7 @@ function unfollow (memberNo) {
                     console.log("unfollow 성공");
                 } else {
                     console.log("unfollow 실패");
-                    document.getElementById("toggle" + memberNo).addAttribute("checked");
+//                    document.getElementById("toggle" + memberNo).addAttribute("checked");
                 }
             } else {
                 alert('Request Error!');
