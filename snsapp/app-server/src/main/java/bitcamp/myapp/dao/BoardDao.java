@@ -17,7 +17,7 @@ public interface BoardDao {
   int delete(int no);
 
   int insertFiles(Board board);
-  BoardPhoto findPhotoBy(int no);
+  BoardPhoto findPhotoBy(int fileNo);
   int deleteFile(int fileNo);
   int deleteFiles(int boardNo);
 

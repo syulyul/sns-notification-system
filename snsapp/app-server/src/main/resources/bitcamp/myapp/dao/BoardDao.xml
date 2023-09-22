@@ -75,9 +75,9 @@
       b.likes,
       m.mno,
       m.name,
-      m.filepath,
       f.bpno,
-      f.filepath
+      f.filepath,
+      f.bno
     from
       sns_board b inner join sns_member m on b.mno=m.mno
       left outer join sns_board_photo f on b.bno=f.bno
