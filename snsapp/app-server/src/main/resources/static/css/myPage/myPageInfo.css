@@ -10,21 +10,13 @@
 .profile-pic {
     max-width: 100%;
     height: auto;
+    border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
 }
 
 /* 왼쪽 사이드바 스타일 */
 .sidebar {
     float: left;
-    width: 70%;
-    padding: 20px;
-    background-color: #FAFAF5;
-    border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
-}
-
-/* 왼쪽 사이드바 스타일 */
-.sidebar {
-    float: left;
-    width: 70%;
+    width: 270px;
     padding: 20px;
     background-color: #FAFAF5;
     border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
@@ -38,6 +30,7 @@
 }
 
 .sidebar_my_btn a {
+    font-size: 15px;
     background-color: #426B1F;
     color: white;
     border: none;
