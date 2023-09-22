@@ -15,6 +15,8 @@ public class BoardComment implements Serializable {
     private Timestamp createdAt; // 댓글 작성 일시
     private Timestamp updatedAt; // 댓글 수정 일시
 
+    private Member profile;
+
     @Override
     public String toString() {
         return "BoardComment{" +
@@ -86,5 +88,13 @@ public class BoardComment implements Serializable {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Member getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Member profile) {
+        this.profile = profile;
     }
 }

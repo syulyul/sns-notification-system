@@ -4,6 +4,7 @@
 <head>
     <meta charset='UTF-8'>
     <title>게시글</title>
+    <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/board/detail.css">
 
     <script>
@@ -86,7 +87,7 @@
                         <div data-th-each="file : ${board.attachedFiles}">
                             <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" width="100"/>
                             <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|"></a>
-                            [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
+                            [<a data-th-href="|/sns_board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
                         </div>
                         <input multiple name='files' type='file'>
                     </div>
@@ -101,15 +102,15 @@
                         </a>
                     </div>
                 </form>
-                <!-- 좋아요 버튼 -->
-                <button class="like-button" th:id="'likeButton-' + ${board.no}" th:if="${!likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
-                    🤍
-                </button>
-                <!-- 좋아요 취소 버튼 -->
-                <button class="unlike-button" th:id="'unlikeButton-' + ${board.no}" th:if="${likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
-                    ❤️
-                </button>
             </div> <!-- End of content-box -->
+            <!-- 좋아요 버튼 -->
+            <button class="like-button" th:id="'likeButton-' + ${board.no}" th:if="${!likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
+                🤍
+            </button>
+            <!-- 좋아요 취소 버튼 -->
+            <button class="unlike-button" th:id="'unlikeButton-' + ${board.no}" th:if="${likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
+                ❤️
+            </button>
         </div> <!-- End of container -->
     </div> <!-- End of left-column -->
 
@@ -141,8 +142,13 @@
                         <td class="title-meta-cell" colspan="3">
                             <div class="horizontal-layout">
                                 <div style="display: flex; align-items: center;">
-                                    <div class="profile-picture">
-                                        <img class="profile-image" src="/images/profile.png" alt="Profile Picture" />
+                                    <div class="profile-picture" style="display: inline-block;">
+                                        <img data-th-unless="${boardComment.writer.photo}" src='/images/avatar.png'>
+                                        <a data-th-if="${boardComment.writer.photo}"
+                                           data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${boardComment.writer.photo}|">
+                                            <img class="profile-image" alt="프로필 사진"
+                                                 data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${boardComment.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+                                        </a>
                                     </div>
                                     <div>
                                         <span th:text="${boardComment.writer.name}"></span>

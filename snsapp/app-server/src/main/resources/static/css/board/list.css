@@ -3,17 +3,21 @@ table {
     width: 1200px;
     margin: 1rem auto;
     background-color: white;
+    border: 1px solid #ddd;
 }
+tr {
 
+}
 thead {
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);*/
 }
 
 /* 테이블 행 */
 td {
     padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+
+    border: 1px solid #ddd;
     text-align: center;
 }
 
@@ -23,12 +27,13 @@ th {
     text-align: center;
     /*border-top: 2px solid #888;*/
     /*border-bottom: 2px solid #888;*/
-    /*color: #888;*/
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
 }
 
 /* 테이블 올렸을 때 */
 tbody tr:hover {
-    background-color: #d3d3d3;
+    background-color: #ccc;
     opacity: 0.9;
     cursor: pointer;
 }
@@ -87,4 +92,21 @@ input[type="text"] {
 
 .search-button:hover {
     background-color: #426B1F;
+}
+
+.profile-picture {
+    width: 20px; /* 원 모양의 크기를 조절할 수 있습니다. */
+    height: 20px; /* 원 모양의 크기를 조절할 수 있습니다. */
+    border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다. */
+    overflow: hidden; /* 이미지가 원 안에 맞게 잘릴 수 있도록 설정합니다. */
+}
+
+.profile-picture img {
+    width: 100%; /* 이미지를 부모 요소에 꽉 채우도록 설정합니다. */
+    height: auto; /* 가로 세로 비율을 유지합니다. */
+}
+
+.profile-author {
+    display: flex;
+    align-items: center;
 }
