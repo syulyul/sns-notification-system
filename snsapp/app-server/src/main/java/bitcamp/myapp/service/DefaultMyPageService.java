@@ -84,7 +84,17 @@ public class DefaultMyPageService implements MyPageService {
   }
 
   @Override
+  public int getFollowerCount(int memberNo) {
+    return myPageDao.getFollowerCount(memberNo);
+  }
+
+  @Override
   public List<Member> followingList(int memberNo) throws Exception {
     return myPageDao.findAllFollowings(memberNo);
+  }
+
+  @Override
+  public int getFollowingCount(int memberNo) {
+    return myPageDao.getFollowingCount(memberNo);
   }
 }

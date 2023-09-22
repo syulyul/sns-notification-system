@@ -13,7 +13,9 @@ public interface NotificationDao {
 
   List<NotiLog> findAllNotiLog(int memberNo);
 
-  int findAllNotReadNotiLogCount(int memberNo);
+  int getNotiLogCount(int memberNo);
+
+  int getNotReadNotiLogCount(int memberNo);
 
   NotiLog findBy(int notiNo);
 
