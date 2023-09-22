@@ -22,9 +22,12 @@
       <img src="/images/noti.png" alt="알림" class="header_notification-icon">
     </a>
     <a style="text-decoration-line: none" data-th-href="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
-      <img data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|"
+      <img data-th-unless="${session.loginUser.photo == null}"
+           data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|"
            alt="프로필 사진" class="header_user-icon">
     </a>
+    <img data-th-if="${session.loginUser.photo == null}" src='/images/default.jpg'
+         alt="프로필 사진" class="header_user-icon">
     <span class="header_user-nickname" data-th-text="${session.loginUser.nick}">${session.loginUser.nick}</span>
     <div class="logout">
       <a href="/auth/logout">로그아웃</a>

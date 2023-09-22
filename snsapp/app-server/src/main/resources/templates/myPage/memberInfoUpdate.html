@@ -32,8 +32,9 @@
                 <div class="form-group">
                     <label for="name">사진</label>
                     <input type="file" id="photofile" name="photofile" style="width:10px;" onchange="previewImage(this);">
-                    <img data-th-unless="${session.loginUser.photo}" style='height:80px' src='/images/avatar.png' alt="기본 이미지">
-                    <img id="preview" class="user-photo" data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${myPage.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+                    <img class="user-photo" data-th-unless="${session.loginUser.photo}" src='/images/avatar.png' alt="기본 이미지">
+                    <img id="preview" class="user-photo" data-th-if="${session.loginUser.photo}"
+                         data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${myPage.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
                 </div>
 
                 <script>
@@ -88,9 +89,9 @@
                 </div>
             </div>
         </div>
+    </div>
 </form>
 
-</div>
 <div data-th-replace="footer :: footer"></div>
 </body>
 </html>

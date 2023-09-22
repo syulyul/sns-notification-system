@@ -63,7 +63,7 @@ public class MyPageController {
     HashSet<Integer> visitedMyPages = loginUser.getVisitedMyPages();
 
     // 만약 방문한 적 없는 마이페이지라면 조회수 증가
-    if (!visitedMyPages.contains(no)) {
+    if (!visitedMyPages.contains(no) && loginUser.getNo() != no) {
       myPageService.increaseVisitCount(no);
 
       // 방문한 마이페이지 번호를 세션에 추가
@@ -150,9 +150,11 @@ public class MyPageController {
         throw new Exception("회원이 없습니다.");
       } else {
         // 사용자 정보 업데이트 후, 세션에 새 정보를 설정
-        loginUser.setName(myPage.getName()); // 사용자 이름 업데이트
-        loginUser.setNick(myPage.getNick()); // 사용자 닉네임 업데이트
-        loginUser.setPhoto(myPage.getPhoto()); // 사용자 사진 업데이트
+        loginUser.setName(member.getName()); // 사용자 이름 업데이트
+        loginUser.setNick(member.getNick()); // 사용자 닉네임 업데이트
+        if (!photofile.isEmpty()) {
+          loginUser.setPhoto(member.getPhoto()); // 사용자 사진 업데이트
+        }
 
         // 세션에 업데이트된 loginUser 속성을 다시 설정
         session.setAttribute("loginUser", loginUser);
