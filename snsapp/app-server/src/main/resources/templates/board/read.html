@@ -4,6 +4,7 @@
 <head>
     <title>방명록</title>
     <!-- 스타일과 스크립트 추가가 필요하면 여기에 -->
+    <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/board/read.css">
 
@@ -105,8 +106,12 @@
                 <tr class="second-row">
                     <td class="writer-cell" style="text-align: center;">
                         <div class="profile-picture" style="display: inline-block;">
-                            <img class="profile-image" src="/images/profile.png" alt="Profile Picture" />
-                            <!-- 프로필 사진을 실제 이미지로 바꾸세요. -->
+                            <img data-th-unless="${board.writer.photo}" src='/images/avatar.png'>
+                            <a data-th-if="${board.writer.photo}"
+                               data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${board.writer.photo}|">
+                                <img class="profile-image" alt="프로필 사진"
+                                     data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${board.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+                            </a>
                         </div>
                         <div style="margin-top: 5px;"> <!-- 이름과 프로필 사진 사이에 간격을 조절합니다. -->
                             <span th:text="${board.writer.name}"></span>

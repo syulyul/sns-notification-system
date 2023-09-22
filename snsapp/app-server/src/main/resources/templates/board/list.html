@@ -3,34 +3,14 @@
 <head>
   <meta charset='UTF-8'>
   <title>게시글</title>
-
+  <link rel="stylesheet" type="text/css" href="/css/font.css">
   <link rel="stylesheet" type="text/css" href="/css/header.css">
   <link rel="stylesheet" type="text/css" href="/css/board/list.css">
 
-  <script>
-    function searchFunction() {
-      const input = document.querySelector('.search-box input[type="text"]');
-      const filter = input.value.toUpperCase();
-      const table = document.querySelector('table tbody');
-      const tr = table.querySelectorAll('tr');
-
-      tr.forEach(row => {
-        const titleCell = row.querySelector('td:nth-child(2) a');
-        const titleText = titleCell ? titleCell.textContent || titleCell.innerText : "";
-
-        if (titleText.toUpperCase().indexOf(filter) > -1) {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
-      });
-    }
-  </script>
 
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
-<h1>게시글 목록</h1>
 
 <!-- 새 글 버튼을 표 상단 우측에 추가 -->
 <div style="text-align: right; margin-right: 20px; margin-top: -30px;">
@@ -43,7 +23,6 @@
   <tr>
     <th>번호</th>
     <th>제목</th>
-    <th>프사</th>
     <th>작성자</th>
     <th>조회수</th>
     <th>등록일</th>
@@ -56,11 +35,21 @@
            data-th-text="${board.title} ?: '제목없음'">게시글 제목</a>
     </td>
     <td>
-      <div class="profile-picture">
-        <img src="${board.writer.photo}" class="circular-image">
+      <div class="profile-author">
+        <div class="profile-picture">
+          <!-- 기본 프로필 이미지를 사용하려면 아래와 같이 src를 명시합니다. -->
+          <img data-th-unless="${board.writer.photo}" src='/images/avatar.png'>
+
+          <!-- board.writer.photo 값이 있을 경우에만 이 img 태그가 렌더링됩니다. -->
+          <a data-th-if="${board.writer.photo}"
+             data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${board.writer.photo}|">
+            <img class="profile-image" alt="프로필 사진"
+                 data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${board.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+          </a>
+        </div>
+        <span data-th-text="${board.writer.name}">작성자</span>
       </div>
     </td>
-    <td data-th-text="${board.writer.name}">작성자</td>
 
     <td data-th-text="${board.viewCount}">조회수</td>
     <td data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">등록일</td>
@@ -70,7 +59,7 @@
 
 <!-- 검색 박스와 검색 버튼 추가 -->
 <div class="search-box">
-  <input type="text" placeholder="제목을 입력하세요" onkeyup="searchFunction()">
+  <input type="text" placeholder="제목을 입력하세요">
   <button class="search-button">검색</button>
 </div>
 
