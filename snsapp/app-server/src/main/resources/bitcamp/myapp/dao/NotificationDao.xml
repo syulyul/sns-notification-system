@@ -40,21 +40,23 @@
     nlno desc
   </select>
 
-  <select id="findAllNotReadNotiLog" parameterType="int" resultMap="notiLogMap">
+  <select id="getNotiLogCount" parameterType="int" resultType="int">
     select
-    nlno,
-    mno,
-    ntno,
-    content,
-    url,
-    noti_state
+    count(nlno)
+    from
+    sns_noti_log
+    where
+    mno=#{memberNo}
+  </select>
+
+  <select id="getNotReadNotiLogCount" parameterType="int" resultType="int">
+    select
+    count(nlno)
     from
     sns_noti_log
     where
     mno=#{memberNo}
     and noti_state=0
-    order by
-    nlno desc
   </select>
 
   <select id="findBy" parameterType="int" resultMap="notiLogMap">

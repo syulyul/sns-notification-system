@@ -93,7 +93,7 @@ public class AuthController {
     loginUserObject.setFollowMemberSet(
         new HashSet<>(myPageService.followingList(loginUser.getNo())));
 
-    int notReadNotiCount = notificationService.notReadNotiLogList(loginUser.getNo()).size();
+    int notReadNotiCount = notificationService.notReadNotiLogCount(loginUser.getNo());
     context.setAttribute("notReadNotiCount" + loginUser.getNo(), notReadNotiCount);
 
     session.setAttribute("loginUser", loginUserObject);
@@ -147,8 +147,9 @@ public class AuthController {
       HttpSession session) {
 
     try { // 이미 가입된 전화번호가 있으면
-      if (smsService.memberTelCount(phoneNumber) > 0)
+      if (smsService.memberTelCount(phoneNumber) > 0) {
         return true;
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
