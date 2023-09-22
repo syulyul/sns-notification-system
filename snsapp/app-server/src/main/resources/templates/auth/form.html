@@ -99,7 +99,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BITSNS</title>
-  <script defer src="form.js"></script>
 </head>
 
 <body>
@@ -110,18 +109,54 @@
     <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
   </div>
 
-  <form id="login-form" action='login' method='post'>
-    <input type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="Phone Number" data-th-value='${phoneNumber}'>
-    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password" data-th-value='${password}'>
+  <form id="login-form" method="post">
+    <!-- 사용자 입력 필드 -->
+    <input type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="Phone Number">
+    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
     <input type="submit" value="Login" id="login-form-submit">
-    <input type='checkbox' name='savePhoneNumber' data-th-checked="${phoneNumber}"> 전화번호 저장
+
     <ul>
       <li><a href="/auth/add" class="user-field"> 회원가입</a></li>
       <li><a href="/auth/find" class="user2-field"> 비밀번호 찾기</a></li>
-
     </ul>
   </form>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginForm = document.getElementById("login-form");
+      const loginErrorMsg = document.getElementById("login-error-msg");
 
+      loginForm.addEventListener("submit", function (event) {
+        const phoneNumber = loginForm.querySelector("#username-field").value;
+        const password = loginForm.querySelector("#password-field").value;
+
+        // Ajax 요청 보내기
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "login", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            // 로그인 성공
+            loginErrorMsg.style.opacity = 0; // 에러 메시지 감추기
+            alert("로그인에 성공하였습니다.");
+            const responseData = JSON.parse(xhr.responseText); // JSON 응답 데이터 파싱
+            const userNo = responseData.userNo; // 사용자 번호 추출
+            location.href = `/myPage/${userNo}`; // 사용자 번호를 기반으로 리다이렉트
+          } else {
+            // 로그인 실패
+            loginErrorMsg.style.opacity = 1; // 에러 메시지 표시
+            loginErrorMsg.innerText = "로그인 실패, 다시 시도하세요."; // 에러 메시지 설정
+          }
+        };
+
+        // 요청 본문 설정
+        const data = `phoneNumber=${phoneNumber}&password=${password}`;
+        xhr.send(data);
+
+        event.preventDefault(); // 폼 제출 방지
+      });
+    });
+</script>
 </main>
 </body>
 

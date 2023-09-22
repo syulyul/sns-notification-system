@@ -22,7 +22,6 @@ public class SmsService {
         this.memberDao = memberDao;
     }
 
-
     public int memberTelCount(String phoneNumber) {
         int data = memberDao.countByTel(phoneNumber);
         if (data != 0) {
@@ -42,7 +41,6 @@ public class SmsService {
             numStr += ran;
             //numStr.append(ran);
         }
-
         message.sendMsg(phoneNumber, numStr);
         System.out.println("rand 값: " + numStr);
         return numStr;
