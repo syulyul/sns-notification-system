@@ -26,12 +26,11 @@
                 url: "/auth/phoneAuth",
                 data: { phoneNumber: phoneNumber },
                 success: function(response) {
-                    // 가입 여부를 확인하지 않음
-                    // if (response) {
-                    //   $("#result").text("가입된 전화번호입니다.");
-                    // } else {
+                    if (response) {
+                      $("#result").text("가입된 전화번호입니다.");
+                    } else {
                     $("#result").text("인증번호를 전송했습니다.");
-                    // }
+                    }
                 },
                 error: function() {
                     $("#result").text("오류가 발생했습니다.");

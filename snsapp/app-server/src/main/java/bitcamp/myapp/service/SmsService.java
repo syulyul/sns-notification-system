@@ -23,9 +23,12 @@ public class SmsService {
     }
 
     // 핸드폰 번호로 가입된 회원 수 조회
-    public Member memberTelCount(String phoneNumber) {
-
-        return memberDao.countByTel(phoneNumber);
+    public int memberTelCount(String phoneNumber) {
+        Member member = memberDao.countByTel(phoneNumber);
+        if (member != null) {
+            return 1; // 전화번호와 일치하는 회원이 있으면 1을 반환
+        }
+        return 0; // 일치하는 회원이 없으면 0을 반환
     }
     // 문자 메시지 발송과 랜덤 코드 생성을 한 번에 처리
     public String sendRandomMessage(String phoneNumber) {
