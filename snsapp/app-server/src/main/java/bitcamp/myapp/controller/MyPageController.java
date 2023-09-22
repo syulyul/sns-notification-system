@@ -145,10 +145,11 @@ public class MyPageController {
         Timestamp timestamp = new Timestamp(parsedDate.getTime());
 
         myPage.setBirthday(timestamp);
-        myPage.setGender(gender);
-        myPage.setStateMessage(stateMessage);
 //      myPage.setEmail(email);
       }
+      
+      myPage.setGender(gender);
+      myPage.setStateMessage(stateMessage);
 
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
         throw new Exception("회원이 없습니다.");
@@ -175,7 +176,7 @@ public class MyPageController {
   public void follow(
       @RequestParam("followingNo") int followingNo,
       HttpSession session,
-      HttpServletResponse response) throws Exception, IOException {
+      HttpServletResponse response) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 
     Map<String, Object> returnMap = new HashMap<>();
