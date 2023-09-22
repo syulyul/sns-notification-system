@@ -91,3 +91,10 @@ select[name='category'] {
 form {
     text-align: center;
 }
+
+.form-container {
+    padding: 20px;  /* 내부 여백 설정 */
+    background-color: #f2f2f2;  /* 배경색 적용 */
+    width: 700px;  /* 가로 크기 설정 */
+    margin: auto;  /* 가운데 정렬 */
+}

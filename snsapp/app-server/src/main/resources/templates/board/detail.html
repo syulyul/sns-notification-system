@@ -72,9 +72,9 @@
                 <form data-th-action="@{/board/update}" data-th-if="${board}" enctype='multipart/form-data' method='post'>
                     <input name='no' th:value="${board.no}" type='hidden'>
                     <h1>
-                        <input name="title" th:value="${board.title}" type="text" value="${board.title}">
+                        <input style="margin-top: 20px; margin-bottom: 30px; font-size: 40px; background-color: transparent; border: none;" name="title" th:value="${board.title}" type="text" value="${board.title}">
                     </h1>
-                    <div class="meta-info">
+                    <div style="margin-left: 300px; margin-bottom: 30px;" class="meta-info">
                         <span th:text="${board.writer.name}"></span>
                         <img class="clock-icon" src="/images/clock.png">
                         <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
@@ -82,7 +82,7 @@
                         <span th:text="${board.viewCount}"></span>
                     </div>
                     <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
-                    <textarea data-th-text="${board.content}" name='content' style='height:200px; width:400px;'>내용입니다!</textarea>
+                    <textarea data-th-text="${board.content}" name='content' style="font-size: 20px; background-color: transparent; border: none; height:200px; width:400px;">내용입니다!</textarea>
                     <div>
                         <div data-th-each="file : ${board.attachedFiles}">
                             <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" width="100"/>
@@ -105,11 +105,11 @@
             </div> <!-- End of content-box -->
             <!-- 좋아요 버튼 -->
             <button class="like-button" th:id="'likeButton-' + ${board.no}" th:if="${!likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
-                🤍
+                좋아요 누르기 🤍
             </button>
             <!-- 좋아요 취소 버튼 -->
             <button class="unlike-button" th:id="'unlikeButton-' + ${board.no}" th:if="${likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
-                ❤️
+                좋아요 취소❤️
             </button>
         </div> <!-- End of container -->
     </div> <!-- End of left-column -->
@@ -118,14 +118,14 @@
         <!-- 댓글 작성 폼 -->
         <div class="comment-input-container">
             <form action="/board/addComment" method="post">
-                <table style="margin-bottom: 2%">
+                <table style="margin-right:100px; margin-bottom: 2%">
                     <tr>
-                        <th>   댓글   </th>
-                        <td><textarea name="content" rows="4" cols="80"></textarea></td>
+                        <th>댓글달기</th>
+                        <td><textarea style=" border: none;" name="content" rows="4" cols="30"></textarea></td>
                     </tr>
                 </table>
-                <div style="text-align: center; margin-left:80%; margin-top:2%; margin-bottom:5%;">
-                    <button type="submit">댓글 작성</button>
+                <div style="text-align: center; margin-left:45%; margin-top:2%; margin-bottom:5%;">
+                    <button type="submit">작성</button>
                 </div>
                 <input name="boardNo" th:value="${board.no}" type="hidden">
             </form>

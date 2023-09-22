@@ -64,13 +64,13 @@
     /* 좋아요 버튼 스타일 */
         .like-button, .unlike-button {
             padding: 5px 10px;
+            color:black;
             background-color: transparent;
-            color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 10px;
-            position: absolute;
+            margin-top: 30px;
+            margin-left: 500px;
             right: 0;
             bottom: 0;
         }
@@ -83,7 +83,6 @@
 
     .comment-input-container {
         display: flex;
-        flex-direction: row;
         align-items: center;
         width: 100%;
     }
@@ -310,7 +309,7 @@
         }
 
         .delete-button {
-            text-align: center;
+            text-align: left;
             margin-left :13%;
             margin-top:2%;
             margin-bottom:5%;
