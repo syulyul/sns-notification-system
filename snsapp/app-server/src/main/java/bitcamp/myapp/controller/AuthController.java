@@ -95,7 +95,6 @@ public class AuthController {
 
     int notReadNotiCount = notificationService.notReadNotiLogList(loginUser.getNo()).size();
     context.setAttribute("notReadNotiCount" + loginUser.getNo(), notReadNotiCount);
-    session.setAttribute("notReadNotiCount", notReadNotiCount);
 
     session.setAttribute("loginUser", loginUserObject);
 

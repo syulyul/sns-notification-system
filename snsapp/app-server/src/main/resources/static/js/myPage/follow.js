@@ -1,8 +1,8 @@
 let myPageNo;
 /* httpRequest의 readyState가 변화했을때 함수 실행 */
-const httpRequest = new XMLHttpRequest();
 
 function follow (memberNo) {
+    let httpRequest = new XMLHttpRequest();
     myPageNo = document.getElementById("myPageNo").value;
     /* 통신에 사용 될 XMLHttpRequest 객체 정의 */
     httpRequest.onreadystatechange = () => {
@@ -14,7 +14,7 @@ function follow (memberNo) {
                     console.log("follow 성공");
                 } else {
                     console.log("follow 실패");
-//                      document.getElementById("toggle" + memberNo).removeAttribute("checked");
+                    document.getElementById("toggle" + memberNo).removeAttribute("checked");
                 }
             } else {
                 alert('Request Error!');
@@ -30,7 +30,7 @@ function follow (memberNo) {
 }
 
 function unfollow (memberNo) {
-    myPageNo = document.getElementById("myPageNo").value;
+    let httpRequest = new XMLHttpRequest();
     /* httpRequest의 readyState가 변화했을때 함수 실행 */
     httpRequest.onreadystatechange = () => {
         /* readyState가 Done이고 응답 값이 200일 때 실행 */
@@ -41,7 +41,7 @@ function unfollow (memberNo) {
                     console.log("unfollow 성공");
                 } else {
                     console.log("unfollow 실패");
-//                        document.getElementById("toggle" + memberNo).addAttribute("checked");
+                    document.getElementById("toggle" + memberNo).addAttribute("checked");
                 }
             } else {
                 alert('Request Error!');
@@ -49,7 +49,7 @@ function unfollow (memberNo) {
         }
     };
     /* Get 방식으로 name 파라미터와 함께 요청 */
-    httpRequest.open('GET', '/myPage/unfollow?myPageNo=' + myPageNo + '&followingNo=' + memberNo);
+    httpRequest.open('GET', '/myPage/unfollow?followingNo=' + memberNo);
     /* Response Type을 Json으로 사전 정의 */
     httpRequest.responseType = "json";
     /* 정의된 서버에 요청을 전송 */

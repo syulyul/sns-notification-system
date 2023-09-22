@@ -39,6 +39,14 @@
     gap: 10px;
 }
 
+#newNotiBox {
+  position: fixed;
+  top: 80px;
+  right: -300px;
+  background: lightskyblue;
+  transition: all 1s ease;
+}
+
 .header_notification-icon {
     height: 20px;
 }
