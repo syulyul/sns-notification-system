@@ -1,0 +1,323 @@
+
+        /* 중앙에 위치하는 사각형 */
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 70vh;
+        background-color: #ffffff;
+        /* 배경색을 흰색으로 설정 */
+        border: 1px solid #ffffff;
+        /* 선의 색상을 회색으로 설정 */
+        position: relative;
+        /* 상대적 위치 설정 */
+    }
+
+    /* 내용을 감싸는 박스 */
+    .content-box {
+        text-align: left;
+        /* 내용을 왼쪽으로 정렬 */
+        padding: 20px;
+        max-width: 600px;
+        background: #ffffff;
+        border: 1px solid #888;
+        height: 600px;
+        /* 원하는 높이로 조절하세요 */
+        width: 700px;
+        position: relative;
+    }
+
+    /* 제목 스타일 */
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* 작성자, 등록일, 조회수 스타일 */
+    .meta-info {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 10px;
+        /* 아래 간격 추가 */
+    }
+
+    /* 버튼 스타일 */
+    .btn-container {
+        display: flex;
+        /* 버튼들을 가로로 나열하기 위해 설정 */
+        justify-content: flex-end;
+        /* 버튼들을 오른쪽 정렬하기 위해 설정 */
+        margin-top: 20px;
+    }
+
+    .btn-container button {
+        background-color: #426B1F;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+        /* 버튼 간격 조절을 위해 margin-left 추가 */
+    }
+
+    /* 좋아요 버튼 스타일 */
+        .like-button, .unlike-button {
+            padding: 5px 10px;
+            background-color: transparent;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+    .comment-box {
+        margin-top: 20px;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .comment-input-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+
+    .comment-input textarea {
+        flex: 1;
+        width: 100%;
+        padding: 10px;
+        margin-right: 10px;
+    }
+
+    .comment-input button {
+        background-color: #426B1F;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left : 40px;
+
+    }
+
+    .comment-list table {
+        margin: 0 auto; /* 가운데 정렬을 추가 */
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .comment-list th,
+    .comment-list td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .left-column,
+    .right-column {
+        flex: 1;
+    }
+
+    table {
+        width: 60%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid #f2f2f2;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    button {
+        padding: 5px 10px;
+        background-color: #426B1F;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+        .scrollable-table {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+
+        .actions {
+            text-align: center;
+            padding: 16px;
+            /* 변경: 상하 여백 추가 */
+            line-height: 15;
+            /* 변경: 세로 크기 2배로 늘림 */
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #426B1F;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button {
+            float: inherit;
+        }
+
+        .actions button {
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #426B1F;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .content-table {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        .content-table td {
+            border: none; /* 모든 셀의 테두리를 제거합니다. */
+        }
+        /* 메타 정보 내부 요소들을 가로로 배열 */
+
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /* 아이콘과 텍스트 사이의 간격 */
+        }
+        /* 시간과 뷰 카운트 아이콘 스타일 */
+
+        .clock-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .horizontal-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* 추가된 속성 */
+            gap: 20px;
+        }
+        /* 게시글 제목을 가로로 배열하기 위한 스타일 */
+
+        h1 {
+            margin: 0;
+        }
+        /* 메타 정보 내부 요소들을 가로로 배열 */
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .no-cell {
+            width: 10%;
+        }
+        /* 제목과 메타 정보 셀 스타일 */
+
+        .title-meta-cell {
+            width: 40%;
+        }
+        /* 작성자 셀 스타일 */
+
+        .writer-cell {
+            width: 15%;
+        }
+        /* 내용과 좋아요 셀 스타일 */
+
+        .content-like-cell {
+            width: 35%;
+        }
+
+        .horizontal-layout {
+            display: flex;
+            align-items: center;
+        }
+
+        .first-row {
+            background-color: #f2f2f2;
+        }
+
+        .second-row {
+            background-color: white;
+            height: 10px;
+        }
+
+        .hidden-file-input {
+            opacity: 0;
+            /* 투명하게 만들기 */
+            position: absolute;
+            /* 페이지 레이아웃에 영향을 주지 않게 위치 지정 */
+            pointer-events: none;
+            /* 마우스 이벤트 무시 */
+        }
+
+
+        .profile-picture {
+            width: 30px; /* 원 모양의 크기를 조절할 수 있습니다. */
+            height: 30px; /* 원 모양의 크기를 조절할 수 있습니다. */
+            border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다. */
+            overflow: hidden; /* 이미지가 원 안에 맞게 잘릴 수 있도록 설정합니다. */
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-picture img {
+            width: 100%; /* 이미지를 부모 요소에 꽉 채우도록 설정합니다. */
+            height: auto; /* 가로 세로 비율을 유지합니다. */
+            margin: 0;
+            padding: 0;
+        }
+
+        .comment-container {
+            margin-bottom: 5px;
+        }
+
+        .content-table {
+            margin-left : 0;
+        }
+
+        .delete-button {
+            text-align: center;
+            margin-left :13%;
+            margin-top:2%;
+            margin-bottom:5%;
+        }
+
+        .comment-list-scrollable {
+            max-height: 400px;  /* 높이는 원하는대로 설정 */
+            overflow-y: auto;  /* 수직 스크롤 설정 */
+        }

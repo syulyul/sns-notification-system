@@ -4,274 +4,172 @@
 <head>
     <meta charset='UTF-8'>
     <title>게시글</title>
-    <style>
-        /* 중앙에 위치하는 사각형 */
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 70vh;
-            background-color: #ffffff;
-            /* 배경색을 흰색으로 설정 */
-            border: 1px solid #ffffff;
-            /* 선의 색상을 회색으로 설정 */
-            position: relative;
-            /* 상대적 위치 설정 */
-        }
-
-        /* 내용을 감싸는 박스 */
-        .content-box {
-            text-align: left;
-            /* 내용을 왼쪽으로 정렬 */
-            padding: 20px;
-            max-width: 600px;
-            background: #ffffff;
-            border: 1px solid #888;
-            height: 600px;
-            /* 원하는 높이로 조절하세요 */
-            width: 700px;
-            position: relative;
-        }
-
-        /* 제목 스타일 */
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        /* 작성자, 등록일, 조회수 스타일 */
-        .meta-info {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 10px;
-            /* 아래 간격 추가 */
-        }
-
-        /* 버튼 스타일 */
-        .btn-container {
-            display: flex;
-            /* 버튼들을 가로로 나열하기 위해 설정 */
-            justify-content: flex-end;
-            /* 버튼들을 오른쪽 정렬하기 위해 설정 */
-            margin-top: 20px;
-        }
-
-        .btn-container button {
-            background-color: #426B1F;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 10px;
-            /* 버튼 간격 조절을 위해 margin-left 추가 */
-        }
-
-        /* 좋아요 버튼 스타일 */
-        .like-button {
-            background-color: transparent;
-            /* 배경 색상을 투명하게 설정 */
-            border: 1px solid #fff;
-            /* 테두리 흰색으로 설정 */
-            border-radius: 4px;
-            /* 버튼 모서리 둥글게 설정 */
-            cursor: pointer;
-            padding: 5px 10px;
-            /* 버튼 내부 여백 설정 */
-            position: absolute;
-            /* 절대 위치 설정 */
-            bottom: 50px;
-            /* 하단에 위치하도록 설정 */
-            right: 10px;
-            /* 우측에 위치하도록 설정 */
-        }
-
-        .unlike-button {
-            background-color: transparent;
-            /* 배경 색상을 투명하게 설정 */
-            border: 1px solid #fff;
-            /* 테두리 흰색으로 설정 */
-            border-radius: 4px;
-            /* 버튼 모서리 둥글게 설정 */
-            cursor: pointer;
-            padding: 5px 10px;
-            /* 버튼 내부 여백 설정 */
-            position: absolute;
-            /* 절대 위치 설정 */
-            bottom: 10px;
-            /* 하단에 위치하도록 설정 */
-            right: 10px;
-            /* 우측에 위치하도록 설정 */
-        }
-
-        .comment-box {
-            margin-top: 20px;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .comment-input-container {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center; /* 가운데 정렬을 위해 추가 */
-        }
-
-        .comment-input textarea {
-            flex: 1;
-            width: 100%;
-            padding: 10px;
-            margin-right: 10px;
-        }
-
-        .comment-input button {
-            background-color: #426B1F;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .comment-list table {
-            margin: 0 auto; /* 가운데 정렬을 추가 */
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .comment-list th,
-        .comment-list td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/board/detail.css">
 
     <script>
-        function likeButtonClicked() {
-            const boardNo = document.getElementById("likeButton").getAttribute("data-board-no");
-            const memberNo = 3; //임시로 설정 (로그인 구현시 추가해야함)
+        function toggleLikeButtons(boardNo) {
+            const likeButton = document.getElementById('likeButton-' + boardNo);
+            const unlikeButton = document.getElementById('unlikeButton-' + boardNo);
 
-            fetch(`/board/like?memberNo=${memberNo}&boardNo=${boardNo}`, {
+            // 버튼의 표시 상태를 전환
+            if (likeButton.style.display === 'none' || likeButton.style.display === '') {
+                likeButton.style.display = 'inline-block';
+                unlikeButton.style.display = 'none';
+            } else {
+                likeButton.style.display = 'none';
+                unlikeButton.style.display = 'inline-block';
+            }
+        }
+
+        function likeButtonClicked(buttonElement) {
+            const boardNo = buttonElement.getAttribute("data-board-no");
+
+            fetch(`/board/like?boardNo=${boardNo}`, {
                 method: 'POST'
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data !== -1) {
-                        document.getElementById("likeButton").innerText = `❤️ 좋아요 (${data})`;
+                .then(response => {
+                    if (response.ok) {
+                        alert("좋아요가 성공적으로 처리되었습니다.");
+                        toggleLikeButtons(boardNo); // 버튼 상태 전환 함수 호출
+                    } else {
+                        alert("좋아요 처리 중 오류가 발생했습니다.");
                     }
                 });
         }
 
-        function unlikeButtonClicked() {
-            const boardNo = document.getElementById("unlikeButton").getAttribute("data-board-no");
-            const memberNo = 3; //임시로 설정 (로그인 구현시 추가해야함)
+        function unlikeButtonClicked(buttonElement) {
+            const boardNo = buttonElement.getAttribute("data-board-no");
 
-            fetch(`/board/unlike?memberNo=${memberNo}&boardNo=${boardNo}`, {
+            fetch(`/board/unlike?boardNo=${boardNo}`, {
                 method: 'POST'
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data !== -1) {
-                        document.getElementById("unlikeButton").innerText = `좋아요취소 (${data})`;
+                .then(response => {
+                    if (response.ok) {
+                        alert("좋아요 취소가 성공적으로 처리되었습니다.");
+                        toggleLikeButtons(boardNo); // 버튼 상태 전환 함수 호출
+                    } else {
+                        alert("좋아요 취소 처리 중 오류가 발생했습니다.");
                     }
                 });
         }
     </script>
-    <link rel="stylesheet" type="text/css" href="/css/header.css">
+
+    <link href="/css/header.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 <div data-th-replace="header :: header"></div>
 
-<p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
+<!-- Wrapper div to contain the two columns -->
+<div class="wrapper" style="display: flex; justify-content: space-between;">
 
-<form data-th-if="${board}" data-th-action="@{/board/update}" method='post' enctype='multipart/form-data'>
-    <div class="container">
-        <div class="content-box">
-            <input type='hidden' name='no' th:value="${board.no}">
-            <h1>
-                <input type="text" name="title" value="${board.title}" th:value="${board.title}">
-            </h1>
-            <div class="meta-info">
-                <span th:text="${board.writer.name}"></span>
-                <img class="clock-icon" src="/images/clock.png">
-                <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
-                <img class="clock-icon" src="/images/eye.png">
-                <span th:text="${board.viewCount}"></span>
-            </div>
-            <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
-            <textarea name='content' style='height:200px; width:400px;'
-                      data-th-text="${board.content}">내용입니다!</textarea>
-            <tr>
-                <!--                <th>첨부파일</th>-->
-                <td>
-                    <div data-th-each="file : ${board.attachedFiles}">
-                        <!-- 이미지 파일 URL -->
-                        <img data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}"
-                             alt="첨부파일 이미지" width="100"/>
-                        <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|"></a>
-                        [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
+    <!-- Left column for the post -->
+    <div class="left-column" style="flex: 1;">
+        <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
+        <div class="container">
+            <div class="content-box">
+                <form data-th-action="@{/board/update}" data-th-if="${board}" enctype='multipart/form-data' method='post'>
+                    <input name='no' th:value="${board.no}" type='hidden'>
+                    <h1>
+                        <input name="title" th:value="${board.title}" type="text" value="${board.title}">
+                    </h1>
+                    <div class="meta-info">
+                        <span th:text="${board.writer.name}"></span>
+                        <img class="clock-icon" src="/images/clock.png">
+                        <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
+                        <img class="clock-icon" src="/images/eye.png">
+                        <span th:text="${board.viewCount}"></span>
                     </div>
-                    <input type='file' name='files' multiple>
-                </td>
-            </tr>
-            <div class="btn-container">
-                <button class="like-button" id="likeButton" th:if="${board != null}"
-                        th:text="'❤️ 좋아요 (' + ${board.likes != null ? board.likes : '0'} + ')'"
-                        th:attr="data-board-no=${board != null ? board.no : '0'}" onclick="likeButtonClicked()">
-                    ❤️ 좋아요 (0)
+                    <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
+                    <textarea data-th-text="${board.content}" name='content' style='height:200px; width:400px;'>내용입니다!</textarea>
+                    <div>
+                        <div data-th-each="file : ${board.attachedFiles}">
+                            <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" width="100"/>
+                            <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|"></a>
+                            [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
+                        </div>
+                        <input multiple name='files' type='file'>
+                    </div>
+                    <div class="btn-container">
+                        <button>변경</button>
+                        <button type="reset">초기화</button>
+                        <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
+                            <button type="button">삭제</button>
+                        </a>
+                        <a th:href="@{/board/list(category=${board.category})}">
+                            <button type="button">목록</button>
+                        </a>
+                    </div>
+                </form>
+                <!-- 좋아요 버튼 -->
+                <button class="like-button" th:id="'likeButton-' + ${board.no}" th:if="${!likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
+                    🤍
                 </button>
-                <button class="unlike-button" id="unlikeButton" th:if="${board != null}"
-                        th:text="'취소 (' + ${board.likes != null ? board.likes : '0'} + ')'"
-                        th:attr="data-board-no=${board != null ? board.no : '0'}" onclick="unlikeButtonClicked()">
-                    ❤️ 좋아요 (0)
+                <!-- 좋아요 취소 버튼 -->
+                <button class="unlike-button" th:id="'unlikeButton-' + ${board.no}" th:if="${likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
+                    ❤️
                 </button>
-            </div>
-        </div>
-        <div class="btn-container">
-            <button>변경</button>
-            <button type="reset">초기화</button>
-            <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
-                <button type="button">삭제</button>
-            </a>
-            <a th:href="@{/board/list(category=${board.category})}">
-                <button type="button">목록</button>
-            </a>
-        </div>
-    </div>
-</form>
+            </div> <!-- End of content-box -->
+        </div> <!-- End of container -->
+    </div> <!-- End of left-column -->
 
-<tr data-th-each="boardComment : ${comments}">
-    <div>
-        <p>
-            <td data-th-text="${boardComment.writer.name}">홍길동</td>
-            /
-            <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">2023-09-14</td>
-        </p>
-        <p>
-            <td data-th-text="${boardComment.content}">댓글 내용</td>
-        </p>
-        <a data-th-href="|/board/detailComment/${board.no}/${boardComment.no}|">
-            <button type="button">수정</button>
-        </a>
-        <a data-th-href="|/board/deleteComment/${board.no}/${boardComment.no}|">
-            <button type="button">삭제</button>
-        </a>
-    </div>
-</tr>
-<div>
-    <form method="post" action="/board/addComment">
+    <div class="right-column" style="flex: 1;">
+        <!-- 댓글 작성 폼 -->
         <div class="comment-input-container">
-            <textarea rows="3" cols="70" name="content"></textarea>
-            <button type="submit">댓글 작성</button>
+            <form action="/board/addComment" method="post">
+                <table style="margin-bottom: 2%">
+                    <tr>
+                        <th>   댓글   </th>
+                        <td><textarea name="content" rows="4" cols="80"></textarea></td>
+                    </tr>
+                </table>
+                <div style="text-align: center; margin-left:80%; margin-top:2%; margin-bottom:5%;">
+                    <button type="submit">댓글 작성</button>
+                </div>
+                <input name="boardNo" th:value="${board.no}" type="hidden">
+            </form>
         </div>
-        <input type="hidden" name="boardNo" th:value="${board.no}">
-    </form>
-</div>
 
-<div data-th-replace="footer :: footer"></div>
+    <!-- 댓글 내용 -->
+        <div class="comment-list-scrollable">
+    <div data-th-each="boardComment : ${comments}">
+            <div class="comment-container">
+                <!-- 게시글 목록 -->
+                <table class="content-table">
+                    <!-- 첫 번째 행: 프사, 이름, 시간 -->
+                    <tr class="first-row">
+                        <td class="title-meta-cell" colspan="3">
+                            <div class="horizontal-layout">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="profile-picture">
+                                        <img class="profile-image" src="/images/profile.png" alt="Profile Picture" />
+                                    </div>
+                                    <div>
+                                        <span th:text="${boardComment.writer.name}"></span>
+                                    </div>
+                                </div>
+                                <div class="meta-info">
+                                    <img class="clock-icon" src="/images/clock.png">
+                                    <span th:text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 두 번째 행: 내용 -->
+                    <tr class="second-row">
+                        <td class="content-like-cell" colspan="3" style="position: relative;">
+                            <span th:text="${boardComment.content}"></span>
+                        </td>
+                    </tr>
+                </table>
+        <div style="text-align: center; margin-left:0%; margin-top:2%; margin-bottom:5%;">
+            <a data-th-href="|/board/deleteComment/${board.no}/${boardComment.no}|">
+                <button class="delete-button">삭제</button>
+            </a>
+        </div>
+    </div>
+</div> <!-- End of right-column -->
+        </div>
 </body>
 
 </html>
