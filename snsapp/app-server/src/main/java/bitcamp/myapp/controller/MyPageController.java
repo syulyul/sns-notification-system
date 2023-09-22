@@ -52,6 +52,7 @@ public class MyPageController {
   public String detail(
       @PathVariable int no,
       @RequestParam(defaultValue = "") String show,
+      @RequestParam(defaultValue = "1") int page,
       Model model,
       HttpSession session) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -72,13 +73,16 @@ public class MyPageController {
 
     model.addAttribute("myPage", myPageService.get(no));
     model.addAttribute("show", show);
+    model.addAttribute("page", page);
 
     switch (show) {
       case "followers":
         model.addAttribute("followList", myPageService.followerList(no));
+        model.addAttribute("maxPage", (myPageService.getFollowerCount(no) + 14) % 15);
         break;
       case "followings":
         model.addAttribute("followList", myPageService.followingList(no));
+        model.addAttribute("maxPage", (myPageService.getFollowingCount(no) + 14) % 15);
         break;
       default:
         model.addAttribute("followList", null);

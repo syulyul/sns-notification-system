@@ -33,6 +33,19 @@
       </label>
     </div>
   </div>
+  <div id="pageLabel">
+    <!--    <span data-th-text="${#request.getRequestURL()}"></span>-->
+    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=1)}"
+       data-th-text="(${page} > 1) ? '1' : _"></a>
+    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} - 1))}"
+       data-th-text="(${page} > 2) ? '2' : _"></a>
+    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=${page})}"
+       data-th-text="${page}"></a>
+    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} + 1))}"
+       data-th-text="${page} < ${maxPage} - 1 ? ${page} + 1 : _"></a>
+    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=${maxPage})}"
+       data-th-text="${page} < ${maxPage} ? ${maxPage} : _"></a>
+  </div>
 </div>
 </body>
 </html>

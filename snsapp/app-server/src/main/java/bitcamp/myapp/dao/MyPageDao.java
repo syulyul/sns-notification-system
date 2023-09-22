@@ -29,5 +29,9 @@ public interface MyPageDao {
 
   List<Member> findAllFollowers(int memberNo);
 
+  int getFollowerCount(int memberNo);
+
   List<Member> findAllFollowings(int memberNo);
+
+  int getFollowingCount(int memberNo);
 }
