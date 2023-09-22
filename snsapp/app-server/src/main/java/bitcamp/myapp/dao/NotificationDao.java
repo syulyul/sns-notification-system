@@ -13,6 +13,8 @@ public interface NotificationDao {
 
   List<NotiLog> findAllNotiLog(int memberNo);
 
+  List<NotiLog> findAllNotReadNotiLog(int memberNo);
+
   NotiLog findBy(int notiNo);
 
   int updateState(@Param("notiNo") int notiNo, @Param("notiState") int notiState);
@@ -22,4 +24,5 @@ public interface NotificationDao {
   List<NotiType> findAllNotiType();
 
   String findNotiTypeName(int notiTypeNo);
+
 }
