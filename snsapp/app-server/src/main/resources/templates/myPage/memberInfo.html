@@ -17,7 +17,7 @@
       <br>
       <br>
 
-      <img data-th-unless="${myPage.photo}" style='height:80px' src='/images/avatar.png' alt="기본 이미지">
+      <img class="profile-pic" data-th-unless="${myPage.photo}" src='/images/default.jpg' alt="기본 이미지">
       <a data-th-if="${myPage.photo}"
          data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${myPage.photo}|">
         <img class="profile-pic" alt="프로필 사진"
