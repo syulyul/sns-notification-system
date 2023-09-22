@@ -145,6 +145,14 @@ public class MyPageController {
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
         throw new Exception("회원이 없습니다.");
       } else {
+        // 사용자 정보 업데이트 후, 세션에 새 정보를 설정
+        loginUser.setName(myPage.getName()); // 사용자 이름 업데이트
+        loginUser.setNick(myPage.getNick()); // 사용자 닉네임 업데이트
+        loginUser.setPhoto(myPage.getPhoto()); // 사용자 사진 업데이트
+
+        // 세션에 업데이트된 loginUser 속성을 다시 설정
+        session.setAttribute("loginUser", loginUser);
+
         return "redirect:/myPage/" + myPage.getNo();
       }
     } else {
@@ -173,8 +181,8 @@ public class MyPageController {
     } finally {
       try {
         response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
-      } catch (IOException ioExceptione) {
-        ioExceptione.printStackTrace();
+      } catch (IOException ioException) {
+        ioException.printStackTrace();
       }
     }
 
@@ -200,8 +208,8 @@ public class MyPageController {
     } finally {
       try {
         response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
-      } catch (IOException ioExceptione) {
-        ioExceptione.printStackTrace();
+      } catch (IOException ioException) {
+        ioException.printStackTrace();
       }
     }
   }
