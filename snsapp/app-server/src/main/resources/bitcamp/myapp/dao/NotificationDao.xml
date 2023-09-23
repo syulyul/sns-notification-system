@@ -38,6 +38,7 @@
     mno=#{memberNo}
     order by
     nlno desc
+    limit #{limit} offset #{offset}
   </select>
 
   <select id="getNotiLogCount" parameterType="int" resultType="int">

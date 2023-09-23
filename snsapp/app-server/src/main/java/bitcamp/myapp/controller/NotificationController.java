@@ -54,7 +54,10 @@ public class NotificationController {
 
     model.addAttribute("page", page);
     model.addAttribute("notiList",
-        notificationService.notiLogList(((Member) session.getAttribute("loginUser")).getNo()));
+        notificationService.notiLogList(
+            ((Member) session.getAttribute("loginUser")).getNo(),
+            15,
+            page));
     model.addAttribute("maxPage",
         (notificationService.notiLogCount(
             ((Member) session.getAttribute("loginUser")).getNo())
