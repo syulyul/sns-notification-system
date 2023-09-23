@@ -37,9 +37,8 @@ public class DefaultBoardService implements BoardService {
   }
 
   @Override
-  public List<Board> list(int category, int page, int pageSize) throws Exception {
-    int startRecord = (page - 1) * pageSize;
-    return boardDao.findAll(category, pageSize, startRecord);
+  public List<Board> list(int category, int limit, int page) throws Exception {
+    return boardDao.findAll(category, limit, limit * (page - 1));
   }
 
   @Override
@@ -127,6 +126,7 @@ public class DefaultBoardService implements BoardService {
   public List<Integer> likelist(int memberNo) throws Exception {
     return boardDao.findLikeByMno(memberNo);
   }
+
   @Override
   public List<String> boardlikelist(int boardNo) throws Exception {
     return boardDao.findLikeByBno(boardNo);

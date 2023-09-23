@@ -9,7 +9,7 @@ public interface BoardService {
 
   int add(Board board) throws Exception;
 
-  List<Board> list(int category, int page, int pageSize) throws Exception;
+  List<Board> list(int category, int limit, int page) throws Exception;
 
   int getTotalCount(int category) throws Exception;
 
