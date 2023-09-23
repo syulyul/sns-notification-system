@@ -5,11 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>전화번호 인증 및 비밀번호 변경</title>
     <style>
-        /* 이 부분은 본문의 스타일 시트입니다. 필요한 경우 스타일을 추가하세요. */
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+            background-color: #426B1F;
+        }
+
+        #main-holder {
+            width: 70%;
+            height: 80%;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+            background-color: white;
+            border-radius: 7px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #426B1F;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #426B1F;
+        }
+
+        #result {
+            color: #ff0000;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        @font-face {
+            font-family: 'UhBeeKeongKeong';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeKeongKeong.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        #newPasswordForm {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-<h1>전화번호 인증 및 비밀번호 변경</h1>
+<main id="main-holder">
+<h1>🌱전화번호 인증 및 비밀번호 변경🌱</h1>
 <input type="text" name="phoneNumber" id="tel" placeholder="전화번호를 입력하세요">
 <button id="sendCode">인증번호 전송</button>
 <input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
@@ -105,5 +169,6 @@
         });
     });
 </script>
+</main>
 </body>
 </html>
