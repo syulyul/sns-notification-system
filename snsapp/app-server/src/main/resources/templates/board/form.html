@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='UTF-8'>
-    <title>새글작성 </title>
+    <title>🌱글쓰기</title>
     <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/board/form.css">
@@ -11,14 +11,14 @@
 
 <div data-th-replace="header :: header"></div>
 
-<h1 style="text-align:center;">글쓰기</h1>
+<h1 style="text-align:center;">🌱글쓰기🌱</h1>
 
 <div class="form-container">
     <form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
         <!-- 제목 입력 칸에 스타일 적용 -->
         <input style="font-size:25px;" type='text' name='title' placeholder="제목을 입력하세요"><br>
         <!-- 내용 입력 칸에 스타일 적용 -->
-        <textarea style="font-size:18px;" name='content' placeholder="내용을 입력하세요"></textarea><br>
+        <textarea style="font-size:20px;" name='content' placeholder="내용을 입력하세요"></textarea><br>
         <!-- 파일 입력 칸에 스타일 적용 -->
         <input type='file' name='files' multiple placeholder="제목을 입력하세요"><br>
         <input type='hidden' name='category' data-th-value="${param.category}">
