@@ -70,11 +70,11 @@ public class DefaultMyPageService implements MyPageService {
   @Override
   public int unfollow(Member follower, int followingNo) throws Exception {
     int result = myPageDao.deleteFollow(follower.getNo(), followingNo);
-    notificationService.add(new NotiLog(
-        followingNo,
-        NotiType.FOLLOW_TYPE,
-        follower.getNick() + "님이 회원님을 팔로우 취소 했습니다.",
-        "/myPage/" + follower.getNo()));
+//    notificationService.add(new NotiLog(
+//        followingNo,
+//        NotiType.FOLLOW_TYPE,
+//        follower.getNick() + "님이 회원님을 팔로우 취소 했습니다.",
+//        "/myPage/" + follower.getNo()));
     return result;
   }
 
@@ -89,7 +89,17 @@ public class DefaultMyPageService implements MyPageService {
   }
 
   @Override
+  public int getFollowerCount(int memberNo) {
+    return myPageDao.getFollowerCount(memberNo);
+  }
+
+  @Override
   public List<Member> followingList(int memberNo) throws Exception {
     return myPageDao.findAllFollowings(memberNo);
+  }
+
+  @Override
+  public int getFollowingCount(int memberNo) {
+    return myPageDao.getFollowingCount(memberNo);
   }
 }

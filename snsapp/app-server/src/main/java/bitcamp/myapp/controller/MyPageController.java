@@ -52,6 +52,7 @@ public class MyPageController {
   public String detail(
       @PathVariable int no,
       @RequestParam(defaultValue = "") String show,
+      @RequestParam(defaultValue = "1") int page,
       Model model,
       HttpSession session) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
@@ -72,13 +73,16 @@ public class MyPageController {
 
     model.addAttribute("myPage", myPageService.get(no));
     model.addAttribute("show", show);
+    model.addAttribute("page", page);
 
     switch (show) {
       case "followers":
         model.addAttribute("followList", myPageService.followerList(no));
+        model.addAttribute("maxPage", (myPageService.getFollowerCount(no) + 14) % 15);
         break;
       case "followings":
         model.addAttribute("followList", myPageService.followingList(no));
+        model.addAttribute("maxPage", (myPageService.getFollowingCount(no) + 14) % 15);
         break;
       default:
         model.addAttribute("followList", null);
@@ -134,7 +138,7 @@ public class MyPageController {
 
       myPage.setGender(gender);
       myPage.setStateMessage(stateMessage);
-      //      myPage.setEmail(email);
+      // myPage.setEmail(email);
       if (birthday.isEmpty()) {
         birthday = null;
       } else {
@@ -146,6 +150,9 @@ public class MyPageController {
         myPage.setBirthday(timestamp);
 
       }
+
+      myPage.setGender(gender);
+      myPage.setStateMessage(stateMessage);
 
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
         throw new Exception("회원이 없습니다.");
@@ -172,7 +179,7 @@ public class MyPageController {
   public void follow(
       @RequestParam("followingNo") int followingNo,
       HttpSession session,
-      HttpServletResponse response) throws Exception, IOException {
+      HttpServletResponse response) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 
     Map<String, Object> returnMap = new HashMap<>();

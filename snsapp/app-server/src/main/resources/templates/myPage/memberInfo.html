@@ -13,7 +13,7 @@
   <div data-th-fragment="memberInfo">
     <div class="sidebar">
       <!--        <a href="" >오늘 방문자 수</a>-->
-      <p style="display: inline;">총 방문자 수 </p>
+      <p style="display: inline;">🌱 총 방문자 수 </p>
       <p data-th-text="${myPage.visitCount}" style="display: inline;"></p>
       <br>
       <br>
@@ -28,7 +28,7 @@
       <div>
 
         <div class="sidebar_my_btn" style="display: flex; align-items: center;">
-          <p style="display: inline; font-weight: bold; flex: 1;">상태 메시지</p>
+          <p style="display: inline; font-weight: bold; flex: 1;">상태메시지</p>
           <a data-th-if="${session.loginUser.no == myPage.no}" data-th-href="@{'/myPage/' + ${myPage.no} + '/info'}"
             style="display: inline; margin: 5px; padding: 10px 10px;">내 정보 수정</a>
         </div>
