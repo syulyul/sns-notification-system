@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bitcamp.myapp.dao.BoardDao">
 
   <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
   <resultMap type="board" id="boardMap">
-    <id     column="bno"            property="no"/>
-    <result column="title"          property="title"/>
-    <result column="content"        property="content"/>
-    <result column="view_count"     property="viewCount"/>
-    <result column="likes"          property="likes"/>
-    <result column="category"       property="category"/>
-    <result column="created_at"     property="createdAt"/>
-    <result column="updated_at"     property="updatedAt"/>
+    <id column="bno" property="no" />
+    <result column="title" property="title" />
+    <result column="content" property="content" />
+    <result column="view_count" property="viewCount" />
+    <result column="likes" property="likes" />
+    <result column="category" property="category" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
 
     <association property="writer" javaType="member">
-      <id     column="mno"          property="no"/>
-      <result column="nick"         property="nick"/>
-      <result column="filepath"     property="photo"/>
+      <id column="mno" property="no" />
+      <result column="nick" property="nick" />
+      <result column="filepath" property="photo" />
     </association>
 
     <collection property="attachedFiles" ofType="boardPhoto">
-      <id     column="bpno"         property="no"/>
-      <result column="filepath"     property="filePath"/>
+      <id column="bpno" property="no" />
+      <result column="filepath" property="filePath" />
     </collection>
 
   </resultMap>
 
   <resultMap type="boardPhoto" id="boardPhotoMap">
-    <id     column="bpno"           property="no"/>
-    <result column="filepath"       property="filePath"/>
-    <result column="bno"            property="boardNo"/>
+    <id column="bpno" property="no" />
+    <result column="filepath" property="filePath" />
+    <result column="bno" property="boardNo" />
   </resultMap>
 
   <resultMap type="boardLike" id="boardLikeMap">
-    <result column="member_no"      property="memberNo"/>
-    <result column="board_no"       property="boardNo"/>
+    <result column="member_no" property="memberNo" />
+    <result column="board_no" property="boardNo" />
   </resultMap>
 
   <insert id="insert" parameterType="board"
@@ -45,123 +45,127 @@
     values(#{title},#{content},#{writer.no},#{category})
   </insert>
 
-  <select id="findAll" parameterType="int" resultMap="boardMap">
+  <select id="findAll" resultMap="boardMap">
     select
-      b.bno,
-      b.title,
-      b.content,
-      b.view_count,
-      b.created_at,
-      b.category,
-      b.likes,
-      m.mno,
-      m.nick,
-      m.filepath
+    b.bno,
+    b.title,
+    b.content,
+    b.view_count,
+    b.created_at,
+    b.category,
+    b.likes,
+    m.mno,
+    m.nick,
+    m.filepath
     from
-      sns_board b inner join sns_member m on b.mno=m.mno
+    sns_board b inner join sns_member m on b.mno=m.mno
     where
-      category=#{categoryNo}
+    category=#{category}
     order by
-      b.bno desc
+    b.bno desc
+    limit #{limit} offset #{offset}
   </select>
 
-<!--  <select id="getTotalCount" parameterType="int" resultType="int">-->
-<!--    select count(*) from sns_board where category=#{category}-->
-<!--  </select>-->
+  <select id="getTotalCount" parameterType="int" resultType="int">
+    select count(bno)
+    from sns_board
+    where category=#{category}
+  </select>
 
   <select id="findBy" resultMap="boardMap" parameterType="int">
     select
-      b.bno,
-      b.title,
-      b.content,
-      b.view_count,
-      b.created_at,
-      b.category,
-      b.likes,
-      m.mno,
-      m.nick,
-      f.bpno,
-      f.filepath,
-      f.bno
+    b.bno,
+    b.title,
+    b.content,
+    b.view_count,
+    b.created_at,
+    b.category,
+    b.likes,
+    m.mno,
+    m.nick,
+    f.bpno,
+    f.filepath,
+    f.bno
     from
-      sns_board b inner join sns_member m on b.mno=m.mno
-      left outer join sns_board_photo f on b.bno=f.bno
+    sns_board b inner join sns_member m on b.mno=m.mno
+    left outer join sns_board_photo f on b.bno=f.bno
     where
-      b.bno=#{boardNo}
+    b.bno=#{boardNo}
   </select>
 
   <update id="update" parameterType="board">
     update sns_board set
-      title=#{title},
-      content=#{content}
+    title=#{title},
+    content=#{content}
     where
-      bno=#{no}
+    bno=#{no}
   </update>
 
   <update id="updateCount" parameterType="int">
     update sns_board set
-      view_count=view_count + 1
+    view_count=view_count + 1
     where
-      bno=#{no}
+    bno=#{no}
   </update>
 
   <delete id="delete" parameterType="int">
     delete from sns_board
     where
-      bno=#{no}
+    bno=#{no}
   </delete>
 
   <insert id="insertFiles" parameterType="board">
     insert into sns_board_photo(filepath, bno)
     values
-    <foreach collection="attachedFiles" item="file" separator=",">(#{file.filePath}, #{no})</foreach>
+    <foreach collection="attachedFiles" item="file" separator=",">(#{file.filePath}, #{no})
+    </foreach>
   </insert>
 
   <select id="findPhotoBy" parameterType="int" resultMap="boardPhotoMap">
     select
-      bpno,
-      filepath,
-      bno
+    bpno,
+    filepath,
+    bno
     from
-      sns_board_photo
+    sns_board_photo
     where
-      bpno=#{no}
+    bpno=#{no}
   </select>
 
   <delete id="deleteFile" parameterType="int">
     delete from sns_board_photo
     where
-      bpno=#{no}
+    bpno=#{no}
   </delete>
 
   <delete id="deleteFiles" parameterType="int">
     delete from sns_board_photo
     where
-      bno=#{no}
+    bno=#{no}
   </delete>
 
   <select id="findLikeBy" parameterType="int" resultMap="boardLikeMap">
     select
-      mno,
-      bno
+    mno,
+    bno
     from
-      sns_board_like
+    sns_board_like
     where
-      mno=#{memberNo} and bno=#{boardNo}
+    mno=#{memberNo} and bno=#{boardNo}
   </select>
 
   <update id="updateLike" parameterType="int">
     update sns_board set
-      likes=likes + 1
+    likes=likes + 1
     where
-      bno=#{no}
+    bno=#{no}
   </update>
 
   <update id="cancelLike" parameterType="int">
     update sns_board set
-      likes=likes - 1
+    likes=likes - 1
     where
-      bno=#{no}
+    bno=#{no}
   </update>
 
   <insert id="insertLike" parameterType="int">
@@ -172,22 +176,22 @@
   <delete id="deleteLike" parameterType="int">
     delete from sns_board_like
     where
-      mno=#{memberNo} and bno=#{boardNo}
+    mno=#{memberNo} and bno=#{boardNo}
   </delete>
 
   <delete id="deleteLikes" parameterType="int">
     delete from sns_board_like
     where
-      bno=#{boardNo}
+    bno=#{boardNo}
   </delete>
 
   <select id="findLikeByMno" parameterType="int">
     select
-      bno
+    bno
     from
-      sns_board_like
+    sns_board_like
     where
-      mno=#{memberNo}
+    mno=#{memberNo}
   </select>
 
   <select id="findLikeByBno" parameterType="int">

@@ -32,7 +32,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr data-th-each="board : ${list}">
+  <tr data-th-each="board : ${boardList}">
     <td data-th-text="${board.no}">게시글 번호</td>
     <td>
       <a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
@@ -61,6 +61,20 @@
   </tr>
   </tbody>
 </table>
+
+<!-- 페이징 처리 부분 -->
+<div class="pagination">
+  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=1,pageSize=${pageSize})}"
+     data-th-text="(${page} > 1) ? '처음' : _"></a>
+  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} - 1),pageSize=${pageSize})}"
+     data-th-text="(${page} > 2) ? '이전' : _"></a>
+  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${page},pageSize=${pageSize})}"
+     data-th-text="${page}"></a>
+  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} + 1),pageSize=${pageSize})}"
+     data-th-text="${page} < ${maxPage} - 1 ? '다음' : _"></a>
+  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${maxPage},pageSize=${pageSize})}"
+     data-th-text="${page} < ${maxPage} ? '마지막' : _"></a>
+</div>
 
 <!-- 검색 박스와 검색 버튼 추가 -->
 <div class="search-box">
