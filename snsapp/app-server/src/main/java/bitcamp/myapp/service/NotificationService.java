@@ -8,7 +8,7 @@ public interface NotificationService {
 
   int add(NotiLog notiLog) throws Exception;
 
-  List<NotiLog> notiLogList(int memberNo) throws Exception;
+  List<NotiLog> notiLogList(int memberNo, int limit, int page) throws Exception;
 
   int notiLogCount(int memberNo) throws Exception;
 
