@@ -91,12 +91,10 @@
         where phone_number = #{phoneNumber}
     </select>
 
-    <update id="updatePassWord" parameterType="map">
-        update sns_member
-        set
-        password = #{password}
-        where
-        phoneNumber = #{phoneNumber}
+    <update id="updatePasswordByPhoneNumber">
+        UPDATE sns_member
+        SET password = SHA1(#{newPassword})
+        WHERE phone_number = #{phoneNumber}
     </update>
 </mapper>
 

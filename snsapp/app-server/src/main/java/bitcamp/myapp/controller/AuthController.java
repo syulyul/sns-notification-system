@@ -179,6 +179,26 @@ public class AuthController {
         return false;
     }
 
+    @PostMapping("phoneFind")
+    @ResponseBody
+    public Boolean phoneFind(String phoneNumber,
+                             HttpSession session) {
+
+        try {
+            if (smsService.memberTelCountFind(phoneNumber) > 0)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JSONObject toJson = new JSONObject();
+
+        String code = smsService.sendRandomMessage(phoneNumber);
+        session.setAttribute("rand", code);
+
+        return true;
+    }
+
     @PostMapping("phoneAuthOk")
     @ResponseBody
     public Boolean phoneAuthOk(HttpSession session,
@@ -194,5 +214,23 @@ public class AuthController {
         }
 
         return true;
+    }
+
+    @PostMapping("/resetPassword")
+    @ResponseBody
+    public ResponseEntity<String> resetPassword(
+            @RequestParam String phoneNumber,
+            @RequestParam String newPassword) {
+
+        try {
+            // 새로운 비밀번호로 업데이트
+            smsService.updatePasswordByPhoneNumber(phoneNumber, newPassword);
+
+            return new ResponseEntity<>("비밀번호 재설정이 완료되었습니다.", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 예외 발생 시 처리
+            return new ResponseEntity<>("비밀번호 변경 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
