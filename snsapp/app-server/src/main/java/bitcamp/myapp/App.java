@@ -1,8 +1,11 @@
 package bitcamp.myapp;
 
+import bitcamp.myapp.interceptor.NotReadNotiCountIntercepter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.util.UrlPathHelper;
@@ -10,10 +13,6 @@ import org.springframework.web.util.UrlPathHelper;
 @EnableTransactionManagement
 @SpringBootApplication
 public class App implements WebMvcConfigurer {
-
-  public static void main(String[] args) throws Exception {
-    SpringApplication.run(App.class, args);
-  }
 
 //  @Bean
 //  public MultipartResolver multipartResolver() {
@@ -29,6 +28,10 @@ public class App implements WebMvcConfigurer {
 //    return vr;
 //  }
 
+  public static void main(String[] args) throws Exception {
+    SpringApplication.run(App.class, args);
+  }
+
   @Override
   public void configurePathMatch(PathMatchConfigurer configurer) {
     System.out.println("AppConfig.configurePathMatch() 호출됨");
@@ -41,12 +44,19 @@ public class App implements WebMvcConfigurer {
     configurer.setUrlPathHelper(pathHelper);
   }
 
-//  @Override
-//  public void addInterceptors(InterceptorRegistry registry) {
-//    System.out.println("AppConfig.addInterceptors() 호출됨");
-////    registry
-////        .addInterceptor(new MyInterceptor())
-////        .addPathPatterns("/c04_1/**")
-////        .excludePathPatterns("/c04_1/a/**");
-//  }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    System.out.println("AppConfig.addInterceptors() 호출됨");
+    registry
+        .addInterceptor(notReadNotiCountIntercepter())
+        .addPathPatterns("/**")
+        .excludePathPatterns("/auth/**")
+        .excludePathPatterns("/");
+    
+  }
+
+  @Bean
+  NotReadNotiCountIntercepter notReadNotiCountIntercepter() {
+    return new NotReadNotiCountIntercepter();
+  }
 }

@@ -2,6 +2,13 @@ package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.NotificationService;
 import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.NotiLog;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,15 +24,44 @@ public class NotificationController {
 
   @Autowired
   NotificationService notificationService;
+  @Autowired
+  ServletContext context;
 
   {
     System.out.println("NotificationController 생성됨!");
   }
 
+  @GetMapping("notReadNotiCount")
+  public void count(HttpSession session, HttpServletResponse response) throws Exception {
+    Map<String, Object> returnMap = new HashMap<>();
+    returnMap.put(
+        "notReadNotiCount",
+        context.getAttribute(
+            "notReadNotiCount" + ((Member) session.getAttribute("loginUser")).getNo()));
+
+    try {
+      response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
+    } catch (IOException ioException) {
+      ioException.printStackTrace();
+    }
+  }
+
   @GetMapping("list")
-  public String list(Model model, HttpSession session) throws Exception {
+  public String list(
+      @RequestParam(defaultValue = "1") int page,
+      Model model,
+      HttpSession session) throws Exception {
+
+    model.addAttribute("page", page);
     model.addAttribute("notiList",
-        notificationService.notiLogList(((Member) session.getAttribute("loginUser")).getNo()));
+        notificationService.notiLogList(
+            ((Member) session.getAttribute("loginUser")).getNo(),
+            15,
+            page));
+    model.addAttribute("maxPage",
+        (notificationService.notiLogCount(
+            ((Member) session.getAttribute("loginUser")).getNo())
+            + 14) % 15);
     return "notification/list";
   }
 
@@ -39,7 +75,14 @@ public class NotificationController {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (memberNo == loginUser.getNo()) {
+      NotiLog notiLog = notificationService.getNotiLog(notiNo);
       notificationService.updateState(notiNo, notiState);
+      if (notiLog.getNotiState() == 0 && notiState != 0) {
+        int notReadNotiCount = (int) context.getAttribute("notReadNotiCount" + memberNo);
+        context.setAttribute(
+            "notReadNotiCount" + memberNo, notReadNotiCount - 1);
+        session.setAttribute("notReadNotiCount", notReadNotiCount - 1);
+      }
     }
 
     return "redirect:" + url;
@@ -52,7 +95,11 @@ public class NotificationController {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     notificationService.updateAllState(loginUser.getNo(), notiState);
-
+    if (notiState != 0) {
+      context.setAttribute(
+          "notReadNotiCount" + loginUser.getNo(), 0);
+      session.setAttribute("notReadNotiCount", 0);
+    }
     return "redirect:list";
   }
 

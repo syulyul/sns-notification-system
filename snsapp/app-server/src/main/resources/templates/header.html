@@ -3,49 +3,34 @@
 <head>
   <meta charset='UTF-8'>
   <title>BIT SNS</title>
-
+  <link rel="stylesheet" type="text/css" href="/css/font.css">
 </head>
 <body>
 
-<!--<div data-th-fragment="header" style="height:60px;">-->
-<!--  <img src="/images/logo.png" style="height:60px">-->
-<!--  <a data-th-href="|/myPage/${session.loginUser.no}|">마이페이지</a>-->
-<!--  <a href="/board/list?category=1">게시글</a>-->
-<!--  <a href="/board/list?category=2">방명록</a>-->
-<!--  &lt;!&ndash;  <div style="display:inline;">&ndash;&gt;-->
-<!--  &lt;!&ndash;    <img data-th-if="${session.loginUser.photo == null}" style='height:40px' src='/images/avatar.png'>&ndash;&gt;-->
-<!--  &lt;!&ndash;    <img data-th-if="${session.loginUser.photo != null}"&ndash;&gt;-->
-<!--  &lt;!&ndash;         data-th-src="${'http://ncloud주소값/member/' + session.loginUser.photo + '?type=f&w=30&h=40&faceopt=true&ttype=jpg'}">&ndash;&gt;-->
-<!--  &lt;!&ndash;    <span data-th-text="${session.loginUser.name}"></span>&ndash;&gt;-->
-<!--  <div style="float:right;">-->
-<!--    <a style="text-decoration-line: none" href="/notification/list">-->
-<!--      <img src="/images/noti.png" alt="알림" style="height:20px;">-->
-<!--    </a>-->
-<!--    <span style="margin-left: 0px;" data-th-text="${session.loginUser.nick}">닉네임</span>-->
-<!--    <a href="/auth/logout" style="margin-left: 10px;">로그아웃</a>-->
-<!--  </div>-->
-<!--  &lt;!&ndash;  </div>&ndash;&gt;-->
-<!--  <br>-->
-<!--</div>-->
 <div data-th-fragment="header" class="header">
   <img src="/images/logo.png" alt="로고" class="logo">
   <div class="header_nav">
-    <a data-th-href="|/myPage/${session.loginUser.no}|">마이페이지</a>
-    <a href="/board/list?category=1">게시글</a>
-    <a href="/board/list?category=2">방명록</a>
-    <!--  <div style="display:inline;">-->
-    <!--    <img data-th-if="${session.loginUser.photo == null}" style='height:40px' src='/images/avatar.png'>-->
-    <!--    <img data-th-if="${session.loginUser.photo != null}"-->
-    <!--         data-th-src="${'http://ncloud주소값/member/' + session.loginUser.photo + '?type=f&w=30&h=40&faceopt=true&ttype=jpg'}">-->
-    <!--    <span data-th-text="${session.loginUser.name}"></span>-->
+    <a style="font-size:30px;" data-th-href="|/myPage/${session.loginUser.no}|">마이페이지</a>
+    <a style="font-size:30px;" href="/board/list?category=1">게시글</a>
+    <a style="font-size:30px;" href="/board/list?category=2">방명록</a>
   </div>
-  <div class="header_profile">
+  <div style="font-size:20px" class="header_profile">
     <a style="text-decoration-line: none" href="/notification/list">
+      <div id="newNotiBox">새로운 알림이 도착했습니다</div>
+      <span id="notReadNotiCount" data-th-text="${session.notReadNotiCount}"></span>
+      <script src="/js/header.js"></script>
       <img src="/images/noti.png" alt="알림" class="header_notification-icon">
     </a>
+    <a style="text-decoration-line: none" data-th-href="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+      <img data-th-unless="${session.loginUser.photo == null}"
+           data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|"
+           alt="프로필 사진" class="header_user-icon">
+    </a>
+    <img data-th-if="${session.loginUser.photo == null}" src='/images/default.jpg'
+         alt="프로필 사진" class="header_user-icon">
     <span class="header_user-nickname" data-th-text="${session.loginUser.nick}">${session.loginUser.nick}</span>
     <div class="logout">
-    <a href="/auth/logout">로그아웃</a>
+      <a style="font-size:20px" href="/auth/logout">로그아웃</a>
     </div>
   </div>
   <!--  </div>-->

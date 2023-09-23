@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,15 +52,19 @@ public class MyPageController {
   public String detail(
       @PathVariable int no,
       @RequestParam(defaultValue = "") String show,
+      @RequestParam(defaultValue = "1") int page,
       Model model,
       HttpSession session) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    if (loginUser == null) {
+      return "redirect:/auth/form";
+    }
 
     // 세션에 저장된 방문한 마이페이지 번호 목록을 가져오기
     HashSet<Integer> visitedMyPages = loginUser.getVisitedMyPages();
 
     // 만약 방문한 적 없는 마이페이지라면 조회수 증가
-    if (!visitedMyPages.contains(no)) {
+    if (!visitedMyPages.contains(no) && loginUser.getNo() != no) {
       myPageService.increaseVisitCount(no);
 
       // 방문한 마이페이지 번호를 세션에 추가
@@ -68,13 +73,16 @@ public class MyPageController {
 
     model.addAttribute("myPage", myPageService.get(no));
     model.addAttribute("show", show);
+    model.addAttribute("page", page);
 
     switch (show) {
       case "followers":
         model.addAttribute("followList", myPageService.followerList(no));
+        model.addAttribute("maxPage", (myPageService.getFollowerCount(no) + 14) % 15);
         break;
       case "followings":
         model.addAttribute("followList", myPageService.followingList(no));
+        model.addAttribute("maxPage", (myPageService.getFollowingCount(no) + 14) % 15);
         break;
       default:
         model.addAttribute("followList", null);
@@ -87,15 +95,18 @@ public class MyPageController {
     return "myPage/detail";
   }
 
-
   @GetMapping("{no}/info")
-  public String info(@PathVariable int no, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+  public String info(
+      @PathVariable int no,
+      Model model,
+      HttpServletRequest request,
+      HttpSession session) throws Exception {
     MyPage myPage = myPageService.get(no);
     model.addAttribute("myPage", myPage);
 
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     // request 객체가 null이 아닌 경우에만 모델에 추가
-    if (request != null && loginUser.getNo() == myPage.getNo()) {
+    if (request != null) {
       model.addAttribute("request", request);
     } else {
       return "redirect:/";
@@ -121,10 +132,13 @@ public class MyPageController {
     if (loginUser.getNo() == myPage.getNo()) {
       if (photofile.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+            "bitcamp-nc7-bucket-14", "sns_member/", photofile);
         member.setPhoto(uploadFileUrl);
       }
 
+      myPage.setGender(gender);
+      myPage.setStateMessage(stateMessage);
+      // myPage.setEmail(email);
       if (birthday.isEmpty()) {
         birthday = null;
       } else {
@@ -134,14 +148,25 @@ public class MyPageController {
         Timestamp timestamp = new Timestamp(parsedDate.getTime());
 
         myPage.setBirthday(timestamp);
-        myPage.setGender(gender);
-        myPage.setStateMessage(stateMessage);
-//      myPage.setEmail(email);
+
       }
+
+      myPage.setGender(gender);
+      myPage.setStateMessage(stateMessage);
 
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
         throw new Exception("회원이 없습니다.");
       } else {
+        // 사용자 정보 업데이트 후, 세션에 새 정보를 설정
+        loginUser.setName(member.getName()); // 사용자 이름 업데이트
+        loginUser.setNick(member.getNick()); // 사용자 닉네임 업데이트
+        if (!photofile.isEmpty()) {
+          loginUser.setPhoto(member.getPhoto()); // 사용자 사진 업데이트
+        }
+
+        // 세션에 업데이트된 loginUser 속성을 다시 설정
+        session.setAttribute("loginUser", loginUser);
+
         return "redirect:/myPage/" + myPage.getNo();
       }
     } else {
@@ -154,23 +179,27 @@ public class MyPageController {
   public void follow(
       @RequestParam("followingNo") int followingNo,
       HttpSession session,
-      HttpServletResponse response) throws Exception, IOException {
+      HttpServletResponse response) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 
+    Map<String, Object> returnMap = new HashMap<>();
     try {
-      myPageService.follow(loginUser, followingNo);
+      int result = myPageService.follow(loginUser, followingNo);
       loginUser.getFollowMemberSet().add(memberService.get(followingNo));
       session.setAttribute("loginUser", loginUser);
-    } catch (Exception e) {
+      returnMap.put("result", "success");
 
+    } catch (Exception e) {
+      returnMap.put("result", "fail");
+
+    } finally {
+      try {
+        response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
+      } catch (IOException ioException) {
+        ioException.printStackTrace();
+      }
     }
 
-    // try {
-    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
-    // HashMap<>()));
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
   }
 
   @GetMapping("unfollow")
@@ -180,20 +209,23 @@ public class MyPageController {
       HttpServletResponse response) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
 
+    Map<String, Object> returnMap = new HashMap<>();
     try {
-      myPageService.unfollow(loginUser, followingNo);
+      int result = myPageService.unfollow(loginUser, followingNo);
       loginUser.getFollowMemberSet().remove(memberService.get(followingNo));
       session.setAttribute("loginUser", loginUser);
+      returnMap.put("result", "success");
+
     } catch (Exception e) {
+      returnMap.put("result", "fail");
 
+    } finally {
+      try {
+        response.getWriter().print(new ObjectMapper().writeValueAsString(returnMap));
+      } catch (IOException ioException) {
+        ioException.printStackTrace();
+      }
     }
-
-    // try {
-    // response.getWriter().print(new ObjectMapper().writeValueAsString(new
-    // HashMap<>()));
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
   }
 
 }

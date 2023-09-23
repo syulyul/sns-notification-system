@@ -2,120 +2,30 @@
 <html>
 <head>
   <meta charset='UTF-8'>
-  <title>게시글</title>
-  <style>
-    table {
-        border-collapse: collapse;
-        width: 1200px;
-        margin: 1rem auto;
-        background-color: white;
-    }
-
-    thead {
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 테이블 행 */
-    td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        text-align: center;
-    }
-
-    th {
-        padding: 8px;
-        text-align: left;
-        text-align: center;
-        /*border-top: 2px solid #888;*/
-        /*border-bottom: 2px solid #888;*/
-        /*color: #888;*/
-    }
-
-    /* 테이블 올렸을 때 */
-    tbody tr:hover {
-        background-color: #d3d3d3;
-        opacity: 0.9;
-        cursor: pointer;
-    }
-
-    /* 테이블 비율 */
-    th:nth-child(1),
-    td:nth-child(1) {
-        width: 10%;
-    }
-
-    th:nth-child(2),
-    td:nth-child(2) {
-        width: 60%;
-    }
-
-    th, td {
-        border-left: none;
-        border-right: none;
-    }
-
-    /* 버튼 스타일 (새 글 버튼, 메인 버튼) */
-    .button {
-        background-color: #426B1F;
-        color: white;
-        padding: 5px 10px;
-        text-decoration: none;
-        border-radius: 4px;
-    }
-
-    .button:hover {
-        background-color: #426B1F;
-    }
-
-    /* 검색 박스 스타일 */
-    .search-box {
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    input[type="text"] {
-        padding: 5px;
-        width: 200px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-right: 10px;
-    }
-
-    .search-button {
-        background-color: #426B1F;
-        color: white;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .search-button:hover {
-        background-color: #426B1F;
-    }
-  </style>
+  <title>🌱게시글</title>
+  <link rel="stylesheet" type="text/css" href="/css/font.css">
   <link rel="stylesheet" type="text/css" href="/css/header.css">
+  <link rel="stylesheet" type="text/css" href="/css/board/list.css">
+
+
 </head>
 <body>
 <div data-th-replace="header :: header"></div>
-<h1>게시글 목록</h1>
 
 <!-- 새 글 버튼을 표 상단 우측에 추가 -->
 <div style="text-align: right; margin-right: 20px; margin-top: -30px;">
   <a data-th-href="@{/board/form(category=${param.category})}" class="button">새 글</a>
-  <a data-th-href='@{/}' class="button">메인</a>
+  <a style="margin-right:1650px;" data-th-href='@{/}' class="button">메인</a>
 </div>
 
 <table border='1' data-th-fragment="boardList">
   <thead>
   <tr>
-    <th>번호</th>
-    <th>제목</th>
-    <th>프사</th>
-    <th>작성자</th>
-    <th>조회수</th>
-    <th>등록일</th>
+    <th>번호🌱</th>
+    <th>제목🌱</th>
+    <th>작성자🌱</th>
+    <th>조회수🌱</th>
+    <th>등록일🌱</th>
   </tr>
   </thead>
   <tbody>
@@ -125,11 +35,21 @@
            data-th-text="${board.title} ?: '제목없음'">게시글 제목</a>
     </td>
     <td>
-      <div class="profile-picture">
-        <img src="${board.writer.photo}" class="circular-image">
+      <div class="profile-author">
+        <div class="profile-picture">
+          <!-- 기본 프로필 이미지를 사용하려면 아래와 같이 src를 명시합니다. -->
+          <img data-th-unless="${board.writer.photo}" src='/images/avatar.png'>
+
+          <!-- board.writer.photo 값이 있을 경우에만 이 img 태그가 렌더링됩니다. -->
+          <a data-th-if="${board.writer.photo}"
+             data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${board.writer.photo}|">
+            <img class="profile-image" alt="프로필 사진"
+                 data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${board.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+          </a>
+        </div>
+        <span data-th-text="${board.writer.nick}">작성자</span>
       </div>
     </td>
-    <td data-th-text="${board.writer.name}">작성자</td>
 
     <td data-th-text="${board.viewCount}">조회수</td>
     <td data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">등록일</td>
@@ -139,7 +59,7 @@
 
 <!-- 검색 박스와 검색 버튼 추가 -->
 <div class="search-box">
-  <input type="text" placeholder="검색어를 입력하세요">
+  <input type="text" placeholder="제목을 입력하세요">
   <button class="search-button">검색</button>
 </div>
 

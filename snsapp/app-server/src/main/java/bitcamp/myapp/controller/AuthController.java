@@ -7,7 +7,7 @@ import bitcamp.myapp.service.NotificationService;
 import bitcamp.myapp.service.SmsService;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
-
+import bitcamp.myapp.vo.MyPage;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -16,8 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import bitcamp.myapp.vo.MyPage;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,10 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    NotificationService notificationService;
-    @Autowired
-    ServletContext context;
+
     @Autowired
     SmsService smsService;
     @Autowired
@@ -46,9 +41,11 @@ public class AuthController {
     @Autowired
     MyPageService myPageService;
     @Autowired
+    NotificationService notificationService;
+    @Autowired
     NcpObjectStorageService ncpObjectStorageService;
-
-
+    @Autowired
+    ServletContext context;
 
     {
         System.out.println("AuthController 생성됨!");
@@ -59,7 +56,7 @@ public class AuthController {
             @CookieValue(required = false) String phoneNumber,
             HttpSession session,
             Model model) {
-//        model.addAttribute("phoneNumber", phoneNumber);
+        // model.addAttribute("phoneNumber", phoneNumber);
         session.setAttribute("phoneNumber", phoneNumber);
     }
 
@@ -74,7 +71,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>>  login(
+    public ResponseEntity<Map<String, Object>> login(
             @RequestParam String phoneNumber,
             @RequestParam String password,
             @RequestParam(name = "savePhoneNumber", required = false) String savePhoneNumber,
@@ -100,6 +97,7 @@ public class AuthController {
                 LoginUser loginUserObject = new LoginUser(loginUser);
                 loginUserObject.setFollowMemberSet(new HashSet<>(myPageService.followingList(loginUser.getNo())));
                 session.setAttribute("loginUser", loginUserObject);
+
                 int notReadNotiCount = notificationService.notReadNotiLogCount(loginUser.getNo());
                 context.setAttribute("notReadNotiCount" + loginUser.getNo(), notReadNotiCount);
 
@@ -167,7 +165,7 @@ public class AuthController {
                              HttpSession session) {
 
         try { // 이미 가입된 전화번호가 있으면
-            if(smsService.memberTelCount(phoneNumber) > 0)
+            if (smsService.memberTelCount(phoneNumber) > 0)
                 return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,7 +188,7 @@ public class AuthController {
 
         System.out.println(rand + " : " + code);
 
-        if (rand.equals(code)) {
+        if (rand != null && rand.equals(code)) {
             session.removeAttribute("rand");
             return false;
         }

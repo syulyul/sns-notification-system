@@ -2,117 +2,31 @@
 <html>
 <head>
     <meta charset='UTF-8'>
-    <title>비트캠프</title>
-    <style>
-
-        input[name='title'] {
-            box-sizing: border-box;
-            position: static;
-            width: 641px;
-            height: 42px;
-            left: 330px;
-            top: 100px;
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.17);
-        }
-
-        textarea[name='content'] {
-            box-sizing: border-box;
-            position: static;
-            width: 641px;
-            height: 255px;
-            left: 330px;
-            top: 150px;
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.17);
-        }
-
-        input[name='files'] {
-
-            box-sizing: border-box;
-
-            position: static;
-            width: 641px;
-            height: 42px;
-            left: 330px;
-            top: 420px;
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.17);
-        }
-
-        input[type='file']::-webkit-file-upload-button {
-            position: static;
-            width: 89px;
-            height: 36px;
-            left: 552px;
-            top: 496px;
-            background: #D9D9D9;
-            border: none;
-            border-radius: 4px;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button {
-            position: static;
-            width: 100px;
-            height: 41px;
-            left: 600px;
-            right: 513px;
-            bottom: 45px;
-            background: #426B1F;
-            border-radius: 8px;
-            color: #FFFFFF;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 130%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-        }
-
-        select[name='category'] {
-            box-sizing: border-box;
-
-            position: static;
-            width: 117px;
-            height: 42px;
-            left: 330px;
-            top: 50px;
-
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.17);
-        }
-    </style>
+    <title>🌱글쓰기</title>
+    <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/board/form.css">
 </head>
 <body>
 
 <div data-th-replace="header :: header"></div>
 
-<h1>게시글</h1>
-<form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
-    <!-- 카테고리 선택 -->
-    <select name='category111'>
-        <option value='category1'>카테고리 1</option>
-        <option value='category2'>카테고리 2</option>
-        <option value='category3'>카테고리 3</option>
-        <!-- 필요한 만큼 옵션을 추가하세요 -->
-    </select>
-    <!-- 제목 입력 칸에 스타일 적용 -->
-    <input type='text' name='title' placeholder="제목을 입력하세요"><br>
-    <!-- 내용 입력 칸에 스타일 적용 -->
-    <textarea name='content' placeholder="내용을 입력하세요"></textarea><br>
-    <!-- 파일 입력 칸에 스타일 적용 -->
-    <input type='file' name='files' multiple placeholder="제목을 입력하세요"><br>
-    <input type='hidden' name='category' data-th-value="${param.category}">
-    <button>등록</button>
-</form>
+<h1 style="text-align:center;">🌱글쓰기🌱</h1>
 
-<div data-th-replace="footer :: footer"></div>
+<div class="form-container">
+    <form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
+        <!-- 제목 입력 칸에 스타일 적용 -->
+        <input style="font-size:25px;" type='text' name='title' placeholder="제목을 입력하세요"><br>
+        <!-- 내용 입력 칸에 스타일 적용 -->
+        <textarea style="font-size:20px;" name='content' placeholder="내용을 입력하세요"></textarea><br>
+        <!-- 파일 입력 칸에 스타일 적용 -->
+        <input type='file' name='files' multiple placeholder="제목을 입력하세요"><br>
+        <input type='hidden' name='category' data-th-value="${param.category}">
+        <button>등록</button>
+    </form>
+</div>
+
+<!--<div data-th-replace="footer :: footer"></div>-->
 
 </body>
 </html>

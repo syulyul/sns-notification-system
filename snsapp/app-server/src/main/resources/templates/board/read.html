@@ -2,183 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>방명록</title>
+    <title>🌱방명록</title>
     <!-- 스타일과 스크립트 추가가 필요하면 여기에 -->
-    <style>
-        table {
-            width: 40%;
-            border-collapse: collapse;
-            margin: 0 auto;
-            margin-bottom: 20px;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #f2f2f2;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .scrollable-table {
-            max-height: 300px;
-            overflow-y: scroll;
-        }
-
-        .actions {
-            text-align: center;
-            padding: 16px;
-            /* 변경: 상하 여백 추가 */
-            line-height: 15;
-            /* 변경: 세로 크기 2배로 늘림 */
-        }
-
-        button {
-            padding: 5px 10px;
-            background-color: #426B1F;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        button {
-            float: inherit;
-        }
-
-        .actions button {
-            padding: 5px 10px;
-            margin: 5px;
-            background-color: #426B1F;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-
-        .content-table {
-            border: none;
-            border-collapse: collapse;
-        }
-
-        .content-table td {
-            border: none; /* 모든 셀의 테두리를 제거합니다. */
-        }
-        /* 메타 정보 내부 요소들을 가로로 배열 */
-
-
-        .meta-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            /* 아이콘과 텍스트 사이의 간격 */
-        }
-        /* 시간과 뷰 카운트 아이콘 스타일 */
-
-        .clock-icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        .horizontal-layout {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            /* 추가된 속성 */
-            gap: 20px;
-        }
-        /* 게시글 제목을 가로로 배열하기 위한 스타일 */
-
-        h1 {
-            margin: 0;
-        }
-        /* 메타 정보 내부 요소들을 가로로 배열 */
-
-        .meta-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .no-cell {
-            width: 10%;
-        }
-        /* 제목과 메타 정보 셀 스타일 */
-
-        .title-meta-cell {
-            width: 40%;
-        }
-        /* 작성자 셀 스타일 */
-
-        .writer-cell {
-            width: 15%;
-        }
-        /* 내용과 좋아요 셀 스타일 */
-
-        .content-like-cell {
-            width: 35%;
-        }
-
-        .horizontal-layout {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .first-row {
-            background-color: #f2f2f2;
-        }
-
-        .second-row {
-            background-color: white;
-            height: 200px;
-        }
-
-        .hidden-file-input {
-            opacity: 0;
-            /* 투명하게 만들기 */
-            position: absolute;
-            /* 페이지 레이아웃에 영향을 주지 않게 위치 지정 */
-            pointer-events: none;
-            /* 마우스 이벤트 무시 */
-        }
-
-        .like-button, .unlike-button {
-            padding: 5px 10px;
-            background-color: transparent;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
-
-        .profile-picture {
-            width: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
-            height: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
-            border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다. */
-            overflow: hidden; /* 이미지가 원 안에 맞게 잘릴 수 있도록 설정합니다. */
-        }
-
-        .profile-picture img {
-            width: 100%; /* 이미지를 부모 요소에 꽉 채우도록 설정합니다. */
-            height: auto; /* 가로 세로 비율을 유지합니다. */
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/board/read.css">
 
     <script>
         function toggleLikeButtons(boardNo) {
@@ -238,11 +66,11 @@
         <table>
             <tr>
                 <th>제목</th>
-                <td><input type="text" name="title"></td>
+                <td><input style="border: none;" type="text" name="title"></td>
             </tr>
             <tr>
                 <th>내용</th>
-                <td><textarea name="content" rows="10"></textarea></td>
+                <td><textarea style="border: none;" name="content" rows="10"></textarea></td>
             </tr>
             <input type='hidden' name='category' data-th-value="${param.category}">
             <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
@@ -278,11 +106,15 @@
                 <tr class="second-row">
                     <td class="writer-cell" style="text-align: center;">
                         <div class="profile-picture" style="display: inline-block;">
-                            <img class="profile-image" src="/images/profile.png" alt="Profile Picture" />
-                            <!-- 프로필 사진을 실제 이미지로 바꾸세요. -->
+                            <img data-th-unless="${board.writer.photo}" src='/images/avatar.png'>
+                            <a data-th-if="${board.writer.photo}"
+                               data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${board.writer.photo}|">
+                                <img class="profile-image" alt="프로필 사진"
+                                     data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${board.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+                            </a>
                         </div>
                         <div style="margin-top: 5px;"> <!-- 이름과 프로필 사진 사이에 간격을 조절합니다. -->
-                            <span th:text="${board.writer.name}"></span>
+                            <span th:text="${board.writer.nick}"></span>
                         </div>
                     </td>
                     <td class="content-like-cell" colspan="3" style="position: relative;">
