@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 정보 수정</title>
+    <title>🌱내 정보 수정</title>
     <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfo.css">
@@ -31,7 +31,7 @@
 <!--                    </a>-->
 <!--                </div>-->
                 <div class="form-group">
-                    <label for="name">사진</label>
+                    <label for="name">🌱사진</label>
                     <input type="file" id="photofile" name="photofile" style="width:10px;" onchange="previewImage(this);">
                     <img class="user-photo" data-th-unless="${session.loginUser.photo}" src='/images/default.jpg' alt="기본 이미지">
                     <img id="preview" class="user-photo" data-th-if="${session.loginUser.photo}"
@@ -52,31 +52,31 @@
                 </script>
 
                 <div class="form-group">
-                    <label for="name">이름</label>
+                    <label for="name">🌱이름</label>
                     <input type="text" id="name" name="name" data-th-value="${myPage.name}" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="nick">닉네임</label>
+                    <label for="nick">🌱닉네임</label>
                     <input type="text" id="nick" name="nick" data-th-value="${myPage.nick}">
                 </div>
                 <div class="form-group">
-                    <label for="birthday">생일</label>
+                    <label for="birthday">🌱생일</label>
                     <input type="date" id="birthday" name="birthday" data-th-value="${#dates.format(myPage.birthday, 'yyyy-MM-dd')}">
                 </div>
                 <div class="form-group">
-                    <label for="email">이메일</label>
+                    <label for="email">🌱이메일</label>
                     <input type="email" id="email" name="email" data-th-value="${myPage.email}">
                 </div>
                 <div class="form-group">
-                    <label for="phone">전화번호</label>
+                    <label for="phone">🌱전화번호</label>
                     <input type="tel" id="phone" name="phoneNumber" data-th-value="${myPage.phoneNumber}">
                 </div>
                 <div class="form-group">
-                    <label for="password">암호</label>
+                    <label for="password">🌱암호</label>
                     <input type="password" id="password" name="password">
                 </div>
                 <div class="form-group">
-                    <label for="gender">성별</label>
+                    <label for="gender">🌱성별</label>
                     <select id="gender" name="gender" data-th-value="${myPage.gender}">
                         <option value='1' data-th-selected="${myPage.gender} == '1'">남자</option>
                         <option value='2' data-th-selected="${myPage.gender} == '2'">여자</option>

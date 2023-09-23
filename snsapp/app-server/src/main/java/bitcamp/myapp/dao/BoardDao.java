@@ -28,4 +28,7 @@ public interface BoardDao {
   int deleteLikes(int boardNo); // 게시판 삭제시 좋아요도 삭제
 
   List<Integer> findLikeByMno(int memberNo);
+
+  List<String> findLikeByBno(int boardNo);
+
 }

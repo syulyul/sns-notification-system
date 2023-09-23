@@ -53,6 +53,7 @@
       b.view_count,
       b.created_at,
       b.category,
+      b.likes,
       m.mno,
       m.nick,
       m.filepath
@@ -184,4 +185,14 @@
     where
       mno=#{memberNo}
   </select>
+
+  <select id="findLikeByBno" parameterType="int">
+    select
+    m.nick
+    from
+    sns_board_like b inner join sns_member m on b.mno=m.mno
+    where
+    b.bno=#{boardNo}
+  </select>
+
 </mapper>

@@ -101,6 +101,10 @@ public class BoardController {
       model.addAttribute("board", board);
     }
 
+    // 좋아요 누른 사람들 닉네임 조회
+    List<String> likedUserNicknames = boardService.boardlikelist(no);
+    model.addAttribute("likedUserNicknames", likedUserNicknames);
+
     // 댓글 조회
     List<BoardComment> comments = null;
     comments = boardCommentService.list(no);
