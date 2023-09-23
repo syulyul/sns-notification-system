@@ -9,6 +9,7 @@
 <div data-th-fragment="followList" class="memberListBox" data-th-if="${followList}">
   <h3 data-th-if="${show.equals('followers')}" data-th-text="'팔로워 리스트'"></h3>
   <h3 data-th-if="${show.equals('followings')}" data-th-text="'팔로잉 리스트'"></h3>
+  <h3 data-th-if="${show.equals('searchMembers')}" data-th-text="'회원 검색 리스트'"></h3>
   <div data-th-each="member : ${followList}">
     <div class="memberItem">
       <input data-th-id="memberNo" data-th-value="${member.no}" type="hidden">

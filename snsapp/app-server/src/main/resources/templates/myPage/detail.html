@@ -21,6 +21,9 @@
 <body>
 <div data-th-replace="header :: header"></div>
 <br>
+  <input type="text" name="keyword" placeholder="검색어 입력">
+  <a data-th-href="@{'/myPage/' + ${myPage.no} + '?show=searchMembers'}">검색</a>
+<br><br>
 <div id="myPageBox">
   <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
   <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>

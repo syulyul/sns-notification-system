@@ -29,6 +29,8 @@ public interface MyPageDao {
 
   List<Member> searchMembers(@Param("keyword") String keyword);
 
+  int getSearchMembersCount(int memberNo);
+
   List<Member> findAllFollowers(int memberNo);
 
   int getFollowerCount(int memberNo);

@@ -52,6 +52,7 @@ public class MyPageController {
   public String detail(
       @PathVariable int no,
       @RequestParam(defaultValue = "") String show,
+      @RequestParam(defaultValue = "") String keyword,
       @RequestParam(defaultValue = "1") int page,
       Model model,
       HttpSession session) throws Exception {
@@ -83,6 +84,11 @@ public class MyPageController {
       case "followings":
         model.addAttribute("followList", myPageService.followingList(no));
         model.addAttribute("maxPage", (myPageService.getFollowingCount(no) + 14) % 15);
+        break;
+      case "searchMembers":
+        model.addAttribute("followList", myPageService.searchMembersList(keyword));
+        System.out.println(model);
+        model.addAttribute("maxPage", (myPageService.getSearchMembersCount(no) + 14) % 15);
         break;
       default:
         model.addAttribute("followList", null);

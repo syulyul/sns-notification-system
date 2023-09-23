@@ -77,17 +77,27 @@
     mno=#{memberNo}
   </delete>
 
-    <select id="searchMembers" resultMap="memberMap" parameterType="string">
-        select
-        m.no,
-        m.nick,
-        m.name,
-        m.filepath
-        from sns_member as m
-        where
-            m.nick LIKE '%' || #{keyword} || '%'
-            OR m.name LIKE'%' || #{keyword} || '%'
-    </select>
+  <select id="searchMembers" resultMap="memberMap" parameterType="string">
+      select
+        m.mno
+        ,m.nick
+        ,m.name
+        ,m.phone_number
+        ,m.email
+        ,m.filepath
+      from sns_member as m
+      where
+        m.nick LIKE '%' || #{keyword} || '%'
+        OR m.name LIKE'%' || #{keyword} || '%'
+  </select>
+
+  <select id="getSearchMembersCount" parameterType="int" resultType="int">
+    select count(*)
+    from sns_member as m
+    where
+      m.nick LIKE '%' || #{keyword} || '%'
+      OR m.name LIKE'%' || #{keyword} || '%'
+  </select>
 
   <insert id="insertFollow">
     insert into sns_follow(follower, following)
