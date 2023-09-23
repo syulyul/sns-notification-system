@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="/css/font.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script defer src="form.js"></script>
+
   <style>
     html {
       height: 100%;
@@ -136,16 +137,16 @@
   <form id="login-form" method="post">
     <!-- 사용자 입력 필드 -->
     <input type="text" name="phoneNumber" id="username-field" class="login-form-field"
-           placeholder="Phone Number">
-    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-    <input type="submit" value="Login" id="login-form-submit">
-
+           placeholder="전화번호">
+    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="비밀번호">
+    <input type="submit" value="로그인" id="login-form-submit">
+    <input type='checkbox' name='savePhoneNumber' id='savePhoneNumber'> 전화번호 저장
     <ul>
       <li><a href="/auth/add" class="user-field"> 회원가입</a></li>
       <li><a href="/auth/find" class="user2-field"> 비밀번호 찾기</a></li>
     </ul>
 
-    <input type='checkbox' name='savePhoneNumber' id='savePhoneNumber'> 전화번호 저장
+
   </form>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
