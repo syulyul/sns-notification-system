@@ -3,6 +3,7 @@ package bitcamp.myapp.controller;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.service.NcpObjectStorageService;
+import bitcamp.myapp.service.NotificationService;
 import bitcamp.myapp.service.SmsService;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
@@ -10,6 +11,7 @@ import bitcamp.myapp.vo.Member;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +36,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
+    NotificationService notificationService;
+    @Autowired
+    ServletContext context;
+    @Autowired
     SmsService smsService;
     @Autowired
     MemberService memberService;
@@ -41,6 +47,8 @@ public class AuthController {
     MyPageService myPageService;
     @Autowired
     NcpObjectStorageService ncpObjectStorageService;
+
+
 
     {
         System.out.println("AuthController 생성됨!");
@@ -92,6 +100,9 @@ public class AuthController {
                 LoginUser loginUserObject = new LoginUser(loginUser);
                 loginUserObject.setFollowMemberSet(new HashSet<>(myPageService.followingList(loginUser.getNo())));
                 session.setAttribute("loginUser", loginUserObject);
+                int notReadNotiCount = notificationService.notReadNotiLogCount(loginUser.getNo());
+                context.setAttribute("notReadNotiCount" + loginUser.getNo(), notReadNotiCount);
+
                 System.out.println(loginUser.getNo());
 
                 Map<String, Object> jsonResponse = new HashMap<>();
