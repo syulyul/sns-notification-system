@@ -3,7 +3,7 @@
 
 <head>
     <meta charset='UTF-8'>
-    <title>게시글</title>
+    <title>🌱게시글</title>
     <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/board/detail.css">
 
@@ -75,14 +75,14 @@
                         <input style="margin-top: 20px; margin-bottom: 30px; font-size: 40px; background-color: transparent; border: none;" name="title" th:value="${board.title}" type="text" value="${board.title}">
                     </h1>
                     <div style="margin-left: 300px; margin-bottom: 30px;" class="meta-info">
-                        <span th:text="${board.writer.name}"></span>
+                        <span th:text="${board.writer.nick}"></span>
                         <img class="clock-icon" src="/images/clock.png">
                         <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
                         <img class="clock-icon" src="/images/eye.png">
                         <span th:text="${board.viewCount}"></span>
                     </div>
                     <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
-                    <textarea data-th-text="${board.content}" name='content' style="font-size: 20px; background-color: transparent; border: none; height:200px; width:400px;">내용입니다!</textarea>
+                    <textarea data-th-text="${board.content}" name='content' style="font-size: 20px; background-color: transparent; border: none; height:200px; width:600px;">내용입니다!</textarea>
                     <div>
                         <div data-th-each="file : ${board.attachedFiles}">
                             <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" width="100"/>
@@ -151,7 +151,7 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <span th:text="${boardComment.writer.name}"></span>
+                                        <span th:text="${boardComment.writer.nick}"></span>
                                     </div>
                                 </div>
                                 <div class="meta-info">
