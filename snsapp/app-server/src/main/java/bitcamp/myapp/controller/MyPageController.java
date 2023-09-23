@@ -102,7 +102,7 @@ public class MyPageController {
 
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     // request 객체가 null이 아닌 경우에만 모델에 추가
-    if (request != null && loginUser.getNo() == myPage.getNo()) {
+    if (request != null) {
       model.addAttribute("request", request);
     } else {
       return "redirect:/";
@@ -132,6 +132,9 @@ public class MyPageController {
         member.setPhoto(uploadFileUrl);
       }
 
+      myPage.setGender(gender);
+      myPage.setStateMessage(stateMessage);
+      //      myPage.setEmail(email);
       if (birthday.isEmpty()) {
         birthday = null;
       } else {
@@ -141,9 +144,7 @@ public class MyPageController {
         Timestamp timestamp = new Timestamp(parsedDate.getTime());
 
         myPage.setBirthday(timestamp);
-        myPage.setGender(gender);
-        myPage.setStateMessage(stateMessage);
-//      myPage.setEmail(email);
+
       }
 
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {

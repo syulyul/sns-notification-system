@@ -45,9 +45,21 @@
         </div>
         <div style="padding-bottom:10px; padding-top: 10px;">
 
-          <textarea class="custom-textarea" name="stateMessage" data-th-if="${#strings.isEmpty(myPage.stateMessage)}"
-            placeholder="상태 메시지가 없습니다."
-            style="border: none; background-color: transparent; width: 100%; resize: none;"></textarea>
+          <div data-th-if="${#strings.isEmpty(myPage.stateMessage)}">
+            <textarea class="custom-textarea" name="stateMessage" data-th-if="${session.loginUser.no != myPage.no}"
+                      readonly placeholder="상태 메시지가 없습니다."
+                      style="border: none; background-color: transparent; width: 100%; resize: none;"
+                      data-th-text="${myPage.stateMessage}"></textarea>
+            <div data-th-if="${session.loginUser.no == myPage.no}">
+              <textarea class="custom-textarea" name="stateMessage"
+                        data-th-readonly="${request == null || !#strings.contains(request.getRequestURL(), '/info')}"
+                        placeholder="상태 메시지가 없습니다."
+                        style="border: none; background-color: transparent; width: 100%; resize: none;"
+                        data-th-text="${myPage.stateMessage}"></textarea>
+            </div>
+
+          </div>
+
           <div data-th-if="${not #strings.isEmpty(myPage.stateMessage)}">
             <textarea class="custom-textarea" name="stateMessage" data-th-if="${session.loginUser.no != myPage.no}"
               readonly style="border: none; background-color: transparent; width: 100%; resize: none;"
