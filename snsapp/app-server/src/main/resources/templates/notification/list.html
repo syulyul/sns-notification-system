@@ -29,7 +29,7 @@
     <!-- 알림 로그 아이템 예제 -->
     <div data-th-each="notiLog : ${notiList}">
       <div class="notification-item">
-        <a style="margin-left: 4%; color: black; text-decoration: none"
+        <a style="margin-left: 4%; color: black; text-decoration: none">
         <!--        <span data-th-text="${notiLog.no}"></span>-->  <!--페이지네이션 결과 확인용-->
            data-th-href="@{/notification/updateState(memberNo=${notiLog.memberNo},notiNo=${notiLog.no},notiState=1,url=${notiLog.url})}"
            data-th-text="${notiLog.content}">
