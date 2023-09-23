@@ -90,6 +90,14 @@
         from sns_member
         where phone_number = #{phoneNumber}
     </select>
+
+    <update id="updatePassWord" parameterType="map">
+        update sns_member
+        set
+        password = #{password}
+        where
+        phoneNumber = #{phoneNumber}
+    </update>
 </mapper>
 
 
