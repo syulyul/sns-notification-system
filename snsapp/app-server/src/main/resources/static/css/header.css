@@ -41,13 +41,6 @@
     gap: 10px;
 }
 
-#newNotiBox {
-  position: fixed;
-  top: 80px;
-  right: -300px;
-  background: lightskyblue;
-  transition: all 1s ease;
-}
 
 .header_notification-icon {
     height: 20px;
@@ -80,4 +73,37 @@
 .logout a:hover {
     background-color: #5d962c;
     color: white;
+}
+
+/* 알림 로그 컨테이너 스타일 */
+#notification-container {
+  position: fixed;
+  top: 95px;
+  right: -300px;
+  transition: all 1s ease;
+
+  width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+/* 알림 메시지 스타일 */
+.notification {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* 알림 메시지 제목 스타일 */
+.notification-title {
+  font-weight: bold;
+}
+
+/* 닫기 버튼 스타일 */
+.close-button {
+  float: right;
+  cursor: pointer;
 }
