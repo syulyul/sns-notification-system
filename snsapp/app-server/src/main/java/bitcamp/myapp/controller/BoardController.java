@@ -55,7 +55,7 @@ public class BoardController {
     for (MultipartFile part : files) {
       if (part.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-            "bitcamp-nc7-bucket-14", "sns_board/", part);
+                "bitcamp-nc7-bucket-14", "sns_board/", part);
         BoardPhoto attachedFile = new BoardPhoto();
         attachedFile.setFilePath(uploadFileUrl);
         attachedFiles.add(attachedFile);
@@ -87,7 +87,7 @@ public class BoardController {
 
   @GetMapping("detail/{category}/{no}")
   public String detail(@PathVariable int category, @PathVariable int no, Model model,
-      HttpSession session) throws Exception {
+                       HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
 
     if (loginUser != null) {
@@ -101,6 +101,10 @@ public class BoardController {
       model.addAttribute("board", board);
     }
 
+    // 좋아요 누른 사람들 닉네임 조회
+    List<String> likedUserNicknames = boardService.boardlikelist(no);
+    model.addAttribute("likedUserNicknames", likedUserNicknames);
+
     // 댓글 조회
     List<BoardComment> comments = null;
     comments = boardCommentService.list(no);
@@ -111,7 +115,7 @@ public class BoardController {
 
   @GetMapping("list")
   public String list(@RequestParam int category, Model model, HttpSession session)
-      throws Exception {
+          throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
 
     if (loginUser != null) {
@@ -147,7 +151,7 @@ public class BoardController {
     for (MultipartFile part : files) {
       if (part.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-            "bitcamp-nc7-bucket-14", "sns_board/", part);
+                "bitcamp-nc7-bucket-14", "sns_board/", part);
         BoardPhoto attachedFile = new BoardPhoto();
         attachedFile.setFilePath(uploadFileUrl);
         attachedFiles.add(attachedFile);
@@ -226,7 +230,7 @@ public class BoardController {
   // 댓글 기능
   @PostMapping("addComment")
   public String addComment(BoardComment boardComment, HttpSession session,
-      @RequestParam("boardNo") int boardNo) throws Exception {
+                           @RequestParam("boardNo") int boardNo) throws Exception {
     Member loginUser = (LoginUser) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -241,7 +245,7 @@ public class BoardController {
 
   @GetMapping("detailComment/{boardNo}/{no}")
   public String detailComment(@PathVariable int boardNo, @PathVariable int no, Model model)
-      throws Exception {
+          throws Exception {
     BoardComment boardComment = boardCommentService.get(no, boardNo);
     if (boardComment != null) {
       model.addAttribute("boardComment", boardComment);
@@ -252,7 +256,7 @@ public class BoardController {
 
   @PostMapping("updateComment")
   public String updateComment(@RequestParam int boardNo, BoardComment boardComment,
-      HttpSession session) throws Exception {
+                              HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -270,7 +274,7 @@ public class BoardController {
 
   @GetMapping("deleteComment/{boardNo}/{no}")
   public String deleteComment(@PathVariable int no, @PathVariable int boardNo, HttpSession session)
-      throws Exception {
+          throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";

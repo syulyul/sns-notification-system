@@ -121,4 +121,10 @@ public class DefaultBoardService implements BoardService {
   public List<Integer> likelist(int memberNo) throws Exception {
     return boardDao.findLikeByMno(memberNo);
   }
+  @Override
+  public List<String> boardlikelist(int boardNo) throws Exception {
+    return boardDao.findLikeByBno(boardNo);
+  }
+
+
 }
