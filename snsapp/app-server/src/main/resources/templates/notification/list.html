@@ -30,11 +30,11 @@
     <div data-th-each="notiLog : ${notiList}">
       <div class="notification-item">
         <a style="margin-left: 4%; color: black; text-decoration: none"
-        <!--        <span data-th-text="${notiLog.no}"></span>-->  <!--페이지네이션 결과 확인용-->
-           data-th-href="@{/notification/updateState(memberNo=${notiLog.memberNo},notiNo=${notiLog.no},notiState=1,url=${notiLog.url})}"
+           data-th-href="@{|/notification/updateState(memberNo=${notiLog.memberNo},notiNo=${notiLog.no},notiState=1,url=${notiLog.url})|}"
            data-th-text="${notiLog.content}">
           알림 내용
         </a>
+        <!--        <span data-th-text="${notiLog.no}"></span>-->  <!--페이지네이션 결과 확인용-->
         <span data-th-if="${notiLog.notiState==0}" data-th-text="안읽음"></span>
         <span data-th-if="${notiLog.notiState==1}" data-th-text="읽음"></span>
       </div>
