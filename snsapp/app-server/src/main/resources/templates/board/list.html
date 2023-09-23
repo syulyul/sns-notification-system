@@ -12,6 +12,8 @@
 <body>
 <div data-th-replace="header :: header"></div>
 
+<div style="margin-bottom: 80px;"></div>
+
 <!-- 새 글 버튼을 표 상단 우측에 추가 -->
 <div style="text-align: right; margin-right: 20px; margin-top: -30px;">
   <a data-th-href="@{/board/form(category=${param.category})}" class="button">새 글</a>
@@ -24,6 +26,7 @@
     <th>번호🌱</th>
     <th>제목🌱</th>
     <th>작성자🌱</th>
+    <th>좋아요수🌱</th>
     <th>조회수🌱</th>
     <th>등록일🌱</th>
   </tr>
@@ -31,8 +34,10 @@
   <tbody>
   <tr data-th-each="board : ${list}">
     <td data-th-text="${board.no}">게시글 번호</td>
-    <td><a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
-           data-th-text="${board.title} ?: '제목없음'">게시글 제목</a>
+    <td>
+      <a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
+         data-th-text="${board.title} ?: '제목없음'"
+         style="color: black; text-decoration: none;">게시글 제목</a>
     </td>
     <td>
       <div class="profile-author">
@@ -50,26 +55,12 @@
         <span data-th-text="${board.writer.nick}">작성자</span>
       </div>
     </td>
-
+    <td data-th-text="${board.likes}">좋아요수</td>
     <td data-th-text="${board.viewCount}">조회수</td>
     <td data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">등록일</td>
   </tr>
   </tbody>
 </table>
-
-<!-- 페이징 처리 부분 -->
-<div class="pagination">
-  <!-- 이전 페이지 링크 -->
-  <a href="/board/list?category=1&page=1">처음</a>
-  <a href="/board/list?category=1&page=${page.prev}" th:if="${page.prev != null}">이전</a>
-  <!-- 페이지 번호 출력 -->
-  <span th:each="pageNumber : ${page.pageNumbers}" th:class="${pageNumber == page.currentPage} ? 'active'">
-    <a href="/board/list?category=1&page=${pageNumber}" th:if="${pageNumber != page.currentPage}" th:text="${pageNumber}"></a>
-  </span>
-  <!-- 다음 페이지 링크 -->
-  <a href="/board/list?category=1&page=${page.next}" th:if="${page.next != null}">다음</a>
-  <a href="/board/list?category=1&page=${page.totalPages}">마지막</a>
-</div>
 
 <!-- 검색 박스와 검색 버튼 추가 -->
 <div class="search-box">

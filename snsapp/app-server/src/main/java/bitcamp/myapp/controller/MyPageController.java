@@ -86,7 +86,7 @@ public class MyPageController {
         break;
       default:
         model.addAttribute("followList", null);
-//        model.addAttribute("list", boardService.list(1));
+        model.addAttribute("list", boardService.list(1));
         break;
     }
     // myPageService.increaseVisitCount(no);
