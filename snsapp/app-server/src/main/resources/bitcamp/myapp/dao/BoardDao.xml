@@ -45,7 +45,7 @@
     values(#{title},#{content},#{writer.no},#{category})
   </insert>
 
-  <select id="findAll" parameterType="int" resultMap="boardMap">
+  <select id="findAll" parameterType="map" resultMap="boardMap">
     select
       b.bno,
       b.title,
@@ -60,9 +60,14 @@
     from
       sns_board b inner join sns_member m on b.mno=m.mno
     where
-      category=#{categoryNo}
+      category=#{category}
     order by
       b.bno desc
+    limit #{startRecord}, #{pageSize}
+  </select>
+
+  <select id="getTotalCount" parameterType="int" resultType="int">
+    select count(*) from sns_board where category=#{category}
   </select>
 
   <select id="findBy" resultMap="boardMap" parameterType="int">

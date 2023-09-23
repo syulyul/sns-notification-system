@@ -62,6 +62,20 @@
   </tbody>
 </table>
 
+<!-- 페이징 처리 부분 -->
+<div class="pagination">
+  <!-- 이전 페이지 링크 -->
+  <a href="/board/list?category=1&page=1">처음</a>
+  <a href="/board/list?category=1&page=${page.prev}" th:if="${page.prev != null}">이전</a>
+  <!-- 페이지 번호 출력 -->
+  <span th:each="pageNumber : ${page.pageNumbers}" th:class="${pageNumber == page.currentPage} ? 'active'">
+    <a href="/board/list?category=1&page=${pageNumber}" th:if="${pageNumber != page.currentPage}" th:text="${pageNumber}"></a>
+  </span>
+  <!-- 다음 페이지 링크 -->
+  <a href="/board/list?category=1&page=${page.next}" th:if="${page.next != null}">다음</a>
+  <a href="/board/list?category=1&page=${page.totalPages}">마지막</a>
+</div>
+
 <!-- 검색 박스와 검색 버튼 추가 -->
 <div class="search-box">
   <input type="text" placeholder="제목을 입력하세요">

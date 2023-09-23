@@ -11,6 +11,8 @@ import bitcamp.myapp.vo.Member;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+
+import bitcamp.myapp.vo.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -114,8 +116,10 @@ public class BoardController {
   }
 
   @GetMapping("list")
-  public String list(@RequestParam int category, Model model, HttpSession session)
-      throws Exception {
+  public String list(@RequestParam int category,
+                     @RequestParam(defaultValue = "1") int page, // 기본값 1 설정
+                     @RequestParam(defaultValue = "10") int pageSize, // 페이지 크기 설정
+                     Model model, HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
 
     if (loginUser != null) {
@@ -123,12 +127,32 @@ public class BoardController {
       model.addAttribute("likedBoards", likedBoards);
     }
 
-    if (category == 1) {
-      model.addAttribute("list", boardService.list(category));
-      return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
+    // 페이징 처리를 위해 시작 레코드 번호 계산
+    int startRecord = (page - 1) * pageSize;
 
+    // 게시물 목록 조회
+    List<Board> boardList = boardService.list(category, pageSize, startRecord);
+
+    // 전체 게시물 수 조회 (페이징 처리를 위해 필요)
+    int totalRecords = boardService.getTotalCount(category);
+
+    // 전체 페이지 수 계산
+    int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+    // page 객체 생성 및 설정
+    Page pageInfo = new Page();
+    pageInfo.setCurrentPage(page);
+    pageInfo.setTotalPages(totalPages);
+    pageInfo.setPrev(page > 1 ? page - 1 : 1);
+    pageInfo.setNext(page < totalPages ? page + 1 : totalPages);
+    model.addAttribute("page", pageInfo);
+
+    model.addAttribute("list", boardList);
+    model.addAttribute("category", category);
+
+    if (category == 1) {
+      return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
     } else if (category == 2) {
-      model.addAttribute("list", boardService.list(category));
       return "board/read"; // 카테고리가 2일 때 "read.html"을 실행
     } else {
       throw new Exception("유효하지 않은 카테고리입니다.");

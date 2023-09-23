@@ -37,8 +37,14 @@ public class DefaultBoardService implements BoardService {
   }
 
   @Override
-  public List<Board> list(int category) throws Exception {
-    return boardDao.findAll(category);
+  public List<Board> list(int category, int page, int pageSize) throws Exception {
+    int startRecord = (page - 1) * pageSize;
+    return boardDao.findAll(category, pageSize, startRecord);
+  }
+
+  @Override
+  public int getTotalCount(int category) throws Exception {
+    return boardDao.getTotalCount(category);
   }
 
   @Override

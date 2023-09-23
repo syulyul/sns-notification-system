@@ -10,7 +10,8 @@ import java.util.List;
 @Mapper
 public interface BoardDao {
   int insert(Board board);
-  List<Board> findAll(int category);
+  List<Board> findAll(int category, int pageSize, int startRecord);
+  int getTotalCount(int category);
   Board findBy(int no);
   int update(Board board);
   int updateCount(int no);
