@@ -87,7 +87,7 @@
                         <div data-th-each="file : ${board.attachedFiles}">
                             <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" width="100"/>
                             <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|"></a>
-                            [<a data-th-href="|/sns_board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
+                            [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
                         </div>
                         <input multiple name='files' type='file'>
                     </div>
