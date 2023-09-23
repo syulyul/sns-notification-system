@@ -65,6 +65,10 @@
       b.bno desc
   </select>
 
+<!--  <select id="getTotalCount" parameterType="int" resultType="int">-->
+<!--    select count(*) from sns_board where category=#{category}-->
+<!--  </select>-->
+
   <select id="findBy" resultMap="boardMap" parameterType="int">
     select
       b.bno,
