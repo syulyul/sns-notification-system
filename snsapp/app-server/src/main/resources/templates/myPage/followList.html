@@ -16,7 +16,9 @@
       <img class="memberPhoto" data-th-src="'/images/avatar.png'"
            data-th-unless="${member.photo}">
       <img class="memberPhoto" data-th-if="${member.photo}" data-th-src="${member.photo}">
-      <span data-th-text="${member.nick}"></span>
+      <a data-th-href="|/myPage/${member.no}|">
+        <span data-th-text="${member.nick}"></span>
+      </a>
 
       <input class="followCheckbox"
              data-th-checked="${session.loginUser.getFollowMemberSet().contains(member)}"
