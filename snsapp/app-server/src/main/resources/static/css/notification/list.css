@@ -47,3 +47,12 @@
         font-weight: bold;
         text-align: left; /* 추가: 왼쪽 정렬 */
     }
+
+    button {
+        background-color: #426B1F;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }

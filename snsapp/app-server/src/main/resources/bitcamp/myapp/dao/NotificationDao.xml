@@ -38,6 +38,26 @@
     mno=#{memberNo}
     order by
     nlno desc
+    limit #{limit} offset #{offset}
+  </select>
+
+  <select id="getNotiLogCount" parameterType="int" resultType="int">
+    select
+    count(nlno)
+    from
+    sns_noti_log
+    where
+    mno=#{memberNo}
+  </select>
+
+  <select id="getNotReadNotiLogCount" parameterType="int" resultType="int">
+    select
+    count(nlno)
+    from
+    sns_noti_log
+    where
+    mno=#{memberNo}
+    and noti_state=0
   </select>
 
   <select id="findBy" parameterType="int" resultMap="notiLogMap">

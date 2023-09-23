@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="ie=edge" http-equiv="X-UA-Compatible">
-  <title>MyPage</title>
-
+  <title>🌱마이페이지</title>
+  <link rel="stylesheet" type="text/css" href="/css/font.css">
   <link rel="stylesheet" type="text/css" href="/css/myPage/detail.css">
   <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfo.css">
   <link rel="stylesheet" type="text/css" href="/css/myPage/boardList.css">
@@ -19,21 +19,22 @@
 </head>
 
 <body>
-  <div data-th-replace="header :: header"></div>
-  <br>
-  <div id="myPageBox">
-    <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
-    <!--      <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
-    <div class="boardListBox" data-th-unless="${followList}">
-       <div data-th-replace="board/list :: boardList">목록</div>
-       <div data-th-replace="board/list :: boardList">목록</div>
-      <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
-    </div>
-    <div data-th-replace="myPage/followList :: followList"></div>
-
+<div data-th-replace="header :: header"></div>
+<br>
+<div id="myPageBox">
+  <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
+  <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
+  <!--      <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
+  <div class="boardListBox" data-th-unless="${followList}">
+    <div data-th-replace="board/list :: boardList">목록</div>
+    <!-- <div data-th-replace="board/list :: boardList">목록</div> -->
+    <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
   </div>
+  <div data-th-replace="myPage/followList :: followList"></div>
 
-  <div data-th-replace="footer :: footer"></div>
+</div>
+
+<div data-th-replace="footer :: footer"></div>
 
 </body>
 

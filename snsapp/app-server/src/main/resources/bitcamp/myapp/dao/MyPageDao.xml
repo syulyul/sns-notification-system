@@ -1,122 +1,146 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bitcamp.myapp.dao.MyPageDao">
 
-    <resultMap type="myPage" id="myPageMap">
-        <id column="mno" property="no"/>
-        <result column="nick" property="nick"/>
-        <result column="name" property="name"/>
-        <result column="phone_number" property="phoneNumber"/>
-        <result column="password" property="password"/>
-        <result column="email" property="email"/>
-        <result column="filepath" property="photo"/>
-        <result column="state_message" property="stateMessage"/>
-        <result column="birthday" property="birthday"/>
-        <result column="gender" property="gender"/>
-        <result column="likes" property="likes"/>
-        <result column="visit_count" property="visitCount"/>
-        <result column="created_date" property="createdDate"/>
-    </resultMap>
+  <resultMap type="myPage" id="myPageMap">
+    <id column="mno" property="no" />
+    <result column="nick" property="nick" />
+    <result column="name" property="name" />
+    <result column="phone_number" property="phoneNumber" />
+    <result column="password" property="password" />
+    <result column="email" property="email" />
+    <result column="filepath" property="photo" />
+    <result column="state_message" property="stateMessage" />
+    <result column="birthday" property="birthday" />
+    <result column="gender" property="gender" />
+    <result column="likes" property="likes" />
+    <result column="visit_count" property="visitCount" />
+    <result column="created_date" property="createdDate" />
+  </resultMap>
 
-    <resultMap type="member" id="memberMap">
-        <id column="mno" property="no"/>
-        <result column="nick" property="nick"/>
-        <result column="name" property="name"/>
-        <result column="phone_number" property="phoneNumber"/>
-        <result column="email" property="email"/>
-        <result column="password" property="password"/>
-        <result column="filepath" property="photo"/>
-    </resultMap>
+  <resultMap type="member" id="memberMap">
+    <id column="mno" property="no" />
+    <result column="nick" property="nick" />
+    <result column="name" property="name" />
+    <result column="phone_number" property="phoneNumber" />
+    <result column="email" property="email" />
+    <result column="password" property="password" />
+    <result column="filepath" property="photo" />
+  </resultMap>
 
-    <insert id="insert" parameterType="myPage">
-        insert into sns_mypage(mno,state_message, birthday, gender)
-        values(#{no},#{stateMessage}, #{birthday}, #{gender})
-    </insert>
+  <insert id="insert" parameterType="myPage">
+    insert into sns_mypage(mno,state_message, birthday, gender)
+    values(#{no},#{stateMessage}, #{birthday}, #{gender})
+  </insert>
 
-    <select id="findBy" parameterType="int" resultMap="myPageMap">
+  <select id="findBy" parameterType="int" resultMap="myPageMap">
+    select
+    mp.mno
+    ,nick
+    ,name
+    ,phone_number
+    ,email
+    ,filepath
+    ,state_message
+    ,birthday
+    ,gender
+    ,likes
+    ,visit_count
+    ,created_date
+    from
+    sns_mypage as mp inner join sns_member as m on mp.mno=m.mno
+    where
+    mp.mno=#{memberNo}
+  </select>
+
+  <update id="update" parameterType="myPage">
+    update sns_mypage set
+    state_message=#{stateMessage}
+    ,birthday=#{birthday}
+    ,gender=#{gender}
+    where
+    mno=#{no}
+  </update>
+
+  <update id="updateCount" parameterType="int">
+    update sns_mypage set
+    visit_count=visit_count + 1
+    where
+    mno=#{no}
+  </update>
+
+  <delete id="delete" parameterType="int">
+    delete from sns_mypage
+    where
+    mno=#{memberNo}
+  </delete>
+
+    <select id="searchMembers" resultMap="memberMap" parameterType="string">
         select
-        mp.mno
-        ,nick
-        ,name
-        ,phone_number
-        ,email
-        ,filepath
-        ,state_message
-        ,birthday
-        ,gender
-        ,likes
-        ,visit_count
-        ,created_date
-        from
-        sns_mypage as mp inner join sns_member as m on mp.mno=m.mno
+        m.no,
+        m.nick,
+        m.name,
+        m.filepath
+        from sns_member as m
         where
-        mp.mno=#{memberNo}
+            m.nick LIKE '%' || #{keyword} || '%'
+            OR m.name LIKE'%' || #{keyword} || '%'
     </select>
 
-    <update id="update" parameterType="myPage">
-        update sns_mypage set
-        state_message=#{stateMessage}
-        ,birthday=#{birthday}
-        ,gender=#{gender}
-        where
-        mno=#{no}
-    </update>
+  <insert id="insertFollow">
+    insert into sns_follow(follower, following)
+    values(#{followerNo}, #{followingNo})
+  </insert>
 
-    <update id="updateCount" parameterType="int">
-        update sns_mypage set
-        visit_count=visit_count + 1
-        where
-        mno=#{no}
-    </update>
+  <delete id="deleteFollow">
+    delete from sns_follow
+    where
+    follower=#{followerNo}
+    and following=#{followingNo}
+  </delete>
 
-    <delete id="delete" parameterType="int">
-        delete from sns_mypage
-        where
-        mno=#{memberNo}
-    </delete>
+  <select id="findAllFollowers" parameterType="int" resultMap="memberMap">
+    select
+    m.mno
+    ,m.nick
+    ,m.name
+    ,m.phone_number
+    ,m.email
+    ,m.filepath
+    from
+    (select follower
+    from sns_follow
+    where following=#{memberNo}) as f
+    inner join sns_member as m on f.follower=m.mno
+  </select>
 
+  <select id="getFollowerCount" parameterType="int" resultType="int">
+    select count(follower)
+    from sns_follow
+    where following=#{memberNo}
+  </select>
 
-    <insert id="insertFollow">
-        insert into sns_follow(follower, following)
-        values(#{followerNo}, #{followingNo})
-    </insert>
+  <select id="findAllFollowings" parameterType="int" resultMap="memberMap">
+    select
+    m.mno
+    ,m.nick
+    ,m.name
+    ,m.phone_number
+    ,m.email
+    ,m.filepath
+    from
+    (select following
+    from sns_follow
+    where follower=#{memberNo}) as f
+    inner join sns_member as m on f.following=m.mno
+  </select>
 
-    <delete id="deleteFollow">
-        delete from sns_follow
-        where
-        follower=#{followerNo}
-        and following=#{followingNo}
-    </delete>
+  <select id="getFollowingCount" parameterType="int" resultType="int">
+    select count(following)
+    from sns_follow
+    where follower=#{memberNo}
+  </select>
 
-    <select id="findAllFollowers" parameterType="int" resultMap="memberMap">
-        select
-        m.mno
-        ,m.nick
-        ,m.name
-        ,m.phone_number
-        ,m.email
-        ,m.filepath
-        from
-        (select follower
-        from sns_follow
-        where following=#{memberNo}) as f
-        inner join sns_member as m on f.follower=m.mno
-    </select>
-
-    <select id="findAllFollowings" parameterType="int" resultMap="memberMap">
-        select
-        m.mno
-        ,m.nick
-        ,m.name
-        ,m.phone_number
-        ,m.email
-        ,m.filepath
-        from
-        (select following
-        from sns_follow
-        where follower=#{memberNo}) as f
-        inner join sns_member as m on f.following=m.mno
-    </select>
 </mapper>

@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<head>
+  <meta charset='UTF-8'>
+  <title>힐링스타그램</title>
+  <link rel="stylesheet" type="text/css" href="/css/font.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script defer src="form.js"></script>
+
 <style>
   html {
     height: 100%;
@@ -8,22 +16,20 @@
   body {
     height: 100%;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
     display: grid;
     justify-items: center;
     align-items: center;
-    background-color: #3a3a3a;
+    background-color:#426B1F;
   }
 
   #main-holder {
-    width: 50%;
-    height: 70%;
+    width: 70%;
+    height: 80%;
     display: grid;
     justify-items: center;
     align-items: center;
     background-color: white;
     border-radius: 7px;
-    box-shadow: 0px 0px 5px 2px black;
   }
 
   #login-error-msg-holder {
@@ -64,11 +70,13 @@
 
   .login-form-field {
     border: none;
-    border-bottom: 1px solid #3a3a3a;
+    border-bottom: 1px solid #f2f2f2;
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
     padding: 0px 0px 5px 5px;
+    height: 60px;
+    width: 400px;
   }
 
 
@@ -79,7 +87,7 @@
     border-radius: 5px;
     color: white;
     font-weight: bold;
-    background-color: #3a3a3a;
+    background-color: #426B1F;
     cursor: pointer;
     outline: none;
   }
@@ -94,35 +102,52 @@
     width: 220px; height: 100px;
     margin: 0 auto;
   }
+
+  @font-face {
+    font-family: 'UhBeeKeongKeong';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeKeongKeong.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body, p, h1, h2, h3, h4, h5, h6, textarea, input, button, a {
+    font-family: 'UhBeeKeongKeong', sans-serif;
+  }
+
+  button {
+    font-size : 20px;
+  }
+
+  body {
+    font-size : 20px;
+  }
 </style>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BITSNS</title>
-  <script defer src="form.js"></script>
+
 </head>
 
 <body>
 <main id="main-holder">
-  <h1>BITSNS</h1>
+  <h1>🌱힐링스타그램🌱</h1>
 
   <div id="login-error-msg-holder">
-    <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+    <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span>
+    </p>
   </div>
 
   <form id="login-form" action='login' method='post'>
-    <input type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="Phone Number" data-th-value='${phoneNumber}'>
-    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password" data-th-value='${password}'>
-    <input type="submit" value="Login" id="login-form-submit">
-    <input type='checkbox' name='savePhoneNumber' data-th-checked="${phoneNumber}"> 전화번호 저장
+    <input style="font-size:20px;" type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="전화번호" data-th-value='${phoneNumber}'>
+    <input style="font-size:20px;" type="password" name="password" id="password-field" class="login-form-field" placeholder="비밀번호" data-th-value='${password}'>
+    <input style="font-size:20px;" type="submit" value="로그인" id="login-form-submit">
     <ul>
-      <li><a href="/auth/add" class="user-field"> 회원가입</a></li>
-      <li><a href="/auth/find" class="user2-field"> 비밀번호 찾기</a></li>
-
+    <input type='checkbox' name='savePhoneNumber' data-th-checked="${phoneNumber}"> 전화번호 저장
+<!--      <li><a href="/auth/add" class="user-field"> 회원가입</a></li>-->
+      <a href="/auth/find" class="user2-field"> 비밀번호 찾기</a>
     </ul>
   </form>
 
 </main>
+
+
 </body>
 
 

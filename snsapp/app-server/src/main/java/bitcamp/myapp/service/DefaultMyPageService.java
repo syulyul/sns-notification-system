@@ -1,7 +1,6 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.MyPageDao;
-import bitcamp.myapp.dao.NotificationDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
 import bitcamp.myapp.vo.NotiLog;
@@ -15,15 +14,15 @@ public class DefaultMyPageService implements MyPageService {
 
   MyPageDao myPageDao;
 
-  NotificationDao notificationDao;
+  NotificationService notificationService;
 
   {
     System.out.println("DefaultMyPageService 생성됨!");
   }
 
-  public DefaultMyPageService(MyPageDao myPageDao, NotificationDao notificationDao) {
+  public DefaultMyPageService(MyPageDao myPageDao, NotificationService notificationService) {
     this.myPageDao = myPageDao;
-    this.notificationDao = notificationDao;
+    this.notificationService = notificationService;
   }
 
   @Transactional
@@ -59,7 +58,7 @@ public class DefaultMyPageService implements MyPageService {
   @Override
   public int follow(Member follower, int followingNo) throws Exception {
     int result = myPageDao.insertFollow(follower.getNo(), followingNo);
-    notificationDao.insert(new NotiLog(
+    notificationService.add(new NotiLog(
         followingNo,
         NotiType.FOLLOW_TYPE,
         follower.getNick() + "님이 회원님을 팔로우 했습니다.",
@@ -71,12 +70,17 @@ public class DefaultMyPageService implements MyPageService {
   @Override
   public int unfollow(Member follower, int followingNo) throws Exception {
     int result = myPageDao.deleteFollow(follower.getNo(), followingNo);
-    notificationDao.insert(new NotiLog(
-        followingNo,
-        NotiType.FOLLOW_TYPE,
-        follower.getNick() + "님이 회원님을 팔로우 취소 했습니다.",
-        "/myPage/" + follower.getNo()));
+//    notificationService.add(new NotiLog(
+//        followingNo,
+//        NotiType.FOLLOW_TYPE,
+//        follower.getNick() + "님이 회원님을 팔로우 취소 했습니다.",
+//        "/myPage/" + follower.getNo()));
     return result;
+  }
+
+  @Override
+  public List<Member> searchMembers(String keyword) throws Exception {
+    return myPageDao.searchMembers(keyword);
   }
 
   @Override
@@ -85,7 +89,17 @@ public class DefaultMyPageService implements MyPageService {
   }
 
   @Override
+  public int getFollowerCount(int memberNo) {
+    return myPageDao.getFollowerCount(memberNo);
+  }
+
+  @Override
   public List<Member> followingList(int memberNo) throws Exception {
     return myPageDao.findAllFollowings(memberNo);
+  }
+
+  @Override
+  public int getFollowingCount(int memberNo) {
+    return myPageDao.getFollowingCount(memberNo);
   }
 }

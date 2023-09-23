@@ -11,7 +11,13 @@ public interface NotificationDao {
 
   int insert(NotiLog noti);
 
-  List<NotiLog> findAllNotiLog(int memberNo);
+  List<NotiLog> findAllNotiLog(@Param("memberNo") int memberNo,
+      @Param("limit") int limit,
+      @Param("offset") int offset);
+
+  int getNotiLogCount(int memberNo);
+
+  int getNotReadNotiLogCount(int memberNo);
 
   NotiLog findBy(int notiNo);
 
@@ -22,4 +28,5 @@ public interface NotificationDao {
   List<NotiType> findAllNotiType();
 
   String findNotiTypeName(int notiTypeNo);
+
 }

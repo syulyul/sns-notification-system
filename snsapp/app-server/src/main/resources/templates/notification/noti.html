@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알림 로그</title>
+  <style>
+    /* 알림 로그 컨테이너 스타일 */
+    .notification-container {
+      /*position: fixed;*/
+      margin-top: 30px;
+      float: right;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    /* 알림 메시지 스타일 */
+    .notification {
+      background-color: #f2f2f2;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* 알림 메시지 제목 스타일 */
+    .notification-title {
+      font-weight: bold;
+    }
+
+    /* 닫기 버튼 스타일 */
+    .close-button {
+      float: right;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<!-- 알림 로그 컨테이너 -->
+<div class="notification-container" id="notification-container">
+  <!-- 알림 메시지 예제 -->
+  <div class="notification">
+    <span class="notification-title">알림</span>
+    <span class="close-button" onclick="closeNotification(this)">X</span>
+    <p>새로운 알림이 도착했습니다.</p>
+  </div>
+</div>
+
+<!-- JavaScript 코드: 알림 메시지 닫기 기능 구현 -->
+<script>
+  // 알림 메시지 닫기 기능
+  function closeNotification(element) {
+    var notification = element.parentElement;
+    notification.style.display = "none";
+  }
+</script>
+</body>
+</html>
