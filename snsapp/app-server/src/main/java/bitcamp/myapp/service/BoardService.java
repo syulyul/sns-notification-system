@@ -32,4 +32,6 @@ public interface BoardService {
   int unlike(Member member, Board board) throws Exception; //board_like테이블 좋아요정보 삭제
 
   List<Integer> likelist(int memberNo) throws Exception;
+
+  List<String> boardlikelist(int boardNo) throws Exception;
 }

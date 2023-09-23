@@ -65,12 +65,12 @@
     <form data-th-action="@{/board/add}" method='post' enctype='multipart/form-data'>
         <table>
             <tr>
-                <th>제목</th>
-                <td><input style="border: none;" type="text" name="title"></td>
+                <th>🌱제목</th>
+                <td><input style="font-size:18px; border: none;" type="text" name="title" placeholder="제목을 입력하세요"></td>
             </tr>
             <tr>
-                <th>내용</th>
-                <td><textarea style="border: none;" name="content" rows="10"></textarea></td>
+                <th>🌱내용</th>
+                <td><textarea style="font-size:18px; border: none;" name="content" rows="6" placeholder="내용을 입력하세요"></textarea></td>
             </tr>
             <input type='hidden' name='category' data-th-value="${param.category}">
             <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
