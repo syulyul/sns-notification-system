@@ -2,127 +2,109 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>BITSNS</title>
+    <title>BITSNS</title><style>
+    html {
+        height: 100%;
+    }
 
-    <style>
-        html {
-            height: 100%;
-        }
+    /* h2 글자의 색은 흰색으로 크기는 30px */
+    h2 {
+        color: white;
+        font-size: 30px;
+    }
 
-        /* h2 글자의 색은 흰색으로 크기는 30px */
-        h2 {
-            color: white;
-            font-size: 30px;
-            /*font-style: ;*/
-        }
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        font-size: 20px;
+        height: 100%;
+        margin: 0;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-color: #3a3a3a;
+    }
 
+    form {
+        top: 40%;
+        left: 100%;
+        width: 1000px;
+        height: 2500px;
+        padding: 30px;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            font-size: 20px;
-            height: 100%;
-            margin: 0;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-            background-color: #3a3a3a;
-        }
+    /* 각 tr의 td의 모서리가 둥글게 하고 table 우측 끝에 가깝지만 margin을 5정도 남기고 꽉 채울수 있도록 */
+    table {
+        margin: 0 auto;
+        width: 100%; /* 테이블이 부모 요소에 꽉 차도록 설정합니다. */
+        border-collapse: collapse; /* 테이블 셀 경계를 병합하여 모서리가 둥글게 됩니다. */
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #cccccc;
+        margin-right: 5px; /* 오른쪽 마진을 5px로 설정합니다. */
+    }
 
-        form {
-            top: 40%;
-            left: 100%;
-            width: 1000px;
-            height: 2500px;
-            padding: 30px;
-        }
+    th, td {
+        padding: 25px;
+    }
 
-        /*  각 tr의 td의 모서리가 둥글게 하고 table 우측 끝에 가깝지만 margin을 5정도 남기고 꽉 채울수 있도록 */
+    td {
+        background: #cccccc;
+    }
 
-        table {
-            margin: 0 auto;
-            width: 100%; /* 테이블이 부모 요소에 꽉 차도록 설정합니다. */
-            border-collapse: collapse; /* 테이블 셀 경계를 병합하여 모서리가 둥글게 됩니다. */
-            text-align: left;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #cccccc;
-            margin-right: 5px; /* 오른쪽 마진을 5px로 설정합니다. */
+    /* th의 글자 색은 흰색으로 배경색은 #3a3a3a로 */
+    th {
+        background: #3a3a3a;
+        padding: 10px; /* 셀 안의 여백을 설정합니다. */
+        border-radius: 10px; /* 모서리를 둥글게 만듭니다. */
+    }
 
-        }
+    input[type="file"],
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+    }
 
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
 
-        table {
-        }
+    input[type="submit"]:hover {
+        /* hover 시 스타일링을 추가할 수 있습니다. */
+    }
 
-        th, td {
-            padding: 25px;
-            /*border-bottom: 1px solid #ccc;*/
-        }
+    /* 3. 사진에서 사진을 넣게된다면 이미지를 우측에 출력하도록 table 수정 */
+    .image-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
 
-        td {
-            background: #cccccc;
-        }
-
-        /*  th의 글자 색은 흰색으로 배경색은 #3a3a3a로 */
-        th {
-            background: #3a3a3a;
-            /*color: white;*/
-            /*background-color: #3a3a3a;*/
-            padding: 10px; /* 셀 안의 여백을 설정합니다. */
-            border-radius: 10px; /* 모서리를 둥글게 만듭니다. */
-
-        }
-
-
-        input[type="file"],
-        input[type="text"],
-        input[type="date"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="password"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 16px;
-        }
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-        }
-
-        /* 3. 사진에서 사진을 넣게된다면 이미지를 우측에 출력하도록 table 수정 */
-        .image-container {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .user-image {
-            max-width: 100px; /* 이미지의 최대 너비를 설정합니다. */
-            height: auto; /* 이미지의 높이를 자동으로 조정합니다. */
-            margin-left: 10px; /* 이미지와 텍스트 사이의 간격을 조정합니다. */
-        }
-
-    </style>
-
-
+    .user-image {
+        max-width: 100px; /* 이미지의 최대 너비를 설정합니다. */
+        height: auto; /* 이미지의 높이를 자동으로 조정합니다. */
+        margin-left: 10px; /* 이미지와 텍스트 사이의 간격을 조정합니다. */
+    }
+</style>
 </head>
 <body>
 <h2>회원가입 양식</h2>
 <form action='add' method='post' enctype='multipart/form-data'>
     <table>
-
         <tr>
             <th>닉네임</th>
             <td><input type='text' name='nick'></td>
@@ -133,7 +115,13 @@
         </tr>
         <tr>
             <th>전화번호</th>
-            <td><input type='tel' name='phoneNumber'></td>
+            <td>
+                <input type="text" name="phoneNumber" id="tel" placeholder="전화번호를 입력하세요">
+                <button id="sendCode">인증번호 전송</button>
+                <input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
+                <button id="verifyCode">인증 확인</button>
+                <p id="result"></p>
+            </td>
         </tr>
         <tr>
             <th>비밀번호</th>
@@ -148,7 +136,6 @@
                 </div>
             </td>
         </tr>
-
         <tr>
             <td>
                 <button><a href="/" style="backface-visibility: hidden">뒤로가기</a></button>
@@ -160,8 +147,65 @@
                 <button type="submit">가입하기</button>
             </td>
         </tr>
-
     </table>
 </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#sendCode").click(function() {
+            var phoneNumber = $("#tel").val();
+            $.ajax({
+                type: "POST",
+                url: "/auth/phoneAuth",
+                data: { phoneNumber: phoneNumber },
+                success: function(response) {
+                    if (response) {
+                        $("#result").text("가입된 전화번호입니다.");
+                    } else {
+                        $("#result").text("인증번호를 전송했습니다.");
+                    }
+                },
+                error: function() {
+                    $("#result").text("오류가 발생했습니다.");
+                }
+            });
+        });
+
+        $("#verifyCode").click(function() {
+            var code = $("#verificationCode").val();
+            $.ajax({
+                type: "POST",
+                url: "/auth/phoneAuthOk",
+                data: { code: code },
+                success: function(response) {
+                    if (response) {
+                        $("#result").text("인증 실패");
+                    } else {
+                        $("#result").text("인증 성공");
+                    }
+                },
+                error: function() {
+                    $("#result").text("오류가 발생했습니다.");
+                }
+            });
+        });
+    });
+
+    function previewFile() {
+        var preview = document.getElementById('previewImage');
+        var file = document.getElementById('photoInput').files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
 </body>
 </html>
