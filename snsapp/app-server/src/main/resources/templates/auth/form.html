@@ -1,128 +1,127 @@
 <!DOCTYPE html>
-
+<html>
 <head>
   <meta charset='UTF-8'>
   <title>힐링스타그램</title>
   <link rel="stylesheet" type="text/css" href="/css/font.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <script defer src="form.js"></script>
+  <style>
+    html {
+      height: 100%;
+    }
 
-<style>
-  html {
-    height: 100%;
-  }
+    body {
+      height: 100%;
+      margin: 0;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      background-color: #426B1F;
+    }
 
-  body {
-    height: 100%;
-    margin: 0;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color:#426B1F;
-  }
+    #main-holder {
+      width: 70%;
+      height: 80%;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      background-color: white;
+      border-radius: 7px;
+    }
 
-  #main-holder {
-    width: 70%;
-    height: 80%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 7px;
-  }
+    #login-error-msg-holder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
 
-  #login-error-msg-holder {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
+    #login-error-msg {
+      width: 23%;
+      text-align: center;
+      margin: 0;
+      padding: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #8a0000;
+      border: 1px solid #8a0000;
+      background-color: #e58f8f;
+      opacity: 0;
+    }
 
-  #login-error-msg {
-    width: 23%;
-    text-align: center;
-    margin: 0;
-    padding: 5px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #8a0000;
-    border: 1px solid #8a0000;
-    background-color: #e58f8f;
-    opacity: 0;
-  }
+    #error-msg-second-line {
+      display: block;
+    }
 
-  #error-msg-second-line {
-    display: block;
-  }
+    #login-form {
+      align-self: flex-start;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
 
-  #login-form {
-    align-self: flex-start;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
+    .login-form-field::placeholder {
+      color: #3a3a3a;
+    }
 
-  .login-form-field::placeholder {
-    color: #3a3a3a;
-  }
+    .login-form-field {
+      border: none;
+      border-bottom: 1px solid #f2f2f2;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      outline: none;
+      padding: 0px 0px 5px 5px;
+      height: 60px;
+      width: 400px;
+    }
 
-  .login-form-field {
-    border: none;
-    border-bottom: 1px solid #f2f2f2;
-    margin-bottom: 10px;
-    border-radius: 3px;
-    outline: none;
-    padding: 0px 0px 5px 5px;
-    height: 60px;
-    width: 400px;
-  }
+    #login-form-submit {
+      width: 100%;
+      padding: 7px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      background-color: #426B1F;
+      cursor: pointer;
+      outline: none;
+    }
 
+    .user-field {
+      display: block;
+      width: 220px;
+      height: 30px;
+      margin: 0 auto;
+    }
 
-  #login-form-submit {
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    background-color: #426B1F;
-    cursor: pointer;
-    outline: none;
-  }
+    .user2-field {
+      display: block;
+      width: 220px;
+      height: 100px;
+      margin: 0 auto;
+    }
 
-  .user-field {
-    display: block;
-    width: 220px; height: 30px;
-    margin: 0 auto;
-  }
-  .user2-field {
-    display: block;
-    width: 220px; height: 100px;
-    margin: 0 auto;
-  }
+    @font-face {
+      font-family: 'UhBeeKeongKeong';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeKeongKeong.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: 'UhBeeKeongKeong';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeKeongKeong.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
+    body, p, h1, h2, h3, h4, h5, h6, textarea, input, button, a {
+      font-family: 'UhBeeKeongKeong', sans-serif;
+    }
 
-  body, p, h1, h2, h3, h4, h5, h6, textarea, input, button, a {
-    font-family: 'UhBeeKeongKeong', sans-serif;
-  }
+    button {
+      font-size: 20px;
+    }
 
-  button {
-    font-size : 20px;
-  }
-
-  body {
-    font-size : 20px;
-  }
-</style>
-
+    body {
+      font-size: 20px;
+    }
+  </style>
 </head>
 
 <body>
@@ -134,21 +133,57 @@
     </p>
   </div>
 
-  <form id="login-form" action='login' method='post'>
-    <input style="font-size:20px;" type="text" name="phoneNumber" id="username-field" class="login-form-field" placeholder="전화번호" data-th-value='${phoneNumber}'>
-    <input style="font-size:20px;" type="password" name="password" id="password-field" class="login-form-field" placeholder="비밀번호" data-th-value='${password}'>
-    <input style="font-size:20px;" type="submit" value="로그인" id="login-form-submit">
+  <form id="login-form" method="post">
+    <!-- 사용자 입력 필드 -->
+    <input type="text" name="phoneNumber" id="username-field" class="login-form-field"
+           placeholder="Phone Number">
+    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+    <input type="submit" value="Login" id="login-form-submit">
+
     <ul>
-    <input type='checkbox' name='savePhoneNumber' data-th-checked="${phoneNumber}"> 전화번호 저장
-<!--      <li><a href="/auth/add" class="user-field"> 회원가입</a></li>-->
-      <a href="/auth/find" class="user2-field"> 비밀번호 찾기</a>
+      <li><a href="/auth/add" class="user-field"> 회원가입</a></li>
+      <li><a href="/auth/find" class="user2-field"> 비밀번호 찾기</a></li>
     </ul>
+
+    <input type='checkbox' name='savePhoneNumber' id='savePhoneNumber'> 전화번호 저장
   </form>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginForm = document.getElementById("login-form");
+      const loginErrorMsg = document.getElementById("login-error-msg");
 
+      loginForm.addEventListener("submit", function (event) {
+        const phoneNumber = loginForm.querySelector("#username-field").value;
+        const password = loginForm.querySelector("#password-field").value;
+
+        // Ajax 요청 보내기
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "login", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            // 로그인 성공
+            loginErrorMsg.style.opacity = 0; // 에러 메시지 감추기
+            alert("로그인에 성공하였습니다.");
+            const responseData = JSON.parse(xhr.responseText); // JSON 응답 데이터 파싱
+            const userNo = responseData.userNo; // 사용자 번호 추출
+            location.href = `/myPage/${userNo}`; // 사용자 번호를 기반으로 리다이렉트
+          } else {
+            // 로그인 실패
+            loginErrorMsg.style.opacity = 1; // 에러 메시지 표시
+            loginErrorMsg.innerText = "로그인 실패, 다시 시도하세요."; // 에러 메시지 설정
+          }
+        };
+
+        // 요청 본문 설정
+        const data = `phoneNumber=${phoneNumber}&password=${password}`;
+        xhr.send(data);
+
+        event.preventDefault(); // 폼 제출 방지
+      });
+    });
+  </script>
 </main>
-
-
 </body>
-
-
 </html>
