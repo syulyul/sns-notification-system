@@ -55,7 +55,7 @@ public class BoardController {
     for (MultipartFile part : files) {
       if (part.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-14", "sns_board/", part);
+            "bitcamp-nc7-bucket-14", "sns_board/", part);
         BoardPhoto attachedFile = new BoardPhoto();
         attachedFile.setFilePath(uploadFileUrl);
         attachedFiles.add(attachedFile);
@@ -87,7 +87,7 @@ public class BoardController {
 
   @GetMapping("detail/{category}/{no}")
   public String detail(@PathVariable int category, @PathVariable int no, Model model,
-                       HttpSession session) throws Exception {
+      HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
 
     if (loginUser != null) {
@@ -114,8 +114,10 @@ public class BoardController {
   }
 
   @GetMapping("list")
-  public String list(@RequestParam int category, Model model, HttpSession session)
-          throws Exception {
+  public String list(@RequestParam int category,
+      @RequestParam(defaultValue = "1") int page, // 기본값 1 설정
+      @RequestParam(defaultValue = "10") int pageSize, // 페이지 크기 설정
+      Model model, HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
 
     if (loginUser != null) {
@@ -123,12 +125,23 @@ public class BoardController {
       model.addAttribute("likedBoards", likedBoards);
     }
 
+    // 게시물 목록 조회
+    List<Board> boardList = boardService.list(category, pageSize, page);
+
+    // 전체 게시물 수 조회 (페이징 처리를 위해 필요)
+    int totalRecords = boardService.getTotalCount(category);
+
+    // 전체 페이지 수 계산
+    model.addAttribute("maxPage", (totalRecords + (pageSize - 1)) / pageSize);
+    model.addAttribute("page", page);
+    model.addAttribute("pageSize", pageSize);
+    model.addAttribute("boardList", boardList);
+    model.addAttribute("category", category);
+
     if (category == 1) {
-      model.addAttribute("list", boardService.list(category));
       return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
 
     } else if (category == 2) {
-      model.addAttribute("list", boardService.list(category));
       return "board/read"; // 카테고리가 2일 때 "read.html"을 실행
     } else {
       throw new Exception("유효하지 않은 카테고리입니다.");
@@ -151,7 +164,7 @@ public class BoardController {
     for (MultipartFile part : files) {
       if (part.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-14", "sns_board/", part);
+            "bitcamp-nc7-bucket-14", "sns_board/", part);
         BoardPhoto attachedFile = new BoardPhoto();
         attachedFile.setFilePath(uploadFileUrl);
         attachedFiles.add(attachedFile);
@@ -230,7 +243,7 @@ public class BoardController {
   // 댓글 기능
   @PostMapping("addComment")
   public String addComment(BoardComment boardComment, HttpSession session,
-                           @RequestParam("boardNo") int boardNo) throws Exception {
+      @RequestParam("boardNo") int boardNo) throws Exception {
     Member loginUser = (LoginUser) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -245,7 +258,7 @@ public class BoardController {
 
   @GetMapping("detailComment/{boardNo}/{no}")
   public String detailComment(@PathVariable int boardNo, @PathVariable int no, Model model)
-          throws Exception {
+      throws Exception {
     BoardComment boardComment = boardCommentService.get(no, boardNo);
     if (boardComment != null) {
       model.addAttribute("boardComment", boardComment);
@@ -256,7 +269,7 @@ public class BoardController {
 
   @PostMapping("updateComment")
   public String updateComment(@RequestParam int boardNo, BoardComment boardComment,
-                              HttpSession session) throws Exception {
+      HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -274,7 +287,7 @@ public class BoardController {
 
   @GetMapping("deleteComment/{boardNo}/{no}")
   public String deleteComment(@PathVariable int no, @PathVariable int boardNo, HttpSession session)
-          throws Exception {
+      throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";

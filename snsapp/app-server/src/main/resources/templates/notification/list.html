@@ -43,15 +43,15 @@
 
   <div id="pageLabel">
     <!--    <span data-th-text="${#request.getRequestURL()}"></span>-->
-    <a data-th-href="@{${#request.getRequestURL()}(page=1)}"
+    <a data-th-href="@{${#request.getRequestURL()}(page=1,pageSize=${pageSize})}"
        data-th-text="(${page} > 1) ? '1' : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=(${page} - 1))}"
+    <a data-th-href="@{${#request.getRequestURL()}(page=(${page} - 1),pageSize=${pageSize})}"
        data-th-text="(${page} > 2) ? ${page} - 1 : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=${page})}"
+    <a data-th-href="@{${#request.getRequestURL()}(page=${page},pageSize=${pageSize})}"
        data-th-text="${page}"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=(${page} + 1))}"
+    <a data-th-href="@{${#request.getRequestURL()}(page=(${page} + 1),pageSize=${pageSize})}"
        data-th-text="${page} < ${maxPage} - 1 ? ${page} + 1 : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=${maxPage})}"
+    <a data-th-href="@{${#request.getRequestURL()}(page=${maxPage},pageSize=${pageSize})}"
        data-th-text="${page} < ${maxPage} ? ${maxPage} : _"></a>
   </div>
 </div>
