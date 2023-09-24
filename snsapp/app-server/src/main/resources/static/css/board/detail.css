@@ -20,8 +20,8 @@
         /* 내용을 왼쪽으로 정렬 */
         padding: 20px;
         max-width: 600px;
+        max-height: 1000px;
         background: #f2f2f2;
-        height: 600px;
         /* 원하는 높이로 조절하세요 */
         width: 700px;
         position: relative;
@@ -73,6 +73,16 @@
             margin-left: 500px;
             right: 0;
             bottom: 0;
+        }
+
+        .like-list {
+            margin-top: 30px;
+            text-align: right; /* 마지막 글자를 오른쪽으로 정렬하기 위해 */
+        }
+
+        .nickname {
+            display: inline-block; /* 각 닉네임을 가로로 나란히 배치하기 위해 */
+            margin-right: 10px; /* 마지막 글자와 닉네임 사이의 간격 조절 */
         }
 
     .comment-box {
@@ -319,3 +329,11 @@
             max-height: 400px;  /* 높이는 원하는대로 설정 */
             overflow-y: auto;  /* 수직 스크롤 설정 */
         }
+
+        .submit-button {
+            margin-left :68%;
+            margin-top:2%;
+            margin-bottom:5%;
+        }
+
+

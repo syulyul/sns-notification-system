@@ -37,8 +37,13 @@ public class DefaultBoardService implements BoardService {
   }
 
   @Override
-  public List<Board> list(int category) throws Exception {
-    return boardDao.findAll(category);
+  public List<Board> list(int category, int limit, int page) throws Exception {
+    return boardDao.findAll(category, limit, limit * (page - 1));
+  }
+
+  @Override
+  public int getTotalCount(int category) throws Exception {
+    return boardDao.getTotalCount(category);
   }
 
   @Override
@@ -96,14 +101,13 @@ public class DefaultBoardService implements BoardService {
   @Override
   public int unlike(Member member, Board board) throws Exception {
     int result = boardDao.deleteLike(member.getNo(), board.getNo());
-//        notificationService.add(new NotiLog(
-//            board.getWriter().getNo(),
-//            NotiType.FOLLOW_TYPE,
-//            member.getNick() + "님이 회원의 게시글 좋아요를 취소 했습니다..",
-//            "/board/" +board.getCategory()+"/"+ board.getNo()));
+    // notificationService.add(new NotiLog(
+    // board.getWriter().getNo(),
+    // NotiType.FOLLOW_TYPE,
+    // member.getNick() + "님이 회원의 게시글 좋아요를 취소 했습니다..",
+    // "/board/" +board.getCategory()+"/"+ board.getNo()));
     return result;
   }
-
 
   // board 테이블 좋아요 수 +1 -1
   @Transactional
@@ -121,4 +125,10 @@ public class DefaultBoardService implements BoardService {
   public List<Integer> likelist(int memberNo) throws Exception {
     return boardDao.findLikeByMno(memberNo);
   }
+
+  @Override
+  public List<String> boardlikelist(int boardNo) throws Exception {
+    return boardDao.findLikeByBno(boardNo);
+  }
+
 }

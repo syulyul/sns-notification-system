@@ -15,13 +15,14 @@
     <a style="font-size:30px;" href="/board/list?category=2">방명록</a>
   </div>
   <div style="font-size:20px" class="header_profile">
+    <div data-th-replace="notification/noti :: notiBox">새로운 알림이 도착했습니다</div>
     <a style="text-decoration-line: none" href="/notification/list">
-      <div id="newNotiBox">새로운 알림이 도착했습니다</div>
       <span id="notReadNotiCount" data-th-text="${session.notReadNotiCount}"></span>
       <script src="/js/header.js"></script>
       <img src="/images/noti.png" alt="알림" class="header_notification-icon">
     </a>
-    <a style="text-decoration-line: none" data-th-href="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+    <a style="text-decoration-line: none"
+       data-th-href="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
       <img data-th-unless="${session.loginUser.photo == null}"
            data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${session.loginUser.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|"
            alt="프로필 사진" class="header_user-icon">

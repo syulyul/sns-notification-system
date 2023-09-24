@@ -90,6 +90,12 @@
         from sns_member
         where phone_number = #{phoneNumber}
     </select>
+
+    <update id="updatePasswordByPhoneNumber">
+        UPDATE sns_member
+        SET password = SHA1(#{newPassword})
+        WHERE phone_number = #{phoneNumber}
+    </update>
 </mapper>
 
 

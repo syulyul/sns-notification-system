@@ -46,17 +46,16 @@ public class SmsService {
         return numStr;
 
     }
+    public int memberTelCountFind(String phoneNumber) {
+        int data = memberDao.countByTel(phoneNumber);
+        if (data != 0) {
+            return 0; // 전화번호와 일치하는 회원이 있으면 0을 반환
+        }
+        return 1; // 일치하는 회원이 없으면 1을 반환
+    }
 
+    public void updatePasswordByPhoneNumber(String phoneNumber, String newPassword) {
+        memberDao.updatePasswordByPhoneNumber(phoneNumber, newPassword);
+    }
 
-    // 문자 코드 검증
-//    public boolean verifyCode(String code, HttpSession session) {
-//        String rand = (String) session.getAttribute("rand");
-//        if (rand != null && rand.equals(code)) {
-//            // 코드 일치, 세션에서 코드 제거
-//            session.removeAttribute("rand");
-//            return true;
-//        }
-//        // 코드 불일치
-//        return false;
-//    }
 }

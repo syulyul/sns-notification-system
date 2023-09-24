@@ -57,6 +57,7 @@ public class MyPageController {
       @RequestParam(defaultValue = "") String show,
       @RequestParam(name = "keyword", required = false) String keyword,
       @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "15") int pageSize,
       Model model,
       HttpSession session,
       @ModelAttribute("queryString") String queryString) throws Exception {
@@ -84,11 +85,13 @@ public class MyPageController {
     switch (show) {
       case "followers":
         model.addAttribute("followList", myPageService.followerList(no));
-        model.addAttribute("maxPage", (myPageService.getFollowerCount(no) + 14) % 15);
+        model.addAttribute("maxPage",
+            (myPageService.getFollowerCount(no) + pageSize - 1) / pageSize);
         break;
       case "followings":
         model.addAttribute("followList", myPageService.followingList(no));
-        model.addAttribute("maxPage", (myPageService.getFollowingCount(no) + 14) % 15);
+        model.addAttribute("maxPage",
+            (myPageService.getFollowingCount(no) + pageSize - 1) / pageSize);
         break;
       case "searchMembers":
         model.addAttribute("followList", myPageService.searchMembersList(keyword));
@@ -96,11 +99,9 @@ public class MyPageController {
         break;
       default:
         model.addAttribute("followList", null);
-        model.addAttribute("list", boardService.list(1));
+        model.addAttribute("boardList", boardService.list(1, pageSize, 1));
         break;
     }
-    // myPageService.increaseVisitCount(no);
-    // model.addAttribute("loginUser", loginUser);
     session.setAttribute("loginUser", loginUser);
     return "myPage/detail";
   }
