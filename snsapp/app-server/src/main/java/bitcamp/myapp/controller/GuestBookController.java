@@ -72,8 +72,8 @@ public class GuestBookController {
             model.addAttribute("likedGuestBooks", likedGuestBooks);
         }
 
-        List<GuestBook> GuestBookList = guestBookService.list(no);
-        model.addAttribute("GuestBookList", GuestBookList);
+        List<GuestBook> guestBookList = guestBookService.list(no);
+        model.addAttribute("guestBookList", guestBookList);
 
         session.setAttribute("loginUser", loginUser);
         return "guestBook/read";
