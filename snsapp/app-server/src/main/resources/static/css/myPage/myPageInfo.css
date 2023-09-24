@@ -12,15 +12,18 @@
     width: 300px;
     height: auto;
     border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
-    /*margin: auto;*/
+    margin: auto;
+    justify-content: center;
+    display: flex;
 }
 
 /* 왼쪽 사이드바 스타일 */
 .sidebar {
     float: left;
-    width: 300px;
+    width: 420px;
     height: 700px;
     padding: 20px;
+    /*margin-left: 3%;*/
     background-color: #FAFAF5;
     border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
 }
@@ -33,17 +36,17 @@
 }
 
 .sidebar_my_btn a {
-    font-size: 15px;
+    font-size: 20px;
     background-color: #426B1F;
     color: white;
     border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
+    border-radius: 10px;
+    padding: 15px 40px;
     cursor: pointer;
     /*margin-right: 10px;*/
     white-space : nowrap;
     text-decoration-line: none;
-    margin: 20px;
+    margin: 30px;
 }
 
 .sidebar_my_btn a:hover {

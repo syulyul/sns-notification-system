@@ -30,10 +30,10 @@
   </p>
 </form>
 
-<div id="myPageBox">
+<div id="myPageBox" style="">
   <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
   <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
-  <div class="list_form" >
+  <div class="list_form">
 <!--        <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
 
     <div class="boardListBox" data-th-unless="${followList}">
