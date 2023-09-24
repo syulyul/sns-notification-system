@@ -12,7 +12,7 @@ public class GuestBook implements Serializable {
   private String title; // 제목
   private String content; // 내용
   private Member writer; // 작성자
-  private Member toUser; // 당사자
+  private MyPage toUser; // 당사자
   private Member profile; // 회원 프사
   private int likes; // 좋아요
   private Timestamp createdAt; // 등록일
@@ -76,11 +76,11 @@ public class GuestBook implements Serializable {
     this.writer = writer;
   }
 
-  public Member getToUser() {
+  public MyPage getToUser() {
     return toUser;
   }
 
-  public void setToUser(Member toUser) {
+  public void setToUser(MyPage toUser) {
     this.toUser = toUser;
   }
 

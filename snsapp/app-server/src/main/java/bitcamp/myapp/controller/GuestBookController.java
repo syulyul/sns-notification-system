@@ -1,9 +1,11 @@
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.GuestBookService;
+import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.vo.GuestBook;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.MyPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,11 @@ import java.util.List;
 @Controller
 @RequestMapping("/guestBook")
 public class GuestBookController {
-
     @Autowired
     GuestBookService guestBookService;
+
+    @Autowired
+    MyPageService myPageService;
 
     {
         System.out.println("GuestBookController 생성됨!");
@@ -33,13 +37,16 @@ public class GuestBookController {
     public void form() throws Exception {
     }
 
-    @PostMapping("add")
-    public String add(GuestBook guestBook, HttpSession session) throws Exception {
+    @PostMapping("add/{no}")
+    public String add(@PathVariable int no, GuestBook guestBook, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
         }
         guestBook.setWriter(loginUser);
+
+        MyPage mypage = myPageService.get(no);
+        guestBook.setToUser(mypage);
 
         guestBookService.add(guestBook);
         return "redirect:/guestBook/" + guestBook.getToUser().getNo();
