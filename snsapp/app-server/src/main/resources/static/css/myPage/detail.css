@@ -21,3 +21,16 @@
        background-color: #FAFAF5;
        border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
    }
+
+   .search_btn {
+       font-size: 15px;
+       background-color: #426B1F;
+       color: white;
+       border: none;
+       border-radius: 8px;
+       padding: 10px 20px;
+       cursor: pointer;
+       white-space : nowrap;
+       text-decoration-line: none;
+       margin: 20px 20px 20px 10px;
+   }
