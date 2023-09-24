@@ -9,6 +9,7 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -111,7 +112,8 @@ public class MyPageController {
       @RequestParam(defaultValue = "") String show,
       @RequestParam("keyword") String keyword,
       @RequestParam(defaultValue = "1") int page) throws Exception {
-    String queryString = String.format("?show=%s&keyword=%s&page=%d", show, keyword, page);
+    String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
+    String queryString = String.format("?show=%s&keyword=%s&page=%d", show, encodedKeyword, page);
 
     return "redirect:/myPage/" + no + queryString;
   }
