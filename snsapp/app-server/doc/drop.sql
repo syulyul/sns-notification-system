@@ -1,8 +1,8 @@
 -- 게시글
-DROP TABLE IF EXISTS sns_board RESTRICT;
+DROP TABLE IF EXISTS sns_board_comment RESTRICT;
 
 -- 댓글
-DROP TABLE IF EXISTS sns_board_comment RESTRICT;
+DROP TABLE IF EXISTS sns_board RESTRICT;
 
 -- 게시글 좋아요
 DROP TABLE IF EXISTS sns_board_like RESTRICT;
