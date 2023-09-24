@@ -36,16 +36,15 @@ public class GuestBookController {
     @GetMapping("form")
     public void form() throws Exception {
     }
-
-    @PostMapping("add/{no}")
-    public String add(@PathVariable int no, GuestBook guestBook, HttpSession session) throws Exception {
+    @PostMapping("add")
+    public String add(GuestBook guestBook, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
         }
         guestBook.setWriter(loginUser);
 
-        MyPage mypage = myPageService.get(no);
+        MyPage mypage = myPageService.get(loginUser.getNo()); // 세션에서 회원번호 가져오기
         guestBook.setToUser(mypage);
 
         guestBookService.add(guestBook);

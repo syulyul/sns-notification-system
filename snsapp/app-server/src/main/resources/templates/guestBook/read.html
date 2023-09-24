@@ -7,52 +7,53 @@
   <link rel="stylesheet" type="text/css" href="/css/font.css">
   <link rel="stylesheet" type="text/css" href="/css/header.css">
   <link rel="stylesheet" type="text/css" href="/css/board/read.css">
+  <link rel="stylesheet" type="text/css" href="/css/guestBook/add.css">
 
   <script>
     function toggleLikeButtons(guestBookNo) {
-        const likeButton = document.getElementById('likeButton-' + guestBookNo);
-        const unlikeButton = document.getElementById('unlikeButton-' + guestBookNo);
+      const likeButton = document.getElementById('likeButton-' + guestBookNo);
+      const unlikeButton = document.getElementById('unlikeButton-' + guestBookNo);
 
-        // 버튼의 표시 상태를 전환
-        if (likeButton.style.display === 'none' || likeButton.style.display === '') {
-            likeButton.style.display = 'inline-block';
-            unlikeButton.style.display = 'none';
-        } else {
-            likeButton.style.display = 'none';
-            unlikeButton.style.display = 'inline-block';
-        }
+      // 버튼의 표시 상태를 전환
+      if (likeButton.style.display === 'none' || likeButton.style.display === '') {
+        likeButton.style.display = 'inline-block';
+        unlikeButton.style.display = 'none';
+      } else {
+        likeButton.style.display = 'none';
+        unlikeButton.style.display = 'inline-block';
+      }
     }
 
     function likeButtonClicked(buttonElement) {
-        const guestBookNo = buttonElement.getAttribute("data-guestBook-no");
+      const guestBookNo = buttonElement.getAttribute("data-guestBook-no");
 
-        fetch(`/guestBook/like?guestBookNo=${guestBookNo}`, {
-                method: 'POST'
-            })
-            .then(response => {
+      fetch(`/guestBook/like?guestBookNo=${guestBookNo}`, {
+        method: 'POST'
+      })
+              .then(response => {
                 if (response.ok) {
-                    alert("좋아요가 성공적으로 처리되었습니다.");
-                    toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
+                  alert("좋아요가 성공적으로 처리되었습니다.");
+                  toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
                 } else {
-                    alert("좋아요 처리 중 오류가 발생했습니다.");
+                  alert("좋아요 처리 중 오류가 발생했습니다.");
                 }
-            });
+              });
     }
 
     function unlikeButtonClicked(buttonElement) {
-        const guestBookNo = buttonElement.getAttribute("data-board-no");
+      const guestBookNo = buttonElement.getAttribute("data-board-no");
 
-        fetch(`/guestBook/unlike?guestBookNo=${guestBookNo}`, {
-                method: 'POST'
-            })
-            .then(response => {
+      fetch(`/guestBook/unlike?guestBookNo=${guestBookNo}`, {
+        method: 'POST'
+      })
+              .then(response => {
                 if (response.ok) {
-                    alert("좋아요 취소가 성공적으로 처리되었습니다.");
-                    toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
+                  alert("좋아요 취소가 성공적으로 처리되었습니다.");
+                  toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
                 } else {
-                    alert("좋아요 취소 처리 중 오류가 발생했습니다.");
+                  alert("좋아요 취소 처리 중 오류가 발생했습니다.");
                 }
-            });
+              });
     }
   </script>
 
@@ -65,26 +66,22 @@
 <div class="guestbook-title">
   <span th:text="${guestBookOwnerNick} ? ${guestBookOwnerNick + '의 방명록'} : ''"></span>
 </div>
-<form data-th-action="@{/guestBook/add/{no}}" method='post'>
-  <table>
-    <tr>
-      <th>🌱제목</th>
-      <td><input style="font-size:18px; border: none;" type="text" name="title"
-                 placeholder="제목을 입력하세요"></td>
-    </tr>
-    <tr>
-      <th>🌱내용</th>
-      <td><textarea style="font-size:18px; border: none;" name="content" rows="6"
-                    placeholder="내용을 입력하세요"></textarea></td>
-    </tr>
-    <!--<input type='hidden' name='mno' value="${guestBook.writer.no}">-->
-    <input type='hidden' name='mem_no' value="${param.no}">
-    <!--파일 선택 부분 투명으로 바꿔줌 -->
-  </table>
-  <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
-    <button>등록</button>
-  </div>
-</form>
+
+<!-- 방명록 추가 폼 -->
+<div class="add-guestbook-form">
+  <h1>방명록 추가</h1>
+  <form method="post" action="/guestBook/add">
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title" required>
+    </div>
+    <div class="form-group">
+      <label for="content">내용</label>
+      <textarea id="content" name="content" required></textarea>
+    </div>
+    <button type="submit">추가</button>
+  </form>
+</div>
 
 <!-- 게시글 목록을 출력하기 위한 Thymeleaf 반복문 -->
 <div data-th-each="guestBook : ${guestBookList}">
