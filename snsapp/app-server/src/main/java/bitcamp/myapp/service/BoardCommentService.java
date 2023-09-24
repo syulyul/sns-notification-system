@@ -10,4 +10,6 @@ public interface BoardCommentService {
     BoardComment get(int no, int boardNo) throws Exception;
     int update(BoardComment boardComment) throws Exception;
     int delete(int no, int boardNo) throws Exception;
+
+    List<BoardComment> mycommentlist(int writerNo, int limit, int page) throws Exception;
 }

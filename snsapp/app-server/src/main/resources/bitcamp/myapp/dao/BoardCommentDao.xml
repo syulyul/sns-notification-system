@@ -73,4 +73,22 @@
     where
       bno=#{boardNo}
   </delete>
+
+  <select id="findAllByMno" resultMap="boardCommentMap">
+    select
+    bc.bcno,
+    bc.bno,
+    bc.content,
+    bc.created_at,
+    m.mno,
+    m.nick,
+    m.filepath
+    from
+    sns_board_comment bc inner join sns_member m on bc.mno=m.mno
+    where
+    m.mno=#{writerNo}
+    order by
+    bc.bcno desc
+    limit #{limit} offset #{offset}
+  </select>
 </mapper>
