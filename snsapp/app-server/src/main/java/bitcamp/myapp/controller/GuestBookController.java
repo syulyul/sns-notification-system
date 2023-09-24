@@ -42,7 +42,7 @@ public class GuestBookController {
         guestBook.setWriter(loginUser);
 
         guestBookService.add(guestBook);
-        return "redirect:/guestBook/list/userNo=" + guestBook.getToUser().getNo();
+        return "redirect:/guestBook/" + guestBook.getToUser().getNo();
     }
 
     @GetMapping("delete")
@@ -58,7 +58,7 @@ public class GuestBookController {
             throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
         } else {
             guestBookService.delete(g.getNo());
-            return "redirect:/guestBook/list/userNo=" + loginUser.getNo();
+            return "redirect:/guestBook/" + loginUser.getNo();
         }
     }
 
