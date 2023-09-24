@@ -57,6 +57,9 @@ public class DefaultMyPageService implements MyPageService {
   @Transactional
   @Override
   public int follow(Member follower, int followingNo) throws Exception {
+    if (follower.getNo() == followingNo) {
+      return 0;
+    }
     int result = myPageDao.insertFollow(follower.getNo(), followingNo);
     notificationService.add(new NotiLog(
         followingNo,
