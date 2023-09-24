@@ -138,4 +138,9 @@ public class DefaultBoardService implements BoardService {
     return boardDao.findLikeByBno(boardNo);
   }
 
+  @Override
+  public List<Board> myboardlist(int category, int writerNo, int limit, int page) throws Exception {
+    return boardDao.findAllByMno(category, writerNo, limit, limit * (page - 1));
+  }
+
 }

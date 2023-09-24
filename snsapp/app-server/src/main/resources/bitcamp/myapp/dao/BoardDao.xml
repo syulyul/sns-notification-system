@@ -203,4 +203,26 @@
     b.bno=#{boardNo}
   </select>
 
+  <select id="findAllByMno" resultMap="boardMap">
+    select
+    b.bno,
+    b.title,
+    b.content,
+    b.view_count,
+    b.created_at,
+    b.category,
+    b.likes,
+    m.mno,
+    m.nick,
+    m.filepath
+    from
+    sns_board b inner join sns_member m on b.mno=m.mno
+    where
+    m.mno=#{writerNo} and category=#{category}
+    order by
+    b.bno desc
+    limit #{limit} offset #{offset}
+  </select>
+
+
 </mapper>
