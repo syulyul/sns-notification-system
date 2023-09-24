@@ -63,8 +63,7 @@ public class GuestBookController {
     }
 
     @GetMapping("/{no}")
-    public String list(@PathVariable int no,
-                       Model model, HttpSession session) throws Exception {
+    public String list(@PathVariable int no, Model model, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
 
         if (loginUser != null) {
@@ -74,6 +73,10 @@ public class GuestBookController {
 
         List<GuestBook> guestBookList = guestBookService.list(no);
         model.addAttribute("guestBookList", guestBookList);
+
+        // 이 부분에서 회원의 닉네임을 가져와서 모델에 추가
+        String guestBookOwnerNick = guestBookService.getMemberNickByNo(no);
+        model.addAttribute("guestBookOwnerNick", guestBookOwnerNick);
 
         session.setAttribute("loginUser", loginUser);
         return "guestBook/read";

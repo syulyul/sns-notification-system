@@ -61,7 +61,10 @@
 <body>
 
 <div data-th-replace="header :: header"></div>
-
+<!-- "누구누구의 방명록" 추가 -->
+<div class="guestbook-title">
+  <span th:text="${guestBookOwnerNick} ? ${guestBookOwnerNick + '의 방명록'} : ''"></span>
+</div>
 <form data-th-action="@{/guestBook/add}" method='post'>
   <table>
     <tr>
@@ -85,6 +88,7 @@
 
 <!-- 게시글 목록을 출력하기 위한 Thymeleaf 반복문 -->
 <div data-th-each="guestBook : ${guestBookList}">
+
   <div class="container">
     <!-- 게시글 목록 -->
     <table class="content-table">

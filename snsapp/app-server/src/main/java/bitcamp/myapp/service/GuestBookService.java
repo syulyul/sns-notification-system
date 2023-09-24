@@ -17,4 +17,6 @@ public interface GuestBookService {
   int unlike(Member member, GuestBook guestBookNo) throws Exception; // guestbook_like 테이블 좋아요정보 삭제
   List<Integer> likelist(int memberNo) throws Exception;
   List<String> guestBooklikelist(int guestBookNo) throws Exception;
+  String getMemberNickByNo(int memberNo) throws Exception;
+
 }

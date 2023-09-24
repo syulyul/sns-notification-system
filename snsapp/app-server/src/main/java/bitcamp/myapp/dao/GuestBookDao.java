@@ -20,4 +20,6 @@ public interface GuestBookDao {
   int deleteLikes(int guestBookNo); // 게시판 삭제시 좋아요도 삭제
   List<Integer> findLikeByMno(int memberNo);
   List<String> findLikeByBno(int guestBookNo);
+  // nick 값을 가져오기 위한 쿼리 추가
+  String findNickByMno(int no); // 회원 고유 번호를 사용하여 nick 값을 가져옴
 }
