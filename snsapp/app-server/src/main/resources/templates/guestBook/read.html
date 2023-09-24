@@ -77,7 +77,7 @@
       <td><textarea style="font-size:18px; border: none;" name="content" rows="6"
                     placeholder="내용을 입력하세요"></textarea></td>
     </tr>
-    <input type='hidden' name='memNo' data-th-value="${param.no}">
+    <input type='hidden' name='mem_no' data-th-value="${param.no}">
     <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
     <!--파일 선택 부분 투명으로 바꿔줌 -->
   </table>
@@ -123,7 +123,7 @@
           </div>
         </td>
         <td class="content-like-cell" colspan="3" style="position: relative;">
-          <span data-th-if="${bguestBookoard != null}"
+          <span data-th-if="${guestBook != null}"
                 data-th-text="${guestBook.content != null ? guestBook.content : '내용입니다!'}"></span>
           <!-- 좋아요 버튼 -->
           <button class="like-button"
@@ -146,7 +146,7 @@
       </tr>
     </table>
     <div class="btn-container">
-      <a data-th-href="@{/guestBook/delete(no=${guestBook != null ? guestBook.no : '0'})}">
+      <a data-th-href="@{/guestBook/delete(no=${guestBook.no})}">
         <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
           <button>삭제</button>
         </div>
