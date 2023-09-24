@@ -23,11 +23,14 @@
 <br>
 <form data-th-action="@{'/myPage/' + ${myPage.no}}" method="POST">
 <!--  <input type="text" name="show" value="searchMembers" style="display: none;">-->
-  <input type="text" name="keyword" placeholder="검색어를 입력해 주세요.">
+  <p style="margin-left: 20px;">친구 찾기
+  <input type="text" name="keyword" placeholder="검색어를 입력해 주세요."
+         style="margin-left: 20px; padding: 10px;">
   <input type="hidden" name="show" value="searchMembers">
-  <input type="submit" value="검색">
+  <input class="search_btn" type="submit" value="검색">
+  </p>
 </form>
-<br><br>
+
 <div id="myPageBox">
   <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
   <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
