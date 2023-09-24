@@ -15,4 +15,5 @@ public interface MemberDao {
   int update(Member member);
   int delete(int no);
   int countByTel(@Param("phoneNumber") String phoneNumber);
+  int updatePasswordByPhoneNumber(@Param("phoneNumber") String phoneNumber, @Param("newPassword") String newPassword);
 }

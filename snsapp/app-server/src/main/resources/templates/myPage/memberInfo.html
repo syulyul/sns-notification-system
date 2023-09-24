@@ -36,11 +36,18 @@
         <div data-th-if="${session.loginUser.no != myPage.no}" style="display: inline; margin-left: 10px; float:right">
           <input class="followCheckbox" data-th-checked="${session.loginUser.getFollowMemberSet().contains(myPage)}"
             data-th-id="|toggle${myPage.no}|" type="checkbox">
-          <label class="unfollowLabel" data-th-for="|toggle${myPage.no}|" data-th-onclick="|unfollow(${myPage.no})|">
+          <label class="unfollowLabel"
+                 data-th-for="|toggle${myPage.no}|"
+                 data-th-onclick="|unfollow(${myPage.no})|"
+                 style="color: green; background-color: transparent;">
             팔로잉 취소
           </label>
-          <label class="followLabel" data-th-for="|toggle${myPage.no}|" data-th-onclick="|follow(${myPage.no})|">
-            팔로우
+
+          <label class="followLabel"
+                 data-th-for="|toggle${myPage.no}|"
+                 data-th-onclick="|follow(${myPage.no})|"
+                 style="color: green; background-color: transparent;">
+            팔로우 하기
           </label>
         </div>
         <div style="padding-bottom:10px; padding-top: 10px;">

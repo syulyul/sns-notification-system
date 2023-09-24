@@ -49,16 +49,21 @@ public class NotificationController {
   @GetMapping("list")
   public String list(
       @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int pageSize,
       Model model,
       HttpSession session) throws Exception {
 
     model.addAttribute("page", page);
+    model.addAttribute("pageSize", pageSize);
     model.addAttribute("notiList",
-        notificationService.notiLogList(((Member) session.getAttribute("loginUser")).getNo()));
+        notificationService.notiLogList(
+            ((Member) session.getAttribute("loginUser")).getNo(),
+            pageSize,
+            page));
     model.addAttribute("maxPage",
         (notificationService.notiLogCount(
             ((Member) session.getAttribute("loginUser")).getNo())
-            + 14) % 15);
+            + pageSize - 1) / pageSize);
     return "notification/list";
   }
 

@@ -70,24 +70,27 @@
         <div class="container">
             <div class="content-box">
                 <form data-th-action="@{/board/update}" data-th-if="${board}" enctype='multipart/form-data' method='post'>
-                    <input name='no' th:value="${board.no}" type='hidden'>
+                    <input name='no' data-th-value="${board.no}" type='hidden'>
                     <h1>
-                        <input style="margin-top: 20px; margin-bottom: 30px; font-size: 40px; background-color: transparent; border: none;" name="title" th:value="${board.title}" type="text" value="${board.title}">
+                        <input style="margin-top: 20px; margin-bottom: 30px; font-size: 40px; background-color: transparent; border: none;" name="title" data-th-value="${board.title}" type="text" value="${board.title}">
                     </h1>
-                    <div style="margin-left: 300px; margin-bottom: 30px;" class="meta-info">
-                        <span th:text="${board.writer.nick}"></span>
+                    <div style="margin-left: 335px; margin-bottom: 30px;" class="meta-info">
+                        <span data-th-text="${board.writer.nick}"></span>
                         <img class="clock-icon" src="/images/clock.png">
-                        <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
+                        <span data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}"></span>
                         <img class="clock-icon" src="/images/eye.png">
-                        <span th:text="${board.viewCount}"></span>
+                        <span data-th-text="${board.viewCount}"></span>
                     </div>
                     <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
-                    <textarea data-th-text="${board.content}" name='content' style="font-size: 20px; background-color: transparent; border: none; height:200px; width:600px;">내용입니다!</textarea>
+                    <textarea data-th-text="${board.content}" name='content' style="font-size: 20px; background-color: transparent; border: none; height:200px; widdata-th-600px;">내용입니다!</textarea>
                     <div>
-                        <div data-th-each="file : ${board.attachedFiles}">
-                            <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" width="100"/>
-                            <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|"></a>
-                            [<a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|">삭제</a>]<br>
+                        <div style="overflow-x: auto; white-space: nowrap;">
+                            <div data-th-each="file : ${board.attachedFiles}" style="display: inline-block; margin-right: 10px;">
+                                <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" height="200" width="200"/>
+                                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|"></a>
+                                <a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|"
+                                   style="color: black; text-decoration: none; font-weight: bold;">X</a><br>
+                            </div>
                         </div>
                         <input multiple name='files' type='file'>
                     </div>
@@ -97,20 +100,27 @@
                         <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
                             <button type="button">삭제</button>
                         </a>
-                        <a th:href="@{/board/list(category=${board.category})}">
+                        <a data-th-href="@{/board/list(category=${board.category})}">
                             <button type="button">목록</button>
                         </a>
                     </div>
                 </form>
             </div> <!-- End of content-box -->
             <!-- 좋아요 버튼 -->
-            <button class="like-button" th:id="'likeButton-' + ${board.no}" th:if="${!likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
+            <button class="like-button" data-th-id="'likeButton-' + ${board.no}" data-th-if="${!likedBoards.contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
                 좋아요 누르기 🤍
             </button>
             <!-- 좋아요 취소 버튼 -->
-            <button class="unlike-button" th:id="'unlikeButton-' + ${board.no}" th:if="${likedBoards.contains(board.no)}" th:attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
+            <button class="unlike-button" data-th-id="'unlikeButton-' + ${board.no}" data-th-if="${likedBoards.contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
                 좋아요 취소❤️
             </button>
+            <div class="like-list">
+                <span data-th-each="nickname, iterStat : ${likedUserNicknames}">
+                    <span data-th-text="${nickname}"></span>
+                    <span data-th-if="${iterStat.last}"> 님이 좋아합니다</span>
+                    <span data-th-unless="${iterStat.last}">, </span>
+                </span>
+            </div>
         </div> <!-- End of container -->
     </div> <!-- End of left-column -->
 
@@ -118,16 +128,16 @@
         <!-- 댓글 작성 폼 -->
         <div class="comment-input-container">
             <form action="/board/addComment" method="post">
-                <table style="margin-right:100px; margin-bottom: 2%">
+                <table style="margin-bottom: 2%; margin-left: 0%">
                     <tr>
-                        <th>댓글달기</th>
-                        <td><textarea style=" border: none;" name="content" rows="4" cols="30"></textarea></td>
+                        <th>댓글</th>
+                        <td><textarea style="border: none;" name="content" rows="4" cols="60" placeholder="내용을 입력하세요"></textarea></td>
                     </tr>
                 </table>
                 <div style="text-align: center; margin-left:45%; margin-top:2%; margin-bottom:5%;">
-                    <button type="submit">작성</button>
+                    <button class="submit-button" type="submit">작성</button>
                 </div>
-                <input name="boardNo" th:value="${board.no}" type="hidden">
+                <input name="boardNo" data-th-value="${board.no}" type="hidden">
             </form>
         </div>
 
@@ -151,12 +161,12 @@
                                         </a>
                                     </div>
                                     <div>
-                                        <span th:text="${boardComment.writer.nick}"></span>
+                                        <span data-th-text="${boardComment.writer.nick}"></span>
                                     </div>
                                 </div>
                                 <div class="meta-info">
                                     <img class="clock-icon" src="/images/clock.png">
-                                    <span th:text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}"></span>
+                                    <span data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}"></span>
                                 </div>
                             </div>
                         </td>
@@ -164,7 +174,7 @@
                     <!-- 두 번째 행: 내용 -->
                     <tr class="second-row">
                         <td class="content-like-cell" colspan="3" style="position: relative;">
-                            <span th:text="${boardComment.content}"></span>
+                            <span data-th-text="${boardComment.content}"></span>
                         </td>
                     </tr>
                 </table>

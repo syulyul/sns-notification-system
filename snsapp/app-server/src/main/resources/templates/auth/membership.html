@@ -2,78 +2,34 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>BITSNS</title>
+    <title>🌱회원가입</title>
+    <link rel="stylesheet" type="text/css" href="/css/font.css">
 
     <style>
+
         html {
             height: 100%;
         }
 
         /* h2 글자의 색은 흰색으로 크기는 30px */
         h2 {
-            color: white;
-            font-size: 30px;
-            /*font-style: ;*/
+            color: black;
+            font-size: 40px;
         }
 
-
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            font-size: 20px;
             height: 100%;
             margin: 0;
             display: grid;
             justify-items: center;
             align-items: center;
-            background-color: #3a3a3a;
-        }
-
-        form {
-            top: 40%;
-            left: 100%;
-            width: 1000px;
-            height: 2500px;
-            padding: 30px;
-        }
-
-        /*  각 tr의 td의 모서리가 둥글게 하고 table 우측 끝에 가깝지만 margin을 5정도 남기고 꽉 채울수 있도록 */
-
-        table {
-            margin: 0 auto;
-            width: 100%; /* 테이블이 부모 요소에 꽉 차도록 설정합니다. */
-            border-collapse: collapse; /* 테이블 셀 경계를 병합하여 모서리가 둥글게 됩니다. */
-            text-align: left;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #cccccc;
-            margin-right: 5px; /* 오른쪽 마진을 5px로 설정합니다. */
-
-        }
-
-
-        table {
+            background-color: #426B1F;
         }
 
         th, td {
+            font-size:25px;
             padding: 25px;
-            /*border-bottom: 1px solid #ccc;*/
         }
-
-        td {
-            background: #cccccc;
-        }
-
-        /*  th의 글자 색은 흰색으로 배경색은 #3a3a3a로 */
-        th {
-            background: #3a3a3a;
-            /*color: white;*/
-            /*background-color: #3a3a3a;*/
-            padding: 10px; /* 셀 안의 여백을 설정합니다. */
-            border-radius: 10px; /* 모서리를 둥글게 만듭니다. */
-
-        }
-
 
         input[type="file"],
         input[type="text"],
@@ -90,78 +46,194 @@
             font-size: 16px;
         }
 
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
+        /*input[type="submit"] {*/
+        /*    background-color: #007bff;*/
+        /*    color: #fff;*/
+        /*    padding: 10px 20px;*/
+        /*    border-radius: 3px;*/
+        /*    cursor: pointer;*/
+        /*}*/
 
         input[type="submit"]:hover {
+            /* hover 시 스타일링을 추가할 수 있습니다. */
         }
 
-        /* 3. 사진에서 사진을 넣게된다면 이미지를 우측에 출력하도록 table 수정 */
-        .image-container {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
+         /*3. 사진에서 사진을 넣게된다면 이미지를 우측에 출력하도록 table 수정*/
+        /*.image-container {*/
+        /*    display: flex;*/
+        /*    justify-content: flex-end;*/
+        /*}*/
 
         .user-image {
             max-width: 100px; /* 이미지의 최대 너비를 설정합니다. */
-            height: auto; /* 이미지의 높이를 자동으로 조정합니다. */
-            margin-left: 10px; /* 이미지와 텍스트 사이의 간격을 조정합니다. */
+            max-height: 100px;
         }
 
+        body {
+            height: 100%;
+            margin: 0;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+            background-color: #426B1F;
+        }
+
+        #main-holder {
+            width: 70%;
+            height: 80%;
+            justify-items: center;
+            align-items: center;
+            background-color: white;
+            border-radius: 7px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-container {
+            margin-top: 0;
+        }
+
+        /* 버튼들을 오른쪽 정렬하고 간격을 조정합니다. */
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px; /* 버튼 사이의 간격을 조정합니다. */
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #426B1F;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .send-button {
+            margin-left: 30px;
+            width: 140px;
+        }
+
+        .verify-button {
+            margin-left: 30px;
+            width: 140px;
+        }
+
+        .submit-button {
+            width: 160px;
+            height: 60px;
+            display: block;
+            margin: 0 auto;
+            margin-top : 70px;
+        }
     </style>
-
-
 </head>
+
 <body>
-<h2>회원가입 양식</h2>
-<form action='add' method='post' enctype='multipart/form-data'>
-    <table>
+<main id="main-holder">
+    <h2>회원가입</h2>
+    <div style="margin-bottom: 80px;"></div>
+    <form action='add' method='post' enctype='multipart/form-data'>
+        <table class="form-container">
+            <tr>
+                <th>🌱 이름</th>
+                <td><input type='text' name='name' style="width: 400px;" placeholder="이름을 입력하세요"></td>
+            </tr>
+            <tr>
+                <th>🌱 닉네임</th>
+                <td><input type='text' name='nick' style="width: 400px;" placeholder="닉네임을 입력하세요"></td>
+            </tr>
+            <tr>
+                <th>🌱 전화번호</th>
+                <td>
+                    <div style="display: flex; align-items: center;">
+                        <input style="width: 400px;" type="text" name="phoneNumber" id="tel" placeholder="전화번호를 입력하세요">
+                        <button type="button" id="sendCode" class="send-button">인증번호전송</button>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input style="width: 400px;" type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
+                        <button  type="button" id="verifyCode" class="verify-button">인증번호확인</button>
+                    </div>
+                    <p id="result"></p>
+                </td>
+            </tr>
+            <tr>
+                <th>🌱 비밀번호</th>
+                <td><input type='password' name='password' style="width: 400px;" placeholder="비밀번호를 입력하세요"></td>
+            </tr>
+            <tr>
+                <th>🌱 프로필사진</th>
+                <td>
+                    <div class="image-container" style="width:400px;">
+                        <img src="" class="user-image" id="previewImage">
+                        <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button style="font-size:30px;" type="submit" class="submit-button">가입하기</button>
+    </form>
 
-        <tr>
-            <th>닉네임</th>
-            <td><input type='text' name='nick'></td>
-        </tr>
-        <tr>
-            <th>이름</th>
-            <td><input type='text' name='name'></td>
-        </tr>
-        <tr>
-            <th>전화번호</th>
-            <td><input type='tel' name='phoneNumber'></td>
-        </tr>
-        <tr>
-            <th>비밀번호</th>
-            <td><input type='password' name='password'></td>
-        </tr>
-        <tr>
-            <th>사진 :</th>
-            <td>
-                <div class="image-container">
-                    <img src="" class="user-image" id="previewImage">
-                    <input type='file' name='photofile' id="photoInput" onchange="previewFile()">
-                </div>
-            </td>
-        </tr>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#sendCode").click(function() {
+            var phoneNumber = $("#tel").val();
+            $.ajax({
+                type: "POST",
+                url: "/auth/phoneAuth",
+                data: { phoneNumber: phoneNumber },
+                success: function(response) {
+                    if (response) {
+                        $("#result").text("가입된 전화번호입니다.");
+                    } else {
+                        $("#result").text("인증번호를 전송했습니다.");
+                    }
+                },
+                error: function() {
+                    $("#result").text("오류가 발생했습니다.");
+                }
+            });
+        });
 
-        <tr>
-            <td>
-                <button><a href="/" style="backface-visibility: hidden">뒤로가기</a></button>
-            </td>
-            <td>
-                <button type='reset'>초기화</button>
-            </td>
-            <td>
-                <button type="submit">가입하기</button>
-            </td>
-        </tr>
+        $("#verifyCode").click(function() {
+            var code = $("#verificationCode").val();
+            $.ajax({
+                type: "POST",
+                url: "/auth/phoneAuthOk",
+                data: { code: code },
+                success: function(response) {
+                    if (response) {
+                        $("#result").text("인증 실패");
+                    } else {
+                        $("#result").text("인증 성공");
+                    }
+                },
+                error: function() {
+                    $("#result").text("오류가 발생했습니다.");
+                }
+            });
+        });
+    });
 
-    </table>
-</form>
+    function previewFile() {
+        var preview = document.getElementById('previewImage');
+        var file = document.getElementById('photoInput').files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+</main>
 </body>
 </html>

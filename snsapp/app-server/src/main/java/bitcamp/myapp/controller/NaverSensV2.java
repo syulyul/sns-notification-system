@@ -115,9 +115,11 @@ public class NaverSensV2 {
         //bodyJson.put("reserveTime", LocalDateTime.now().format(formatter));
 
         String body = bodyJson.toJSONString();
+        String to = toJson.toJSONString();
 
         System.out.println(body);
         System.out.println("phoneNumber 값" + rand);
+        System.out.println("phoneNumber 값" + to);
 
         try {
             String url = "https://sens.apigw.ntruss.com/sms/v2/services/" + serviceId + "/messages";

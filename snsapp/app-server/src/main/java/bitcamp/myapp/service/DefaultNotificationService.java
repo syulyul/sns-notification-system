@@ -30,8 +30,8 @@ public class DefaultNotificationService implements NotificationService {
   }
 
   @Override
-  public List<NotiLog> notiLogList(int memberNo) throws Exception {
-    return notificationDao.findAllNotiLog(memberNo);
+  public List<NotiLog> notiLogList(int memberNo, int limit, int page) throws Exception {
+    return notificationDao.findAllNotiLog(memberNo, limit, limit * (page - 1));
   }
 
   @Override
