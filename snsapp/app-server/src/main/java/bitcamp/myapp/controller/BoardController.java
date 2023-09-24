@@ -86,7 +86,10 @@ public class BoardController {
   }
 
   @GetMapping("detail/{category}/{no}")
-  public String detail(@PathVariable int category, @PathVariable int no, Model model,
+  public String detail(
+      @PathVariable int category,
+      @PathVariable int no,
+      Model model,
       HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
 
@@ -242,7 +245,9 @@ public class BoardController {
 
   // 댓글 기능
   @PostMapping("addComment")
-  public String addComment(BoardComment boardComment, HttpSession session,
+  public String addComment(
+      BoardComment boardComment,
+      HttpSession session,
       @RequestParam("boardNo") int boardNo) throws Exception {
     Member loginUser = (LoginUser) session.getAttribute("loginUser");
     if (loginUser == null) {
@@ -268,7 +273,9 @@ public class BoardController {
   }
 
   @PostMapping("updateComment")
-  public String updateComment(@RequestParam int boardNo, BoardComment boardComment,
+  public String updateComment(
+      @RequestParam int boardNo,
+      BoardComment boardComment,
       HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
