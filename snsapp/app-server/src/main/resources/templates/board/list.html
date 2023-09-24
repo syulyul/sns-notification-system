@@ -14,6 +14,13 @@
 
 <div style="margin-bottom: 80px;"></div>
 
+<div class="search-box">
+  <input type="text" placeholder="제목을 입력하세요">
+  <button class="search-button">검색</button>
+</div>
+
+<div style="margin-bottom: 80px;"></div>
+
 <!-- 새 글 버튼을 표 상단 우측에 추가 -->
 <div style="text-align: right; margin-right: 20px; margin-top: -30px;">
   <a data-th-href="@{/board/form(category=${param.category})}" class="button">새 글</a>
@@ -63,24 +70,31 @@
 </table>
 
 <!-- 페이징 처리 부분 -->
-<div class="pagination">
-  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=1,pageSize=${pageSize})}"
-     data-th-text="(${page} > 1) ? '처음' : _"></a>
-  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} - 1),pageSize=${pageSize})}"
-     data-th-text="(${page} > 2) ? '이전' : _"></a>
-  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${page},pageSize=${pageSize})}"
+<div id="pageLabel">
+  <!-- 이전 페이지들 -->
+  <a th:if="${page > 1}" th:class="${page == 1 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=1,pageSize=${pageSize})}"
+     data-th-text="1"></a>
+
+  <a th:if="${page > 2}" th:class="${page == 2 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} - 1),pageSize=${pageSize})}"
+     data-th-text="2"></a>
+
+  <!-- 현재 페이지 -->
+  <a th:class="${page == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${page},pageSize=${pageSize})}"
      data-th-text="${page}"></a>
-  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} + 1),pageSize=${pageSize})}"
-     data-th-text="${page} < ${maxPage} - 1 ? '다음' : _"></a>
-  <a data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${maxPage},pageSize=${pageSize})}"
-     data-th-text="${page} < ${maxPage} ? '마지막' : _"></a>
+
+  <!-- 다음 페이지들 -->
+  <a th:if="${page < (maxPage - 1)}" th:class="${page + 1 == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} + 1),pageSize=${pageSize})}"
+     data-th-text="${page + 1}"></a>
+
+  <a th:if="${page < maxPage}" th:class="${maxPage == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${maxPage},pageSize=${pageSize})}"
+     data-th-text="${maxPage}"></a>
 </div>
 
-<!-- 검색 박스와 검색 버튼 추가 -->
-<div class="search-box">
-  <input type="text" placeholder="제목을 입력하세요">
-  <button class="search-button">검색</button>
-</div>
 
 <div data-th-replace="footer :: footer"></div>
 

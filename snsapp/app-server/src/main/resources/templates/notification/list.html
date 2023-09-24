@@ -18,7 +18,7 @@
   <!-- 알림 로그 목록 컨테이너 -->
   <div class="notification-list-container">
     <div id="notification-title-container">
-      <h2 class="notification-title" style="margin-left: 5%;">🌱알림내용</h2> <!-- 수정: 제목을 왼쪽 정렬로 맞춤 -->
+      <h2 class="notification-title" style="margin-left: 5%;">🌱 알림내용</h2> <!-- 수정: 제목을 왼쪽 정렬로 맞춤 -->
       <form data-th-action="'/notification/updateAllState'" method='post'>
         <input value="1" name="notiState" type="hidden">
         <button>
@@ -42,17 +42,25 @@
   </div>
 
   <div id="pageLabel">
-    <!--    <span data-th-text="${#request.getRequestURL()}"></span>-->
-    <a data-th-href="@{${#request.getRequestURL()}(page=1,pageSize=${pageSize})}"
-       data-th-text="(${page} > 1) ? '1' : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=(${page} - 1),pageSize=${pageSize})}"
-       data-th-text="(${page} > 2) ? ${page} - 1 : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=${page},pageSize=${pageSize})}"
+    <a th:if="${page > 1}" th:class="${page == 1 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=1,keyword=${param.keyword})}"
+       data-th-text="'1'"></a>
+
+    <a th:if="${page > 2}" th:class="${page == 2 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} - 1),keyword=${param.keyword})}"
+       data-th-text="'2'"></a>
+
+    <a th:class="${page == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=${page},keyword=${param.keyword})}"
        data-th-text="${page}"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=(${page} + 1),pageSize=${pageSize})}"
-       data-th-text="${page} < ${maxPage} - 1 ? ${page} + 1 : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(page=${maxPage},pageSize=${pageSize})}"
-       data-th-text="${page} < ${maxPage} ? ${maxPage} : _"></a>
+
+    <a th:if="${page < (maxPage - 1)}" th:class="${page + 1 == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} + 1),keyword=${param.keyword})}"
+       data-th-text="${page + 1}"></a>
+
+    <a th:if="${page < maxPage}" th:class="${maxPage == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=${maxPage},keyword=${param.keyword})}"
+       data-th-text="${maxPage}"></a>
   </div>
 </div>
 <div data-th-replace="footer :: footer"></div>
