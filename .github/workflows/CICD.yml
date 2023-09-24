@@ -1,0 +1,57 @@
+name: snsapp CI/CD
+
+on: # 워크플로우를 언제 실행할지를 정의
+  push:
+    branches:
+      - practice-werybalert
+
+jobs: # 워크플로우의 작업을 정의
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+         token: ${{ secrets.ACTION_TOKEN }}
+    
+    - name: Set up Java
+      uses: actions/setup-java@v2 # Java 환경을 설정하고 JDK 17을 사용
+      with:
+        java-version: 17
+
+    - name: Build with Gradle
+      run: | # Gradle 빌드를 실행하기 전에 Gradle 래퍼 스크립트에 실행 권한을 부여하고, ./gradlew build 명령을 실행하여 빌드
+        chmod +x ./gradlew
+        ./gradlew build
+        
+
+    - name: Publish to GitHub Packages
+      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+      with:
+        arguments: publish
+      env:
+        USERNAME: ${{ github.actor }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Deploy to Server
+      run: |
+        
+        #  SSH 연결 정보를 정의
+        
+        SSH_HOST=223.130.134.219
+        SSH_PORT=22
+        SSH_USER=root
+        SSH_KEY=/snsapp/app-server/src/main/resources/snsapp-key.pem
+        
+        # 로컬에서 워크플로우 실행 중에 생성된 빌드 아티팩트의 경로와 서버에 복사할 경로를 정의
+        
+        LOCAL_DIR=./build/libs/ 
+        REMOTE_DIR=/path/to/remote/directory/ # Remote directory where artifacts will be copied
+        
+        scp -i "$SSH_KEY" -P "$SSH_PORT" -r "$LOCAL_DIR" "$SSH_USER@$SSH_HOST:$REMOTE_DIR"
+        
+         #사용할 개인 키를 GitHub 리포지토리의 비밀 키로 저장하고, 워크플로우에서 환경 변수로 사용
+      env:
+        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
