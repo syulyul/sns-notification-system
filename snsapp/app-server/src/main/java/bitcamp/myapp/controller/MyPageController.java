@@ -100,6 +100,7 @@ public class MyPageController {
       default:
         model.addAttribute("followList", null);
         model.addAttribute("boardList", boardService.list(1, pageSize, 1));
+        model.addAttribute("myboardList", boardService.myboardlist(1, loginUser.getNo(), pageSize, 1));
         break;
     }
     session.setAttribute("loginUser", loginUser);
