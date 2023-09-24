@@ -21,7 +21,7 @@ h1 {
 }
 
 .form-container {
-    width: 500px;
+    width: 600px;
     margin: 0 auto; /* 가운데 정렬을 위해 수정 */
     background-color: #ffffff;
     padding-left: 30px;
@@ -58,6 +58,7 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
+    margin-right: 26%;
 }
 
 .form-group input[type="file"],
@@ -74,6 +75,7 @@ h1 {
     height: 3.5em;
     width: 100%;
     padding-right: 1em;
+    margin-right: 26%;
 }
 
 .button-container {
@@ -115,12 +117,12 @@ h1 {
     padding-top: 0px;
 }
 
-/* 프로필 사진 스타일 */
-.profile-pic {
-    max-width: 100%;
-    height: auto;
-    border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
-}
+/*!* 프로필 사진 스타일 *!*/
+/*.profile-pic {*/
+/*    max-width: 100%;*/
+/*    height: auto;*/
+/*    border-radius: 50%; !* 원 모양 프로필 사진을 만들기 위해 추가 *!*/
+/*}*/
 
 .info_update {
     width: 103.5%;

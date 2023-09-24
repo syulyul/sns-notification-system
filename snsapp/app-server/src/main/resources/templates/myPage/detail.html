@@ -24,23 +24,28 @@
 <form data-th-action="@{'/myPage/' + ${myPage.no}}" method="POST">
 <!--  <input type="text" name="show" value="searchMembers" style="display: none;">-->
   <p style="margin-left: 20px;">🔍️ 친구찾기
-  <input type="text" name="keyword" placeholder="이름을 입력해주세요."
-         style="margin-left: 20px; padding: 10px;">
-  <input type="hidden" name="show" value="searchMembers">
-  <input class="search_btn" type="submit" value="검색">
+    <input type="text" name="keyword" placeholder="이름을 입력해주세요."
+           style="margin-left: 20px; padding: 14px; border-width:1px; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+    <input type="hidden" name="show" value="searchMembers">
+    <input class="search_btn" type="submit" value="검색">
   </p>
 </form>
 
 <div id="myPageBox">
   <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
   <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
-  <!--      <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
-  <div class="boardListBox" data-th-unless="${followList}">
-    <div data-th-replace="board/list :: boardList">목록</div>
-    <!-- <div data-th-replace="board/list :: boardList">목록</div> -->
-    <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
+  <div class="list_form" >
+<!--        <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
+
+    <div class="boardListBox" data-th-unless="${followList}">
+      <div data-th-replace="board/list :: boardList">목록</div>
+      <!-- <div data-th-replace="board/list :: boardList">목록</div> -->
+      <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
+    </div>
+      <div class="form-list">
+      <div data-th-replace="myPage/followList :: followList"></div>
+    </div>
   </div>
-  <div data-th-replace="myPage/followList :: followList"></div>
 
 </div>
 
