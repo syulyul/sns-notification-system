@@ -42,7 +42,7 @@ public class GuestBookController {
         guestBook.setWriter(loginUser);
 
         guestBookService.add(guestBook);
-        return "redirect:/guestBook/list/userNo=" + guestBook.getToUser().getNo();
+        return "redirect:/guestBook/" + guestBook.getToUser().getNo();
     }
 
     @GetMapping("delete")
@@ -58,13 +58,12 @@ public class GuestBookController {
             throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
         } else {
             guestBookService.delete(g.getNo());
-            return "redirect:/guestBook/list/userNo=" + loginUser.getNo();
+            return "redirect:/guestBook/" + loginUser.getNo();
         }
     }
 
     @GetMapping("/{no}")
-    public String list(@PathVariable int no,
-                       Model model, HttpSession session) throws Exception {
+    public String list(@PathVariable int no, Model model, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
 
         if (loginUser != null) {
@@ -74,6 +73,10 @@ public class GuestBookController {
 
         List<GuestBook> guestBookList = guestBookService.list(no);
         model.addAttribute("guestBookList", guestBookList);
+
+        // 이 부분에서 회원의 닉네임을 가져와서 모델에 추가
+        String guestBookOwnerNick = guestBookService.getMemberNickByNo(no);
+        model.addAttribute("guestBookOwnerNick", guestBookOwnerNick);
 
         session.setAttribute("loginUser", loginUser);
         return "guestBook/read";

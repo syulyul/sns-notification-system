@@ -87,4 +87,11 @@ public class DefaultGuestBookService implements GuestBookService {
     public List<String> guestBooklikelist(int guestBookNo) throws Exception {
         return guestBookDao.findLikeByBno(guestBookNo);
     }
+
+    @Override
+    public String getMemberNickByNo(int memberNo) throws Exception {
+        // GuestBookDao를 이용하여 회원 번호로 회원 닉네임을 가져옴
+        String memberNick = guestBookDao.findNickByMno(memberNo);
+        return memberNick;
+    }
 }

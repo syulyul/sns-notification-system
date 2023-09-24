@@ -48,4 +48,9 @@ public interface BoardDao {
 
   List<String> findLikeByBno(int boardNo);
 
+  List<Board> findAllByMno(
+          @Param("category") int category,
+          @Param("writerNo") int writerNo,
+          @Param("limit") int limit,
+          @Param("offset") int offset);
 }
