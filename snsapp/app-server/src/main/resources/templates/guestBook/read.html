@@ -65,7 +65,7 @@
 <div class="guestbook-title">
   <span th:text="${guestBookOwnerNick} ? ${guestBookOwnerNick + '의 방명록'} : ''"></span>
 </div>
-<form data-th-action="@{/guestBook/add}" method='post'>
+<form data-th-action="@{/guestBook/add/{no}}" method='post'>
   <table>
     <tr>
       <th>🌱제목</th>
@@ -77,8 +77,8 @@
       <td><textarea style="font-size:18px; border: none;" name="content" rows="6"
                     placeholder="내용을 입력하세요"></textarea></td>
     </tr>
-    <input type='hidden' name='mem_no' data-th-value="${param.no}">
-    <input type='file' name='files' class='hidden-file-input' multiple placeholder="제목을 입력하세요"><br>
+    <!--<input type='hidden' name='mno' value="${guestBook.writer.no}">-->
+    <input type='hidden' name='mem_no' value="${param.no}">
     <!--파일 선택 부분 투명으로 바꿔줌 -->
   </table>
   <div style="text-align: center; margin-left:37%; margin-bottom:2%;">

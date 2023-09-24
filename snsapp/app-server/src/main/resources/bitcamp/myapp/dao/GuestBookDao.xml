@@ -18,10 +18,8 @@
       <result column="filepath" property="photo" />
     </association>
 
-    <association property="toUser" javaType="member">
+    <association property="toUser" javaType="mypage">
       <id     column="mem_no"   property="no" />
-      <result column="nick"     property="nick" />
-      <result column="filepath" property="photo" />
     </association>
   </resultMap>
 
