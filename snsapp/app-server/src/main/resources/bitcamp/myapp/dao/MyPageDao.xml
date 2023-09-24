@@ -77,25 +77,26 @@
     mno=#{memberNo}
   </delete>
 
-  <select id="searchMembers" resultMap="memberMap" parameterType="string">
-      select
-        m.mno
-        ,m.nick
-        ,m.name
-        ,m.filepath
-      from sns_member as m
-      where
-        m.nick LIKE '%' || #{keyword} || '%'
-        OR m.name LIKE '%' || #{keyword} || '%'
+  <select id="searchMembers" resultMap="memberMap">
+    select
+    m.mno
+    ,m.nick
+    ,m.name
+    ,m.filepath
+    from sns_member as m
+    where
+    m.nick LIKE CONCAT('%', #{keyword}, '%')
+    OR m.name LIKE CONCAT('%', #{keyword}, '%')
+    limit #{limit} offset #{offset}
   </select>
 
-  <select id="getSearchMembersCount" parameterType="int" resultType="int">
+  <select id="getSearchMembersCount" parameterType="string" resultType="int">
     select count(mno)
     from
-      sns_member as m
+    sns_member as m
     where
-      m.nick LIKE '%' || #{keyword} || '%'
-      OR m.name LIKE '%' || #{keyword} || '%'
+    m.nick LIKE CONCAT('%', #{keyword}, '%')
+    OR m.name LIKE CONCAT('%', #{keyword}, '%')
   </select>
 
   <insert id="insertFollow">

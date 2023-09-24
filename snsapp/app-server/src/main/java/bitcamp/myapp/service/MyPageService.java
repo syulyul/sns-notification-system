@@ -20,9 +20,9 @@ public interface MyPageService {
 
   int unfollow(Member follower, int followingNo) throws Exception;
 
-  List<Member> searchMembersList(String keyword) throws Exception;
+  List<Member> searchMembersList(String keyword, int limit, int page) throws Exception;
 
-  int getSearchMembersCount(int memberNo);
+  int getSearchMembersCount(String keyword);
 
   List<Member> followerList(int memberNo) throws Exception;
 

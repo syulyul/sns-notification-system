@@ -27,9 +27,12 @@ public interface MyPageDao {
       @Param("followerNo") int followerNo,
       @Param("followingNo") int followingNo);
 
-  List<Member> searchMembers(String keyword);
+  List<Member> searchMembers(
+      @Param("keyword") String keyword,
+      @Param("limit") int limit,
+      @Param("offset") int offset);
 
-  int getSearchMembersCount(int memberNo);
+  int getSearchMembersCount(String keyword);
 
   List<Member> findAllFollowers(int memberNo);
 

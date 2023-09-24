@@ -9,7 +9,6 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/myPage")
@@ -80,7 +78,6 @@ public class MyPageController {
     model.addAttribute("myPage", myPageService.get(no));
     model.addAttribute("show", show);
     model.addAttribute("page", page);
-    model.getAttribute(keyword);
 
     switch (show) {
       case "followers":
@@ -94,56 +91,29 @@ public class MyPageController {
             (myPageService.getFollowingCount(no) + pageSize - 1) / pageSize);
         break;
       case "searchMembers":
-        model.addAttribute("followList", myPageService.searchMembersList(keyword));
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("followList", myPageService.searchMembersList(keyword, pageSize, page));
         model.addAttribute("maxPage",
-                (myPageService.getFollowingCount(no) + pageSize - 1) / pageSize);
+            (myPageService.getSearchMembersCount(keyword) + pageSize - 1) / pageSize);
         break;
       default:
         model.addAttribute("followList", null);
         model.addAttribute("boardList", boardService.list(1, pageSize, 1));
         break;
     }
-    System.out.println("get 실행");
     session.setAttribute("loginUser", loginUser);
     return "myPage/detail";
   }
 
   @PostMapping("{no}")
   public String searchMembers(
-          Member member,
-          @PathVariable int no,
-          @RequestParam(defaultValue = "") String show,
-          @RequestParam("keyword") String keyword,
-          @RequestParam(defaultValue = "1") int page,
-          RedirectAttributes redirectAttributes,
-          Model model,
-          HttpSession session) throws Exception {
-    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-    MyPage myPage = myPageService.get(member.getNo());
+      @PathVariable int no,
+      @RequestParam(defaultValue = "") String show,
+      @RequestParam("keyword") String keyword,
+      @RequestParam(defaultValue = "1") int page) throws Exception {
+    String queryString = String.format("?show=%s&keyword=%s&page=%d", show, keyword, page);
 
-    // URL에 포함될 쿼리 문자열 생성 및 URL 인코딩
-    String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
-    String queryString = String.format("?show=%s&keyword=%s&page=%d", show, encodedKeyword, page);
-
-    // 리다이렉트할 URL 생성
-    String redirectUrl = "/myPage/" + no + "/detail" + queryString;
-
-    // 쿼리 스트링 파라미터를 FlashAttributes에 추가
-    redirectAttributes.addFlashAttribute("queryString", queryString);
-
-    System.out.println("============" + keyword);
-    System.out.println("============" + queryString);
-
-//    model.addAttribute("myPage", myPageService.get(no));
-//    model.addAttribute("show", show);
-//    model.addAttribute("page", page);
-    model.addAttribute("keyword", keyword);
-//
-//    System.out.println("%%%%%%%%%%%%%%%" + model.getAttribute(keyword));
-
-    session.setAttribute("loginUser", loginUser);
-    System.out.println("post 실행");
-    return "myPage/detail";
+    return "redirect:/myPage/" + no + queryString;
   }
 
   @GetMapping("{no}/info")
