@@ -88,13 +88,6 @@
             margin-top: 1px;
         }
 
-        .table1, .table2 {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
         .table1 {
             display: flex;
             flex-direction: column;
@@ -108,43 +101,38 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-top: 200px;
+
         }
 
-        .table3 {
-            display: flex;
+        #newPasswordForm {
+            display: none;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-top: 200px;
+            justify-content: center; /* 가운데 정렬 */
         }
 
-
-        #newPasswordForm {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 80%;
-        }
-
-        #newPasswordForm input[type="password"] {
+        .input-field {
             padding: 10px;
             margin: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            width: 250px;
+            width: 260px;
+            margin-left:320px;
         }
 
-        #newPasswordForm .change-button {
-            margin-left:30px;
-            width: 220px;
+        .common-button {
+            padding: 10px 20px;
+            background-color: #426B1F;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 160px;
+            margin-left:23px;
         }
 
-        #newPasswordForm #changeresult {
-            color: black;
-            font-weight: bold;
-            margin-top: 1px;
-        }
+
 
     </style>
 
@@ -158,26 +146,28 @@
 
     <table class="table2">
     <div style="display: flex; align-items: center;">
+        <label style="width: 200px;">🌱 전화번호</label>
         <input type="text" name="phoneNumber" id="tel" placeholder="전화번호를 입력하세요">
         <button class="send-button" id="sendCode">인증번호 전송</button>
     </div>
     <p id="sendresult"></p>
 
     <div style="display: flex; align-items: center;">
+        <label style="width: 200px;">🌱 인증번호</label>
         <input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
         <button class="verify-button" id="verifyCode">인증번호 확인</button>
     </div>
     <p id="verifyresult"></p>
     </table>
 
-    <div class="table3">
-<!-- 새로운 비밀번호 입력 폼 (초기에는 숨겨져 있음) -->
-    <div id="newPasswordForm" style="display: flex; align-items: center;" >
-        <input type="password" id="newPassword" placeholder="새로운 비밀번호를 입력하세요">
-        <button class="change-button" id="changePassword">비밀번호 변경</button>
+ <!-- 새로운 비밀번호 입력 폼 (초기에는 숨겨져 있음) -->
+    <div id="newPasswordForm" style="display: none; flex-direction: row; align-items: center; justify-content: center;" >
+        <label style="width: 200px;">🌱 새 비밀번호</label>
+        <input class="input-field" type="password" id="newPassword" placeholder="새로운 비밀번호를 입력하세요">
+        <button class="common-button" id="changePassword">비밀번호 변경</button>
     </div>
     <p id="changeresult"></p>
-    </div>
+
 
 
 
@@ -221,7 +211,7 @@
                         $("#verifyresult").text("인증이 완료되었습니다.");
 
                         // 인증 성공 시 새로운 비밀번호 입력 폼을 표시
-                        $("#newPasswordForm").show();
+                        $("#newPasswordForm").show(); //여기변경
 
                         // 비밀번호 변경 버튼 클릭 이벤트 처리
                         $("#changePassword").click(function() {
@@ -236,7 +226,7 @@
                                 },
                                 success: function(response) {
                                     if (response) {
-                                        $("#changeresult").text("비밀번호 변경 성공: " + response);
+                                        $("#changeresult").text("비밀번호 변경 성공! " + response);
                                     } else {
                                         $("#changeresult").text("비밀번호 변경 실패");
                                     }

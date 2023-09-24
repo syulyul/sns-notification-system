@@ -44,11 +44,9 @@
       text-align: center;
       margin: 0;
       padding: 5px;
-      font-size: 12px;
+      font-size: 25px;
       font-weight: bold;
-      color: #8a0000;
-      border: 1px solid #8a0000;
-      background-color: #e58f8f;
+      color: black;
       opacity: 0;
     }
 
@@ -75,11 +73,11 @@
       outline: none;
       padding: 0px 0px 5px 5px;
       height: 60px;
-      width: 400px;
+      width: 420px;
     }
 
     #login-form-submit {
-      width: 100%;
+      width: 90%;
       padding: 7px;
       border: none;
       border-radius: 5px;
@@ -90,18 +88,13 @@
       outline: none;
     }
 
-    .user-field {
-      display: block;
+    .user-field, .user2-field {
+      display: inline-block;
       width: 220px;
       height: 30px;
       margin: 0 auto;
-    }
-
-    .user2-field {
-      display: block;
-      width: 220px;
-      height: 100px;
-      margin: 0 auto;
+      text-decoration: none; /* 밑줄 제거 */
+      color: black; /* 텍스트 색상을 검정색으로 설정 */
     }
 
     @font-face {
@@ -122,6 +115,14 @@
     body {
       font-size: 20px;
     }
+
+    .left-align {
+      justify-self: start; /*전화번호 저장 왼쪽으로*/
+      margin-left:30px;
+      margin-top: 10px;
+      margin-bottom: 50px;
+      font-size:25px;
+    }
   </style>
 </head>
 
@@ -136,14 +137,16 @@
 
   <form id="login-form" method="post">
     <!-- 사용자 입력 필드 -->
-    <input type="text" name="phoneNumber" id="username-field" class="login-form-field"
+    <input style="font-size: 25px" type="text" name="phoneNumber" id="username-field" class="login-form-field"
            placeholder="전화번호">
-    <input type="password" name="password" id="password-field" class="login-form-field" placeholder="비밀번호">
-    <input type="submit" value="로그인" id="login-form-submit">
-    <input type='checkbox' name='savePhoneNumber' id='savePhoneNumber'> 전화번호 저장
+    <input style="font-size: 25px" type="password" name="password" id="password-field" class="login-form-field" placeholder="비밀번호">
+    <input style="font-size: 25px" type="submit" value="로그인" id="login-form-submit">
+    <label class="left-align">
+      <input type='checkbox' name='savePhoneNumber' id='savePhoneNumber'> 전화번호 저장
+    </label>
     <ul>
-      <li><a href="/auth/add" class="user-field"> 회원가입</a></li>
-      <li><a href="/auth/find" class="user2-field"> 비밀번호 찾기</a></li>
+      <a style="font-size: 25px" href="/auth/add" class="user-field"> 🌱 회원가입</a>
+      <a style="font-size: 25px" href="/auth/find" class="user2-field"> 🌱 비밀번호 찾기</a>
     </ul>
 
 
@@ -166,14 +169,14 @@
           if (xhr.status === 200) {
             // 로그인 성공
             loginErrorMsg.style.opacity = 0; // 에러 메시지 감추기
-            alert("로그인에 성공하였습니다.");
+            alert("로그인 성공 🌱");
             const responseData = JSON.parse(xhr.responseText); // JSON 응답 데이터 파싱
             const userNo = responseData.userNo; // 사용자 번호 추출
             location.href = `/myPage/${userNo}`; // 사용자 번호를 기반으로 리다이렉트
           } else {
             // 로그인 실패
             loginErrorMsg.style.opacity = 1; // 에러 메시지 표시
-            loginErrorMsg.innerText = "로그인 실패, 다시 시도하세요."; // 에러 메시지 설정
+            loginErrorMsg.innerText = "로그인 실패! 다시 시도해주세요"; // 에러 메시지 설정
           }
         };
 
