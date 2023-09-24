@@ -13,9 +13,10 @@
   <div data-th-each="member : ${followList}">
     <div class="memberItem">
       <input data-th-id="memberNo" data-th-value="${member.no}" type="hidden">
-      <img class="memberPhoto" data-th-src="'/images/avatar.png'"
+      <img class="memberPhoto" data-th-src="'/images/default.jpg'"
            data-th-unless="${member.photo}">
-      <img class="memberPhoto" data-th-if="${member.photo}" data-th-src="${member.photo}">
+      <img class="memberPhoto" data-th-if="${member.photo}"
+           data-th-src="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${member.photo}|">
       <a data-th-href="|/myPage/${member.no}|">
         <span data-th-text="${member.nick}"></span>
       </a>
