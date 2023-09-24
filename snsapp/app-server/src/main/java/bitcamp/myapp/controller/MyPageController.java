@@ -1,9 +1,6 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.service.BoardService;
-import bitcamp.myapp.service.MemberService;
-import bitcamp.myapp.service.MyPageService;
-import bitcamp.myapp.service.NcpObjectStorageService;
+import bitcamp.myapp.service.*;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
@@ -42,6 +39,9 @@ public class MyPageController {
 
   @Autowired
   BoardService boardService;
+
+  @Autowired
+  BoardCommentService boardCommentService;
 
   @Autowired
   NcpObjectStorageService ncpObjectStorageService;
@@ -101,6 +101,7 @@ public class MyPageController {
         model.addAttribute("followList", null);
         model.addAttribute("boardList", boardService.list(1, pageSize, 1));
         model.addAttribute("myboardList", boardService.myboardlist(1, loginUser.getNo(), pageSize, 1));
+        model.addAttribute("mycommentList", boardCommentService.mycommentlist(loginUser.getNo(), pageSize, 1));
         break;
     }
     session.setAttribute("loginUser", loginUser);
