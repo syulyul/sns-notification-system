@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="/css/font.css">
   <link rel="stylesheet" type="text/css" href="/css/header.css">
   <link rel="stylesheet" type="text/css" href="/css/board/list.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/detail.css">
 
 
 </head>
@@ -14,17 +15,28 @@
 
 <div style="margin-bottom: 80px;"></div>
 
-<div class="search-box">
-  <input type="text" placeholder="제목을 입력하세요">
-  <button class="search-button">검색</button>
-</div>
+<!--<div class="search-box">-->
+<!--  <input type="text" placeholder="제목을 입력하세요">-->
+<!--  <button class="search-button">검색</button>-->
+<!--</div>-->
+<div style="margin:3%;">
+<p>🔍️ 게시글 찾기
+  <input type="text" name="keyword" placeholder="검색어를 입력해주세요."
+         style="margin-left: 20px; padding: 14px; border-width:1px; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+  <input type="hidden" name="show" value="searchMembers">
+  <input class="search_btn" type="submit" value="검색">
+</p>
 
-<div style="margin-bottom: 80px;"></div>
+<!--<div style="margin-bottom: 80px;"></div>-->
 
 <!-- 새 글 버튼을 표 상단 우측에 추가 -->
-<div style="text-align: right; margin-right: 20px; margin-top: -30px;">
-  <a data-th-href="@{/board/form(category=${param.category})}" class="button">새 글</a>
-  <a style="margin-right:1650px;" data-th-href='@{/}' class="button">메인</a>
+<!--<div style="text-align: right; margin-right: 20px; margin-top: -30px;">-->
+<!--  <a data-th-href="@{/board/form(category=${param.category})}" class="button" style="white-space: nowrap">새 글</a>-->
+<!--  <a style="margin-right:1650px; white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>-->
+<!--</div>-->
+<div style="float:right; margin: 20px 0 25px;">
+  <a data-th-href="@{/board/form(category=${param.category})}" class="button" style="margin-left: 20px;">새 글</a>
+  <a style="white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>
 </div>
 
 <table border='1' data-th-fragment="boardList">
@@ -94,7 +106,7 @@
      data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${maxPage},pageSize=${pageSize})}"
      data-th-text="${maxPage}"></a>
 </div>
-
+</div>
 
 <div data-th-replace="footer :: footer"></div>
 
