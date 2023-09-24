@@ -12,7 +12,7 @@
   <div class="header_nav">
     <a style="font-size:30px;" data-th-href="|/myPage/${session.loginUser.no}|">마이페이지</a>
     <a style="font-size:30px;" href="/board/list?category=1">게시글</a>
-    <a style="font-size:30px;" href="/board/list?category=2">방명록</a>
+    <a style="font-size:30px;" data-th-href="|/guestBook/${session.loginUser.no}|">방명록</a>
   </div>
   <div style="font-size:20px" class="header_profile">
     <a style="text-decoration-line: none" href="/notification/list">

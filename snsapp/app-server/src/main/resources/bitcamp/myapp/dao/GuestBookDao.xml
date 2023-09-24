@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.GuestBookDao">
+
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="guestbook" id="guestBookMap">
+    <id     column="gbno"       property="no" />
+    <result column="title"      property="title" />
+    <result column="content"    property="content" />
+    <result column="likes"      property="likes" />
+    <result column="created_at" property="createdAt" />
+
+    <association property="writer" javaType="member">
+      <id     column="mno"      property="no" />
+      <result column="mem_no"   property="memNo" />
+      <result column="nick"     property="nick" />
+      <result column="filepath" property="photo" />
+    </association>
+  </resultMap>
+
+  <resultMap type="guestBookLike" id="guestBookLikeMap">
+    <result column="mno"    property="memberNo" />
+    <result column="gbno"   property="guestBookNo" />
+  </resultMap>
+
+  <insert id="insert" parameterType="guestBook"
+          useGeneratedKeys="true" keyColumn="guestBook_no" keyProperty="no">
+    insert into sns_guestbook(title,content,mno,memNo,created_at)
+    values(#{title},#{content},#{writer.no},#{toUser.no},now())
+  </insert>
+
+  <select id="findAll" parameterType="int" resultMap="guestBookMap">
+    select
+      g.gbno,
+      g.title,
+      g.content,
+      g.created_at,
+      g.likes,
+      m.mno,
+      m.nick,
+      m.filepath
+    from
+    sns_guestbook g inner join sns_member m on g.mno=m.mno
+    where
+      g.mno=#{no}
+    order by
+      g.gbno desc
+  </select>
+
+<!--  <select id="getTotalCount" parameterType="int" resultType="int">-->
+<!--    select count(bno)-->
+<!--    from sns_board-->
+<!--    where category=#{category}-->
+<!--  </select>-->
+
+  <select id="findBy" resultMap="guestBookMap" parameterType="int">
+    select
+      g.gbno,
+      g.title,
+      g.content,
+      g.created_at,
+      g.likes,
+      m.mno,
+      m.nick
+    from
+      sns_guestbook b inner join sns_member m on b.mno=m.mno
+    where
+      g.gbno=#{guestBookNo}
+  </select>
+
+  <delete id="delete" parameterType="int">
+    delete from sns_guestbook
+    where
+      gbno=#{no}
+  </delete>
+
+  <select id="findLikeBy" parameterType="int" resultMap="guestBookLikeMap">
+    select
+      mno,
+      gbno
+    from
+      sns_guestbook_like
+    where
+      mno=#{memberNo} and gbno=#{guestBookNo}
+  </select>
+
+  <update id="updateLike" parameterType="int">
+    update sns_guestbook set
+      likes=likes + 1
+    where
+      gbno=#{no}
+  </update>
+
+  <update id="cancelLike" parameterType="int">
+    update sns_guestbook set
+      likes=likes - 1
+    where
+      gbno=#{no}
+  </update>
+
+  <insert id="insertLike" parameterType="int">
+    insert into sns_guestbook_like(mno, gbno)
+    values(#{memberNo}, #{guestBookNo})
+  </insert>
+
+  <delete id="deleteLike" parameterType="int">
+    delete from sns_guestbook_like
+    where
+      mno=#{memberNo} and gbno=#{guestBookNo}
+  </delete>
+
+  <delete id="deleteLikes" parameterType="int">
+    delete from sns_guestbook_like
+    where
+      gbno=#{guestBookNo}
+  </delete>
+
+  <select id="findLikeByMno" parameterType="int">
+    select
+      gbno
+    from
+      sns_guestbook_like
+    where
+      mno=#{memberNo}
+  </select>
+
+  <select id="findLikeByBno" parameterType="int">
+    select
+      m.nick
+    from
+      sns_guestbook_like g inner join sns_member m on g.mno=m.mno
+    where
+      g.gbno=#{guestBookNo}
+  </select>
+</mapper>
