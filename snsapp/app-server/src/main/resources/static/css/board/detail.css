@@ -75,10 +75,6 @@
             bottom: 0;
         }
 
-        .like-list {
-            margin-top: 30px;
-            text-align: right; /* 마지막 글자를 오른쪽으로 정렬하기 위해 */
-        }
 
         .nickname {
             display: inline-block; /* 각 닉네임을 가로로 나란히 배치하기 위해 */
@@ -336,4 +332,9 @@
             margin-bottom:5%;
         }
 
+        .like-list {
+            position: absolute;
+            top:900px;
+            right: 300px;
+        }
 
