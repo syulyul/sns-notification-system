@@ -8,15 +8,18 @@
 
 /* 프로필 사진 스타일 */
 .profile-pic {
-    max-width: 100%;
+    /*max-width: 100%;*/
+    width: 300px;
     height: auto;
     border-radius: 50%; /* 원 모양 프로필 사진을 만들기 위해 추가 */
+    /*margin: auto;*/
 }
 
 /* 왼쪽 사이드바 스타일 */
 .sidebar {
     float: left;
-    width: 270px;
+    width: 300px;
+    height: 700px;
     padding: 20px;
     background-color: #FAFAF5;
     border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */

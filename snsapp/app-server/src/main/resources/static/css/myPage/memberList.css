@@ -1,7 +1,6 @@
-
     /* 회원 리스트 스타일 */
     .memberListBox {
-        width: 30%;
+        width: 100%;
         padding: 20px;
         background-color: #fff;
         border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
