@@ -82,8 +82,13 @@ public class DefaultMyPageService implements MyPageService {
   }
 
   @Override
-  public List<Member> searchMembers(String keyword) throws Exception {
-    return myPageDao.searchMembers(keyword);
+  public List<Member> searchMembersList(String keyword, int limit, int page) throws Exception {
+    return myPageDao.searchMembers(keyword, limit, limit * (page - 1));
+  }
+
+  @Override
+  public int getSearchMembersCount(String keyword) {
+    return myPageDao.getSearchMembersCount(keyword);
   }
 
   @Override
