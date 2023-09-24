@@ -95,13 +95,15 @@ public class MyPageController {
         break;
       case "searchMembers":
         model.addAttribute("followList", myPageService.searchMembersList(keyword));
-        model.addAttribute("maxPage", (myPageService.getSearchMembersCount(no) + 14) % 15);
+        model.addAttribute("maxPage",
+                (myPageService.getFollowingCount(no) + pageSize - 1) / pageSize);
         break;
       default:
         model.addAttribute("followList", null);
         model.addAttribute("boardList", boardService.list(1, pageSize, 1));
         break;
     }
+    System.out.println("get 실행");
     session.setAttribute("loginUser", loginUser);
     return "myPage/detail";
   }
@@ -114,7 +116,7 @@ public class MyPageController {
           @RequestParam("keyword") String keyword,
           @RequestParam(defaultValue = "1") int page,
           RedirectAttributes redirectAttributes,
-//          Model model,
+          Model model,
           HttpSession session) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     MyPage myPage = myPageService.get(member.getNo());
@@ -130,16 +132,18 @@ public class MyPageController {
     redirectAttributes.addFlashAttribute("queryString", queryString);
 
     System.out.println("============" + keyword);
+    System.out.println("============" + queryString);
 
 //    model.addAttribute("myPage", myPageService.get(no));
 //    model.addAttribute("show", show);
 //    model.addAttribute("page", page);
-//    model.addAttribute("keyword", keyword);
+    model.addAttribute("keyword", keyword);
 //
 //    System.out.println("%%%%%%%%%%%%%%%" + model.getAttribute(keyword));
 
     session.setAttribute("loginUser", loginUser);
-    return "redirect:/myPage/detail";
+    System.out.println("post 실행");
+    return "myPage/detail";
   }
 
   @GetMapping("{no}/info")
