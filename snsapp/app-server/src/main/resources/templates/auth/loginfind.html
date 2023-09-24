@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전화번호 인증 및 비밀번호 변경</title>
+    <title>🌱비밀번호 찾기</title>
     <style>
         html {
             height: 100%;
@@ -20,19 +20,22 @@
         #main-holder {
             width: 70%;
             height: 80%;
-            display: grid;
-            justify-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             background-color: white;
             border-radius: 7px;
+            gap: 10px;
         }
 
-        h1 {
-            color: #333;
+        /* 그리드 간격 조정 */
+        #main-holder > :not(:last-child) {
+            margin-bottom: 10px;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        input[type="text"]
+        {
             padding: 10px;
             margin: 5px;
             border: 1px solid #ccc;
@@ -43,7 +46,6 @@
 
         button {
             padding: 10px 20px;
-            margin: 5px;
             background-color: #426B1F;
             color: #fff;
             border: none;
@@ -55,40 +57,132 @@
             background-color: #426B1F;
         }
 
-        #result {
-            color: #ff0000;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+
         @font-face {
             font-family: 'UhBeeKeongKeong';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeKeongKeong.woff') format('woff');
             font-weight: normal;
             font-style: normal;
         }
-        #newPasswordForm {
-            margin-top: 20px;
+
+        body, p, h1, h2, h3, h4, h5, h6, textarea, input, button, a {
+            font-family: 'UhBeeKeongKeong', sans-serif;
         }
+
+        button {
+            font-size : 20px;
+        }
+
+        body {
+            font-size : 20px;
+        }
+
+        .send-button, .verify-button, .change-button {
+            margin-left:30px;
+            width: 220px;
+        }
+
+        #sendresult, #verifyresult, #changeresult{
+            color: black;
+            font-weight: bold;
+            margin-top: 1px;
+        }
+
+        .table1, .table2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .table1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 200px;
+        }
+
+        .table2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 200px;
+        }
+
+        .table3 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 200px;
+        }
+
+
+        #newPasswordForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+        }
+
+        #newPasswordForm input[type="password"] {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 250px;
+        }
+
+        #newPasswordForm .change-button {
+            margin-left:30px;
+            width: 220px;
+        }
+
+        #newPasswordForm #changeresult {
+            color: black;
+            font-weight: bold;
+            margin-top: 1px;
+        }
+
     </style>
+
 </head>
 <body>
+
 <main id="main-holder">
-<h1>🌱전화번호 인증 및 비밀번호 변경🌱</h1>
-<input type="text" name="phoneNumber" id="tel" placeholder="전화번호를 입력하세요">
-<button id="sendCode">인증번호 전송</button>
-<input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
-<button id="verifyCode">인증 확인</button>
+    <table class="table1">
+    <h1>비밀번호 찾기</h1>
+    </table>
 
+    <table class="table2">
+    <div style="display: flex; align-items: center;">
+        <input type="text" name="phoneNumber" id="tel" placeholder="전화번호를 입력하세요">
+        <button class="send-button" id="sendCode">인증번호 전송</button>
+    </div>
+    <p id="sendresult"></p>
+
+    <div style="display: flex; align-items: center;">
+        <input type="text" id="verificationCode" placeholder="인증번호를 입력하세요">
+        <button class="verify-button" id="verifyCode">인증번호 확인</button>
+    </div>
+    <p id="verifyresult"></p>
+    </table>
+
+    <div class="table3">
 <!-- 새로운 비밀번호 입력 폼 (초기에는 숨겨져 있음) -->
-<div id="newPasswordForm" style="display: none;">
-    <input type="password" id="newPassword" placeholder="새로운 비밀번호를 입력하세요">
-    <button id="changePassword">비밀번호 변경</button>
-</div>
+    <div id="newPasswordForm" style="display: flex; align-items: center;" >
+        <input type="password" id="newPassword" placeholder="새로운 비밀번호를 입력하세요">
+        <button class="change-button" id="changePassword">비밀번호 변경</button>
+    </div>
+    <p id="changeresult"></p>
+    </div>
 
-<p id="result"></p>
+
 
 <!-- 로그인 버튼 추가 -->
-<button id="goToLogin">돌아가기</button>
+<button style="font-size: 30px" id="goToLogin">돌아가기</button>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -102,13 +196,13 @@
                 success: function(response) {
                     // 가입 여부를 확인
                     if (response) {
-                        $("#result").text("인증번호를 전송했습니다");
+                        $("#sendresult").text("인증번호가 발송되었습니다.");
                     } else {
-                        $("#result").text("없는 번호입니다..");
+                        $("#sendresult").text("번호를 다시 확인해주세요.");
                     }
                 },
                 error: function() {
-                    $("#result").text("오류가 발생했습니다.");
+                    $("#sendresult").text("오류가 발생했습니다.");
                 }
             });
         });
@@ -122,9 +216,9 @@
                 data: { code: code },
                 success: function(response) {
                     if (response) {
-                        $("#result").text("인증 실패");
+                        $("#verifyresult").text("인증번호가 틀립니다.");
                     } else {
-                        $("#result").text("인증 성공");
+                        $("#verifyresult").text("인증이 완료되었습니다.");
 
                         // 인증 성공 시 새로운 비밀번호 입력 폼을 표시
                         $("#newPasswordForm").show();
@@ -142,20 +236,20 @@
                                 },
                                 success: function(response) {
                                     if (response) {
-                                        $("#result").text("비밀번호 변경 성공: " + response);
+                                        $("#changeresult").text("비밀번호 변경 성공: " + response);
                                     } else {
-                                        $("#result").text("비밀번호 변경 실패");
+                                        $("#changeresult").text("비밀번호 변경 실패");
                                     }
                                 },
                                 error: function() {
-                                    $("#result").text("오류가 발생했습니다.");
+                                    $("#changeresult").text("오류가 발생했습니다.");
                                 }
                             });
                         });
                     }
                 },
                 error: function() {
-                    $("#result").text("오류가 발생했습니다.");
+                    $("#verifyresult").text("오류가 발생했습니다.");
                 }
             });
         });
