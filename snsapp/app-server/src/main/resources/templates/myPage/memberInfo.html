@@ -24,13 +24,17 @@
         <img class="profile-pic" alt="프로필 사진"
           data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${myPage.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
       </a>
-      <h2 data-th-text="${myPage.nick}"></h2>
+      <div class="sidebar_my_btn" style="display: flex; align-items: center;">
+      <h2 data-th-text="${myPage.nick}" style="display: inline; margin: 10px 90px 5px 0;"></h2>
+      <a data-th-if="${session.loginUser.no == myPage.no}" data-th-href="@{'/myPage/' + ${myPage.no} + '/info'}"
+         style="display: inline; margin: 30px 0 0 0; padding: 15px 20px; text-align:right; float: right;">내 정보 수정</a>
+      </div>
       <div>
 
         <div class="sidebar_my_btn" style="display: flex; align-items: center;">
           <p style="display: inline; font-weight: bold; flex: 1;">상태메시지</p>
-          <a data-th-if="${session.loginUser.no == myPage.no}" data-th-href="@{'/myPage/' + ${myPage.no} + '/info'}"
-            style="display: inline; margin: 5px; padding: 10px 10px;">내 정보 수정</a>
+<!--          <a data-th-if="${session.loginUser.no == myPage.no}" data-th-href="@{'/myPage/' + ${myPage.no} + '/info'}"-->
+<!--            style="display: inline; margin: 5px; padding: 15px 20px;">내 정보 수정</a>-->
         </div>
 
         <div data-th-if="${session.loginUser.no != myPage.no}" style="display: inline; margin-left: 10px; float:right">

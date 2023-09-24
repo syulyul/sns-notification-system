@@ -3,14 +3,16 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        padding: 20px;
+        /*padding: 20px;*/
+        padding: 0 1% 0 1%;
         background-color: #fff;
         border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
+        margin-right: 3%;
     }
     table {
         border-collapse: collapse;
-        width: 1200px;
-        margin: 1rem auto;
+        width: 1090px;
+        margin: auto;
         background-color: white;
         border: 1px solid #ddd;
     }
@@ -53,10 +55,10 @@
         width: 10%;
     }
 
-    th:nth-child(2),
-    td:nth-child(2) {
-        width: 60%;
-    }
+    /*th:nth-child(2),*/
+    /*td:nth-child(2) {*/
+    /*    width: 60%;*/
+    /*}*/
 
     th, td {
         border-left: none;
