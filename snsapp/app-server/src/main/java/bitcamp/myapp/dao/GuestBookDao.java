@@ -9,9 +9,10 @@ import java.util.List;
 @Mapper
 public interface GuestBookDao {
   int insert(GuestBook guestBook);
-  List<GuestBook> findAll(@Param("no") int no);
+  List<GuestBook> findAll(@Param("no") int no, @Param("limit") int limit, @Param("offset") int offset);
   GuestBook findBy(int no);
   int delete(int no);
+  int getTotalCount();
 
   int updateLike(int guestBookNo); // 좋아요 수 1 증가
   int cancelLike(int guestBookNo); // 좋아요 수 1 감소

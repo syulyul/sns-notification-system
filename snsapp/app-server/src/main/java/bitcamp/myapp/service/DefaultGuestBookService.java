@@ -31,8 +31,13 @@ public class DefaultGuestBookService implements GuestBookService {
     }
 
     @Override
-    public List<GuestBook> list(int userNo) throws Exception {
-        return guestBookDao.findAll(userNo);
+    public List<GuestBook> list(int no, int limit, int page) throws Exception {
+        return guestBookDao.findAll(no, limit, limit * (page - 1));
+    }
+
+    @Override
+    public int getTotalCount() throws Exception {
+        return guestBookDao.getTotalCount();
     }
 
     @Override
