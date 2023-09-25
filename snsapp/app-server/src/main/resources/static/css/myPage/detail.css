@@ -8,7 +8,7 @@
    /* MyPageBox 스타일 */
    #myPageBox {
        margin-left:40px;
-       display: flex;
+       display: inline-flex;
        justify-content: center;
        padding: 20px;
        padding-top: 0px;
