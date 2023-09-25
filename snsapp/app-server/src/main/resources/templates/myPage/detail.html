@@ -12,6 +12,7 @@
   <link rel="stylesheet" type="text/css" href="/css/myPage/boardList.css">
   <link rel="stylesheet" type="text/css" href="/css/myPage/memberList.css">
   <link rel="stylesheet" type="text/css" href="/css/myPage/follow.css">
+  <link rel="stylesheet" type="text/css" href="/css/toggle.css">
   <link rel="stylesheet" type="text/css" href="/css/myPage/myPageInfoUpdate.css">
   <link rel="stylesheet" type="text/css" href="/css/header.css">
 
@@ -34,10 +35,10 @@
   <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
   <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
   <div class="list_form">
-<!--        <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
+    <!--        <div id="memberInfo" data-th-insert="memberInfo :: memberInfo">회원 정보</div>-->
 
     <div class="boardListBox" data-th-unless="${followList}">
-<!--      <div data-th-replace="board/list :: boardList">목록</div>-->
+      <!--      <div data-th-replace="board/list :: boardList">목록</div>-->
       <div style="display: block;">
         <div>
           <h2>🌱 내 게시글 </h2>
@@ -55,7 +56,7 @@
       <!-- <div data-th-replace="board/list :: boardList">목록</div> -->
       <!--            <div data-th-insert="boardList :: boardList">목록</div>-->
     </div>
-      <div class="form-list">
+    <div class="form-list">
       <div data-th-replace="myPage/followList :: followList"></div>
     </div>
   </div>
