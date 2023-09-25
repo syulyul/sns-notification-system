@@ -51,7 +51,6 @@ jobs:
           pwd
           ls -al
       
-      
 
       #
       - name: Connect to Server & Transfer Application
