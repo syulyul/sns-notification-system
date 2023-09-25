@@ -21,8 +21,8 @@ h1 {
 }
 
 .form-container {
-    width: 600px;
-    margin: 0 auto; /* 가운데 정렬을 위해 수정 */
+    width: 250%;
+    /*margin: 0 auto; !* 가운데 정렬을 위해 수정 *!*/
     background-color: #ffffff;
     padding-left: 30px;
     padding-right: 30px;
@@ -30,9 +30,10 @@ h1 {
     padding-top: 5px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    position: relative; /* 부모 위치 기준으로 설정하기 위해 추가 */
-    top: 50%; /* 화면 상단에서 중앙으로 이동 */
-    transform: translateY(-50%); /* 수직 방향으로 중앙으로 이동 */
+    /*position: relative; !* 부모 위치 기준으로 설정하기 위해 추가 *!*/
+    /*top: 50%; !* 화면 상단에서 중앙으로 이동 *!*/
+    /*transform: translateY(-50%); !* 수직 방향으로 중앙으로 이동 *!*/
+    margin-left: 10%;
 }
 
 .form-group {
@@ -111,6 +112,7 @@ h1 {
 
 /* MyPageBox 스타일 */
 #myPageBox {
+    margin-left:40px;
     display: flex;
     justify-content: center;
     padding: 20px;
@@ -125,9 +127,16 @@ h1 {
 /*}*/
 
 .info_update {
-    width: 103.5%;
+    /*width: 103.5%;*/
+    /*!*padding: 20px;*!*/
+    /*background-color: #fff;*/
+    /*border-radius: 5px; !* 박스를 둥글게 만들기 위해 추가 *!*/
+    /*!*margin: -30px;*!*/
+    width: 100%;
     /*padding: 20px;*/
     background-color: #fff;
     border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
     /*margin: -30px;*/
+    align-items: center;
+    margin:auto;
 }

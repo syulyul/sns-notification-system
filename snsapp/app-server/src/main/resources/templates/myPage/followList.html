@@ -19,7 +19,7 @@
            data-th-unless="${member.photo}">
       <img class="memberPhoto" data-th-if="${member.photo}"
            data-th-src="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${member.photo}|">
-      <a style="text-decoration: none; color: black;" data-th-href="|/myPage/${member.no}|">
+      <a style="margin-top:25px;text-decoration: none; color: black;" data-th-href="|/myPage/${member.no}|">
         <span data-th-text="${member.nick}"></span>
       </a>
 
@@ -30,13 +30,13 @@
       <label class="checkedLabel"
              data-th-for="|toggle${member.no}|"
              data-th-onclick="|unfollow(${member.no})|"
-             style="color: #426B1F; background-color: transparent;">
+             style="margin-top:25px; color: #426B1F; background-color: transparent;">
         팔로잉 취소
       </label>
       <label class="uncheckedLabel"
              data-th-for="|toggle${member.no}|"
              data-th-onclick="|follow(${member.no})|"
-             style="color: #426B1F; background-color: transparent;">
+             style="margin-top:25px; color: #426B1F; background-color: transparent;">
         팔로우 하기
       </label>
     </div>

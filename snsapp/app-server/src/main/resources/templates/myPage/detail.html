@@ -22,8 +22,8 @@
 <body>
 <div data-th-replace="header :: header"></div>
 <form data-th-action="@{'/myPage/' + ${myPage.no}}" method="POST">
-  <!--  <input type="text" name="show" value="searchMembers" style="display: none;">-->
-  <p style="margin-left: 20px;">🔍️ 친구찾기
+<!--  <input type="text" name="show" value="searchMembers" style="display: none;">-->
+  <p style="font-size:20px; margin-left: 60px;">🔍️ 친구찾기
     <input type="text" name="keyword" placeholder="이름을 입력해주세요."
            style="margin-left: 20px; padding: 14px; border-width:1px; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
     <input type="hidden" name="show" value="searchMembers">
@@ -31,7 +31,7 @@
   </p>
 </form>
 
-<div id="myPageBox" style="">
+<div id="myPageBox">
   <input data-th-value="${myPage.no}" id="myPageNo" type="hidden">
   <div data-th-insert="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
   <div class="list_form">
