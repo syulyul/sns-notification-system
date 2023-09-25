@@ -57,7 +57,7 @@ jobs:
         uses: appleboy/scp-action@master  # scp 전송 확인
 
         with:
-          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_host: 223.130.134.219
           proxy_username: root
           proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
           proxy_port: 22
