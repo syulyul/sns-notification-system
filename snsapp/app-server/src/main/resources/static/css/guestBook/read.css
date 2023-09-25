@@ -1,0 +1,194 @@
+    table {
+        width: 40%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid #f2f2f2;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .scrollable-table {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .actions {
+        text-align: center;
+        padding: 16px;
+        /* 변경: 상하 여백 추가 */
+        line-height: 15;
+        /* 변경: 세로 크기 2배로 늘림 */
+    }
+
+    button {
+        padding: 5px 10px;
+        background-color: #426B1F;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button {
+        float: inherit;
+    }
+
+    .actions button {
+        padding: 5px 10px;
+        margin: 5px;
+        background-color: #426B1F;
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+
+    .content-table {
+        border: none;
+        border-collapse: collapse;
+    }
+
+    .content-table td {
+        border: none; /* 모든 셀의 테두리를 제거합니다. */
+    }
+    /* 메타 정보 내부 요소들을 가로로 배열 */
+
+
+    .meta-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        /* 아이콘과 텍스트 사이의 간격 */
+    }
+    /* 시간과 뷰 카운트 아이콘 스타일 */
+
+    .clock-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .horizontal-layout {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* 추가된 속성 */
+        gap: 20px;
+    }
+    /* 게시글 제목을 가로로 배열하기 위한 스타일 */
+
+    h1 {
+        margin: 0;
+    }
+    /* 메타 정보 내부 요소들을 가로로 배열 */
+
+    .meta-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .no-cell {
+        width: 10%;
+    }
+    /* 제목과 메타 정보 셀 스타일 */
+
+    .title-meta-cell {
+        width: 40%;
+    }
+    /* 작성자 셀 스타일 */
+
+    .writer-cell {
+        width: 15%;
+    }
+    /* 내용과 좋아요 셀 스타일 */
+
+    .content-like-cell {
+        width: 35%;
+    }
+
+    .horizontal-layout {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .first-row {
+        background-color: #f2f2f2;
+    }
+
+    .second-row {
+        background-color: white;
+        height: 200px;
+    }
+
+    .hidden-file-input {
+        opacity: 0;
+        /* 투명하게 만들기 */
+        position: absolute;
+        /* 페이지 레이아웃에 영향을 주지 않게 위치 지정 */
+        pointer-events: none;
+        /* 마우스 이벤트 무시 */
+    }
+
+    .like-button, .unlike-button {
+        padding: 5px 10px;
+        background-color: transparent;
+        color: black;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+    .profile-picture {
+        width: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
+        height: 100px; /* 원 모양의 크기를 조절할 수 있습니다. */
+        border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다. */
+        overflow: hidden; /* 이미지가 원 안에 맞게 잘릴 수 있도록 설정합니다. */
+    }
+
+    .profile-picture img {
+        width: 100%; /* 이미지를 부모 요소에 꽉 채우도록 설정합니다. */
+        height: auto; /* 가로 세로 비율을 유지합니다. */
+    }
+
+    .pagination-link {
+        display: inline-block;
+        width: 36px; /* 너비 */
+        height: 36px; /* 높이 */
+        line-height: 36px; /* 텍스트 수직 정렬 */
+        text-align: center; /* 텍스트 수평 정렬 */
+        margin-right: 4px;
+        border-radius: 50%; /* 동그라미 */
+        background-color: #f2f2f2;
+        text-decoration: none;
+        color: black;
+    }
+
+    .pagination-link-active {
+        background-color: #426B1F;
+        color: white;
+    }
+
+    #pageLabel {
+        margin-top : 60px;
+        text-align: center;
+    }

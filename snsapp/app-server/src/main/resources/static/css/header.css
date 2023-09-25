@@ -12,11 +12,12 @@
 }
 
 .logo {
-    height: 40px;
+    margin-left:60px;
+    height: 70px;
 }
 
 .header_nav {
-    margin-left:100px;
+    margin-left: -200px;
     display: flex;
     gap: 20px;
 }

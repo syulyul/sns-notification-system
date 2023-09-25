@@ -109,6 +109,8 @@ input[type="text"] {
 .profile-author {
     display: flex;
     align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
 #pageLabel {

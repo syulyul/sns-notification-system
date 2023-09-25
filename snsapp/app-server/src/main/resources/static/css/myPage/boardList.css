@@ -18,9 +18,7 @@
         background-color: white;
         border: 1px solid #ddd;
     }
-    tr {
 
-    }
     thead {
         /* box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);*/
     }
@@ -28,15 +26,12 @@
     /* 테이블 행 */
     td {
         padding: 8px;
-        text-align: left;
-
         border: 1px solid #ddd;
         text-align: center;
     }
 
     th {
         padding: 8px;
-        text-align: left;
         text-align: center;
         /*border-top: 2px solid #888;*/
         /*border-bottom: 2px solid #888;*/
@@ -54,13 +49,13 @@
     /* 테이블 비율 */
     th:nth-child(1),
     td:nth-child(1) {
-        width: 10%;
+        width: 20%;
     }
 
-    /*th:nth-child(2),*/
-    /*td:nth-child(2) {*/
-    /*    width: 60%;*/
-    /*}*/
+    th:nth-child(2),
+    td:nth-child(2) {
+        width: 40%;
+    }
 
     th, td {
         border-left: none;
@@ -122,4 +117,6 @@
     .profile-author {
         display: flex;
         align-items: center;
+        text-align: center;
+        justify-content: center;
     }
