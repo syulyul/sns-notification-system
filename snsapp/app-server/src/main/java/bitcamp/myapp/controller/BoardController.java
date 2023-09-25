@@ -8,6 +8,8 @@ import bitcamp.myapp.vo.BoardComment;
 import bitcamp.myapp.vo.BoardPhoto;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
+
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -118,35 +120,48 @@ public class BoardController {
 
   @GetMapping("list")
   public String list(@RequestParam int category,
-      @RequestParam(defaultValue = "1") int page, // 기본값 1 설정
-      @RequestParam(defaultValue = "10") int pageSize, // 페이지 크기 설정
-      Model model, HttpSession session) throws Exception {
+                     @RequestParam(defaultValue = "") String keyword,
+                     @RequestParam(defaultValue = "1") int page,
+                     @RequestParam(defaultValue = "10") int pageSize,
+                     Model model, HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
+    List<Board> boardList;
+    int totalRecords;
 
     if (loginUser != null) {
       List<Integer> likedBoards = boardService.likelist(loginUser.getNo());
       model.addAttribute("likedBoards", likedBoards);
     }
 
-    // 게시물 목록 조회
-    List<Board> boardList = boardService.list(category, pageSize, page);
+    if ("".equals(keyword)) {
+      boardList = boardService.list(category, pageSize, page);
+      totalRecords = boardService.getTotalCount(category);
+    } else {
+      boardList = boardService.searchBoardsList(category, keyword, pageSize, page);
+      totalRecords = boardService.getSearchBoardsCount(keyword);
+    }
 
-    // 전체 게시물 수 조회 (페이징 처리를 위해 필요)
-    int totalRecords = boardService.getTotalCount(category);
-
-    // 전체 페이지 수 계산
+    model.addAttribute("boardList", boardList);
     model.addAttribute("maxPage", (totalRecords + (pageSize - 1)) / pageSize);
     model.addAttribute("page", page);
     model.addAttribute("pageSize", pageSize);
-    model.addAttribute("boardList", boardList);
     model.addAttribute("category", category);
 
     if (category == 1) {
       return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
-
+      
     } else {
       throw new Exception("유효하지 않은 카테고리입니다.");
     }
+  }
+
+  @PostMapping("list/{category}")
+  public String searchBoards(@PathVariable int category,
+                             @RequestParam("keyword") String keyword,
+                             @RequestParam(defaultValue = "1") int page) throws Exception {
+    String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
+    String queryString = String.format("&keyword=%s&page=%d", encodedKeyword, page);
+    return "redirect:/board/list?category=" + category + queryString;
   }
 
   @PostMapping("update")
@@ -176,6 +191,7 @@ public class BoardController {
     boardService.update(board);
     return "redirect:/board/list?category=" + b.getCategory();
   }
+
 
   @GetMapping("fileDelete/{attachedFile}") // 예) .../fileDelete/attachedfile;no=30
   public String fileDelete(@MatrixVariable("no") int no, HttpSession session) throws Exception {

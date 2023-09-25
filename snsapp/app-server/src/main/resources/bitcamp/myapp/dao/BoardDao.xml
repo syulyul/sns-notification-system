@@ -224,5 +224,43 @@
     limit #{limit} offset #{offset}
   </select>
 
+  <select id="searchBoards" resultMap="boardMap">
+    select
+    b.bno,
+    b.title,
+    b.content,
+    b.view_count,
+    b.created_at,
+    b.category,
+    b.likes,
+    m.mno,
+    m.nick,
+    m.filepath
+    from
+    sns_board b inner join sns_member m on b.mno=m.mno
+    where
+    category=#{category}
+    AND (
+    b.title LIKE CONCAT('%', #{keyword}, '%') OR
+    b.content LIKE CONCAT('%', #{keyword}, '%') OR
+    m.nick LIKE CONCAT('%', #{keyword}, '%')
+    )
+    order by
+    b.bno desc
+    limit #{limit} offset #{offset}
+  </select>
 
+  <select id="getSearchBoardsCount" parameterType="string" resultType="int">
+    select count(b.bno)
+    from
+    sns_board as b
+    inner join sns_member m on b.mno = m.mno
+    where
+    category=#{category}
+    AND (
+    b.title LIKE CONCAT('%', #{keyword}, '%') OR
+    b.content LIKE CONCAT('%', #{keyword}, '%') OR
+    m.nick LIKE CONCAT('%', #{keyword}, '%')
+    )
+  </select>
 </mapper>

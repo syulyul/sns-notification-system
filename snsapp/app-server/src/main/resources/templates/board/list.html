@@ -19,13 +19,16 @@
 <!--  <input type="text" placeholder="제목을 입력하세요">-->
 <!--  <button class="search-button">검색</button>-->
 <!--</div>-->
+<form data-th-action="@{/board/list/{category}(category=1)}" method="POST">
 <div style="margin:3%;">
 <p>🔍️ 게시글 찾기
   <input type="text" name="keyword" placeholder="검색어를 입력해주세요."
          style="margin-left: 20px; padding: 14px; border-width:1px; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
-  <input type="hidden" name="show" value="searchMembers">
+  <input type="hidden" name="show" value="searchBoards">
   <input class="search_btn" type="submit" value="검색">
 </p>
+</div>
+</form>
 
 <!--<div style="margin-bottom: 80px;"></div>-->
 
