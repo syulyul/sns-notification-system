@@ -32,6 +32,10 @@ repositories {
     mavenCentral()
 }
 
+bootJar {
+    archiveFileName = 'app.jar' // JAR 파일의 이름을 변경합니다.
+}
+
 dependencies {
     // json-simple 라이브러리
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
