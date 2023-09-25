@@ -7,7 +7,8 @@
 
    /* MyPageBox 스타일 */
    #myPageBox {
-       display: inline-flex;
+       margin-left:40px;
+       display: flex;
        justify-content: center;
        padding: 20px;
        padding-top: 0px;
@@ -38,8 +39,8 @@
 
    /* 팔로잉, 팔로워 목록 관련 */
    .form-list {
-       width: 170%;
-       /*margin: 0 auto; !* 가운데 정렬을 위해 수정 *!*/
-       margin-left: 30%;
-       /*position: relative; !* 부모 위치 기준으로 설정하기 위해 추가 *!*/
+       width: 500px;
+       margin-top:-50px;
+       margin-left:250px; /* 가운데 정렬을 위해 수정 */
+       position: relative; /* 부모 위치 기준으로 설정하기 위해 추가 */
    }

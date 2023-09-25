@@ -1,5 +1,7 @@
 
     .boardListBox {
+        margin-top:-95px;
+        margin-left:100px;
         display: flex;
         justify-content: space-between;
         width: 100%;

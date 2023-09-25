@@ -112,7 +112,8 @@ h1 {
 
 /* MyPageBox 스타일 */
 #myPageBox {
-    display: inline-flex;
+    margin-left:40px;
+    display: flex;
     justify-content: center;
     padding: 20px;
     padding-top: 0px;
