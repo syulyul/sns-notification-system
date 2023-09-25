@@ -23,17 +23,17 @@
         <span data-th-text="${member.nick}"></span>
       </a>
 
-      <input class="followCheckbox"
+      <input class="toggleBox"
              data-th-checked="${session.loginUser.getFollowMemberSet().contains(member)}"
              data-th-id="|toggle${member.no}|"
              type="checkbox">
-      <label class="unfollowLabel"
+      <label class="checkedLabel"
              data-th-for="|toggle${member.no}|"
              data-th-onclick="|unfollow(${member.no})|"
              style="margin-top:25px; color: #426B1F; background-color: transparent;">
         팔로잉 취소
       </label>
-      <label class="followLabel"
+      <label class="uncheckedLabel"
              data-th-for="|toggle${member.no}|"
              data-th-onclick="|follow(${member.no})|"
              style="margin-top:25px; color: #426B1F; background-color: transparent;">
@@ -42,11 +42,13 @@
     </div>
   </div>
   <div id="pageLabel">
-    <a th:if="${page > 1}" th:class="${page == 1 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+    <a th:if="${page > 1}"
+       th:class="${page == 1 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
        data-th-href="@{${#request.getRequestURL()}(show=${show},page=1,keyword=${param.keyword})}"
        data-th-text="'1'"></a>
 
-    <a th:if="${page > 2}" th:class="${page == 2 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+    <a th:if="${page > 2}"
+       th:class="${page == 2 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
        data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} - 1),keyword=${param.keyword})}"
        data-th-text="'2'"></a>
 
@@ -54,11 +56,13 @@
        data-th-href="@{${#request.getRequestURL()}(show=${show},page=${page},keyword=${param.keyword})}"
        data-th-text="${page}"></a>
 
-    <a th:if="${page < (maxPage - 1)}" th:class="${page + 1 == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+    <a th:if="${page < (maxPage - 1)}"
+       th:class="${page + 1 == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
        data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} + 1),keyword=${param.keyword})}"
        data-th-text="${page + 1}"></a>
 
-    <a th:if="${page < maxPage}" th:class="${maxPage == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+    <a th:if="${page < maxPage}"
+       th:class="${maxPage == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
        data-th-href="@{${#request.getRequestURL()}(show=${show},page=${maxPage},keyword=${param.keyword})}"
        data-th-text="${maxPage}"></a>
   </div>

@@ -1,0 +1,3 @@
+[submodule "secure-submodule-snsapp"]
+	path = secure-submodule-snsapp
+	url = git@github.com:NC7-1st-TeamProject-1st-Team/secure-submodule-snsapp.git
