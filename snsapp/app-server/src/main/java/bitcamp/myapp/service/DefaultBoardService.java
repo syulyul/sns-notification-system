@@ -143,4 +143,14 @@ public class DefaultBoardService implements BoardService {
     return boardDao.findAllByMno(category, writerNo, limit, limit * (page - 1));
   }
 
+  @Override
+  public List<Board> searchBoardsList(int category, String keyword, int limit, int page) throws Exception {
+    return boardDao.searchBoards(category, keyword, limit, limit * (page - 1));
+  }
+
+  @Override
+  public int getSearchBoardsCount(String keyword) {
+    return boardDao.getSearchBoardsCount(keyword);
+  }
+
 }
