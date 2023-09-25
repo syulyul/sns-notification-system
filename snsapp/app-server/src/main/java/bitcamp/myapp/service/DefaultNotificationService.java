@@ -25,7 +25,11 @@ public class DefaultNotificationService implements NotificationService {
   @Override
   public int add(NotiLog notiLog) throws Exception {
     String key = "notReadNotiCount" + notiLog.getMemberNo();
-    context.setAttribute(key, (Integer) context.getAttribute(key) + 1);
+    try {
+      context.setAttribute(key, (Integer) context.getAttribute(key) + 1);
+    } catch (Exception e) {
+      // 알림을 받을 유저가 로그인되어 있지 않을 경우 context에 key가 없어 발생하는 오류 처리
+    }
     return notificationDao.insert(notiLog);
   }
 
