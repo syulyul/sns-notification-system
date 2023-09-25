@@ -66,4 +66,9 @@ public class DefaultBoardCommentService implements BoardCommentService {
   public int delete(int no, int boardNo) throws Exception {
     return boardCommentDao.delete(no, boardNo);
   }
+
+  @Override
+  public List<BoardComment> mycommentlist(int writerNo, int limit, int page) throws Exception {
+    return boardCommentDao.findAllByMno(writerNo, limit, limit * (page - 1));
+  }
 }

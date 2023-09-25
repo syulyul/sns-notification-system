@@ -18,3 +18,23 @@
     .followCheckbox:checked ~ .followLabel {
         display: none;
     }
+
+    .pagination-link {
+        display: inline-block;
+        padding: 8px 12px;
+        margin-right: 4px;
+        border-radius: 100px; /* 완벽한 동그라미로 만들기 */
+        background-color: #f2f2f2;
+        text-decoration: none;
+        color: white;
+    }
+
+    .pagination-link-active {
+        background-color: #426B1F;
+        color: white;
+    }
+
+    #pageLabel {
+        margin-top : 60px;
+        text-align: center;
+    }

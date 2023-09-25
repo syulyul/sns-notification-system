@@ -39,25 +39,18 @@
   <a style="white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>
 </div>
 
-<table border='1' data-th-fragment="boardList">
+<table border='1' data-th-fragment="myboardList">
   <thead>
   <tr>
-    <th>번호🌱</th>
-    <th>제목🌱</th>
     <th>작성자🌱</th>
+    <th>제목🌱</th>
     <th>좋아요수🌱</th>
     <th>조회수🌱</th>
     <th>등록일🌱</th>
   </tr>
   </thead>
   <tbody>
-  <tr data-th-each="board : ${boardList}">
-    <td data-th-text="${board.no}">게시글 번호</td>
-    <td>
-      <a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
-         data-th-text="${board.title} ?: '제목없음'"
-         style="color: black; text-decoration: none;">게시글 제목</a>
-    </td>
+  <tr data-th-each="board : ${myboardList}">
     <td>
       <div class="profile-author">
         <div class="profile-picture">
@@ -73,6 +66,11 @@
         </div>
         <span data-th-text="${board.writer.nick}">작성자</span>
       </div>
+    </td>
+    <td>
+      <a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
+         data-th-text="${board.title} ?: '제목없음'"
+         style="color: black; text-decoration: none;">게시글 제목</a>
     </td>
     <td data-th-text="${board.likes}">좋아요수</td>
     <td data-th-text="${board.viewCount}">조회수</td>

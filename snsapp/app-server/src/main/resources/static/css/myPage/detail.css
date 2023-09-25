@@ -13,11 +13,32 @@
        padding-top: 0px;
    }
 
-   /* 왼쪽 사이드바 스타일 */
-   .sidebar {
-       float: left;
-       width: 270px;
-       padding: 20px;
-       background-color: #FAFAF5;
-       border-radius: 5px; /* 사이드바를 둥글게 만들기 위해 추가 */
+   /* 친구 검색 버튼 */
+   .search_btn {
+       font-size: 20px;
+       background-color: #426B1F;
+       color: white;
+       border: none;
+       border-radius: 8px;
+       padding: 10px 20px;
+       cursor: pointer;
+       white-space : nowrap;
+       text-decoration-line: none;
+       margin: 20px 20px 20px 10px;
+   }
+
+   /* 팔로잉, 팔로워 리스트 관련 */
+   .list_form {
+       width: 140%;
+       /*padding: 20px;*/
+       background-color: #fff;
+       border-radius: 5px; /* 박스를 둥글게 만들기 위해 추가 */
+       /*margin: -30px;*/
+   }
+
+   /* 팔로잉, 팔로워 목록 관련 */
+   .form-list {
+       width: 500px;
+       margin: 0 auto; /* 가운데 정렬을 위해 수정 */
+       position: relative; /* 부모 위치 기준으로 설정하기 위해 추가 */
    }

@@ -39,44 +39,36 @@
   <a style="white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>
 </div>
 
-<table border='1' data-th-fragment="boardList">
+<table border='1' data-th-fragment="mycommentList">
   <thead>
   <tr>
-    <th>번호🌱</th>
-    <th>제목🌱</th>
     <th>작성자🌱</th>
-    <th>좋아요수🌱</th>
-    <th>조회수🌱</th>
+    <th>내용🌱</th>
     <th>등록일🌱</th>
   </tr>
   </thead>
   <tbody>
-  <tr data-th-each="board : ${boardList}">
-    <td data-th-text="${board.no}">게시글 번호</td>
-    <td>
-      <a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
-         data-th-text="${board.title} ?: '제목없음'"
-         style="color: black; text-decoration: none;">게시글 제목</a>
-    </td>
+  <tr data-th-each="boardComment : ${mycommentList}">
     <td>
       <div class="profile-author">
         <div class="profile-picture">
           <!-- 기본 프로필 이미지를 사용하려면 아래와 같이 src를 명시합니다. -->
-          <img data-th-unless="${board.writer.photo}" src='/images/avatar.png'>
+          <img data-th-unless="${boardComment.writer.photo}" src='/images/avatar.png'>
 
           <!-- board.writer.photo 값이 있을 경우에만 이 img 태그가 렌더링됩니다. -->
-          <a data-th-if="${board.writer.photo}"
-             data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${board.writer.photo}|">
+          <a data-th-if="${boardComment.writer.photo}"
+             data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${boardComment.writer.photo}|">
             <img class="profile-image" alt="프로필 사진"
-                 data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${board.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+                 data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${boardComment.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
           </a>
         </div>
-        <span data-th-text="${board.writer.nick}">작성자</span>
+        <span data-th-text="${boardComment.writer.nick}">작성자</span>
       </div>
     </td>
-    <td data-th-text="${board.likes}">좋아요수</td>
-    <td data-th-text="${board.viewCount}">조회수</td>
-    <td data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">등록일</td>
+    <td>
+      <span data-th-text="${boardComment.content}">내용</span>
+    </td>
+    <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">등록일</td>
   </tr>
   </tbody>
 </table>

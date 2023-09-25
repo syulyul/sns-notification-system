@@ -70,7 +70,7 @@ th, td {
 /* 검색 박스 스타일 */
 .search-box {
     margin-top: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 input[type="text"] {
@@ -109,4 +109,23 @@ input[type="text"] {
 .profile-author {
     display: flex;
     align-items: center;
+}
+
+#pageLabel {
+    margin-top : 100px;
+    text-align: center;
+}
+.pagination-link {
+    display: inline-block;
+    padding: 8px 12px;
+    margin-right: 4px;
+    border-radius: 100px; /* 완벽한 동그라미로 만들기 */
+    background-color: #f2f2f2;
+    text-decoration: none;
+    color: white;
+}
+
+.pagination-link-active {
+    background-color: #426B1F;
+    color: white;
 }

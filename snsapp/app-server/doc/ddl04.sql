@@ -505,3 +505,12 @@ ALTER TABLE sns_today_visit_count
   REFERENCES sns_mypage ( -- 마이페이지
   mno -- 회원번호
   );
+
+  INSERT INTO sns_guestbook (title, content, likes, created_at, mno, mem_no)
+VALUES
+    ('첫 번째 게시물', '첫 번째 게시물 내용입니다.', 5, NOW(), 1, 2),
+    ('두 번째 게시물', '두 번째 게시물 내용입니다.', 10, NOW(), 2, 1),
+    ('세 번째 게시물', '세 번째 게시물 내용입니다.', 7, NOW(), 3, 4);
+    ('네 번째 게시물', '세 번째 게시물 내용입니다.', 7, NOW(), 4, 3);
+    ('오 번째 게시물', '세 번째 게시물 내용입니다.', 7, NOW(), 5, 6);
+    ('육 번째 게시물', '세 번째 게시물 내용입니다.', 7, NOW(), 6, 5);
