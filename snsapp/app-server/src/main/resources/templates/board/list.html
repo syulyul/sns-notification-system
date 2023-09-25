@@ -13,14 +13,14 @@
 <body>
 <div data-th-replace="header :: header"></div>
 
-<div style="margin-bottom: 80px;"></div>
+<div style="margin-bottom: 40px;"></div>
 
 <!--<div class="search-box">-->
 <!--  <input type="text" placeholder="제목을 입력하세요">-->
 <!--  <button class="search-button">검색</button>-->
 <!--</div>-->
 <form data-th-action="@{/board/list/{category}(category=1)}" method="POST">
-<div style="margin:3%;">
+<div style="margin-left:330px;">
 <p>🔍️ 게시글 찾기
   <input type="text" name="keyword" placeholder="검색어를 입력해주세요."
          style="margin-left: 20px; padding: 14px; border-width:1px; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
@@ -37,9 +37,9 @@
 <!--  <a data-th-href="@{/board/form(category=${param.category})}" class="button" style="white-space: nowrap">새 글</a>-->
 <!--  <a style="margin-right:1650px; white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>-->
 <!--</div>-->
-<div style="float:right; margin: 20px 0 25px;">
-  <a data-th-href="@{/board/form(category=${param.category})}" class="button" style="margin-left: 20px;">새 글</a>
-  <a style="white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>
+<div style="text-align: right; margin-right: 20px; margin-top: -30px; margin-bottom: 20px;">
+  <a data-th-href="@{/board/form(category=${param.category})}" class="button" style="margin-right:10px;">글쓰기</a>
+  <a style="margin-right:300px; white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>
 </div>
 
 <table border='1' data-th-fragment="boardList">

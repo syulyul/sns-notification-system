@@ -1,5 +1,6 @@
     /* 회원 리스트 스타일 */
     .memberListBox {
+        margin-left:0px;
         width: 100%;
         padding: 20px;
         background-color: #fff;
@@ -8,9 +9,10 @@
 
     /* 개별 회원 항목 스타일 */
     .memberItem {
+        margin-top:0px;
         display: flex;
         justify-content: space-between;
-        padding: 10px 30px;
+        padding: 10px 10px;
         border-bottom: 1px solid #ccc; /* 회원 항목 사이에 구분선 추가 */
     }
 
