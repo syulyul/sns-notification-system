@@ -88,6 +88,14 @@ tasks.named('test') {
 }
 
 
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
 
 //앱이름-plain.jar를 생성제어
 jar {
