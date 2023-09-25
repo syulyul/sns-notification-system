@@ -4,110 +4,13 @@
     <meta charset="UTF-8">
     <title>🌱회원가입</title>
     <link rel="stylesheet" type="text/css" href="/css/font.css">
+    <link rel="stylesheet" type="text/css" href="/css/auth/membership.css">
 
-    <style>
-
-        html {
-            height: 100%;
-        }
-
-        /* h2 글자의 색은 흰색으로 크기는 30px */
-        h2 {
-            color: black;
-            font-size: 40px;
-        }
-
-        body {
-            height: 100%;
-            margin: 0;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-            background-color: #426B1F;
-        }
-
-        th, td {
-            font-size:25px;
-            padding: 25px;
-        }
-
-        input[type="file"],
-        input[type="text"],
-        input[type="date"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="password"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 16px;
-        }
-
-        .user-image {
-            max-width: 100px; /* 이미지의 최대 너비를 설정합니다. */
-            max-height: 100px;
-        }
-
-        #main-holder {
-            width: 70%;
-            height: 80%;
-            justify-items: center;
-            align-items: center;
-            background-color: white;
-            border-radius: 7px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .form-container {
-            margin-top: 0;
-        }
-
-        /* 버튼들을 오른쪽 정렬하고 간격을 조정합니다. */
-        .button-container {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px; /* 버튼 사이의 간격을 조정합니다. */
-        }
-
-        button {
-            padding: 5px 10px;
-            background-color: #426B1F;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .send-button {
-            margin-left: 30px;
-            width: 140px;
-        }
-
-        .verify-button {
-            margin-left: 30px;
-            width: 140px;
-        }
-
-        .submit-button {
-            width: 160px;
-            height: 60px;
-            display: block;
-            margin: 0 auto;
-            margin-top: 70px;
-        }
-    </style>
 </head>
 
 <body>
 <main id="main-holder">
     <h2>회원가입</h2>
-    <div style="margin-bottom: 80px;"></div>
     <form action='add' method='post' enctype='multipart/form-data'>
         <table class="form-container">
             <tr>
@@ -146,7 +49,7 @@
                 </td>
             </tr>
         </table>
-        <button style="font-size:30px;" type="submit" class="submit-button" id="registerButton" disabled>가입하기</button>
+        <button style="font-size:25px;" type="submit" class="submit-button" id="registerButton" disabled>가입하기</button>
     </form>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

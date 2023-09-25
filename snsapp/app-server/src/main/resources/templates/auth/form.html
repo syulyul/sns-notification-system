@@ -2,133 +2,18 @@
 <html>
 <head>
   <meta charset='UTF-8'>
-  <title>🌱힐링스타그램🌱</title>
+  <title>저를 "힐링버튼"으로 쓰세요</title>
   <link rel="stylesheet" type="text/css" href="/css/font.css">
+  <link rel="stylesheet" type="text/css" href="/css/auth/form.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script defer src="form.js"></script>
+  <script src="../../static/js/auth/form.js"></script>
 
-  <style>
-    html {
-      height: 100%;
-    }
-
-    body {
-      height: 100%;
-      margin: 0;
-      display: grid;
-      justify-items: center;
-      align-items: center;
-      background-color: #426B1F;
-    }
-
-    #main-holder {
-      width: 70%;
-      height: 80%;
-      display: grid;
-      justify-items: center;
-      align-items: center;
-      background-color: white;
-      border-radius: 7px;
-    }
-
-    #login-error-msg-holder {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      justify-items: center;
-      align-items: center;
-    }
-
-    #login-error-msg {
-      width: 23%;
-      text-align: center;
-      margin: 0;
-      padding: 5px;
-      font-size: 25px;
-      font-weight: bold;
-      color: black;
-      opacity: 0;
-    }
-
-    #error-msg-second-line {
-      display: block;
-    }
-
-    #login-form {
-      align-self: flex-start;
-      display: grid;
-      justify-items: center;
-      align-items: center;
-    }
-
-    .login-form-field::placeholder {
-      color: #3a3a3a;
-    }
-
-    .login-form-field {
-      border: none;
-      border-bottom: 1px solid #f2f2f2;
-      margin-bottom: 10px;
-      border-radius: 3px;
-      outline: none;
-      padding: 0px 0px 5px 5px;
-      height: 60px;
-      width: 420px;
-    }
-
-    #login-form-submit {
-      width: 90%;
-      padding: 7px;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      background-color: #426B1F;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .user-field, .user2-field {
-      display: inline-block;
-      width: 220px;
-      height: 30px;
-      margin: 0 auto;
-      text-decoration: none; /* 밑줄 제거 */
-      color: black; /* 텍스트 색상을 검정색으로 설정 */
-    }
-
-    @font-face {
-      font-family: 'UhBeeKeongKeong';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeKeongKeong.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    body, p, h1, h2, h3, h4, h5, h6, textarea, input, button, a {
-      font-family: 'UhBeeKeongKeong', sans-serif;
-    }
-
-    button {
-      font-size: 20px;
-    }
-
-    body {
-      font-size: 20px;
-    }
-
-    .left-align {
-      justify-self: start; /*전화번호 저장 왼쪽으로*/
-      margin-left:30px;
-      margin-top: 10px;
-      margin-bottom: 50px;
-      font-size:25px;
-    }
-  </style>
 </head>
 
 <body>
 <main id="main-holder">
-  <h1>🌱 힐링스타그램 🌱</h1>
+  <div style="margin-bottom: 40px;"></div>
+  <img src="/images/logo.png" alt="로고" class="logo">
 
   <div id="login-error-msg-holder">
     <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span>
@@ -137,16 +22,16 @@
 
   <form id="login-form" method="post">
     <!-- 사용자 입력 필드 -->
-    <input style="font-size: 25px" type="text" name="phoneNumber" id="username-field" class="login-form-field"
+    <input style="font-size: 20px" type="text" name="phoneNumber" id="username-field" class="login-form-field"
            placeholder="전화번호">
-    <input style="font-size: 25px" type="password" name="password" id="password-field" class="login-form-field" placeholder="비밀번호">
-    <input style="font-size: 25px" type="submit" value="로그인" id="login-form-submit">
+    <input style="font-size: 20px" type="password" name="password" id="password-field" class="login-form-field" placeholder="비밀번호">
+    <input style="font-size: 20px" type="submit" value="로그인" id="login-form-submit">
     <label class="left-align">
       <input type='checkbox' name='savePhoneNumber' id='savePhoneNumber'> 전화번호 저장
     </label>
     <ul>
-      <a style="font-size: 25px" href="/auth/add" class="user-field"> 🌱 회원가입</a>
-      <a style="font-size: 25px" href="/auth/find" class="user2-field"> 🌱 비밀번호 찾기</a>
+      <a style="font-size: 20px" href="/auth/add" class="user-field"> 🌱 회원가입</a>
+      <a style="font-size: 20px" href="/auth/find" class="user2-field"> 🌱 비밀번호 찾기</a>
     </ul>
 
 
