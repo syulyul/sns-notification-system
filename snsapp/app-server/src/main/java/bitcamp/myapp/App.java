@@ -52,7 +52,6 @@ public class App implements WebMvcConfigurer {
         .addPathPatterns("/**")
         .excludePathPatterns("/auth/**")
         .excludePathPatterns("/");
-    
   }
 
   @Bean
