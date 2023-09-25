@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -38,19 +39,16 @@ public class GuestBookController {
     }
 
     @PostMapping("add")
-    public String add(GuestBook guestBook, HttpSession session, @RequestParam("no") int no) throws Exception {
+    public String add(GuestBook guestBook, @RequestParam int memNo, HttpSession session, Model model) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
         }
         guestBook.setWriter(loginUser);
-
-        // List에서 선택한 no를 사용하여 MyPage를 조회
-        MyPage toUser = myPageService.get(no);
-        guestBook.setToUser(toUser);
+        guestBook.setMemNo(memNo);
 
         guestBookService.add(guestBook);
-        return "redirect:/guestBook/" + toUser.getNo();
+        return "redirect:/guestBook/" + guestBook.getMemNo();
     }
 
     @GetMapping("delete")
@@ -85,6 +83,8 @@ public class GuestBookController {
         // 이 부분에서 회원의 닉네임을 가져와서 모델에 추가
         String guestBookOwnerNick = guestBookService.getMemberNickByNo(no);
         model.addAttribute("guestBookOwnerNick", guestBookOwnerNick);
+
+        model.addAttribute("memNo", no);
 
         session.setAttribute("loginUser", loginUser);
         return "guestBook/read";

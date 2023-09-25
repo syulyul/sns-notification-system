@@ -18,5 +18,4 @@ public interface GuestBookService {
   List<Integer> likelist(int memberNo) throws Exception;
   List<String> guestBooklikelist(int guestBookNo) throws Exception;
   String getMemberNickByNo(int memberNo) throws Exception;
-
 }

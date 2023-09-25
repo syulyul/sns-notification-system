@@ -144,8 +144,6 @@ public class BoardController {
     if (category == 1) {
       return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
 
-    } else if (category == 2) {
-      return "board/read"; // 카테고리가 2일 때 "read.html"을 실행
     } else {
       throw new Exception("유효하지 않은 카테고리입니다.");
     }
