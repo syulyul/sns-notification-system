@@ -5,7 +5,6 @@ import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.vo.GuestBook;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
-import bitcamp.myapp.vo.MyPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class GuestBookController {
     }
 
     @PostMapping("add")
-    public String add(GuestBook guestBook, @RequestParam int memNo, HttpSession session, Model model) throws Exception {
+    public String add(GuestBook guestBook, @RequestParam int memNo, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";

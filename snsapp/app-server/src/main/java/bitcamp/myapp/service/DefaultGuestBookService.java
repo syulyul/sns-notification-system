@@ -9,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
 public class DefaultGuestBookService implements GuestBookService {
     @Autowired
     GuestBookDao guestBookDao;
+
+    @Autowired
+    HttpSession session;
 
     @Autowired
     NotificationService notificationService;
@@ -64,22 +68,26 @@ public class DefaultGuestBookService implements GuestBookService {
     @Override
     public int like(Member member, GuestBook guestBook) throws Exception {
         int result = guestBookDao.insertLike(member.getNo(), guestBook.getNo());
-        notificationService.add(new NotiLog(
-                guestBook.getWriter().getNo(),
-                NotiType.FOLLOW_TYPE,
-                member.getNick() + "님이 회원의 게시글을 좋아합니다.",
-                "/guestBook/" + guestBook.getMemNo())); // 이 부분 고민해봐야함
+        if (!session.getAttribute("loginUser").equals(guestBook.getWriter())) {
+            notificationService.add(new NotiLog(
+                    guestBook.getWriter().getNo(),
+                    NotiType.FOLLOW_TYPE,
+                    member.getNick() + "님이 회원의 게시글을 좋아합니다.",
+                    "/guestBook/" + guestBook.getMemNo()));
+        }
         return result;
     }
 
     @Override
     public int unlike(Member member, GuestBook guestBook) throws Exception {
         int result = guestBookDao.deleteLike(member.getNo(), guestBook.getNo());
-         notificationService.add(new NotiLog(
-                 guestBook.getWriter().getNo(),
-                 NotiType.FOLLOW_TYPE,
-                 member.getNick() + "님이 회원의 게시글 좋아요를 취소 했습니다..",
-                 "/guestBook/" + guestBook.getMemNo()));
+        if (!session.getAttribute("loginUser").equals(guestBook.getWriter())) {
+            notificationService.add(new NotiLog(
+                    guestBook.getWriter().getNo(),
+                    NotiType.FOLLOW_TYPE,
+                    member.getNick() + "님이 회원의 게시글 좋아요를 취소 했습니다..",
+                    "/guestBook/" + guestBook.getMemNo()));
+        }
         return result;
     }
 
