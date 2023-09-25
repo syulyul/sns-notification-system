@@ -155,7 +155,8 @@ public class MyPageController {
       Model model,
       MultipartFile photofile,
       HttpSession session) throws Exception {
-
+    member.setPhoneNumber(member.getPhoneNumber().replaceAll("\\D+", ""));
+    
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     MyPage myPage = myPageService.get(member.getNo());
 
