@@ -6,8 +6,7 @@
   <!-- 스타일과 스크립트 추가가 필요하면 여기에 -->
   <link rel="stylesheet" type="text/css" href="/css/font.css">
   <link rel="stylesheet" type="text/css" href="/css/header.css">
-  <link rel="stylesheet" type="text/css" href="/css/board/read.css">
-  <link rel="stylesheet" type="text/css" href="/css/guestBook/add.css">
+  <link rel="stylesheet" type="text/css" href="/css/guestBook/read.css">
 
   <script>
     function toggleLikeButtons(guestBookNo) {
@@ -66,25 +65,29 @@
 
 <!-- "누구누구의 방명록" 추가 -->
 <div class="guestbook-title" style="text-align: center;">
-  <span th:text="${guestBookOwnerNick} ? ${guestBookOwnerNick + '의 방명록'} : ''"></span>
+  <h2><span th:text="${guestBookOwnerNick} ? '🌱 ' + ${guestBookOwnerNick} + ' 의 방명록 🌱' : ''"></span></h2>
 </div>
 
 <!-- 방명록 추가 폼 -->
 <div class="add-guestbook-form" style="text-align: center;">
-  <h1>방명록 추가</h1>
-  <form method="post" action="/guestBook/add" style="display: inline-block; text-align: center;">
-    <div class="form-group">
-      <label for="title">제목</label>
-      <input type="text" id="title" name="title" required>
+  <form method="post" action="/guestBook/add" style="display: inline-block; text-align: left;">
+    <table>
+      <tr>
+        <th style="text-align: left; width: 200px;">🌱 제목</th>
+        <td><input style="font-size:18px; border: none; width: 100%;" type="text" name="title" id="title" placeholder="제목을 입력하세요" required></td>
+      </tr>
+      <tr>
+        <th style="text-align: left; width: 200px;">🌱 내용</th>
+        <td><textarea style="font-size:18px; border: none; width: 100%;" name="content" id="content" rows="6" cols="150" placeholder="내용을 입력하세요" required></textarea></td>
+      </tr>
+      <input name="memNo" data-th-value="${no}" type="hidden">
+    </table>
+    <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
+      <button type="submit">작성</button>
     </div>
-    <div class="form-group">
-      <label for="content">내용</label>
-      <textarea id="content" name="content" required></textarea>
-    </div>
-    <button type="submit">추가</button>
-    <input name="memNo" data-th-value="${no}" type="hidden">
   </form>
 </div>
+
 
 <!-- 게시글 목록을 출력하기 위한 Thymeleaf 반복문 -->
 <div data-th-each="guestBook : ${guestBookList}">
@@ -158,31 +161,28 @@
 </div>
 <!-- 페이징 처리 부분 -->
 <div id="pageLabel">
-  <!-- 이전 페이지들 -->
   <a th:if="${page > 1}"
      th:class="${page == 1 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
-     data-th-href="@{${#request.getRequestURL()}(page=1,pageSize=${pageSize})}"
-     data-th-text="1"></a>
+     data-th-href="@{${#request.getRequestURL()}(show=${show},page=1,keyword=${param.keyword})}"
+     data-th-text="'1'"></a>
 
   <a th:if="${page > 2}"
      th:class="${page == 2 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
-     data-th-href="@{${#request.getRequestURL()}(page=(${page} - 1),pageSize=${pageSize})}"
-     data-th-text="2"></a>
+     data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} - 1),keyword=${param.keyword})}"
+     data-th-text="'2'"></a>
 
-  <!-- 현재 페이지 -->
   <a th:class="${page == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
-     data-th-href="@{${#request.getRequestURL()}(page=${page},pageSize=${pageSize})}"
+     data-th-href="@{${#request.getRequestURL()}(show=${show},page=${page},keyword=${param.keyword})}"
      data-th-text="${page}"></a>
 
-  <!-- 다음 페이지들 -->
   <a th:if="${page < (maxPage - 1)}"
      th:class="${page + 1 == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
-     data-th-href="@{${#request.getRequestURL()}(page=(${page} + 1),pageSize=${pageSize})}"
+     data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} + 1),keyword=${param.keyword})}"
      data-th-text="${page + 1}"></a>
 
   <a th:if="${page < maxPage}"
      th:class="${maxPage == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
-     data-th-href="@{${#request.getRequestURL()}(page=${maxPage},pageSize=${pageSize})}"
+     data-th-href="@{${#request.getRequestURL()}(show=${show},page=${maxPage},keyword=${param.keyword})}"
      data-th-text="${maxPage}"></a>
 </div>
 

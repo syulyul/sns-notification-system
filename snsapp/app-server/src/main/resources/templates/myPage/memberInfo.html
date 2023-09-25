@@ -18,18 +18,18 @@
     <br>
     <br>
 
-    <img class="profile-pic" data-th-unless="${myPage.photo}" src='/images/default.jpg'
-         alt="기본 이미지">
+    <img class="profile-pic" data-th-unless="${myPage.photo}" src='/images/default.jpg' alt="기본 이미지">
     <a data-th-if="${myPage.photo}"
        data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${myPage.photo}|">
       <img class="profile-pic" alt="프로필 사진"
            data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${myPage.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
     </a>
     <div class="sidebar_my_btn" style="display: flex; align-items: center;">
-      <h2 data-th-text="${myPage.nick}" style="display: inline; margin: 10px 90px 5px 0;"></h2>
+      <h2 data-th-text="${myPage.nick}" 
+          style="display: inline; margin: 10px 0 5px 0; white-space: nowrap; overflow: visible;"></h2>
       <a data-th-if="${session.loginUser.no == myPage.no}"
          data-th-href="@{'/myPage/' + ${myPage.no} + '/info'}"
-         style="display: inline; margin: 20px 0 0 100px; padding: 15px 20px; text-align:right; float: right;">내
+         style="text-decoration: none; color:#426B1F; margin: 0 0 0 20px; padding: 15px 20px; text-align: right; float: right;">내
         정보 수정</a>
 
       <div data-th-if="${session.loginUser.no != myPage.no}"
@@ -40,14 +40,14 @@
         <label class="checkedLabel"
                data-th-for="|toggle${myPage.no}|"
                data-th-onclick="|unfollow(${myPage.no})|"
-               style="color: green; background-color: transparent;">
+               style="color: #426B1F; background-color: transparent;">
           팔로잉 취소
         </label>
 
         <label class="uncheckedLabel"
                data-th-for="|toggle${myPage.no}|"
                data-th-onclick="|follow(${myPage.no})|"
-               style="color: green; background-color: transparent;">
+               style="color: #426B1F; background-color: transparent;">
           팔로우 하기
         </label>
       </div>
