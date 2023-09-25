@@ -145,7 +145,7 @@
       </tr>
     </table>
     <div class="btn-container">
-      <a data-th-href="@{/guestBook/delete(no=${guestBook.no})}">
+      <a data-th-href="@{/guestBook/delete(memNo=${guestBook.getMemNo()},no=${guestBook.no})}">
         <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
           <button>삭제</button>
         </div>
