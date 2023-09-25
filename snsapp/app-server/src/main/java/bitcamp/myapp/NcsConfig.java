@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("ncs.properties")
+@PropertySource("application.properties")
 @ConfigurationProperties("ncs")
 public class NcsConfig {
     private String accessKey;
