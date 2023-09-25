@@ -60,13 +60,18 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // MySQL JDBC 라이브러리
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'mysql:mysql-connector-java:8.0.32'
+
 
     // Amazon AWS Java SDK s3
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.530'
 
     // Spring 설정을 도와주는 라이브러리
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    //SSH 터널링을 위해 JSch(Java Secure Channel) 라이브러리
+    implementation 'com.jcraft:jsch:0.1.55'
+
 
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
