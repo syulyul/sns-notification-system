@@ -89,14 +89,7 @@ public class BoardController {
   public String detail(
       @PathVariable int category,
       @PathVariable int no,
-      Model model,
-      HttpSession session) throws Exception {
-    Member loginUser = (Member) session.getAttribute("loginUser");
-
-    if (loginUser != null) {
-      List<Integer> likedBoards = boardService.likelist(loginUser.getNo());
-      model.addAttribute("likedBoards", likedBoards);
-    }
+      Model model) throws Exception {
 
     Board board = boardService.get(no);
     if (board != null) {
@@ -208,6 +201,8 @@ public class BoardController {
       Board board = boardService.get(boardNo);
       boardService.like(loginUser, board);
       boardService.increaseLikes(boardNo);
+      loginUser.getLikeBoardSet().add(boardNo);
+      session.setAttribute("loginUser", loginUser);
       return 1; // 예: 성공시 1 반환
     } catch (Exception e) {
       return -1;
@@ -221,6 +216,8 @@ public class BoardController {
       Board board = boardService.get(boardNo);
       boardService.unlike(loginUser, board);
       boardService.decreaseLikes(boardNo);
+      loginUser.getLikeBoardSet().remove(boardNo);
+      session.setAttribute("loginUser", loginUser);
       return 1; // 예: 성공시 1 반환
     } catch (Exception e) {
       return -1;

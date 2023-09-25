@@ -110,11 +110,11 @@
                 </form>
             </div> <!-- End of content-box -->
             <!-- 좋아요 버튼 -->
-            <button class="like-button" data-th-id="'likeButton-' + ${board.no}" data-th-if="${!likedBoards.contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
+            <button class="like-button" data-th-id="'likeButton-' + ${board.no}" data-th-if="${!session.loginUser.getLikeBoardSet().contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
                 좋아요 누르기 🤍
             </button>
             <!-- 좋아요 취소 버튼 -->
-            <button class="unlike-button" data-th-id="'unlikeButton-' + ${board.no}" data-th-if="${likedBoards.contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
+            <button class="unlike-button" data-th-id="'unlikeButton-' + ${board.no}" data-th-if="${session.loginUser.getLikeBoardSet().contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
                 좋아요 취소❤️
             </button>
             <div class="like-list">
