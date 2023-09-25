@@ -1,4 +1,4 @@
-name: snsapp CI/CD
+name: snsapp CI/ CD
 
 on:
   push:
