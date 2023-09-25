@@ -131,6 +131,7 @@ public class AuthController {
       MultipartFile photofile,
       Model model) throws Exception {
 
+    member.setPhoneNumber(member.getPhoneNumber().replaceAll("\\D+", ""));
     try {
       System.out.println(member);
       if (photofile.getSize() > 0) {
@@ -166,9 +167,10 @@ public class AuthController {
 
   @PostMapping("phoneAuth")
   @ResponseBody
-  public Boolean phoneAuth(String phoneNumber,
+  public Boolean phoneAuth(
+      String phoneNumber,
       HttpSession session) {
-
+    phoneNumber = phoneNumber.replaceAll("\\D+", "");
     try { // 이미 가입된 전화번호가 있으면
       if (smsService.memberTelCount(phoneNumber) > 0) {
         return true;
@@ -187,8 +189,8 @@ public class AuthController {
 
   @PostMapping("phoneFind")
   @ResponseBody
-  public Boolean phoneFind(String phoneNumber,
-      HttpSession session) {
+  public Boolean phoneFind(String phoneNumber, HttpSession session) {
+    phoneNumber = phoneNumber.replaceAll("\\D+", "");
 
     try {
       if (smsService.memberTelCountFind(phoneNumber) > 0) {
@@ -208,8 +210,7 @@ public class AuthController {
 
   @PostMapping("phoneAuthOk")
   @ResponseBody
-  public Boolean phoneAuthOk(HttpSession session,
-      HttpServletRequest request) {
+  public Boolean phoneAuthOk(HttpSession session, HttpServletRequest request) {
     String rand = (String) session.getAttribute("rand");
     String code = (String) request.getParameter("code");
 
@@ -228,6 +229,7 @@ public class AuthController {
   public ResponseEntity<String> resetPassword(
       @RequestParam String phoneNumber,
       @RequestParam String newPassword) {
+    phoneNumber = phoneNumber.replaceAll("\\D+", "");
 
     try {
       // 새로운 비밀번호로 업데이트
