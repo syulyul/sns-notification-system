@@ -16,7 +16,7 @@
 <p data-th-unless="${session.loginUser}">로그인이 필요합니다!</p>
 
 <form data-th-if="${session.loginUser}" action='update' method='post' enctype='multipart/form-data'>
-    <div id="myPageBox" style="">
+    <div id="myPageBox">
         <div data-th-replace="myPage/memberInfo :: memberInfo" id="memberInfo"></div>
         <div class="info_update" >
             <div class="form-container" style="margin-left:180px">
