@@ -69,16 +69,24 @@ public class GuestBookController {
     }
 
     @GetMapping("/{no}")
-    public String list(@PathVariable int no, Model model, HttpSession session) throws Exception {
+    public String list(@PathVariable int no, @RequestParam(defaultValue = "1") int page,
+                       @RequestParam(defaultValue = "10") int pageSize,
+                       Model model, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
+        int totalRecords;
 
         if (loginUser != null) {
             List<Integer> likedGuestBooks = guestBookService.likelist(loginUser.getNo());
             model.addAttribute("likedGuestBooks", likedGuestBooks);
         }
 
-        List<GuestBook> guestBookList = guestBookService.list(no);
+        List<GuestBook> guestBookList = guestBookService.list(no, pageSize, page);
+        totalRecords = guestBookService.getTotalCount();
+
         model.addAttribute("guestBookList", guestBookList);
+        model.addAttribute("maxPage", (totalRecords + (pageSize - 1)) / pageSize);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
 
         // 이 부분에서 회원의 닉네임을 가져와서 모델에 추가
         String guestBookOwnerNick = guestBookService.getMemberNickByNo(no);
