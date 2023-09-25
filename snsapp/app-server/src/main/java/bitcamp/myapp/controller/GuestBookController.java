@@ -52,7 +52,7 @@ public class GuestBookController {
     }
 
     @GetMapping("delete")
-    public String delete(int no, HttpSession session) throws Exception {
+    public String delete(@RequestParam int memNo, int no, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
@@ -64,7 +64,7 @@ public class GuestBookController {
             throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
         } else {
             guestBookService.delete(g.getNo());
-            return "redirect:/guestBook/" + loginUser.getNo();
+            return "redirect:/guestBook/" + memNo;
         }
     }
 
