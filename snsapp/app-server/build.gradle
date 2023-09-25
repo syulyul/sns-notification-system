@@ -80,18 +80,6 @@ tasks.named('test') {
 
 
 
-processResources.dependsOn('copySecret')
-
-tasks.register('copySecret', Copy) {
-    from './secure-submodule-snsapp\n'
-    include "application.properties"  // 복사할 파일들
-    include "ncp.properties"  // 복사할 파일들
-    include "ncs.properties"  // 복사할 파일들
-    into 'src/main/resources'  // 복사 위치
-}
-
-
-
 //앱이름-plain.jar를 생성제어
 jar {
     enabled = false
