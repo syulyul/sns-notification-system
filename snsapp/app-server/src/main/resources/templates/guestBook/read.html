@@ -116,7 +116,10 @@
             </a>
           </div>
           <div style="margin-top: 5px;"> <!-- 이름과 프로필 사진 사이에 간격을 조절합니다. -->
-            <span data-th-text="${guestBook.writer.nick}"></span>
+            <a data-th-href="|/myPage/${board.writer.no}|"
+               data-th-text="${guestBook.writer.nick}"
+               style="text-decoration-line: none;color: black"
+            >작성자</a>
           </div>
         </td>
         <td class="content-like-cell" colspan="3" style="position: relative;">
