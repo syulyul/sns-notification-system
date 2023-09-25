@@ -8,7 +8,6 @@ import bitcamp.myapp.vo.BoardComment;
 import bitcamp.myapp.vo.BoardPhoto;
 import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
-
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,10 +112,10 @@ public class BoardController {
 
   @GetMapping("list")
   public String list(@RequestParam int category,
-                     @RequestParam(defaultValue = "") String keyword,
-                     @RequestParam(defaultValue = "1") int page,
-                     @RequestParam(defaultValue = "10") int pageSize,
-                     Model model, HttpSession session) throws Exception {
+      @RequestParam(defaultValue = "") String keyword,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int pageSize,
+      Model model, HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     List<Board> boardList;
     int totalRecords;
@@ -142,7 +141,7 @@ public class BoardController {
 
     if (category == 1) {
       return "board/list"; // 카테고리가 1일 때 "list.html"을 실행
-      
+
     } else {
       throw new Exception("유효하지 않은 카테고리입니다.");
     }
@@ -150,8 +149,8 @@ public class BoardController {
 
   @PostMapping("list/{category}")
   public String searchBoards(@PathVariable int category,
-                             @RequestParam("keyword") String keyword,
-                             @RequestParam(defaultValue = "1") int page) throws Exception {
+      @RequestParam("keyword") String keyword,
+      @RequestParam(defaultValue = "1") int page) throws Exception {
     String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
     String queryString = String.format("&keyword=%s&page=%d", encodedKeyword, page);
     return "redirect:/board/list?category=" + category + queryString;
@@ -214,7 +213,6 @@ public class BoardController {
     try {
       Board board = boardService.get(boardNo);
       boardService.like(loginUser, board);
-      boardService.increaseLikes(boardNo);
       loginUser.getLikeBoardSet().add(boardNo);
       session.setAttribute("loginUser", loginUser);
       return 1; // 예: 성공시 1 반환
@@ -229,7 +227,6 @@ public class BoardController {
     try {
       Board board = boardService.get(boardNo);
       boardService.unlike(loginUser, board);
-      boardService.decreaseLikes(boardNo);
       loginUser.getLikeBoardSet().remove(boardNo);
       session.setAttribute("loginUser", loginUser);
       return 1; // 예: 성공시 1 반환
