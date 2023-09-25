@@ -143,7 +143,7 @@ public class AuthController {
       myPage.setNo(member.getNo());
       myPageService.add(myPage);
 
-      return "auth/membership";
+      return "auth/form";
 
     } catch (Exception e) {
       model.addAttribute("message", "회원 등록 오류!");
