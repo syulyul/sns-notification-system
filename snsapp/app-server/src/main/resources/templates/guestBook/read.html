@@ -62,15 +62,18 @@
 <body>
 
 <div data-th-replace="header :: header"></div>
+
 <!-- "누구누구의 방명록" 추가 -->
-<div class="guestbook-title">
+<div class="guestbook-title" style="text-align: center;">
   <span th:text="${guestBookOwnerNick} ? ${guestBookOwnerNick + '의 방명록'} : ''"></span>
 </div>
 
 <!-- 방명록 추가 폼 -->
-<div class="add-guestbook-form">
+<div class="add-guestbook-form" style="text-align: center;">
   <h1>방명록 추가</h1>
-  <form method="post" action="/guestBook/add">
+  <form method="post" action="/guestBook/add" style="display: inline-block; text-align: center;">
+    <input type="hidden" name="mem_no" value="${guestBook.toUser.no}">
+    <input type="hidden" name="mno" value="${guestBook.writer.no}">
     <div class="form-group">
       <label for="title">제목</label>
       <input type="text" id="title" name="title" required>

@@ -68,9 +68,9 @@
     m.mno,
     m.nick
     from
-    sns_guestbook b inner join sns_member m on b.mno=m.mno
+    sns_guestbook g inner join sns_member m on g.mno=m.mno
     where
-    g.gbno=#{guestBookNo}
+    g.gbno=#{no}
   </select>
 
   <delete id="delete" parameterType="int">
