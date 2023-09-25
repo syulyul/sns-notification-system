@@ -1,5 +1,6 @@
 package bitcamp.myapp.controller;
 
+import bitcamp.myapp.service.BoardCommentService;
 import bitcamp.myapp.service.BoardService;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
@@ -42,6 +43,9 @@ public class MyPageController {
 
   @Autowired
   BoardService boardService;
+
+  @Autowired
+  BoardCommentService boardCommentService;
 
   @Autowired
   NcpObjectStorageService ncpObjectStorageService;
@@ -100,6 +104,9 @@ public class MyPageController {
       default:
         model.addAttribute("followList", null);
         model.addAttribute("boardList", boardService.list(1, pageSize, 1));
+        model.addAttribute("myboardList",
+            boardService.myboardlist(1, no, pageSize, 1));
+        model.addAttribute("mycommentList", boardCommentService.mycommentlist(no, pageSize, 1));
         break;
     }
     session.setAttribute("loginUser", loginUser);
@@ -148,7 +155,8 @@ public class MyPageController {
       Model model,
       MultipartFile photofile,
       HttpSession session) throws Exception {
-
+    member.setPhoneNumber(member.getPhoneNumber().replaceAll("\\D+", ""));
+    
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     MyPage myPage = myPageService.get(member.getNo());
 

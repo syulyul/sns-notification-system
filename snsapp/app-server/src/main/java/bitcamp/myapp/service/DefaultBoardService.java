@@ -84,15 +84,18 @@ public class DefaultBoardService implements BoardService {
     return boardDao.findPhotoBy(fileNo);
   }
 
+  @Transactional
   @Override
   public int deleteAttachedFile(int fileNo) throws Exception {
     return boardDao.deleteFile(fileNo);
   }
 
   // like 테이블 정보 삽입 삭제
+  @Transactional
   @Override
   public int like(Member member, Board board) throws Exception {
     int result = boardDao.insertLike(member.getNo(), board.getNo());
+    boardDao.updateLike(board.getNo());
     if (!session.getAttribute("loginUser").equals(board.getWriter())) {
       notificationService.add(new NotiLog(
           board.getWriter().getNo(),
@@ -103,9 +106,11 @@ public class DefaultBoardService implements BoardService {
     return result;
   }
 
+  @Transactional
   @Override
   public int unlike(Member member, Board board) throws Exception {
     int result = boardDao.deleteLike(member.getNo(), board.getNo());
+    boardDao.cancelLike(board.getNo());
 //    if (!session.getAttribute("loginUser").equals(board.getWriter())) {
 //       notificationService.add(new NotiLog(
 //       board.getWriter().getNo(),
@@ -123,6 +128,7 @@ public class DefaultBoardService implements BoardService {
     return boardDao.updateLike(boardNo);
   }
 
+  @Transactional
   @Override
   public int decreaseLikes(int boardNo) throws Exception {
     return boardDao.cancelLike(boardNo);
@@ -136,6 +142,22 @@ public class DefaultBoardService implements BoardService {
   @Override
   public List<String> boardlikelist(int boardNo) throws Exception {
     return boardDao.findLikeByBno(boardNo);
+  }
+
+  @Override
+  public List<Board> myboardlist(int category, int writerNo, int limit, int page) throws Exception {
+    return boardDao.findAllByMno(category, writerNo, limit, limit * (page - 1));
+  }
+
+  @Override
+  public List<Board> searchBoardsList(int category, String keyword, int limit, int page)
+      throws Exception {
+    return boardDao.searchBoards(category, keyword, limit, limit * (page - 1));
+  }
+
+  @Override
+  public int getSearchBoardsCount(String keyword) {
+    return boardDao.getSearchBoardsCount(keyword);
   }
 
 }

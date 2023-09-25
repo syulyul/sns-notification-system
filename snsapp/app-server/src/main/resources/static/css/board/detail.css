@@ -62,7 +62,7 @@
     }
 
     /* 좋아요 버튼 스타일 */
-        .like-button, .unlike-button {
+        .like-button, .unlike-button , .checkedLabel, .uncheckedLabel{
             padding: 5px 10px;
             color:black;
             background-color: transparent;
@@ -73,12 +73,9 @@
             margin-left: 500px;
             right: 0;
             bottom: 0;
+            white-space:nowrap
         }
 
-        .like-list {
-            margin-top: 30px;
-            text-align: right; /* 마지막 글자를 오른쪽으로 정렬하기 위해 */
-        }
 
         .nickname {
             display: inline-block; /* 각 닉네임을 가로로 나란히 배치하기 위해 */
@@ -336,4 +333,9 @@
             margin-bottom:5%;
         }
 
+        .like-list {
+            position: absolute;
+            top:800px;
+            right: 200px;
+        }
 

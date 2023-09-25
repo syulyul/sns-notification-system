@@ -70,7 +70,7 @@ th, td {
 /* 검색 박스 스타일 */
 .search-box {
     margin-top: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 input[type="text"] {
@@ -109,4 +109,26 @@ input[type="text"] {
 .profile-author {
     display: flex;
     align-items: center;
+}
+
+#pageLabel {
+    margin-top : 100px;
+    text-align: center;
+}
+
+.pagination-link {
+    display: inline-block;
+    width: 36px; /* 너비 */
+    height: 36px; /* 높이 */
+    line-height: 36px; /* 텍스트 수직 정렬 */
+    text-align: center; /* 텍스트 수평 정렬 */
+    margin-right: 4px;
+    border-radius: 50%; /* 동그라미 */
+    background-color: #f2f2f2;
+    text-decoration: none;
+    color: black;
+}
+.pagination-link-active {
+    background-color: #426B1F;
+    color: white;
 }

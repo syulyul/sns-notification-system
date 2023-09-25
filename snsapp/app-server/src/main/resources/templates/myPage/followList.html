@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <link rel="stylesheet" type="text/css" href="/css/font.css">
+
 </head>
+
 <body>
 <div data-th-fragment="followList" class="memberListBox" data-th-if="${followList}">
-  <h3 data-th-if="${show.equals('followers')}" data-th-text="'팔로워 리스트'"></h3>
-  <h3 data-th-if="${show.equals('followings')}" data-th-text="'팔로잉 리스트'"></h3>
-  <h3 data-th-if="${show.equals('searchMembers')}" data-th-text="'회원 검색 리스트'"></h3>
+  <h3 data-th-if="${show.equals('followers')}" data-th-text="'🌱 팔로워 리스트'"></h3>
+  <h3 data-th-if="${show.equals('followings')}" data-th-text="'🌱 팔로잉 리스트'"></h3>
+  <h3 data-th-if="${show.equals('searchMembers')}" data-th-text="'🌱 친구찾기'"></h3>
   <div data-th-each="member : ${followList}">
     <div class="memberItem">
       <input data-th-id="memberNo" data-th-value="${member.no}" type="hidden">
@@ -17,40 +19,52 @@
            data-th-unless="${member.photo}">
       <img class="memberPhoto" data-th-if="${member.photo}"
            data-th-src="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${member.photo}|">
-      <a data-th-href="|/myPage/${member.no}|">
+      <a style="margin-top:25px;text-decoration: none; color: black;" data-th-href="|/myPage/${member.no}|">
         <span data-th-text="${member.nick}"></span>
       </a>
 
-      <input class="followCheckbox"
+      <input class="toggleBox"
              data-th-checked="${session.loginUser.getFollowMemberSet().contains(member)}"
              data-th-id="|toggle${member.no}|"
              type="checkbox">
-      <label class="unfollowLabel"
+      <label class="checkedLabel"
              data-th-for="|toggle${member.no}|"
              data-th-onclick="|unfollow(${member.no})|"
-             style="color: #426B1F; background-color: transparent;">
+             style="margin-top:25px; color: #426B1F; background-color: transparent;">
         팔로잉 취소
       </label>
-      <label class="followLabel"
+      <label class="uncheckedLabel"
              data-th-for="|toggle${member.no}|"
              data-th-onclick="|follow(${member.no})|"
-             style="color: #426B1F; background-color: transparent;">
-        팔로잉
+             style="margin-top:25px; color: #426B1F; background-color: transparent;">
+        팔로우 하기
       </label>
     </div>
   </div>
   <div id="pageLabel">
-    <!--    <span data-th-text="${#request.getRequestURL()}"></span>-->
-    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=1,keyword=${param.keyword})}"
-       data-th-text="(${page} > 1) ? '1' : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} - 1),keyword=${param.keyword})}"
-       data-th-text="(${page} > 2) ? '2' : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=${page},keyword=${param.keyword})}"
+    <a th:if="${page > 1}"
+       th:class="${page == 1 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=1,keyword=${param.keyword})}"
+       data-th-text="'1'"></a>
+
+    <a th:if="${page > 2}"
+       th:class="${page == 2 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} - 1),keyword=${param.keyword})}"
+       data-th-text="'2'"></a>
+
+    <a th:class="${page == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=${page},keyword=${param.keyword})}"
        data-th-text="${page}"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} + 1),keyword=${param.keyword})}"
-       data-th-text="${page} < ${maxPage} - 1 ? ${page} + 1 : _"></a>
-    <a data-th-href="@{${#request.getRequestURL()}(show=${show},page=${maxPage},keyword=${param.keyword})}"
-       data-th-text="${page} < ${maxPage} ? ${maxPage} : _"></a>
+
+    <a th:if="${page < (maxPage - 1)}"
+       th:class="${page + 1 == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=(${page} + 1),keyword=${param.keyword})}"
+       data-th-text="${page + 1}"></a>
+
+    <a th:if="${page < maxPage}"
+       th:class="${maxPage == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+       data-th-href="@{${#request.getRequestURL()}(show=${show},page=${maxPage},keyword=${param.keyword})}"
+       data-th-text="${maxPage}"></a>
   </div>
 </div>
 </body>

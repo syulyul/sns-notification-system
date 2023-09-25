@@ -1,20 +1,23 @@
 
-    /* 팔로우 언팔로우 버튼 디자인 및 토글 구현 */
-    .followCheckbox {
-        display: none;
-    }
-    .unfollowLabel {
-        display: none;
-    }
-    .followCheckbox:checked ~ .unfollowLabel { /* 팔로우 되어 있는 상태 == 언팔 버튼이 보여야함 */
+    .pagination-link {
         display: inline-block;
-        background-color: grey;
+        width: 36px; /* 너비 */
+        height: 36px; /* 높이 */
+        line-height: 36px; /* 텍스트 수직 정렬 */
+        text-align: center; /* 텍스트 수평 정렬 */
+        margin-right: 4px;
+        border-radius: 50%; /* 동그라미 */
+        background-color: #f2f2f2;
+        text-decoration: none;
+        color: black;
     }
 
-    .followLabel {
-        display: inline-block;
-        background-color: grey;
+    .pagination-link-active {
+        background-color: #426B1F;
+        color: white;
     }
-    .followCheckbox:checked ~ .followLabel {
-        display: none;
+
+    #pageLabel {
+        margin-top : 60px;
+        text-align: center;
     }

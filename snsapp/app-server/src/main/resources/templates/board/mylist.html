@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <title>🌱게시글</title>
+  <link rel="stylesheet" type="text/css" href="/css/font.css">
+  <link rel="stylesheet" type="text/css" href="/css/header.css">
+  <link rel="stylesheet" type="text/css" href="/css/board/list.css">
+  <link rel="stylesheet" type="text/css" href="/css/myPage/detail.css">
+
+
+</head>
+<body>
+<div data-th-replace="header :: header"></div>
+
+<div style="margin-bottom: 80px;"></div>
+
+<!--<div class="search-box">-->
+<!--  <input type="text" placeholder="제목을 입력하세요">-->
+<!--  <button class="search-button">검색</button>-->
+<!--</div>-->
+<div style="margin:3%;">
+<p>🔍️ 게시글 찾기
+  <input type="text" name="keyword" placeholder="검색어를 입력해주세요."
+         style="margin-left: 20px; padding: 14px; border-width:1px; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+  <input type="hidden" name="show" value="searchMembers">
+  <input class="search_btn" type="submit" value="검색">
+</p>
+
+<!--<div style="margin-bottom: 80px;"></div>-->
+
+<!-- 새 글 버튼을 표 상단 우측에 추가 -->
+<!--<div style="text-align: right; margin-right: 20px; margin-top: -30px;">-->
+<!--  <a data-th-href="@{/board/form(category=${param.category})}" class="button" style="white-space: nowrap">새 글</a>-->
+<!--  <a style="margin-right:1650px; white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>-->
+<!--</div>-->
+<div style="float:right; margin: 20px 0 25px;">
+  <a data-th-href="@{/board/form(category=${param.category})}" class="button" style="margin-left: 20px;">새 글</a>
+  <a style="white-space: nowrap;" data-th-href='@{/}' class="button">메인</a>
+</div>
+
+<table border='1' data-th-fragment="myboardList">
+  <thead>
+  <tr>
+    <th>작성자🌱</th>
+    <th>제목🌱</th>
+    <th>좋아요수🌱</th>
+    <th>조회수🌱</th>
+    <th>등록일🌱</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr data-th-each="board : ${myboardList}">
+    <td>
+      <div class="profile-author">
+        <div class="profile-picture">
+          <!-- 기본 프로필 이미지를 사용하려면 아래와 같이 src를 명시합니다. -->
+          <img data-th-unless="${board.writer.photo}" src='/images/avatar.png'>
+
+          <!-- board.writer.photo 값이 있을 경우에만 이 img 태그가 렌더링됩니다. -->
+          <a data-th-if="${board.writer.photo}"
+             data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${board.writer.photo}|">
+            <img class="profile-image" alt="프로필 사진"
+                 data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${board.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+          </a>
+        </div>
+        <span data-th-text="${board.writer.nick}">작성자</span>
+      </div>
+    </td>
+    <td>
+      <a data-th-href="@{'/board/detail/' + ${board.category} + '/' + ${board.no}}"
+         data-th-text="${board.title} ?: '제목없음'"
+         style="color: black; text-decoration: none;">게시글 제목</a>
+    </td>
+    <td data-th-text="${board.likes}">좋아요수</td>
+    <td data-th-text="${board.viewCount}">조회수</td>
+    <td data-th-text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">등록일</td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- 페이징 처리 부분 -->
+<div id="pageLabel">
+  <!-- 이전 페이지들 -->
+  <a th:if="${page > 1}" th:class="${page == 1 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=1,pageSize=${pageSize})}"
+     data-th-text="1"></a>
+
+  <a th:if="${page > 2}" th:class="${page == 2 ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} - 1),pageSize=${pageSize})}"
+     data-th-text="2"></a>
+
+  <!-- 현재 페이지 -->
+  <a th:class="${page == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${page},pageSize=${pageSize})}"
+     data-th-text="${page}"></a>
+
+  <!-- 다음 페이지들 -->
+  <a th:if="${page < (maxPage - 1)}" th:class="${page + 1 == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=(${page} + 1),pageSize=${pageSize})}"
+     data-th-text="${page + 1}"></a>
+
+  <a th:if="${page < maxPage}" th:class="${maxPage == page ? 'pagination-link pagination-link-active' : 'pagination-link'}"
+     data-th-href="@{${#request.getRequestURL()}(category=${param.category},page=${maxPage},pageSize=${pageSize})}"
+     data-th-text="${maxPage}"></a>
+</div>
+</div>
+
+<div data-th-replace="footer :: footer"></div>
+
+</body>
+</html>

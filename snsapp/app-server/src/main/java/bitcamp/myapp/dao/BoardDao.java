@@ -3,6 +3,8 @@ package bitcamp.myapp.dao;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.BoardPhoto;
 import java.util.List;
+
+import bitcamp.myapp.vo.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -48,4 +50,17 @@ public interface BoardDao {
 
   List<String> findLikeByBno(int boardNo);
 
+  List<Board> findAllByMno(
+          @Param("category") int category,
+          @Param("writerNo") int writerNo,
+          @Param("limit") int limit,
+          @Param("offset") int offset);
+
+  List<Board> searchBoards(
+          @Param("category") int category,
+          @Param("keyword") String keyword,
+          @Param("limit") int limit,
+          @Param("offset") int offset);
+
+  int getSearchBoardsCount(String keyword);
 }

@@ -36,4 +36,10 @@ public interface BoardService {
   List<Integer> likelist(int memberNo) throws Exception;
 
   List<String> boardlikelist(int boardNo) throws Exception;
+
+  List<Board> myboardlist(int category, int writerNo, int limit, int page) throws Exception;
+
+  List<Board> searchBoardsList(int category, String keyword, int limit, int page) throws Exception;
+
+  int getSearchBoardsCount(String keyword);
 }

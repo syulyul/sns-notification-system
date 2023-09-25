@@ -5,32 +5,19 @@
     <meta charset='UTF-8'>
     <title>🌱게시글</title>
     <link rel="stylesheet" type="text/css" href="/css/font.css">
+    <link rel="stylesheet" type="text/css" href="/css/toggle.css">
     <link rel="stylesheet" type="text/css" href="/css/board/detail.css">
 
     <script>
-        function toggleLikeButtons(boardNo) {
-            const likeButton = document.getElementById('likeButton-' + boardNo);
-            const unlikeButton = document.getElementById('unlikeButton-' + boardNo);
-
-            // 버튼의 표시 상태를 전환
-            if (likeButton.style.display === 'none' || likeButton.style.display === '') {
-                likeButton.style.display = 'inline-block';
-                unlikeButton.style.display = 'none';
-            } else {
-                likeButton.style.display = 'none';
-                unlikeButton.style.display = 'inline-block';
-            }
-        }
-
         function likeButtonClicked(buttonElement) {
-            const boardNo = buttonElement.getAttribute("data-board-no");
+            const boardNo = document.getElementById("boardNo").value;
 
             fetch(`/board/like?boardNo=${boardNo}`, {
                 method: 'POST'
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("좋아요가 성공적으로 처리되었습니다.");
+                        alert("좋아요 성공 🌱 ");
                         toggleLikeButtons(boardNo); // 버튼 상태 전환 함수 호출
                     } else {
                         alert("좋아요 처리 중 오류가 발생했습니다.");
@@ -39,14 +26,14 @@
         }
 
         function unlikeButtonClicked(buttonElement) {
-            const boardNo = buttonElement.getAttribute("data-board-no");
+            const boardNo = document.getElementById("boardNo").value;
 
             fetch(`/board/unlike?boardNo=${boardNo}`, {
                 method: 'POST'
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("좋아요 취소가 성공적으로 처리되었습니다.");
+                        alert("좋아요 취소 🌱 ");
                         toggleLikeButtons(boardNo); // 버튼 상태 전환 함수 호출
                     } else {
                         alert("좋아요 취소 처리 중 오류가 발생했습니다.");
@@ -60,6 +47,8 @@
 
 <body>
 <div data-th-replace="header :: header"></div>
+
+<div style="margin-bottom: 60px;"></div>
 
 <!-- Wrapper div to contain the two columns -->
 <div class="wrapper" style="display: flex; justify-content: space-between;">
@@ -85,35 +74,51 @@
                     <textarea data-th-text="${board.content}" name='content' style="font-size: 20px; background-color: transparent; border: none; height:200px; widdata-th-600px;">내용입니다!</textarea>
                     <div>
                         <div style="overflow-x: auto; white-space: nowrap;">
-                            <div data-th-each="file : ${board.attachedFiles}" style="display: inline-block; margin-right: 10px;">
-                                <img alt="첨부파일 이미지" data-th-src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" height="200" width="200"/>
-                                <a data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|"></a>
-                                <a data-th-href="|/board/fileDelete/attachedFile;no=${file.no}|"
+                            <div th:each="file : ${board.attachedFiles}" style="display: inline-block; margin-right: 10px;">
+                                <img alt="첨부파일 이미지" th:src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" height="200" width="200"/>
+                                <a th:href="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}"></a>
+                                <a th:if="${session.loginUser.no == board.writer.no}" th:href="@{/board/fileDelete/attachedFile;no=${file.no}}"
                                    style="color: black; text-decoration: none; font-weight: bold;">X</a><br>
                             </div>
                         </div>
-                        <input multiple name='files' type='file'>
+                        <input th:if="${session.loginUser.no == board.writer.no}" multiple name='files' type='file'>
                     </div>
                     <div class="btn-container">
-                        <button>변경</button>
-                        <button type="reset">초기화</button>
-                        <a data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
+                        <!-- 변경 버튼 -->
+                        <button th:if="${session.loginUser.no == board.writer.no}">변경</button>
+
+                        <!-- 초기화 버튼 -->
+                        <button th:if="${session.loginUser.no == board.writer.no}" type="reset">초기화</button>
+
+                        <!-- 삭제 버튼 -->
+                        <a th:if="${session.loginUser.no == board.writer.no}"
+                           data-th-href="@{/board/delete(category=${board != null ? board.category : 'default'},no=${board != null ? board.no : '0'})}">
                             <button type="button">삭제</button>
-                        </a>
-                        <a data-th-href="@{/board/list(category=${board.category})}">
-                            <button type="button">목록</button>
                         </a>
                     </div>
                 </form>
             </div> <!-- End of content-box -->
             <!-- 좋아요 버튼 -->
-            <button class="like-button" data-th-id="'likeButton-' + ${board.no}" data-th-if="${!likedBoards.contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
-                좋아요 누르기 🤍
-            </button>
-            <!-- 좋아요 취소 버튼 -->
-            <button class="unlike-button" data-th-id="'unlikeButton-' + ${board.no}" data-th-if="${likedBoards.contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
-                좋아요 취소❤️
-            </button>
+
+                <input data-th-id="boardNo" data-th-value="${board.no}" type="hidden" style="width:0px">
+                <input class="toggleBox"
+                       data-th-checked="${session.loginUser.getLikeBoardSet().contains(board.no)}"
+                       data-th-id="checkLike"
+                       type="checkbox">
+                <label class="checkedLabel"
+                       data-th-for="checkLike"
+                       data-th-onclick="unlikeButtonClicked(this)"
+                       data-th-id="'unlikeButton-' + ${board.no}"
+                       style="background-color: transparent;">
+                    좋아요 취소❤️
+                </label>
+                <label class="uncheckedLabel"
+                       data-th-for="checkLike"
+                       data-th-onclick="likeButtonClicked(this)"
+                       data-th-id="'likeButton-' + ${board.no}"
+                       style="background-color: transparent;">
+                    좋아요 누르기 🤍
+                </label>
             <div class="like-list">
                 <span data-th-each="nickname, iterStat : ${likedUserNicknames}">
                     <span data-th-text="${nickname}"></span>
@@ -121,6 +126,9 @@
                     <span data-th-unless="${iterStat.last}">, </span>
                 </span>
             </div>
+            <a data-th-href="@{/board/list(category=${board.category})}">
+                <button type="button">목록</button>
+            </a>
         </div> <!-- End of container -->
     </div> <!-- End of left-column -->
 
