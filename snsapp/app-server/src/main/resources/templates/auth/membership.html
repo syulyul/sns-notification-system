@@ -46,36 +46,9 @@
             font-size: 16px;
         }
 
-        /*input[type="submit"] {*/
-        /*    background-color: #007bff;*/
-        /*    color: #fff;*/
-        /*    padding: 10px 20px;*/
-        /*    border-radius: 3px;*/
-        /*    cursor: pointer;*/
-        /*}*/
-
-        input[type="submit"]:hover {
-            /* hover 시 스타일링을 추가할 수 있습니다. */
-        }
-
-         /*3. 사진에서 사진을 넣게된다면 이미지를 우측에 출력하도록 table 수정*/
-        /*.image-container {*/
-        /*    display: flex;*/
-        /*    justify-content: flex-end;*/
-        /*}*/
-
         .user-image {
             max-width: 100px; /* 이미지의 최대 너비를 설정합니다. */
             max-height: 100px;
-        }
-
-        body {
-            height: 100%;
-            margin: 0;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-            background-color: #426B1F;
         }
 
         #main-holder {
@@ -126,7 +99,7 @@
             height: 60px;
             display: block;
             margin: 0 auto;
-            margin-top : 70px;
+            margin-top: 70px;
         }
     </style>
 </head>
@@ -173,67 +146,81 @@
                 </td>
             </tr>
         </table>
-        <button style="font-size:30px;" type="submit" class="submit-button">가입하기</button>
+        <button style="font-size:30px;" type="submit" class="submit-button" id="registerButton" disabled>가입하기</button>
     </form>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#sendCode").click(function() {
-            var phoneNumber = $("#tel").val();
-            $.ajax({
-                type: "POST",
-                url: "/auth/phoneAuth",
-                data: { phoneNumber: phoneNumber },
-                success: function(response) {
-                    if (response) {
-                        $("#result").text("가입된 전화번호입니다.");
-                    } else {
-                        $("#result").text("인증번호를 전송했습니다.");
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#sendCode").click(function() {
+                var phoneNumber = $("#tel").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/auth/phoneAuth",
+                    data: { phoneNumber: phoneNumber },
+                    success: function(response) {
+                        if (response) {
+                            $("#result").text("가입된 전화번호입니다.");
+                            // 전화번호가 이미 가입되어 있는 경우 가입하기 버튼 비활성화 및 알림 표시
+                            $("#registerButton").prop("disabled", true);
+                            alert("전화번호 인증을 먼저 완료해주세요.");
+                        } else {
+                            $("#result").text("인증번호를 전송했습니다.");
+                            // 인증번호 전송 성공 시 가입하기 버튼 활성화
+                            $("#registerButton").prop("disabled", false);
+                        }
+                    },
+                    error: function() {
+                        $("#result").text("오류가 발생했습니다.");
+                        $("#registerButton").prop("disabled", true);
+                        alert("오류가 발생했습니다. 다시 시도해주세요.");
                     }
-                },
-                error: function() {
-                    $("#result").text("오류가 발생했습니다.");
-                }
+                });
+            });
+
+            $("#verifyCode").click(function() {
+                var code = $("#verificationCode").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/auth/phoneAuthOk",
+                    data: { code: code },
+                    success: function(response) {
+                        if (response) {
+                            $("#result").text("인증 실패");
+                            // 인증 실패 시 가입하기 버튼 비활성화 및 알림 표시
+                            $("#registerButton").prop("disabled", true);
+                            alert("인증에 실패했습니다. 올바른 인증번호를 입력해주세요.");
+                        } else {
+                            $("#result").text("인증 성공");
+                            // 인증 성공 시 가입하기 버튼 활성화
+                            $("#registerButton").prop("disabled", false);
+                        }
+                    },
+                    error: function() {
+                        $("#result").text("오류가 발생했습니다.");
+                        $("#registerButton").prop("disabled", true);
+                        alert("오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                });
             });
         });
 
-        $("#verifyCode").click(function() {
-            var code = $("#verificationCode").val();
-            $.ajax({
-                type: "POST",
-                url: "/auth/phoneAuthOk",
-                data: { code: code },
-                success: function(response) {
-                    if (response) {
-                        $("#result").text("인증 실패");
-                    } else {
-                        $("#result").text("인증 성공");
-                    }
-                },
-                error: function() {
-                    $("#result").text("오류가 발생했습니다.");
-                }
-            });
-        });
-    });
+        function previewFile() {
+            var preview = document.getElementById('previewImage');
+            var file = document.getElementById('photoInput').files[0];
+            var reader = new FileReader();
 
-    function previewFile() {
-        var preview = document.getElementById('previewImage');
-        var file = document.getElementById('photoInput').files[0];
-        var reader = new FileReader();
+            reader.onloadend = function() {
+                preview.src = reader.result;
+            }
 
-        reader.onloadend = function() {
-            preview.src = reader.result;
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+            }
         }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = "";
-        }
-    }
-</script>
+    </script>
 </main>
 </body>
 </html>
