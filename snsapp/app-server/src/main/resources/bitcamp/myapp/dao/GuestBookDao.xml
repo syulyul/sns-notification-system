@@ -7,6 +7,7 @@
   <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
   <resultMap type="guestbook" id="guestBookMap">
     <id     column="gbno"       property="no" />
+    <result column="mem_no"     property="memNo"/>
     <result column="title"      property="title" />
     <result column="content"    property="content" />
     <result column="likes"      property="likes" />
@@ -16,10 +17,6 @@
       <id     column="mno"      property="no" />
       <result column="nick"     property="nick" />
       <result column="filepath" property="photo" />
-    </association>
-
-    <association property="toUser" javaType="mypage">
-      <id     column="mem_no"   property="no" />
     </association>
   </resultMap>
 
@@ -31,7 +28,7 @@
   <insert id="insert" parameterType="guestBook"
           useGeneratedKeys="true" keyColumn="guestBook_no" keyProperty="no">
     insert into sns_guestbook(title,content,mno,mem_no,created_at)
-    values(#{title},#{content},#{writer.no},#{toUser.no},now())
+    values(#{title},#{content},#{writer.no},#{memNo},now())
   </insert>
 
   <select id="findAll" parameterType="int" resultMap="guestBookMap">
@@ -41,13 +38,14 @@
     g.content,
     g.created_at,
     g.likes,
+    g.mem_no,
     m.mno,
     m.nick,
     m.filepath
     from
     sns_guestbook g inner join sns_member m on g.mno=m.mno
     where
-    g.mno=#{no}
+    g.mem_no=#{no}
     order by
     g.gbno desc
   </select>
@@ -68,9 +66,9 @@
     m.mno,
     m.nick
     from
-    sns_guestbook b inner join sns_member m on b.mno=m.mno
+    sns_guestbook g inner join sns_member m on g.mno=m.mno
     where
-    g.gbno=#{guestBookNo}
+    g.gbno=#{no}
   </select>
 
   <delete id="delete" parameterType="int">
@@ -138,12 +136,11 @@
     g.gbno=#{guestBookNo}
   </select>
 
-  <select id="findNickByMno" parameterType="int" resultType="String">
-    select
-    nick
-    from
-    sns_member
-    where
-    mno=#{no}
+  <select id="findNickByMemNo" parameterType="int" resultType="String">
+    SELECT DISTINCT m.nick
+    FROM sns_guestbook AS g
+    INNER JOIN sns_mypage AS mp ON g.mem_no = mp.mno
+    INNER JOIN sns_member AS m ON mp.mno = m.mno
+    WHERE g.mem_no = #{no};
   </select>
 </mapper>

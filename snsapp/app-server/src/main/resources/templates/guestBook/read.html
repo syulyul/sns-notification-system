@@ -62,15 +62,16 @@
 <body>
 
 <div data-th-replace="header :: header"></div>
+
 <!-- "누구누구의 방명록" 추가 -->
-<div class="guestbook-title">
+<div class="guestbook-title" style="text-align: center;">
   <span th:text="${guestBookOwnerNick} ? ${guestBookOwnerNick + '의 방명록'} : ''"></span>
 </div>
 
 <!-- 방명록 추가 폼 -->
-<div class="add-guestbook-form">
+<div class="add-guestbook-form" style="text-align: center;">
   <h1>방명록 추가</h1>
-  <form method="post" action="/guestBook/add">
+  <form method="post" action="/guestBook/add" style="display: inline-block; text-align: center;">
     <div class="form-group">
       <label for="title">제목</label>
       <input type="text" id="title" name="title" required>
@@ -80,6 +81,7 @@
       <textarea id="content" name="content" required></textarea>
     </div>
     <button type="submit">추가</button>
+    <input name="memNo" data-th-value="${no}" type="hidden">
   </form>
 </div>
 
@@ -143,7 +145,7 @@
       </tr>
     </table>
     <div class="btn-container">
-      <a data-th-href="@{/guestBook/delete(no=${guestBook.no})}">
+      <a data-th-href="@{/guestBook/delete(memNo=${guestBook.getMemNo()},no=${guestBook.no})}">
         <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
           <button>삭제</button>
         </div>
