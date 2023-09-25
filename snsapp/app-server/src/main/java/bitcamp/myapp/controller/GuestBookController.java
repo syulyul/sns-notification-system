@@ -36,19 +36,21 @@ public class GuestBookController {
     @GetMapping("form")
     public void form() throws Exception {
     }
+
     @PostMapping("add")
-    public String add(GuestBook guestBook, HttpSession session) throws Exception {
+    public String add(GuestBook guestBook, HttpSession session, @RequestParam("no") int no) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
         }
         guestBook.setWriter(loginUser);
 
-        MyPage mypage = myPageService.get(loginUser.getNo()); // 세션에서 회원번호 가져오기
-        guestBook.setToUser(mypage);
+        // List에서 선택한 no를 사용하여 MyPage를 조회
+        MyPage toUser = myPageService.get(no);
+        guestBook.setToUser(toUser);
 
         guestBookService.add(guestBook);
-        return "redirect:/guestBook/" + guestBook.getToUser().getNo();
+        return "redirect:/guestBook/" + toUser.getNo();
     }
 
     @GetMapping("delete")
