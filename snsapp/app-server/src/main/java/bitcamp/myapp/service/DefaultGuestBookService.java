@@ -31,8 +31,13 @@ public class DefaultGuestBookService implements GuestBookService {
     }
 
     @Override
-    public List<GuestBook> list(int userNo) throws Exception {
-        return guestBookDao.findAll(userNo);
+    public List<GuestBook> list(int no, int limit, int page) throws Exception {
+        return guestBookDao.findAll(no, limit, limit * (page - 1));
+    }
+
+    @Override
+    public int getTotalCount() throws Exception {
+        return guestBookDao.getTotalCount();
     }
 
     @Override
@@ -63,18 +68,18 @@ public class DefaultGuestBookService implements GuestBookService {
                 guestBook.getWriter().getNo(),
                 NotiType.FOLLOW_TYPE,
                 member.getNick() + "님이 회원의 게시글을 좋아합니다.",
-                "/guestBook/" + guestBook.getWriter().getNo())); // 이 부분 고민해봐야함
+                "/guestBook/" + guestBook.getMemNo())); // 이 부분 고민해봐야함
         return result;
     }
 
     @Override
     public int unlike(Member member, GuestBook guestBook) throws Exception {
         int result = guestBookDao.deleteLike(member.getNo(), guestBook.getNo());
-        // notificationService.add(new NotiLog(
-        // board.getWriter().getNo(),
-        // NotiType.FOLLOW_TYPE,
-        // member.getNick() + "님이 회원의 게시글 좋아요를 취소 했습니다..",
-        // "/board/" +board.getCategory()+"/"+ board.getNo()));
+         notificationService.add(new NotiLog(
+                 guestBook.getWriter().getNo(),
+                 NotiType.FOLLOW_TYPE,
+                 member.getNick() + "님이 회원의 게시글 좋아요를 취소 했습니다..",
+                 "/guestBook/" + guestBook.getMemNo()));
         return result;
     }
 
@@ -91,7 +96,6 @@ public class DefaultGuestBookService implements GuestBookService {
     @Override
     public String getMemberNickByNo(int memberNo) throws Exception {
         // GuestBookDao를 이용하여 회원 번호로 회원 닉네임을 가져옴
-        String memberNick = guestBookDao.findNickByMno(memberNo);
-        return memberNick;
+        return guestBookDao.findNickByMemNo(memberNo);
     }
 }

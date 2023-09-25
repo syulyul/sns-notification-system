@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -38,23 +39,20 @@ public class GuestBookController {
     }
 
     @PostMapping("add")
-    public String add(GuestBook guestBook, HttpSession session, @RequestParam("no") int no) throws Exception {
+    public String add(GuestBook guestBook, @RequestParam int memNo, HttpSession session, Model model) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
         }
         guestBook.setWriter(loginUser);
-
-        // List에서 선택한 no를 사용하여 MyPage를 조회
-        MyPage toUser = myPageService.get(no);
-        guestBook.setToUser(toUser);
+        guestBook.setMemNo(memNo);
 
         guestBookService.add(guestBook);
-        return "redirect:/guestBook/" + toUser.getNo();
+        return "redirect:/guestBook/" + guestBook.getMemNo();
     }
 
     @GetMapping("delete")
-    public String delete(int no, HttpSession session) throws Exception {
+    public String delete(@RequestParam int memNo, int no, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/auth/form";
@@ -66,25 +64,35 @@ public class GuestBookController {
             throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
         } else {
             guestBookService.delete(g.getNo());
-            return "redirect:/guestBook/" + loginUser.getNo();
+            return "redirect:/guestBook/" + memNo;
         }
     }
 
     @GetMapping("/{no}")
-    public String list(@PathVariable int no, Model model, HttpSession session) throws Exception {
+    public String list(@PathVariable int no, @RequestParam(defaultValue = "1") int page,
+                       @RequestParam(defaultValue = "10") int pageSize,
+                       Model model, HttpSession session) throws Exception {
         Member loginUser = (Member) session.getAttribute("loginUser");
+        int totalRecords;
 
         if (loginUser != null) {
             List<Integer> likedGuestBooks = guestBookService.likelist(loginUser.getNo());
             model.addAttribute("likedGuestBooks", likedGuestBooks);
         }
 
-        List<GuestBook> guestBookList = guestBookService.list(no);
+        List<GuestBook> guestBookList = guestBookService.list(no, pageSize, page);
+        totalRecords = guestBookService.getTotalCount();
+
         model.addAttribute("guestBookList", guestBookList);
+        model.addAttribute("maxPage", (totalRecords + (pageSize - 1)) / pageSize);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
 
         // 이 부분에서 회원의 닉네임을 가져와서 모델에 추가
         String guestBookOwnerNick = guestBookService.getMemberNickByNo(no);
         model.addAttribute("guestBookOwnerNick", guestBookOwnerNick);
+
+        model.addAttribute("memNo", no);
 
         session.setAttribute("loginUser", loginUser);
         return "guestBook/read";

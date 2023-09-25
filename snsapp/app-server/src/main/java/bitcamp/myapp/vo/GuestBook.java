@@ -12,7 +12,7 @@ public class GuestBook implements Serializable {
   private String title; // 제목
   private String content; // 내용
   private Member writer; // 작성자
-  private MyPage toUser; // 당사자
+  private int memNo; // 누구한테 쓰는지에 대한 회원 번호
   private Member profile; // 회원 프사
   private int likes; // 좋아요
   private Timestamp createdAt; // 등록일
@@ -24,7 +24,7 @@ public class GuestBook implements Serializable {
             ", title='" + title + '\'' +
             ", content='" + content + '\'' +
             ", writer=" + writer +
-            ", toUser=" + toUser +
+            ", memNo=" + memNo +
             ", profile=" + profile +
             ", likes=" + likes +
             ", createdAt=" + createdAt +
@@ -36,12 +36,12 @@ public class GuestBook implements Serializable {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     GuestBook guestBook = (GuestBook) o;
-    return no == guestBook.no && likes == guestBook.likes && Objects.equals(title, guestBook.title) && Objects.equals(content, guestBook.content) && Objects.equals(writer, guestBook.writer) && Objects.equals(toUser, guestBook.toUser) && Objects.equals(profile, guestBook.profile) && Objects.equals(createdAt, guestBook.createdAt);
+    return no == guestBook.no && memNo == guestBook.memNo && likes == guestBook.likes && Objects.equals(title, guestBook.title) && Objects.equals(content, guestBook.content) && Objects.equals(writer, guestBook.writer) && Objects.equals(profile, guestBook.profile) && Objects.equals(createdAt, guestBook.createdAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(no, title, content, writer, toUser, profile, likes, createdAt);
+    return Objects.hash(no, title, content, writer, memNo, profile, likes, createdAt);
   }
 
   public int getNo() {
@@ -76,12 +76,12 @@ public class GuestBook implements Serializable {
     this.writer = writer;
   }
 
-  public MyPage getToUser() {
-    return toUser;
+  public int getMemNo() {
+    return memNo;
   }
 
-  public void setToUser(MyPage toUser) {
-    this.toUser = toUser;
+  public void setMemNo(int memNo) {
+    this.memNo = memNo;
   }
 
   public Member getProfile() {
