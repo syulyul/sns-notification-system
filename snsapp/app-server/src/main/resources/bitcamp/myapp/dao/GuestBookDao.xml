@@ -137,10 +137,10 @@
     </select>
 
     <select id="findNickByMemNo" parameterType="int" resultType="String">
-        SELECT DISTINCT m.nick
-        FROM sns_guestbook AS g
-        INNER JOIN sns_mypage AS mp ON g.mem_no = mp.mno
-        INNER JOIN sns_member AS m ON mp.mno = m.mno
-        WHERE g.mem_no = #{no};
+        select distinct m.nick
+        from sns_guestbook as g
+        inner join sns_mypage as mp on g.mem_no = mp.mno
+        inner join sns_member as m on mp.mno = m.mno
+        where g.mem_no = #{no};
     </select>
 </mapper>
