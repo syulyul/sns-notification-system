@@ -45,6 +45,7 @@ jobs:
         run: |
           pwd
           ls -al
+          
           mv snsapp/app-server/build/libs/app.jar ./
           
           pwd
