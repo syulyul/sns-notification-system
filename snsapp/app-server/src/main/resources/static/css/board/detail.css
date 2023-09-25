@@ -62,7 +62,7 @@
     }
 
     /* 좋아요 버튼 스타일 */
-        .like-button, .unlike-button {
+        .like-button, .unlike-button , .checkedLabel, .uncheckedLabel{
             padding: 5px 10px;
             color:black;
             background-color: transparent;
@@ -73,6 +73,7 @@
             margin-left: 500px;
             right: 0;
             bottom: 0;
+            white-space:nowrap
         }
 
 

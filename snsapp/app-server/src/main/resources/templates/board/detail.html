@@ -5,25 +5,12 @@
     <meta charset='UTF-8'>
     <title>🌱게시글</title>
     <link rel="stylesheet" type="text/css" href="/css/font.css">
+    <link rel="stylesheet" type="text/css" href="/css/toggle.css">
     <link rel="stylesheet" type="text/css" href="/css/board/detail.css">
 
     <script>
-        function toggleLikeButtons(boardNo) {
-            const likeButton = document.getElementById('likeButton-' + boardNo);
-            const unlikeButton = document.getElementById('unlikeButton-' + boardNo);
-
-            // 버튼의 표시 상태를 전환
-            if (likeButton.style.display === 'none' || likeButton.style.display === '') {
-                likeButton.style.display = 'inline-block';
-                unlikeButton.style.display = 'none';
-            } else {
-                likeButton.style.display = 'none';
-                unlikeButton.style.display = 'inline-block';
-            }
-        }
-
         function likeButtonClicked(buttonElement) {
-            const boardNo = buttonElement.getAttribute("data-board-no");
+            const boardNo = document.getElementById("boardNo").value;
 
             fetch(`/board/like?boardNo=${boardNo}`, {
                 method: 'POST'
@@ -39,7 +26,7 @@
         }
 
         function unlikeButtonClicked(buttonElement) {
-            const boardNo = buttonElement.getAttribute("data-board-no");
+            const boardNo = document.getElementById("boardNo").value;
 
             fetch(`/board/unlike?boardNo=${boardNo}`, {
                 method: 'POST'
@@ -110,13 +97,26 @@
                 </form>
             </div> <!-- End of content-box -->
             <!-- 좋아요 버튼 -->
-            <button class="like-button" data-th-id="'likeButton-' + ${board.no}" data-th-if="${!session.loginUser.getLikeBoardSet().contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="likeButtonClicked(this)">
-                좋아요 누르기 🤍
-            </button>
-            <!-- 좋아요 취소 버튼 -->
-            <button class="unlike-button" data-th-id="'unlikeButton-' + ${board.no}" data-th-if="${session.loginUser.getLikeBoardSet().contains(board.no)}" data-th-attr="data-board-no=${board.no}" onclick="unlikeButtonClicked(this)">
-                좋아요 취소❤️
-            </button>
+
+                <input data-th-id="boardNo" data-th-value="${board.no}" type="hidden" style="width:0px">
+                <input class="toggleBox"
+                       data-th-checked="${session.loginUser.getLikeBoardSet().contains(board.no)}"
+                       data-th-id="checkLike"
+                       type="checkbox">
+                <label class="checkedLabel"
+                       data-th-for="checkLike"
+                       data-th-onclick="unlikeButtonClicked(this)"
+                       data-th-id="'unlikeButton-' + ${board.no}"
+                       style="background-color: transparent;">
+                    좋아요 취소❤️
+                </label>
+                <label class="uncheckedLabel"
+                       data-th-for="checkLike"
+                       data-th-onclick="likeButtonClicked(this)"
+                       data-th-id="'likeButton-' + ${board.no}"
+                       style="background-color: transparent;">
+                    좋아요 누르기 🤍
+                </label>
             <div class="like-list">
                 <span data-th-each="nickname, iterStat : ${likedUserNicknames}">
                     <span data-th-text="${nickname}"></span>

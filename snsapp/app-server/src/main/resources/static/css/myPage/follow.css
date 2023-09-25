@@ -1,24 +1,4 @@
 
-    /* 팔로우 언팔로우 버튼 디자인 및 토글 구현 */
-    .followCheckbox {
-        display: none;
-    }
-    .unfollowLabel {
-        display: none;
-    }
-    .followCheckbox:checked ~ .unfollowLabel { /* 팔로우 되어 있는 상태 == 언팔 버튼이 보여야함 */
-        display: inline-block;
-        background-color: grey;
-    }
-
-    .followLabel {
-        display: inline-block;
-        background-color: grey;
-    }
-    .followCheckbox:checked ~ .followLabel {
-        display: none;
-    }
-
     .pagination-link {
         display: inline-block;
         padding: 8px 12px;

@@ -1,0 +1,19 @@
+
+    /* 팔로우 언팔로우 버튼 디자인 및 토글 구현 */
+    .toggleBox {
+        display: none;
+    }
+    .checkedLabel {
+        display: none;
+    }
+    .toggleBox:checked ~ .checkedLabel { /* 팔로우 되어 있는 상태 == 언팔 버튼이 보여야함 */
+        display: inline-block;
+    }
+
+    .toggleBox:checked ~ .uncheckedLabel {
+        display: none;
+    }
+
+    .uncheckedLabel {
+        display: inline-block;
+    }
