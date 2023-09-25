@@ -42,7 +42,7 @@
     }
 
     function unlikeButtonClicked(buttonElement) {
-        const guestBookNo = buttonElement.getAttribute("data-board-no");
+        const guestBookNo = buttonElement.getAttribute("data-guestBook-no");
 
         fetch(`/guestBook/unlike?guestBookNo=${guestBookNo}`, {
             method: 'POST'
