@@ -9,6 +9,8 @@ import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.awt.desktop.SystemSleepListener;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
@@ -17,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -199,6 +202,39 @@ public class MyPageController {
         session.setAttribute("loginUser", loginUser);
 
         return "redirect:/myPage/" + myPage.getNo();
+      }
+    } else {
+      return "redirect:/error";
+    }
+
+  }
+
+  @GetMapping("{no}/update")
+  public String delete(
+          Member member,
+          @PathVariable int no,
+          Model model,
+          HttpSession session) throws Exception {
+    LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
+    MyPage myPage = myPageService.get(member.getNo());
+
+    if (loginUser.getNo() == myPage.getNo()) {
+      member.setPhoto(null);
+      myPage.setGender(0);
+      myPage.setStateMessage(null);
+      myPage.setEmail(null);
+      myPage.setBirthday(null);
+      member.setName("탈퇴한 사용자");
+      member.setNick((System.currentTimeMillis()>>10)%987+"탈퇴한 사용자"+System.currentTimeMillis()%1234);
+      member.setPhoneNumber("000-"+System.currentTimeMillis());
+      member.setPassword(null);
+      myPage.setVisitCount(0);
+
+      if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
+        throw new Exception("회원이 없습니다.");
+      } else {
+        session.invalidate();
+        return "redirect:/";
       }
     } else {
       return "redirect:/error";
