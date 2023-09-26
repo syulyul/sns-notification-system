@@ -9,8 +9,6 @@ import bitcamp.myapp.vo.LoginUser;
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.MyPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.awt.desktop.SystemSleepListener;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
@@ -19,7 +17,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -63,7 +60,7 @@ public class MyPageController {
       @RequestParam(defaultValue = "") String show,
       @RequestParam(name = "keyword", required = false) String keyword,
       @RequestParam(defaultValue = "1") int page,
-      @RequestParam(defaultValue = "15") int pageSize,
+      @RequestParam(defaultValue = "6") int pageSize,
       Model model,
       HttpSession session,
       @ModelAttribute("queryString") String queryString) throws Exception {
@@ -159,7 +156,7 @@ public class MyPageController {
       MultipartFile photofile,
       HttpSession session) throws Exception {
     member.setPhoneNumber(member.getPhoneNumber().replaceAll("\\D+", ""));
-    
+
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     MyPage myPage = myPageService.get(member.getNo());
 
@@ -211,10 +208,10 @@ public class MyPageController {
 
   @GetMapping("{no}/update")
   public String delete(
-          Member member,
-          @PathVariable int no,
-          Model model,
-          HttpSession session) throws Exception {
+      Member member,
+      @PathVariable int no,
+      Model model,
+      HttpSession session) throws Exception {
     LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
     MyPage myPage = myPageService.get(member.getNo());
 
@@ -225,8 +222,9 @@ public class MyPageController {
       myPage.setEmail(null);
       myPage.setBirthday(null);
       member.setName("탈퇴한 사용자");
-      member.setNick((System.currentTimeMillis()>>10)%987+"탈퇴한 사용자"+System.currentTimeMillis()%1234);
-      member.setPhoneNumber("000-"+System.currentTimeMillis());
+      member.setNick(
+          (System.currentTimeMillis() >> 10) % 987 + "탈퇴한 사용자" + System.currentTimeMillis() % 1234);
+      member.setPhoneNumber("000-" + System.currentTimeMillis());
       member.setPassword(null);
       myPage.setVisitCount(0);
 
