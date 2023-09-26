@@ -78,7 +78,8 @@
       </tr>
       <tr>
         <th style="text-align: left; width: 200px;">🌱 내용</th>
-        <td><textarea style="font-size:18px; border: none; width: 100%;" name="content" id="content" rows="6" cols="150" placeholder="내용을 입력하세요" required></textarea></td>
+        <td><textarea style="font-size:18px; border: none; width: 100%; overflow: hidden; resize: none;"
+                      name="content" id="content" rows="6" cols="150" placeholder="내용을 입력하세요" required></textarea></td>
       </tr>
       <input name="memNo" data-th-value="${no}" type="hidden">
     </table>
@@ -128,8 +129,8 @@
           </div>
         </td>
         <td class="content-like-cell" colspan="3" style="position: relative;">
-          <span data-th-if="${guestBook != null}"
-                data-th-text="${guestBook.content != null ? guestBook.content : '내용입니다!'}"></span>
+          <textarea  class="guestBook_textarea" readonly data-th-if="${guestBook != null}"
+                data-th-text="${guestBook.content != null ? guestBook.content : '내용입니다!'}"></textarea>
           <!-- 좋아요 버튼 -->
           <button class="like-button"
                   data-th-id="'likeButton-' + ${guestBook.no}"
