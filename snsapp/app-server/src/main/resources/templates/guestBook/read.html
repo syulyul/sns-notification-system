@@ -10,51 +10,36 @@
     <link rel="stylesheet" type="text/css" href="/css/toggle.css">
 
     <script>
-      function toggleLikeButtons(guestBookNo) {
-        const likeButton = document.getElementById('likeButton-' + guestBookNo);
-        const unlikeButton = document.getElementById('unlikeButton-' + guestBookNo);
-
-        // 버튼의 표시 상태를 전환
-        if (likeButton.style.display === 'none' || likeButton.style.display === '') {
-          likeButton.style.display = 'inline-block';
-          unlikeButton.style.display = 'none';
-        } else {
-          likeButton.style.display = 'none';
-          unlikeButton.style.display = 'inline-block';
-        }
-
-      }
-
       function likeButtonClicked(buttonElement) {
-        const guestBookNo = buttonElement.getAttribute("data-guestBook-no");
+          const guestBookNo = document.getElementById("guestBookNo").value;
 
-        fetch(`/guestBook/like?guestBookNo=${guestBookNo}`, {
-          method: 'POST'
-        })
-          .then(response => {
-            if (response.ok) {
-              alert("좋아요가 성공적으로 처리되었습니다.");
-              toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
-            } else {
-              alert("좋아요 처리 중 오류가 발생했습니다.");
-            }
-          });
+          fetch(`/guestBook/like?guestBookNo=${guestBookNo}`, {
+              method: 'POST'
+          })
+              .then(response => {
+                  if (response.ok) {
+                      alert("좋아요가 성공적으로 처리되었습니다.");
+                      toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
+                  } else {
+                      alert("좋아요 처리 중 오류가 발생했습니다.");
+                  }
+              });
       }
 
       function unlikeButtonClicked(buttonElement) {
-        const guestBookNo = buttonElement.getAttribute("data-guestBook-no");
+          const guestBookNo = document.getElementById("guestBookNo").value;
 
-        fetch(`/guestBook/unlike?guestBookNo=${guestBookNo}`, {
-          method: 'POST'
-        })
-          .then(response => {
-            if (response.ok) {
-              alert("좋아요 취소가 성공적으로 처리되었습니다.");
-              toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
-            } else {
-              alert("좋아요 취소 처리 중 오류가 발생했습니다.");
-            }
-          });
+          fetch(`/guestBook/unlike?guestBookNo=${guestBookNo}`, {
+              method: 'POST'
+          })
+              .then(response => {
+                  if (response.ok) {
+                      alert("좋아요 취소가 성공적으로 처리되었습니다.");
+                      toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
+                  } else {
+                      alert("좋아요 취소 처리 중 오류가 발생했습니다.");
+                  }
+              });
       }
     </script>
 

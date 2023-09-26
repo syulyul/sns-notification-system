@@ -99,7 +99,8 @@ public class GuestBookController {
     try {
       GuestBook guestBook = guestBookService.get(guestBookNo);
       guestBookService.like(loginUser, guestBook);
-      guestBookService.increaseLikes(guestBookNo);
+      loginUser.getLikedGuestBookSet().add(guestBookNo);
+      session.setAttribute("loginUser", loginUser);
       return 1; // 예: 성공시 1 반환
     } catch (Exception e) {
       return -1;
@@ -112,7 +113,8 @@ public class GuestBookController {
     try {
       GuestBook guestBook = guestBookService.get(guestBookNo);
       guestBookService.unlike(loginUser, guestBook);
-      guestBookService.decreaseLikes(guestBookNo);
+      loginUser.getLikedGuestBookSet().remove(guestBookNo);
+      session.setAttribute("loginUser", loginUser);
       return 1; // 예: 성공시 1 반환
     } catch (Exception e) {
       return -1;

@@ -58,25 +58,30 @@ public class DefaultGuestBookService implements GuestBookService {
     return guestBookDao.findBy(guestBookNo);
   }
 
+  @Transactional
   @Override
   public int delete(int guestBookNo) throws Exception {
     guestBookDao.deleteLikes(guestBookNo);
     return guestBookDao.delete(guestBookNo);
   }
 
+  @Transactional
   @Override
   public int increaseLikes(int guestBookNo) throws Exception {
     return guestBookDao.updateLike(guestBookNo);
   }
 
+  @Transactional
   @Override
   public int decreaseLikes(int guestBookNo) throws Exception {
     return guestBookDao.cancelLike(guestBookNo);
   }
 
+  @Transactional
   @Override
   public int like(Member member, GuestBook guestBook) throws Exception {
     int result = guestBookDao.insertLike(member.getNo(), guestBook.getNo());
+    guestBookDao.updateLike(guestBook.getNo());
     if (!session.getAttribute("loginUser").equals(guestBook.getWriter())) {
       notificationService.add(new NotiLog(
           guestBook.getWriter().getNo(),
@@ -87,9 +92,11 @@ public class DefaultGuestBookService implements GuestBookService {
     return result;
   }
 
+  @Transactional
   @Override
   public int unlike(Member member, GuestBook guestBook) throws Exception {
     int result = guestBookDao.deleteLike(member.getNo(), guestBook.getNo());
+    guestBookDao.cancelLike(guestBook.getNo());
 //    if (!session.getAttribute("loginUser").equals(guestBook.getWriter())) {
 //      notificationService.add(new NotiLog(
 //          guestBook.getWriter().getNo(),
