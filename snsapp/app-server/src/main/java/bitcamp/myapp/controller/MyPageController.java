@@ -152,7 +152,6 @@ public class MyPageController {
   public String update(
       Member member,
       @PathVariable int no,
-      @RequestParam("password") String password,
       @RequestParam("birthday") String birthday,
       @RequestParam("gender") int gender,
       @RequestParam("stateMessage") String stateMessage,
