@@ -181,7 +181,7 @@ public class BoardController {
     board.setAttachedFiles(attachedFiles);
 
     boardService.update(board);
-    return "redirect:/board/list?category=" + b.getCategory();
+    return "redirect:/board/detail/" + board.getCategory() + "/" + board.getNo();
   }
 
 
