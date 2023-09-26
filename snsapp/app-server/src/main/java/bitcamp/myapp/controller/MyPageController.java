@@ -152,6 +152,7 @@ public class MyPageController {
   public String update(
       Member member,
       @PathVariable int no,
+      @RequestParam("password") String password,
       @RequestParam("birthday") String birthday,
       @RequestParam("gender") int gender,
       @RequestParam("stateMessage") String stateMessage,
@@ -164,30 +165,36 @@ public class MyPageController {
     MyPage myPage = myPageService.get(member.getNo());
 
     if (loginUser.getNo() == myPage.getNo()) {
-      if (photofile.getSize() > 0) {
-        String uploadFileUrl = ncpObjectStorageService.uploadFile(
-            "bitcamp-nc7-bucket-14", "sns_member/", photofile);
-        member.setPhoto(uploadFileUrl);
+      if (member.getPassword().equals(password)) {
+        if (photofile.getSize() > 0) {
+          String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                  "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+          member.setPhoto(uploadFileUrl);
+        }
+
+        myPage.setGender(gender);
+        myPage.setStateMessage(stateMessage);
+        // myPage.setEmail(email);
+        if (birthday.isEmpty()) {
+          birthday = null;
+        } else {
+          // 생일 값을 문자열에서 Timestamp로 변환
+          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+          Date parsedDate = dateFormat.parse(birthday);
+          Timestamp timestamp = new Timestamp(parsedDate.getTime());
+
+          myPage.setBirthday(timestamp);
+
+        }
+
+        myPage.setGender(gender);
+        myPage.setStateMessage(stateMessage);
+
+        if (member.getEmail().equals(" ") || member.getEmail().isEmpty()) {
+          member.setEmail(null);
+        }
+
       }
-
-      myPage.setGender(gender);
-      myPage.setStateMessage(stateMessage);
-      // myPage.setEmail(email);
-      if (birthday.isEmpty()) {
-        birthday = null;
-      } else {
-        // 생일 값을 문자열에서 Timestamp로 변환
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsedDate = dateFormat.parse(birthday);
-        Timestamp timestamp = new Timestamp(parsedDate.getTime());
-
-        myPage.setBirthday(timestamp);
-
-      }
-
-      myPage.setGender(gender);
-      myPage.setStateMessage(stateMessage);
-
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
         throw new Exception("회원이 없습니다.");
       } else {
@@ -203,6 +210,7 @@ public class MyPageController {
 
         return "redirect:/myPage/" + myPage.getNo();
       }
+
     } else {
       return "redirect:/error";
     }
