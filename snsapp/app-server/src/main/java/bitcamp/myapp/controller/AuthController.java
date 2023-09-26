@@ -114,8 +114,6 @@ public class AuthController {
         int notReadNotiCount = notificationService.notReadNotiLogCount(loginUser.getNo());
         context.setAttribute("notReadNotiCount" + loginUser.getNo(), notReadNotiCount);
 
-        System.out.println(loginUser.getNo());
-
         Map<String, Object> jsonResponse = new HashMap<>();
         jsonResponse.put("userNo", loginUser.getNo());
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
