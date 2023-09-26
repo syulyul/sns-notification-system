@@ -61,7 +61,12 @@
                 <form data-th-action="@{/board/update}" data-th-if="${board}" enctype='multipart/form-data' method='post'>
                     <input name='no' data-th-value="${board.no}" type='hidden'>
                     <h1>
-                        <input style="margin-top: 20px; margin-bottom: 30px; font-size: 40px; background-color: transparent; border: none;" name="title" data-th-value="${board.title}" type="text" value="${board.title}">
+                        <input style="margin-top: 20px; margin-bottom: 30px; font-size: 40px; background-color: transparent; border: none;"
+                               name="title"
+                               data-th-readonly="${!board.writer.equals(session.loginUser)}"
+                               data-th-value="${board.title}"
+                               type="text"
+                               value="${board.title}">
                     </h1>
                     <div style="margin-left: 335px; margin-bottom: 30px;" class="meta-info">
                         <span data-th-text="${board.writer.nick}"></span>
@@ -71,7 +76,10 @@
                         <span data-th-text="${board.viewCount}"></span>
                     </div>
                     <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
-                    <textarea data-th-text="${board.content}" name='content' style="font-size: 20px; background-color: transparent; border: none; height:200px; widdata-th-600px;">내용입니다!</textarea>
+                    <textarea data-th-text="${board.content}"
+                              data-th-readonly="${!board.writer.equals(session.loginUser)}"
+                              name='content'
+                              style="font-size: 20px; background-color: transparent; border: none; height:200px; width: 600px;">내용입니다!</textarea>
                     <div>
                         <div style="overflow-x: auto; white-space: nowrap;">
                             <div th:each="file : ${board.attachedFiles}" style="display: inline-block; margin-right: 10px;">
