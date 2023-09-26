@@ -74,11 +74,6 @@ public class GuestBookController {
     Member loginUser = (Member) session.getAttribute("loginUser");
     int totalRecords;
 
-    if (loginUser != null) {
-      List<Integer> likedGuestBooks = guestBookService.likelist(loginUser.getNo());
-      model.addAttribute("likedGuestBooks", likedGuestBooks);
-    }
-
     List<GuestBook> guestBookList = guestBookService.list(no, pageSize, page);
     totalRecords = guestBookService.getTotalCount(no);
 

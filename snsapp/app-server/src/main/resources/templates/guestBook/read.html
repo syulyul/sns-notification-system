@@ -7,25 +7,11 @@
     <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="stylesheet" type="text/css" href="/css/guestBook/read.css">
+    <link rel="stylesheet" type="text/css" href="/css/toggle.css">
 
     <script>
-      function toggleLikeButtons(guestBookNo) {
-          const likeButton = document.getElementById('likeButton-' + guestBookNo);
-          const unlikeButton = document.getElementById('unlikeButton-' + guestBookNo);
-
-          // 버튼의 표시 상태를 전환
-          if (likeButton.style.display === 'none' || likeButton.style.display === '') {
-              likeButton.style.display = 'inline-block';
-              unlikeButton.style.display = 'none';
-          } else {
-              likeButton.style.display = 'none';
-              unlikeButton.style.display = 'inline-block';
-          }
-
-      }
-
       function likeButtonClicked(buttonElement) {
-          const guestBookNo = buttonElement.getAttribute("data-guestBook-no");
+          const guestBookNo = document.getElementById("guestBookNo").value;
 
           fetch(`/guestBook/like?guestBookNo=${guestBookNo}`, {
               method: 'POST'
@@ -41,7 +27,7 @@
       }
 
       function unlikeButtonClicked(buttonElement) {
-          const guestBookNo = buttonElement.getAttribute("data-guestBook-no");
+          const guestBookNo = document.getElementById("guestBookNo").value;
 
           fetch(`/guestBook/unlike?guestBookNo=${guestBookNo}`, {
               method: 'POST'
@@ -136,23 +122,28 @@
           <span data-th-if="${guestBook != null}"
                 data-th-text="${guestBook.content != null ? guestBook.content : '내용입니다!'}"
                 style="white-space:pre">내용</span>
-              <!-- 좋아요 버튼 -->
-              <button class="like-button"
-                      data-th-id="'likeButton-' + ${guestBook.no}"
-                      data-th-if="${!likedGuestBooks.contains(guestBook.no)}"
-                      data-th-attr="data-guestBook-no=${guestBook.no}"
-                      onclick="likeButtonClicked(this)">
-                🤍
-              </button>
 
-              <!-- 좋아요 취소 (좋아요 눌러져있는상태) 버튼 -->
-              <button class="unlike-button"
-                      data-th-id="'unlikeButton-' + ${guestBook.no}"
-                      data-th-if="${likedGuestBooks.contains(guestBook.no)}"
-                      data-th-attr="data-guestBook-no=${guestBook.no}"
-                      onclick="unlikeButtonClicked(this)">
+              <!-- 좋아요 버튼 -->
+              <input data-th-id="guestBookNo" data-th-value="${guestBook.no}" type="hidden"
+                     style="width:0px">
+              <input class="toggleBox"
+                     data-th-checked="${session.loginUser.getLikedGuestBookSet().contains(guestBook.no)}"
+                     data-th-id="checkLike"
+                     type="checkbox">
+              <label class="checkedLabel"
+                     data-th-for="checkLike"
+                     data-th-onclick="unlikeButtonClicked(this)"
+                     data-th-id="'unlikeButton-' + ${guestBook.no}"
+                     style="background-color: transparent;">
                 ❤️
-              </button>
+              </label>
+              <label class="uncheckedLabel"
+                     data-th-for="checkLike"
+                     data-th-onclick="likeButtonClicked(this)"
+                     data-th-id="'likeButton-' + ${guestBook.no}"
+                     style="background-color: transparent;">
+                🤍
+              </label>
             </td>
           </tr>
         </table>
