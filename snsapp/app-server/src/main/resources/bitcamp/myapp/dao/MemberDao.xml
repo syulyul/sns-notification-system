@@ -15,7 +15,7 @@
         <result column="filepath"        property="photo"/>
     </resultMap>
 
-    <insert id="insert" parameterType="member" useGeneratedKeys="true" keyColumn="board_no" keyProperty="no">
+    <insert id="insert" parameterType="member" useGeneratedKeys="true" keyColumn="member_no" keyProperty="no">
         insert into sns_member(nick,name,phone_number,password,filepath)
         values(#{nick},#{name},#{phoneNumber},sha1(#{password}),#{photo})
     </insert>
@@ -70,10 +70,10 @@
         ,phone_number=#{phoneNumber}
         ,email=#{email}
         <if test="password != null and password.length() != 0">
-            ,password=sha1(#{password})
+            password=sha1(#{password})
         </if>
         <if test="photo != null">
-            ,filepath=#{photo}
+            filepath=#{photo}
         </if>
         where
         mno=#{no}

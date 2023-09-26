@@ -114,9 +114,15 @@ input[type="text"] {
 }
 
 #pageLabel {
-    margin-top : 100px;
-    text-align: center;
+    position: fixed;
+    bottom: 70px; /* 원하는 위치로 조정하세요. */
+    left: 50%; /* 페이지 가운데 위치로 조정하세요. */
+    transform: translateX(-50%);
+    z-index: 1000; /* 다른 요소 위에 보이도록 설정하세요. */
 }
+/*    margin-top : 100px;*/
+/*    text-align: center;*/
+/*}*/
 
 .pagination-link {
     display: inline-block;
