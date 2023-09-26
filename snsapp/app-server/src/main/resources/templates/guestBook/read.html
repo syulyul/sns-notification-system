@@ -18,7 +18,6 @@
           })
               .then(response => {
                   if (response.ok) {
-                      alert("좋아요가 성공적으로 처리되었습니다.");
                       toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
                   } else {
                       alert("좋아요 처리 중 오류가 발생했습니다.");
@@ -34,7 +33,6 @@
           })
               .then(response => {
                   if (response.ok) {
-                      alert("좋아요 취소가 성공적으로 처리되었습니다.");
                       toggleLikeButtons(guestBookNo); // 버튼 상태 전환 함수 호출
                   } else {
                       alert("좋아요 취소 처리 중 오류가 발생했습니다.");
