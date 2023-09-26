@@ -63,7 +63,7 @@ public class MyPageController {
       @RequestParam(defaultValue = "") String show,
       @RequestParam(name = "keyword", required = false) String keyword,
       @RequestParam(defaultValue = "1") int page,
-      @RequestParam(defaultValue = "15") int pageSize,
+      @RequestParam(defaultValue = "6") int pageSize,
       Model model,
       HttpSession session,
       @ModelAttribute("queryString") String queryString) throws Exception {
