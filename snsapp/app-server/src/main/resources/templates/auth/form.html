@@ -33,17 +33,31 @@
       <a style="font-size: 20px" href="/auth/add" class="user-field"> 🌱 회원가입</a>
       <a style="font-size: 20px" href="/auth/find" class="user2-field"> 🌱 비밀번호 찾기</a>
     </ul>
-
-
   </form>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const loginForm = document.getElementById("login-form");
       const loginErrorMsg = document.getElementById("login-error-msg");
+      const savePhoneNumberCheckbox = document.getElementById("savePhoneNumber");
+
+      // 페이지 로드 시 쿠키 확인
+      const savedPhoneNumber = getCookie("savedPhoneNumber");
+      if (savedPhoneNumber) {
+        document.getElementById("username-field").value = savedPhoneNumber;
+        savePhoneNumberCheckbox.checked = true;
+      }
 
       loginForm.addEventListener("submit", function (event) {
         const phoneNumber = loginForm.querySelector("#username-field").value;
         const password = loginForm.querySelector("#password-field").value;
+
+        if (savePhoneNumberCheckbox.checked) {
+          // 사용자가 "전화번호 저장" 체크박스를 선택한 경우, 쿠키에 저장
+          setCookie("savedPhoneNumber", phoneNumber, 30); // 30일 동안 쿠키 유지
+        } else {
+          // 선택하지 않은 경우, 쿠키 삭제
+          deleteCookie("savedPhoneNumber");
+        }
 
         // Ajax 요청 보내기
         const xhr = new XMLHttpRequest();
@@ -71,6 +85,32 @@
 
         event.preventDefault(); // 폼 제출 방지
       });
+
+      // 쿠키 설정 함수
+      function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+      }
+
+      // 쿠키 읽기 함수
+      function getCookie(name) {
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const cookies = decodedCookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.startsWith(name + "=")) {
+            return cookie.substring(name.length + 1);
+          }
+        }
+        return null;
+      }
+
+      // 쿠키 삭제 함수
+      function deleteCookie(name) {
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      }
     });
   </script>
 </main>
