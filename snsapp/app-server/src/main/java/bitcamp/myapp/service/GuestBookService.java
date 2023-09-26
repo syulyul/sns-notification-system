@@ -10,7 +10,7 @@ public interface GuestBookService {
 
   List<GuestBook> list(int no, int limit, int page) throws Exception;
 
-  int getTotalCount(int memNo) throws Exception;
+  int getTotalCount(int mpno) throws Exception;
 
   GuestBook get(int guestBookNo) throws Exception;
 

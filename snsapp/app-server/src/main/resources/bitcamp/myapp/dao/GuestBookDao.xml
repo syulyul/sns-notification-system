@@ -7,7 +7,7 @@
   <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
   <resultMap type="guestbook" id="guestBookMap">
     <id column="gbno" property="no" />
-    <result column="mem_no" property="memNo" />
+    <result column="mpno" property="mpno" />
     <result column="title" property="title" />
     <result column="content" property="content" />
     <result column="likes" property="likes" />
@@ -20,15 +20,10 @@
     </association>
   </resultMap>
 
-  <resultMap type="guestBookLike" id="guestBookLikeMap">
-    <result column="member_no" property="memberNo" />
-    <result column="guestbook_no" property="guestBookNo" />
-  </resultMap>
-
   <insert id="insert" parameterType="guestBook"
           useGeneratedKeys="true" keyColumn="guestBook_no" keyProperty="no">
-    insert into sns_guestbook(title,content,mno,mem_no,created_at)
-    values(#{title},#{content},#{writer.no},#{memNo},now())
+    insert into sns_guestbook(title,content,mno,mpno,created_at)
+    values(#{title},#{content},#{writer.no},#{mpno},now())
   </insert>
 
   <select id="findAll" parameterType="int" resultMap="guestBookMap">
@@ -38,14 +33,14 @@
     g.content,
     g.created_at,
     g.likes,
-    g.mem_no,
+    g.mpno,
     m.mno,
     m.nick,
     m.filepath
     from
     sns_guestbook g inner join sns_member m on g.mno=m.mno
     where
-    g.mem_no=#{no}
+    g.mpno=#{no}
     order by
     g.gbno desc
     limit #{limit} offset #{offset}
@@ -55,7 +50,7 @@
     select count(*)
     from sns_guestbook
     where
-    mem_no=#{memNo}
+    mpno=#{mpno}
   </select>
 
   <select id="findBy" resultMap="guestBookMap" parameterType="int">
@@ -78,16 +73,6 @@
     where
     gbno=#{no}
   </delete>
-
-  <select id="findLikeBy" parameterType="int" resultMap="guestBookLikeMap">
-    select
-    mno,
-    gbno
-    from
-    sns_guestbook_like
-    where
-    mno=#{memberNo} and gbno=#{guestBookNo}
-  </select>
 
   <update id="updateLike" parameterType="int">
     update sns_guestbook set
@@ -138,11 +123,11 @@
     g.gbno=#{guestBookNo}
   </select>
 
-  <select id="findNickByMemNo" parameterType="int" resultType="String">
+  <select id="findNickByMpno" parameterType="int" resultType="String">
     select distinct m.nick
     from sns_guestbook as g
-    inner join sns_mypage as mp on g.mem_no = mp.mno
+    inner join sns_mypage as mp on g.mpno = mp.mno
     inner join sns_member as m on mp.mno = m.mno
-    where g.mem_no = #{no};
+    where g.mpno = #{no};
   </select>
 </mapper>

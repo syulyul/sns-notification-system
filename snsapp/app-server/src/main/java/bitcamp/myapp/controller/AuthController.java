@@ -1,6 +1,7 @@
 package bitcamp.myapp.controller;
 
 import bitcamp.myapp.service.BoardService;
+import bitcamp.myapp.service.GuestBookService;
 import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.MyPageService;
 import bitcamp.myapp.service.NcpObjectStorageService;
@@ -42,6 +43,8 @@ public class AuthController {
   @Autowired
   BoardService boardService;
   @Autowired
+  GuestBookService guestBookService;
+  @Autowired
   MyPageService myPageService;
   @Autowired
   NotificationService notificationService;
@@ -81,6 +84,8 @@ public class AuthController {
       HttpSession session,
       HttpServletResponse response,
       Model model) {
+    phoneNumber = phoneNumber.replaceAll("\\D+", "");
+
     try {
       // 여기에서 phoneNumber와 password를 사용하여 회원 정보를 검증합니다.
       Member loginUser = memberService.get(phoneNumber, password);
@@ -100,7 +105,10 @@ public class AuthController {
         LoginUser loginUserObject = new LoginUser(loginUser);
         loginUserObject.setFollowMemberSet(
             new HashSet<>(myPageService.followingList(loginUser.getNo())));
-        loginUserObject.setLikeBoardSet(new HashSet<>(boardService.likelist(loginUser.getNo())));
+        loginUserObject.setLikeBoardSet(
+            new HashSet<>(boardService.likelist(loginUser.getNo())));
+        loginUserObject.setLikedGuestBookSet(
+            new HashSet<>(guestBookService.likelist(loginUser.getNo())));
         session.setAttribute("loginUser", loginUserObject);
 
         int notReadNotiCount = notificationService.notReadNotiLogCount(loginUser.getNo());

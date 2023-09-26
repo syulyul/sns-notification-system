@@ -7,6 +7,7 @@ public class LoginUser extends Member {
 
   private HashSet<Member> followMemberSet; // 로그인 한 유저가 팔로우하는 멤버 집합
   private HashSet<Integer> likeBoardSet; // 로그인 한 유저가 좋아요를 누른 게시글 번호 집합
+  private HashSet<Integer> likedGuestBookSet;  // 로그인 한 유저가 좋아요를 누른 방명록 번호 집합
   private HashSet<Integer> visitedMyPages = new HashSet<>(); // 방문한 유저를 담는 집합
 
   public LoginUser() {
@@ -46,6 +47,14 @@ public class LoginUser extends Member {
 
   public void setLikeBoardSet(HashSet<Integer> likeBoardSet) {
     this.likeBoardSet = likeBoardSet;
+  }
+
+  public HashSet<Integer> getLikedGuestBookSet() {
+    return likedGuestBookSet;
+  }
+
+  public void setLikedGuestBookSet(HashSet<Integer> likedGuestBookSet) {
+    this.likedGuestBookSet = likedGuestBookSet;
   }
 
   public HashSet<Integer> getVisitedMyPages() {
