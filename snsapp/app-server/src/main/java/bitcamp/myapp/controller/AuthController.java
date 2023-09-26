@@ -84,6 +84,8 @@ public class AuthController {
       HttpSession session,
       HttpServletResponse response,
       Model model) {
+    phoneNumber = phoneNumber.replaceAll("\\D+", "");
+
     try {
       // 여기에서 phoneNumber와 password를 사용하여 회원 정보를 검증합니다.
       Member loginUser = memberService.get(phoneNumber, password);
