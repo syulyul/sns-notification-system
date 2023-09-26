@@ -185,9 +185,6 @@ public class MyPageController {
 
         }
 
-        myPage.setGender(gender);
-        myPage.setStateMessage(stateMessage);
-
         if (member.getEmail().equals(" ") || member.getEmail().isEmpty()) {
           member.setEmail(null);
         }
