@@ -37,21 +37,21 @@ public class GuestBookController {
   }
 
   @PostMapping("add")
-  public String add(GuestBook guestBook, @RequestParam int memNo, HttpSession session)
+  public String add(GuestBook guestBook, @RequestParam int mpno, HttpSession session)
       throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
     }
     guestBook.setWriter(loginUser);
-    guestBook.setMemNo(memNo);
+    guestBook.setMpno(mpno);
 
     guestBookService.add(guestBook);
-    return "redirect:/guestBook/" + guestBook.getMemNo();
+    return "redirect:/guestBook/" + guestBook.getMpno();
   }
 
   @GetMapping("delete")
-  public String delete(@RequestParam int memNo, int no, HttpSession session) throws Exception {
+  public String delete(@RequestParam int mpno, int no, HttpSession session) throws Exception {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {
       return "redirect:/auth/form";
@@ -63,7 +63,7 @@ public class GuestBookController {
       throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
     } else {
       guestBookService.delete(g.getNo());
-      return "redirect:/guestBook/" + memNo;
+      return "redirect:/guestBook/" + mpno;
     }
   }
 
@@ -86,7 +86,7 @@ public class GuestBookController {
     String guestBookOwnerNick = guestBookService.getMemberNickByNo(no);
     model.addAttribute("guestBookOwnerNick", guestBookOwnerNick);
 
-    model.addAttribute("memNo", no);
+    model.addAttribute("mpno", no);
 
     session.setAttribute("loginUser", loginUser);
     return "guestBook/read";

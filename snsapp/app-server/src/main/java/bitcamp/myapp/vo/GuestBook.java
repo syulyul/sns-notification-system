@@ -12,7 +12,7 @@ public class GuestBook implements Serializable {
   private String title; // 제목
   private String content; // 내용
   private Member writer; // 작성자
-  private int memNo; // 누구한테 쓰는지에 대한 회원 번호
+  private int mpno; // 누구한테 쓰는지에 대한 회원 번호
   private Member profile; // 회원 프사
   private int likes; // 좋아요
   private Timestamp createdAt; // 등록일
@@ -20,28 +20,35 @@ public class GuestBook implements Serializable {
   @Override
   public String toString() {
     return "GuestBook{" +
-            "no=" + no +
-            ", title='" + title + '\'' +
-            ", content='" + content + '\'' +
-            ", writer=" + writer +
-            ", memNo=" + memNo +
-            ", profile=" + profile +
-            ", likes=" + likes +
-            ", createdAt=" + createdAt +
-            '}';
+        "no=" + no +
+        ", title='" + title + '\'' +
+        ", content='" + content + '\'' +
+        ", writer=" + writer +
+        ", mpno=" + mpno +
+        ", profile=" + profile +
+        ", likes=" + likes +
+        ", createdAt=" + createdAt +
+        '}';
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     GuestBook guestBook = (GuestBook) o;
-    return no == guestBook.no && memNo == guestBook.memNo && likes == guestBook.likes && Objects.equals(title, guestBook.title) && Objects.equals(content, guestBook.content) && Objects.equals(writer, guestBook.writer) && Objects.equals(profile, guestBook.profile) && Objects.equals(createdAt, guestBook.createdAt);
+    return no == guestBook.no && mpno == guestBook.mpno && likes == guestBook.likes
+        && Objects.equals(title, guestBook.title) && Objects.equals(content, guestBook.content)
+        && Objects.equals(writer, guestBook.writer) && Objects.equals(profile, guestBook.profile)
+        && Objects.equals(createdAt, guestBook.createdAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(no, title, content, writer, memNo, profile, likes, createdAt);
+    return Objects.hash(no, title, content, writer, mpno, profile, likes, createdAt);
   }
 
   public int getNo() {
@@ -76,12 +83,12 @@ public class GuestBook implements Serializable {
     this.writer = writer;
   }
 
-  public int getMemNo() {
-    return memNo;
+  public int getMpno() {
+    return mpno;
   }
 
-  public void setMemNo(int memNo) {
-    this.memNo = memNo;
+  public void setMpno(int mpno) {
+    this.mpno = mpno;
   }
 
   public Member getProfile() {
