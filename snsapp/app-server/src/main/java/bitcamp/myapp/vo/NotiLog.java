@@ -74,11 +74,11 @@ public class NotiLog implements Serializable {
     this.memberNo = memberNo;
   }
 
-  public int getNotiNo() {
+  public int getNotiTypeNo() {
     return notiTypeNo;
   }
 
-  public void setNotiNo(int notiNo) {
+  public void setNotiTypeNo(int notiNo) {
     this.notiTypeNo = notiNo;
   }
 
