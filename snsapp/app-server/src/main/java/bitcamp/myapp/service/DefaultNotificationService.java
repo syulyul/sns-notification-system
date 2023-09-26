@@ -24,13 +24,16 @@ public class DefaultNotificationService implements NotificationService {
   @Transactional
   @Override
   public int add(NotiLog notiLog) throws Exception {
+    int result = notificationDao.insert(notiLog);
     String key = "notReadNotiCount" + notiLog.getMemberNo();
-    try {
-      context.setAttribute(key, (Integer) context.getAttribute(key) + 1);
-    } catch (Exception e) {
-      // 알림을 받을 유저가 로그인되어 있지 않을 경우 context에 key가 없어 발생하는 오류 처리
+    Integer value = (Integer) context.getAttribute(key);
+    if (value == null) {
+      value = notificationDao.getNotiLogCount(notiLog.getMemberNo());
+      context.setAttribute(key, value);
+    } else {
+      context.setAttribute(key, value + 1);
     }
-    return notificationDao.insert(notiLog);
+    return result;
   }
 
   @Override
@@ -55,8 +58,17 @@ public class DefaultNotificationService implements NotificationService {
 
   @Transactional
   @Override
-  public int updateState(int notiNo, int notiState) throws Exception {
-    return notificationDao.updateState(notiNo, notiState);
+  public int updateState(NotiLog notiLog, int notiState) throws Exception {
+    int result = notificationDao.updateState(notiLog.getNo(), notiState);
+    String key = "notReadNotiCount" + notiLog.getMemberNo();
+    Integer value = (Integer) context.getAttribute(key);
+    if (value == null) {
+      value = notificationDao.getNotiLogCount(notiLog.getMemberNo());
+      context.setAttribute(key, value);
+    } else {
+      context.setAttribute(key, value - 1);
+    }
+    return result;
   }
 
   @Override

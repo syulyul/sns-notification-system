@@ -78,14 +78,8 @@ public class NotificationController {
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (memberNo == loginUser.getNo()) {
       NotiLog notiLog = notificationService.getNotiLog(notiNo);
-      notificationService.updateState(notiNo, notiState);
       if (notiLog.getNotiState() == 0 && notiState != 0) {
-
-        int notReadNotiCount = (Integer) context.getAttribute("notReadNotiCount" + memberNo);
-        context.setAttribute(
-            "notReadNotiCount" + memberNo, notReadNotiCount - 1);
-        session.setAttribute("notReadNotiCount", notReadNotiCount - 1);
-
+        notificationService.updateState(notiLog, notiState);
       }
     }
 

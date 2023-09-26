@@ -16,7 +16,7 @@ public interface NotificationService {
 
   NotiLog getNotiLog(int notiNo) throws Exception;
 
-  int updateState(int notiNo, int notiState) throws Exception;
+  int updateState(NotiLog notiLog, int notiState) throws Exception;
 
   int updateAllState(int memberNo, int notiState);
 
