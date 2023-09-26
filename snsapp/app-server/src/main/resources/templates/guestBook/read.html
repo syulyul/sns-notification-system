@@ -73,7 +73,7 @@
                 name="content" id="content" rows="6" cols="150" placeholder="내용을 입력하세요"
                 required></textarea></td>
           </tr>
-          <input name="memNo" data-th-value="${no}" type="hidden">
+          <input name="mpno" data-th-value="${no}" type="hidden">
         </table>
         <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
           <button type="submit">작성</button>
@@ -148,7 +148,7 @@
           </tr>
         </table>
         <div class="btn-container">
-          <a data-th-href="@{/guestBook/delete(memNo=${guestBook.getMpno()},no=${guestBook.no})}">
+          <a data-th-href="@{/guestBook/delete(mpno=${guestBook.getMpno()},no=${guestBook.no})}">
             <div style="text-align: center; margin-left:37%; margin-bottom:2%;">
               <button>삭제</button>
             </div>
