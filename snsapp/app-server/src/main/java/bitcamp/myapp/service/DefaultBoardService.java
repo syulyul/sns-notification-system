@@ -101,7 +101,7 @@ public class DefaultBoardService implements BoardService {
           board.getWriter().getNo(),
           NotiType.LIKE_TYPE,
           member.getNick() + "님이 회원님의 게시글을 좋아합니다.",
-          "/board/" + board.getCategory() + "/" + board.getNo()));
+          "/board/detail/" + board.getCategory() + "/" + board.getNo()));
     }
     return result;
   }
@@ -116,7 +116,7 @@ public class DefaultBoardService implements BoardService {
 //       board.getWriter().getNo(),
 //       NotiType.LIKE_TYPE,
 //       member.getNick() + "님이 회원님의 게시글 좋아요를 취소 했습니다..",
-//       "/board/" +board.getCategory()+"/"+ board.getNo()));
+//       "/board/detail/" +board.getCategory()+"/"+ board.getNo()));
 //    }
     return result;
   }

@@ -69,9 +69,9 @@ public class NotificationController {
 
   @GetMapping("updateState")
   public String updateState(
-      int memberNo,
-      int notiNo,
-      int notiState,
+      @RequestParam int memberNo,
+      @RequestParam int notiNo,
+      @RequestParam int notiState,
       @RequestParam String url,
       HttpSession session) throws Exception {
 
@@ -80,10 +80,12 @@ public class NotificationController {
       NotiLog notiLog = notificationService.getNotiLog(notiNo);
       notificationService.updateState(notiNo, notiState);
       if (notiLog.getNotiState() == 0 && notiState != 0) {
-        int notReadNotiCount = (int) context.getAttribute("notReadNotiCount" + memberNo);
+
+        int notReadNotiCount = (Integer) context.getAttribute("notReadNotiCount" + memberNo);
         context.setAttribute(
             "notReadNotiCount" + memberNo, notReadNotiCount - 1);
         session.setAttribute("notReadNotiCount", notReadNotiCount - 1);
+
       }
     }
 
