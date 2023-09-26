@@ -192,3 +192,10 @@
         margin-top : 60px;
         text-align: center;
     }
+
+    .guestBook_textarea {
+        width: 100%;
+        min-height: 7em; /* 최소 높이 설정 */
+        border-color: transparent;
+        resize: none; /* 사용자 크기 조정 비활성화 */
+    }
