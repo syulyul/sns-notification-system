@@ -123,7 +123,9 @@
             <td class="content-like-cell" colspan="3" style="position: relative;">
             <textarea class="guestBook_textarea" readonly data-th-if="${guestBook != null}"
                       data-th-text="${guestBook.content != null ? guestBook.content : '내용입니다!'}"></textarea>
+
               <!-- 좋아요 버튼 -->
+              <div style="position: absolute; bottom: 10px; right: 10px;">
               <input data-th-id="guestBookNo" data-th-value="${guestBook.no}" type="hidden"
                      style="width:0px">
               <input class="toggleBox"
@@ -144,6 +146,7 @@
                      style="background-color: transparent;">
                 🤍
               </label>
+              </div>
             </td>
           </tr>
         </table>
