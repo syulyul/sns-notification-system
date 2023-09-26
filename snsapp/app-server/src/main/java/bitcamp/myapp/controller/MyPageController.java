@@ -165,7 +165,6 @@ public class MyPageController {
     MyPage myPage = myPageService.get(member.getNo());
 
     if (loginUser.getNo() == myPage.getNo()) {
-      if (member.getPassword().equals(password)) {
         if (photofile.getSize() > 0) {
           String uploadFileUrl = ncpObjectStorageService.uploadFile(
                   "bitcamp-nc7-bucket-14", "sns_member/", photofile);
@@ -194,7 +193,6 @@ public class MyPageController {
           member.setEmail(null);
         }
 
-      }
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
         throw new Exception("회원이 없습니다.");
       } else {
