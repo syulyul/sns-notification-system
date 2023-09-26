@@ -15,7 +15,7 @@ const checkNoti = () => {
         let response = httpRequest.response;
         if(response.notReadNotiCount > notReadNotiCount){
           newNotiBox.style.right = '50px';
-          setTimeout(closeNotification, 10000, "setTimeout");
+          setTimeout(closeNotification, 7000, "setTimeout");
           console.log("새로운 알림!");
           notReadNotiCount = response.notReadNotiCount;
           document.getElementById("notReadNotiCount").innerText = notReadNotiCount;
@@ -37,5 +37,5 @@ const checkNoti = () => {
 
 let intervalId;
 setTimeout(checkNoti, 10000, "setTimeout");
-setTimeout(intervalId = setInterval(checkNoti, 30000, "setInterval"), 10000, "setTimeout");
+setTimeout(intervalId = setInterval(checkNoti, 10000, "setInterval"), 10000, "setTimeout");
 
