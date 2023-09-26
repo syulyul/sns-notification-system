@@ -6,7 +6,7 @@
         align-items: center;
         height: 70vh;
         flex-direction: column; /* 추가: 세로 방향으로 정렬 */
-        margin-left : 5%;
+        margin-left:35px;
     }
 
     /* 알림 로그 목록 컨테이너 스타일 */
@@ -17,6 +17,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        min-height: 600px;
     }
 
     /* 개별 알림 로그 스타일 */
