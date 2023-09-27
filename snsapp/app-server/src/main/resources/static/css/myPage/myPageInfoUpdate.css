@@ -139,4 +139,13 @@ h1 {
     /*margin: -30px;*/
     align-items: center;
     margin:auto;
+    margin-left:20px;
 }
+
+ .custom-link {
+     text-decoration: none; /* 밑줄 없애기 */
+     color: darkgrey;       /* 글자색 회색으로 */
+     font-size:15px;
+     margin-top:20px;
+     margin-left: 540px;
+ }

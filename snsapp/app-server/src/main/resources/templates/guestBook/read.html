@@ -114,27 +114,30 @@
               </div>
             </td>
             <td class="content-like-cell" colspan="3" style="position: relative;">
-            <textarea class="guestBook_textarea" readonly data-th-if="${guestBook != null}"
+            <textarea style="font-size:20px" class="guestBook_textarea" readonly data-th-if="${guestBook != null}"
                       data-th-text="${guestBook.content != null ? guestBook.content : '내용입니다!'}"></textarea>
+
               <!-- 좋아요 버튼 -->
-              <input class="toggleBox"
-                     data-th-checked="${session.loginUser.getLikedGuestBookSet().contains(guestBook.no)}"
-                     data-th-id="|checkLike + ${guestBook.no}|"
-                     type="checkbox">
-              <label class="checkedLabel"
-                     data-th-for="|checkLike + ${guestBook.no}|"
-                     data-th-onclick="|unlikeButtonClicked(${guestBook.no})|"
-                     data-th-id="'unlikeButton-' + ${guestBook.no}"
-                     style="background-color: transparent;">
-                ❤️
-              </label>
-              <label class="uncheckedLabel"
-                     data-th-for="|checkLike + ${guestBook.no}|"
-                     data-th-onclick="|likeButtonClicked(${guestBook.no})|"
-                     data-th-id="'likeButton-' + ${guestBook.no}"
-                     style="background-color: transparent;">
-                🤍
-              </label>
+              <div style="position: absolute; bottom: 10px; right: 10px;">
+                <input class="toggleBox"
+                      data-th-checked="${session.loginUser.getLikedGuestBookSet().contains(guestBook.no)}"
+                      data-th-id="|checkLike + ${guestBook.no}|"
+                      type="checkbox">
+                <label class="checkedLabel"
+                      data-th-for="|checkLike + ${guestBook.no}|"
+                      data-th-onclick="|unlikeButtonClicked(${guestBook.no})|"
+                      data-th-id="'unlikeButton-' + ${guestBook.no}"
+                      style="background-color: transparent;">
+                  ❤️
+                </label>
+                <label class="uncheckedLabel"
+                      data-th-for="|checkLike + ${guestBook.no}|"
+                      data-th-onclick="|likeButtonClicked(${guestBook.no})|"
+                      data-th-id="'likeButton-' + ${guestBook.no}"
+                      style="background-color: transparent;">
+                  🤍
+                </label>
+              </div>
             </td>
           </tr>
         </table>

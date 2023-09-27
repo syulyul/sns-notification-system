@@ -52,7 +52,7 @@
 <div class="wrapper" style="display: flex; justify-content: space-between;">
 
     <!-- Left column for the post -->
-    <div class="left-column" style="flex: 1;">
+    <div class="left-column" style="flex: 1; margin-left:170px;">
         <p data-th-unless="${board}">해당 번호의 게시글이 없습니다!</p>
         <div class="container">
             <div class="content-box">
@@ -81,7 +81,7 @@
                     <div>
                         <div style="overflow-x: auto; white-space: nowrap;">
                             <div th:each="file : ${board.attachedFiles}" style="display: inline-block; margin-right: 10px;">
-                                <img alt="첨부파일 이미지" th:src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" height="200" width="200"/>
+                                <img alt="첨부파일 이미지" th:src="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}" height="150" width="150"/>
                                 <a th:href="@{|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_board/${file.filePath}|}"></a>
                                 <a th:if="${session.loginUser.no == board.writer.no}" th:href="@{|/board/fileDelete/attachedFile;no=${file.no}|}"
                                    style="color: black; text-decoration: none; font-weight: bold;">X</a><br>
@@ -106,36 +106,44 @@
             </div> <!-- End of content-box -->
             <!-- 좋아요 버튼 -->
 
-                <input data-th-id="boardNo" data-th-value="${board.no}" type="hidden" style="width:0px">
-                <input class="toggleBox"
-                       data-th-checked="${session.loginUser.getLikeBoardSet().contains(board.no)}"
-                       data-th-id="checkLike"
-                       type="checkbox">
-                <label class="checkedLabel"
-                       data-th-for="checkLike"
-                       data-th-onclick="unlikeButtonClicked(this)"
-                       data-th-id="'unlikeButton-' + ${board.no}"
-                       style="background-color: transparent;">
-                    좋아요 취소❤️
-                </label>
-                <label class="uncheckedLabel"
-                       data-th-for="checkLike"
-                       data-th-onclick="likeButtonClicked(this)"
-                       data-th-id="'likeButton-' + ${board.no}"
-                       style="background-color: transparent;">
-                    좋아요 누르기 🤍
-                </label>
+            <input data-th-id="boardNo" data-th-value="${board.no}" type="hidden" style="width:0px">
+            <input class="toggleBox"
+                   data-th-checked="${session.loginUser.getLikeBoardSet().contains(board.no)}"
+                   data-th-id="checkLike"
+                   type="checkbox">
+            <label class="checkedLabel"
+                   data-th-for="checkLike"
+                   data-th-onclick="unlikeButtonClicked(this)"
+                   data-th-id="'unlikeButton-' + ${board.no}"
+                   style="background-color: transparent;">
+                좋아요 취소❤️
+            </label>
+            <label class="uncheckedLabel"
+                   data-th-for="checkLike"
+                   data-th-onclick="likeButtonClicked(this)"
+                   data-th-id="'likeButton-' + ${board.no}"
+                   style="background-color: transparent;">
+                좋아요 누르기 🤍
+            </label>
             <div class="like-list">
-                <span data-th-each="nickname, iterStat : ${likedUserNicknames}">
+                <span data-th-each="nickname, iterStat : ${likedUserNicknames}" data-th-if="${#lists.size(likedUserNicknames) <= 3 || iterStat.index < 3}">
                     <span data-th-text="${nickname}"></span>
-                    <span data-th-if="${iterStat.last}"> 님이 좋아합니다</span>
-                    <span data-th-unless="${iterStat.last}">, </span>
+                    <!-- 3명 이하일 때 마지막 닉네임 뒤에 '님' 붙이기 -->
+                    <span data-th-if="${#lists.size(likedUserNicknames) <= 3 && iterStat.last}"> 님이 좋아합니다</span>
+                    <!-- 4명 이상일 때 3번째 닉네임 뒤에 '님' 붙이기 -->
+                    <span data-th-if="${#lists.size(likedUserNicknames) >= 4 && iterStat.index == 2}"> 님</span>
+                    <!-- 마지막 닉네임이 아닌 경우 쉼표 추가 -->
+                    <span data-th-if="${!iterStat.last || (#lists.size(likedUserNicknames) >= 4 && iterStat.index < 2)}">, </span>
+                </span>
+                <!-- 4명 이상일 때 나머지 수 표시 -->
+                <span data-th-if="${#lists.size(likedUserNicknames) >= 4}">
+                외 <span data-th-text="${#lists.size(likedUserNicknames) - 3}"></span>명이 좋아합니다.
                 </span>
             </div>
-            <a data-th-href="@{/board/list(category=${board.category})}">
-                <button type="button">목록</button>
-            </a>
         </div> <!-- End of container -->
+        <a data-th-href="@{/board/list(category=${board.category})}">
+            <button style="margin-top:80px; margin-left:450px;" type="button">목록</button>
+        </a>
     </div> <!-- End of left-column -->
 
     <div class="right-column" style="flex: 1;">
@@ -145,7 +153,7 @@
                 <table style="margin-bottom: 2%; margin-left: 0%">
                     <tr>
                         <th>댓글</th>
-                        <td><textarea style="border: none;" name="content" rows="4" cols="60" placeholder="내용을 입력하세요"></textarea></td>
+                        <td><textarea style="border: none;" name="content" rows="4" cols="55" placeholder="내용을 입력하세요"></textarea></td>
                     </tr>
                 </table>
                 <div style="text-align: center; margin-left:45%; margin-top:2%; margin-bottom:5%;">
@@ -155,51 +163,52 @@
             </form>
         </div>
 
-    <!-- 댓글 내용 -->
+        <!-- 댓글 내용 -->
         <div class="comment-list-scrollable">
-    <div data-th-each="boardComment : ${comments}">
-            <div class="comment-container">
-                <!-- 게시글 목록 -->
-                <table class="content-table">
-                    <!-- 첫 번째 행: 프사, 이름, 시간 -->
-                    <tr class="first-row">
-                        <td class="title-meta-cell" colspan="3">
-                            <div class="horizontal-layout">
-                                <div style="display: flex; align-items: center;">
-                                    <div class="profile-picture" style="display: inline-block;">
-                                        <img data-th-unless="${boardComment.writer.photo}" src='/images/avatar.png'>
-                                        <a data-th-if="${boardComment.writer.photo}"
-                                           data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${boardComment.writer.photo}|">
-                                            <img class="profile-image" alt="프로필 사진"
-                                                 data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${boardComment.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
-                                        </a>
+            <div data-th-each="boardComment : ${comments}">
+                <div class="comment-container">
+                    <!-- 게시글 목록 -->
+                    <table class="content-table">
+                        <!-- 첫 번째 행: 프사, 이름, 시간 -->
+                        <tr class="first-row">
+                            <td class="title-meta-cell" colspan="3">
+                                <div class="horizontal-layout">
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="profile-picture" style="display: inline-block;">
+                                            <img data-th-unless="${boardComment.writer.photo}" src='/images/avatar.png'>
+                                            <a data-th-if="${boardComment.writer.photo}"
+                                               data-th-href="|https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-14/sns_member/${boardComment.writer.photo}|">
+                                                <img class="profile-image" alt="프로필 사진"
+                                                     data-th-src="|http://gjoxpfbmymto19010706.cdn.ntruss.com/sns_member/${boardComment.writer.photo}?type=f&w=270&h=270&faceopt=true&ttype=jpg|">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <span data-th-text="${boardComment.writer.nick}"></span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span data-th-text="${boardComment.writer.nick}"></span>
+                                    <div class="meta-info">
+                                        <img class="clock-icon" src="/images/clock.png">
+                                        <span data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}"></span>
                                     </div>
                                 </div>
-                                <div class="meta-info">
-                                    <img class="clock-icon" src="/images/clock.png">
-                                    <span data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}"></span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- 두 번째 행: 내용 -->
-                    <tr class="second-row">
-                        <td class="content-like-cell" colspan="3" style="position: relative;">
-                            <span data-th-text="${boardComment.content}"></span>
-                        </td>
-                    </tr>
-                </table>
-        <div style="text-align: center; margin-left:0%; margin-top:2%; margin-bottom:5%;">
-            <a data-th-href="|/board/deleteComment/${board.no}/${boardComment.no}|">
-                <button class="delete-button">삭제</button>
-            </a>
+                            </td>
+                        </tr>
+                        <!-- 두 번째 행: 내용 -->
+                        <tr class="second-row">
+                            <td class="content-like-cell" colspan="3" style="position: relative;">
+                                <span data-th-text="${boardComment.content}"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="text-align: center; margin-left:0%; margin-top:2%; margin-bottom:5%;">
+                        <a data-th-href="|/board/deleteComment/${board.no}/${boardComment.no}|">
+                            <button class="delete-button">삭제</button>
+                        </a>
+                    </div>
+                </div>
+            </div> <!-- End of right-column -->
         </div>
-    </div>
-</div> <!-- End of right-column -->
-        </div>
+
 </body>
 
 </html>

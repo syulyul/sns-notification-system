@@ -66,7 +66,9 @@
       </div>
     </td>
     <td>
-      <span data-th-text="${boardComment.content}">내용</span>
+      <a data-th-href="@{'/board/detail/1/' + ${boardComment.boardNo}}"
+         data-th-text="${boardComment.content} ?: '내용없음'"
+         style="color: black; text-decoration: none;">내용</a>
     </td>
     <td data-th-text="${#dates.format(boardComment.createdAt, 'yyyy-MM-dd')}">등록일</td>
   </tr>

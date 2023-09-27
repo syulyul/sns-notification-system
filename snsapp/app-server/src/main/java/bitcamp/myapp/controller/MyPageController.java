@@ -161,29 +161,30 @@ public class MyPageController {
     MyPage myPage = myPageService.get(member.getNo());
 
     if (loginUser.getNo() == myPage.getNo()) {
-      if (photofile.getSize() > 0) {
-        String uploadFileUrl = ncpObjectStorageService.uploadFile(
-            "bitcamp-nc7-bucket-14", "sns_member/", photofile);
-        member.setPhoto(uploadFileUrl);
-      }
+        if (photofile.getSize() > 0) {
+          String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                  "bitcamp-nc7-bucket-14", "sns_member/", photofile);
+          member.setPhoto(uploadFileUrl);
+        }
 
-      myPage.setGender(gender);
-      myPage.setStateMessage(stateMessage);
-      // myPage.setEmail(email);
-      if (birthday.isEmpty()) {
-        birthday = null;
-      } else {
-        // 생일 값을 문자열에서 Timestamp로 변환
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsedDate = dateFormat.parse(birthday);
-        Timestamp timestamp = new Timestamp(parsedDate.getTime());
+        myPage.setGender(gender);
+        myPage.setStateMessage(stateMessage);
+        // myPage.setEmail(email);
+        if (birthday.isEmpty()) {
+          birthday = null;
+        } else {
+          // 생일 값을 문자열에서 Timestamp로 변환
+          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+          Date parsedDate = dateFormat.parse(birthday);
+          Timestamp timestamp = new Timestamp(parsedDate.getTime());
 
-        myPage.setBirthday(timestamp);
+          myPage.setBirthday(timestamp);
 
-      }
+        }
 
-      myPage.setGender(gender);
-      myPage.setStateMessage(stateMessage);
+        if (member.getEmail().equals(" ") || member.getEmail().isEmpty()) {
+          member.setEmail(null);
+        }
 
       if (memberService.update(member) == 0 || myPageService.update(myPage) == 0) {
         throw new Exception("회원이 없습니다.");
@@ -200,6 +201,7 @@ public class MyPageController {
 
         return "redirect:/myPage/" + myPage.getNo();
       }
+
     } else {
       return "redirect:/error";
     }

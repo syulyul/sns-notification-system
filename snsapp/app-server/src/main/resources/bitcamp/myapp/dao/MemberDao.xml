@@ -65,16 +65,16 @@
 
     <update id="update" parameterType="member">
         update sns_member set
-        nick=#{nick}
-        ,name=#{name}
-        ,phone_number=#{phoneNumber}
-        ,email=#{email}
-        <if test="password != null and password.length() != 0">
-            password=sha1(#{password})
-        </if>
-        <if test="photo != null">
-            filepath=#{photo}
-        </if>
+            nick=#{nick}
+            ,name=#{name}
+            ,phone_number=#{phoneNumber}
+            ,email=#{email}
+            <if test="password != null and password.length() != 0">
+                ,password=sha1(#{password})
+            </if>
+            <if test="photo != null">
+                ,filepath=#{photo}
+            </if>
         where
         mno=#{no}
     </update>

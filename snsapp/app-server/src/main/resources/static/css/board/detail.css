@@ -19,11 +19,10 @@
         text-align: left;
         /* 내용을 왼쪽으로 정렬 */
         padding: 20px;
-        max-width: 600px;
-        max-height: 1000px;
         background: #f2f2f2;
         /* 원하는 높이로 조절하세요 */
-        width: 700px;
+        width: 600px;
+        height:1000px;
         position: relative;
     }
 
@@ -328,14 +327,14 @@
         }
 
         .submit-button {
-            margin-left :68%;
+            margin-left :70%;
             margin-top:2%;
             margin-bottom:5%;
         }
 
         .like-list {
             position: absolute;
-            top:800px;
-            right: 200px;
+            top:730px;
+            right: 170px;
         }
 
