@@ -91,15 +91,6 @@ public class AuthController {
       Member loginUser = memberService.get(phoneNumber, password);
       if (loginUser != null) {
         // 로그인 성공 시 처리
-        // 쿠키 설정
-        if (savePhoneNumber != null) {
-          Cookie cookie = new Cookie("phoneNumber", phoneNumber);
-          response.addCookie(cookie);
-        } else {
-          Cookie cookie = new Cookie("phoneNumber", "no");
-          cookie.setMaxAge(0);
-          response.addCookie(cookie);
-        }
 
         // 세션에 로그인 사용자 정보 저장
         LoginUser loginUserObject = new LoginUser(loginUser);
@@ -185,8 +176,6 @@ public class AuthController {
       e.printStackTrace();
     }
 
-    JSONObject toJson = new JSONObject();
-
     String code = smsService.sendRandomMessage(phoneNumber);
     session.setAttribute("rand", code);
 
@@ -205,8 +194,6 @@ public class AuthController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-    JSONObject toJson = new JSONObject();
 
     String code = smsService.sendRandomMessage(phoneNumber);
     session.setAttribute("rand", code);

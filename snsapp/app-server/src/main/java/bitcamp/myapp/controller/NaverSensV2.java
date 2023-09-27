@@ -76,7 +76,6 @@ public class NaverSensV2 {
 
         // 요청 method
         String method = "POST";
-        // current timestamp (epoch)
         String timestamp = Long.toString(System.currentTimeMillis());
         requestUrl += serviceId + requestUrlType;
         String apiUrl = hostNameUrl + requestUrl;
@@ -98,21 +97,14 @@ public class NaverSensV2 {
         // 난수와 함께 전송
         toJson.put("content", "본인인증 코드는 [" + rand + "] 입니다.");
         toJson.put("to", phoneNumber);
-  //      toJson.put("subject", "toJson 테스트내용입니다.");
         toArr.add(toJson);
 
 
         // 발신번호 * 사전에 인증/등록된 번호만 사용할 수 있습니다.
         bodyJson.put("messages", toArr);
-//        bodyJson.put("files", new ArrayList<JSONObject>(){{
-//            add(new JSONObject(new HashMap(){{
-//                put("fileId", "a");
-//            }}));
-//        }});
 
         // 출력 포맷을 설정하기
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        //bodyJson.put("reserveTime", LocalDateTime.now().format(formatter));
 
         String body = bodyJson.toJSONString();
         String to = toJson.toJSONString();
@@ -133,9 +125,6 @@ public class NaverSensV2 {
 
             HttpEntity<String> requestContent = new HttpEntity<>(body, headers);
 
-//            JSONObject bodyJson = new JSONObject();
-//            bodyJson.put()
-
             ResponseEntity<String> responseEntity = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
@@ -146,41 +135,6 @@ public class NaverSensV2 {
             System.out.println(responseEntity.getStatusCode());
             System.out.println(responseEntity.getHeaders());
             System.out.println(responseEntity.getBody());
-            /*
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setUseCaches(false);
-            con.setDoOutput(true);
-            con.setDoInput(true);
-            con.setRequestProperty("content-type", "application/json");
-            con.setRequestProperty("x-ncp-apigw-timestamp", timestamp);
-            con.setRequestProperty("x-ncp-iam-access-key", accessKey);
-            con.setRequestProperty("x-ncp-apigw-signature-v2", makeSignature(requestUrl, timestamp, method, accessKey, secretKey));
-            con.setRequestMethod(method);
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-
-            wr.write(body.getBytes());
-            wr.flush();
-            wr.close();
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-            System.out.println("responseCode" + " " + responseCode);
-            if (responseCode == 202) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else { // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
-
-            System.out.println(response);
-*/
 
         } catch (Exception e) {
             System.out.println(e);
@@ -226,39 +180,4 @@ public class NaverSensV2 {
     }
 
 
-//    @PostMapping("phoneAuth")
-//    @ResponseBody
-//    public Boolean phoneAuth(String phoneNumber,
-//                             SmsService memberService,
-//                             HttpSession session) {
-//
-////        try { // 이미 가입된 전화번호가 있으면
-////            if(memberService.memberTelCount(phoneNumber) > 0)
-////                return true;
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////        }
-//
-//        String code = memberService.sendRandomMessage(phoneNumber);
-//        session.setAttribute("rand", code);
-//
-//        return false;
-//    }
-//
-//    @PostMapping("phoneAuthOk")
-//    @ResponseBody
-//    public Boolean phoneAuthOk(HttpSession session,
-//                               HttpServletRequest request) {
-//        String rand = (String) session.getAttribute("rand");
-//        String code = (String) request.getParameter("code");
-//
-//        System.out.println(rand + " : " + code);
-//
-//        if (rand.equals(code)) {
-//            session.removeAttribute("rand");
-//            return false;
-//        }
-//
-//        return true;
-//    }
 }
