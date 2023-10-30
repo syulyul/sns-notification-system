@@ -15,5 +15,9 @@ java, spring-boot, mybatis, mysql, thymeleaf, javascript, Ajax, css/html, SSH Tu
 
 ## usecase
 ![Alt text](image/usecase.png)
+
+## ERD
+![Alt text](image/ERD.png)
+
 ## Architecture
 ![Alt text](image/architecture.png)
