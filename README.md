@@ -9,7 +9,7 @@
 >>기대 효과 : 힐링스타그램을 통해 현대인들이 위로와 공감을 받을 수 있는 공간 제공 효과를 기대
 
 ## 개발 환경 service : 
-Github, IntelliJ, Visual Studio Code, eXERD, ERDCloud, Figma, Naver Cloud Platform(Simple & Easy Notification Service, Object Storage, Image Optimizer, Cloud DB for MySQL, Global DNS, VPC, Server, Load Balance) Github Action
+Github, IntelliJ, Visual Studio Code, eXERD, ERDCloud, Figma, Naver Cloud Platform(Simple & Easy Notification Service, Object Storage, Image Optimizer, Cloud DB for MySQL, Global DNS, VPC, Server, Load Balancer) Github Action
 ## 개발 Skill : 
 Java, Spring-boot, Mybatis, MySQL, Thymeleaf, JavaScript, Ajax, CSS/HTML, SSH Tunneling
 
